@@ -262,7 +262,7 @@ $group-header-font-size: $font-size-sm !default;
   // Icon Variables
 // -----------------------------------------------------------------------------
 $icon-prefix: #{$namespace}icon;
-$icon-path: 'fonts/';
+$icon-path: '../fonts/';
 $icons: (
   back: \e80a,
   bars: \e80e,

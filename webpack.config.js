@@ -33,7 +33,7 @@ module.exports={
                 loader:"style-loader!css-loader!sass-loader"
             },
             {
-                test:/\.(png|jpg)$/,
+                test:/\.(png|jpg|woff|svg|ttf)$/,
                 loader:"url?limit=25000"
             }
         ],
