@@ -1,4 +1,4 @@
-export About from './About';
+//export About from './About';
 //export Default from './Default';
 
 // Components
@@ -32,9 +32,12 @@ import List from "../src/js/List";
 import Icon from "../src/js/Icon";
 import Modal from "../src/js/modal/Modal";
 import Slider from "../src/js/Slider";
+import Group from "../src/js/Group";
+import Grid from "../src/js/Grid";
+import Col from "../src/js/Col";
 
 
-
+//默认登录页面:Default component
 export const Default=React.createClass({
 	handleLogin(){
 		let account=this.refs.account.getValue();
@@ -56,7 +59,7 @@ export const Default=React.createClass({
 			<View id="app-index">
 		        <NavBar
 		          amStyle="primary"
-		          title="登录农泰金融"
+		          title="登录"
 		        />
 		        <Container scrollable>
 		        	<div style={{marginTop:"80px"}}>
@@ -94,6 +97,8 @@ export const Default=React.createClass({
 	}
 });
 
+
+//首页:Index component
 export const Index=React.createClass({
 	render(){
 		return (
@@ -109,10 +114,66 @@ export const Index=React.createClass({
 						<img src="../src/img/banner_04.jpg" />
 					</Slider.Item>
 				</Slider>
+				<Group header="" noPadded={false} style={{marginTop:0}}>
+					<Grid collapse={true}>
+						<Col cols={3}>
+							<div className="text-center">平台介绍</div>
+							<div className="text-center" style={{color:"#999",fontSize:"12px"}}>上市公司战略投资</div>
+						</Col>
+						<Col cols={3}>
+							<div className="text-center">邀请有礼</div>
+							<div className="text-center" style={{color:"#999",fontSize:"12px"}}>一起赚大钱</div>
+						</Col>
+					</Grid>
+				</Group>
+				<Group>
+					<h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>月月赚</h6>
+					<Grid collapse={true}>
+						<Col cols={3} style={{borderRight:"1px solid #ececec"}}>
+							<div className="text-center">9.5%</div>
+							<div className="text-center" style={{color:"#999",fontSize:"12px"}}>年化收益</div>
+						</Col>
+						<Col cols={3}>
+							<div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>投资期限</span> 1个月</div>
+							<div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>可投金额</span> 0.35万</div>
+						</Col>
+					</Grid>
+				</Group>
 
+				<Group>
+					<h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>季季赚</h6>
+					<Grid collapse={true}>
+						<Col cols={3} style={{borderRight:"1px solid #ececec"}}>
+							<div className="text-center">10.5%</div>
+							<div className="text-center" style={{color:"#999",fontSize:"12px"}}>年化收益</div>
+						</Col>
+						<Col cols={3}>
+							<div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>投资期限</span> 3个月</div>
+							<div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>可投金额</span> 1.35万</div>
+						</Col>
+					</Grid>
+				</Group>
 			</div>
 
 
+		)
+	}
+});
+
+//理财列表页：ProductList component
+export const ProductList=React.createClass({
+	render(){
+		return (
+			<div>这是理财列表页面</div>
+		)
+	}
+});
+
+//用户中心页面：UserHome component
+export const UserHome=React.createClass({
+	render(){
+		return (
+			<div>这是用户中心页面</div>
 		)
 	}
 });

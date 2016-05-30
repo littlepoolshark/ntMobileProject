@@ -24,9 +24,10 @@ let {
   ...Components
   } = Pages;
 
-  console.log("Components:",Components);
 const pageNameMap={
-    "Index":"首页"
+    "Index":"首页",
+    "ProductList":"理财计划",
+    "UserHome":"用户中心"
 }
 const App = React.createClass({
   render() {
@@ -53,22 +54,22 @@ const App = React.createClass({
             component={Link}
             title="首页"
             icon="star"
-            selected={!params.component}
+            selected={params.component === 'index'}
             to="/index"
           />
           <TabBar.Item
             component={Link}
             title="理财"
             icon="list"
-            selected={params.component === 'about'}
-            to="/about"
+            selected={params.component === 'productList'}
+            to="/productList"
           />
           <TabBar.Item
             component={Link}
             icon="person"
             title="我的"
-            selected={params.component === 'about'}
-            to="/about"
+            selected={params.component === 'userHome'}
+            to="/UserHome"
           />
         </TabBar>
       </Container>
