@@ -21,14 +21,7 @@ export About from './About';
 // export Tabs from './TabsExample';
 // export Typography from './TypographyExample';
 
-// import React from "react";
-// export const About=React.createClass({
-// 	render (){
-// 		return (
-// 			<div>about页面</div>
-// 		)
-// 	}
-// });
+
 import React from "react";
 import Container from "../src/js/Container";
 import View from "../src/js/View";
@@ -36,37 +29,90 @@ import NavBar from "../src/js/NavBar";
 import Button from "../src/js/Button";
 import Field from "../src/js/Field";
 import List from "../src/js/List";
+import Icon from "../src/js/Icon";
+import Modal from "../src/js/modal/Modal";
+import Slider from "../src/js/Slider";
 
 
 
 export const Default=React.createClass({
+	handleLogin(){
+		let account=this.refs.account.getValue();
+		let password=this.refs.password.getValue();
+		if( account !== "13682330541" || password !== "123456" ){
+			this.refs.modal.open();
+		}else {
+			//'props.history' and 'context.history' had been deprecated. please use 'context.router'
+			// method pushState had been deprecated.please use push instead
+			this.props.history.pushState(null,"/index");
+		}
+
+	},
+	handleCloseModal(){
+		this.refs.modal.close();
+	},
 	render (){
 		return (
 			<View id="app-index">
 		        <NavBar
 		          amStyle="primary"
-		          title="首页"
+		          title="登录农泰金融"
 		        />
 		        <Container scrollable>
-		        	<div style={{padding:"10px",marginTop:"80px"}}>
+		        	<div style={{marginTop:"80px"}}>
 		        		<List>
 		        			<List.Item
-			                  nested="input"
+								media={<Icon name="person" />}
+			                  	nested="input"
 			                >
-			                  <Field type="text" label="账户" placeholder="请输入您的手机号码,haha"></Field>
+			                  <Field type="text" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
                 			</List.Item>
 
 		        			<List.Item
-			                  nested="input"
+								media={<Icon name="info" />}
+								nested="input"
 			                >
-			                	<Field type="text" label="密码" placeholder="请输入您的登录密码"></Field>
+			                	<Field type="text" label={null} placeholder="请输入您的登录密码" ref="password"></Field>
                 			</List.Item>
 		        			
 		        		</List>
-		        		<Button amStyle="primary" block radius={true}>登录</Button>
 		        	</div>
+					<div style={{padding:"10px",marginTop:"50px"}}>
+						<Button amStyle="primary" block radius={true} onClick={this.handleLogin}>登录</Button>
+					</div>
+					<Modal
+						ref="modal"
+						isOpen={false}
+						role="alert"
+						onAction={this.handleCloseModal}
+					>
+						请输入你正确的账号和密码！
+					</Modal>
 		        </Container>
       		</View>
+		)
+	}
+});
+
+export const Index=React.createClass({
+	render(){
+		return (
+			<div>
+				<Slider>
+					<Slider.Item>
+						<img src="../src/img/banner_01.jpg" />
+					</Slider.Item>
+					<Slider.Item>
+						<img src="../src/img/banner_02.jpg" />
+					</Slider.Item>
+					<Slider.Item>
+						<img src="../src/img/banner_04.jpg" />
+					</Slider.Item>
+				</Slider>
+
+			</div>
+
+
 		)
 	}
 });
