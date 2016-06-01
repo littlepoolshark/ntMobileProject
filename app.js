@@ -17,6 +17,7 @@ import View from "./src/js/View";
 
 
 import * as Pages from './pages';
+console.log("Pages:",Pages);
 
 // 解构赋值
 let {
@@ -24,11 +25,12 @@ let {
   ...Components
   } = Pages;
 
-const pageNameMap={
+let pageNameMap={
     "Index":"首页",
     "ProductList":"理财计划",
     "UserHome":"用户中心"
 }
+
 const App = React.createClass({
   render() {
     let {
@@ -37,6 +39,7 @@ const App = React.createClass({
       children,
       ...props
       } = this.props;
+    console.log("this.props:",this.props);
     let transition = children.props.transition || 'sfr';
 
     return (

@@ -1,9 +1,13 @@
 import React from 'react';
-import {
-  Container,
-  Accordion,
-  Card,
-} from 'amazeui-touch';
+//import {
+//  Container,
+//  Accordion,
+//  Card,
+//} from 'amazeui-touch';
+import Container from "../src/js/Container";
+import Accordion from "../src/js/Accordion";
+import Card from "../src/js/Card";
+
 
 const albums = [
   {

@@ -2,7 +2,7 @@
 //export Default from './Default';
 
 // Components
-// export Accordion from './AccordionExample';
+ export Accordion from './AccordionExample';
 // export Badge from './BadgeExample';
 // export Button from './ButtonExample';
 // export Card from './CardExample';
