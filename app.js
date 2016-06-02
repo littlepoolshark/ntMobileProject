@@ -9,14 +9,14 @@ import {
   IndexRoute,
 } from 'react-router';
 
-import Container from "./src/js/Container";
-import Group from "./src/js/Group";
-import NavBar from "./src/js/NavBar";
-import TabBar from "./src/js/TabBar";
-import View from "./src/js/View";
+import Container from "./src/js/UIComponents/Container";
+import Group from "./src/js/UIComponents/Group";
+import NavBar from "./src/js/UIComponents/NavBar";
+import TabBar from "./src/js/UIComponents/TabBar";
+import View from "./src/js/UIComponents/View";
 
 
-import * as Pages from './pages';
+import * as Pages from './src/js/pages';
 console.log("Pages:",Pages);
 
 // 解构赋值

@@ -2,7 +2,7 @@
 //export Default from './Default';
 
 // Components
- export Accordion from './AccordionExample';
+//export Accordion from './AccordionExample';
 // export Badge from './BadgeExample';
 // export Button from './ButtonExample';
 // export Card from './CardExample';
@@ -23,18 +23,18 @@
 
 
 import React from "react";
-import Container from "../src/js/Container";
-import View from "../src/js/View";
-import NavBar from "../src/js/NavBar";
-import Button from "../src/js/Button";
-import Field from "../src/js/Field";
-import List from "../src/js/List";
-import Icon from "../src/js/Icon";
-import Modal from "../src/js/modal/Modal";
-import Slider from "../src/js/Slider";
-import Group from "../src/js/Group";
-import Grid from "../src/js/Grid";
-import Col from "../src/js/Col";
+import Container from "../UIComponents/Container";
+import View from "../UIComponents/View";
+import NavBar from "../UIComponents/NavBar";
+import Button from "../UIComponents/Button";
+import Field from "../UIComponents/Field";
+import List from "../UIComponents/List";
+import Icon from "../UIComponents/Icon";
+import Modal from "../UIComponents/modal/Modal";
+import Slider from "../UIComponents/Slider";
+import Group from "../UIComponents/Group";
+import Grid from "../UIComponents/Grid";
+import Col from "../UIComponents/Col";
 
 
 //默认登录页面:Default component
