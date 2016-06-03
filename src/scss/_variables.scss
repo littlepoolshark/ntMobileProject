@@ -38,7 +38,7 @@ $black: #000 !default;
 $white: #fff !default;
 
 // Application Colors
-$global-primary: #df4b3c !default;
+$global-primary: #0e90d2 !default;
 $global-secondary: lighten($global-primary, 15%) !default;
 $global-success: #5eb95e !default;
 $global-warning: #F37B1D !default;
@@ -262,7 +262,7 @@ $group-header-font-size: $font-size-sm !default;
   // Icon Variables
 // -----------------------------------------------------------------------------
 $icon-prefix: #{$namespace}icon;
-$icon-path: '../fonts/';
+$icon-path: '/fonts/';
 $icons: (
   back: \e80a,
   bars: \e80e,

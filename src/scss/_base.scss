@@ -9,13 +9,12 @@
 // @see http://browser.colla.me/show/disable_elastic_scroll_on_iOS_safari
 html,
 body {
-  height: 100%;//使得页面在没有内容填充的情况下宽高能等于浏览器视口的宽高
+  height: 100%;
   overflow: hidden;
   font-size: $base-font-size;
 }
 
 // Set box-sizing globally to handle padding and border widths
-//css盒子模型选择border-box而不是content-box
 html {
   box-sizing: border-box;
 }
