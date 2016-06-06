@@ -1,4 +1,5 @@
 require("./src/scss/amazeui.touch.scss");
+require("./src/css/test.css");
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {

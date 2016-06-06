@@ -1,5 +1,6 @@
 var path=require("path");
 var autoprefixer=require("autoprefixer");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var node_modules_dir=path.resolve(__dirname,"node_modules");
 var pathToReact=path.resolve(node_modules_dir,"react/dist/react.min.js");
 var pathToReactDOM=path.resolve(node_modules_dir,"react-dom/dist/react-dom.min.js");
@@ -40,7 +41,7 @@ module.exports={
             },
             {
                 test:/\.css$/,
-                loader:"style-loader!css-loader!postcss-loader"
+                loader:ExtractTextPlugin.extract("style-loader","css-loader")
             },
             {
                 test:/\.scss$/,
@@ -53,5 +54,8 @@ module.exports={
         ],
         noParse:[pathToReact,pathToReactDOM]//每当webpack尝试去解析那个压缩后的文件，我们阻止它，因为这不必要
     },
-    postcss: [ autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }) ]//使用postcss的插件autoprefixer来给css属性添加浏览器前缀
+    postcss: [ autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }) ],//使用postcss的插件autoprefixer来给css属性添加浏览器前缀
+    plugins:[
+        new ExtractTextPlugin("[name].css")
+    ]
 }
