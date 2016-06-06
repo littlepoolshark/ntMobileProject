@@ -105,13 +105,13 @@ export const Index=React.createClass({
 			<div>
 				<Slider>
 					<Slider.Item>
-						<img src="../src/img/banner_01.jpg" />
+						<img src="./src/img/banner_01.jpg" />
 					</Slider.Item>
 					<Slider.Item>
-						<img src="../src/img/banner_02.jpg" />
+						<img src="./src/img/banner_02.jpg" />
 					</Slider.Item>
 					<Slider.Item>
-						<img src="../src/img/banner_04.jpg" />
+						<img src="./src/img/banner_04.jpg" />
 					</Slider.Item>
 				</Slider>
 				<Group header="" noPadded={false} style={{marginTop:0}}>

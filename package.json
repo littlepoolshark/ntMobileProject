@@ -4,7 +4,8 @@
   "description": "build ntMobile project base on amaze ui touch",
   "main": "index.js",
   "scripts": {
-    "start":"webpack-dev-server --inline --hot --color --progress --host 0.0.0.0",
+    "start": "webpack-dev-server --inline --hot --color --progress --host 0.0.0.0",
+    "deploy":"set NODE_ENV=production  && webpack -p --config webpack.production.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -12,6 +13,7 @@
     "amazeui-touch"
   ],
   "devDependencies": {
+    "autoprefixer": "^6.3.6",
     "babel-core": "^6.7.6",
     "babel-eslint": "^6.0.2",
     "babel-loader": "^6.2.4",
@@ -24,6 +26,7 @@
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "node-sass": "^3.7.0",
+    "postcss-loader": "^0.9.1",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
@@ -34,11 +37,9 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
-    "material-ui": "^0.15.0",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-router": "^2.4.1",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-router": "^2.4.1"
   }
 }
