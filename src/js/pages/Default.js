@@ -1,81 +1,88 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {
-  Link,
-} from 'react-router';
+require("../../css/test.css");
+var DefaultAction=require("../actions/DefaultAction.js");
+var DefaultStore=require("../stores/DefaultStore.js");
 
-// import {
-//   Container,
-//   List,
-//   NavBar,
-//   Group,
-//   View,
-// } from 'amazeui-touch';
-import Container from "../src/js/Container";
-import Group from "../src/js/Group";
-import NavBar from "../src/js/NavBar";
-import List from "../src/js/List";
-import View from "../src/js/View";
+import React from "react";
+import Container from "../UIComponents/Container";
+import View from "../UIComponents/View";
+import NavBar from "../UIComponents/NavBar";
+import Button from "../UIComponents/Button";
+import Field from "../UIComponents/Field";
+import List from "../UIComponents/List";
+import Icon from "../UIComponents/Icon";
+import Modal from "../UIComponents/modal/Modal";
+import Slider from "../UIComponents/Slider";
+import Group from "../UIComponents/Group";
+import Grid from "../UIComponents/Grid";
+import Col from "../UIComponents/Col";
 
-let pages = [
-  'Accordion',
-  'Badge',
-  'Button',
-  'Card',
-  'Form',
-  'Grid',
-  'Icon',
-  'List',
-  'Loader',
-  'Modal',
-  'NavBar',
-  'Notification',
-  'OffCanvas',
-  'Popover',
-  'Slider',
-  'TabBar',
-  'Tabs',
-  'Typography',
-];
+//默认登录页面:Default component
+ let Default=React.createClass({
+    handleLogin(){
+        let account=this.refs.account.getValue();
+        let password=this.refs.password.getValue();
+        //if( account !== "13682330541" || password !== "123456" ){
+        //    this.refs.modal.open();
+        //}else {
+        //    //'props.history' and 'context.history' had been deprecated. please use 'context.router'
+        //    // method pushState had been deprecated.please use push instead
+        //    this.props.history.pushState(null,"/home");
+        //}
+        console.log("handleLogin");
+        DefaultAction.login(account,password);
 
-const Default = React.createClass({
-  getDefaultProps() {
-    return {
-      transition: 'rfr'
-    };
-  },
+    },
+    handleCloseModal(){
+        this.refs.modal.close();
+    },
+    render (){
+        return (
+            <View id="app-index">
+                <NavBar
+                    amStyle="primary"
+                    title="登录"
+                />
+                <Container scrollable>
+                    <div style={{marginTop:"80px"}}>
+                        <h6><span className="sam-test">这个字应该是红色的，字体大小24px</span></h6>
+                        <List>
+                            <List.Item
+                                media={<Icon name="person" />}
+                                nested="input"
+                            >
+                                <Field type="text" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
+                            </List.Item>
 
-  render() {
-    let items = pages.map((item, i) => {
-      return (
-        <List.Item
-          linkComponent={Link}
-          linkProps={{to: `/${item.toLowerCase()}`}}
-          title={item}
-          key={i}
-        />
-      );
-    });
+                            <List.Item
+                                media={<Icon name="info" />}
+                                nested="input"
+                            >
+                                <Field type="text" label={null} placeholder="请输入您的登录密码" ref="password"></Field>
+                            </List.Item>
 
-    return (
-      <View id="app-index">
-        <NavBar
-          amStyle="primary"
-          title="Amaze UI Touch"
-        />
-        <Container scrollable>
-          <Group
-            header="Amaze UI Touch Components"
-            noPadded
-          >
-            <List>
-              {items}
-            </List>
-          </Group>
-        </Container>
-      </View>
-    )
-  }
+                        </List>
+                    </div>
+                    <div style={{padding:"10px",marginTop:"50px"}}>
+                        <Button amStyle="primary" block radius={true} onClick={this.handleLogin}>登录</Button>
+                    </div>
+                    <Modal
+                        ref="modal"
+                        isOpen={false}
+                        role="alert"
+                        onAction={this.handleCloseModal}
+                    >
+                        请输入你正确的账号和密码！
+                    </Modal>
+                </Container>
+            </View>
+        )
+    },
+    componentDidMount(){
+        DefaultStore.bind("loginFailed",function(){
+            console.log("into loanPurchaseZoneStore change callback")
+            this.refs.modal.open();
+        }.bind(this));
+    }
 });
 
 export default Default;

@@ -1,6 +1,8 @@
+var webpack=require("webpack");
 var path=require("path");
 var autoprefixer=require("autoprefixer");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var node_modules_dir=path.resolve(__dirname,"node_modules");
 var pathToReact=path.resolve(node_modules_dir,"react/dist/react.min.js");
 var pathToReactDOM=path.resolve(node_modules_dir,"react-dom/dist/react-dom.min.js");
@@ -18,11 +20,12 @@ const AUTOPREFIXER_BROWSERS = [
 
 module.exports={
     entry:{//对应要运行的命令是：webpack-dev-sever --inline --hot
-        app:path.resolve(__dirname,"app.js")
+        app:path.resolve(__dirname,"app.js"),
+        vendor:["react","react-dom","react-router"] //基于类库代码的变动性和浏览器缓存策略，将外部提供的类库提取出来整合一个chunk
     },
     output:{
         path:path.resolve(__dirname,"dist"),
-        filename:"[name].bundle.js"
+        filename:"[name].[chunkhash:8].bundle.js"
     },
     module:{
         loaders:[
@@ -45,7 +48,7 @@ module.exports={
             },
             {
                 test:/\.scss$/,
-                loader:"style-loader!css-loader!postcss-loader!sass-loader"
+                loader:ExtractTextPlugin.extract("style-loader","css-loader!postcss-loader!sass-loader")
             },
             {
                 test:/\.(png|jpg|woff|svg|ttf)$/,
@@ -56,6 +59,18 @@ module.exports={
     },
     postcss: [ autoprefixer({ browsers: AUTOPREFIXER_BROWSERS }) ],//使用postcss的插件autoprefixer来给css属性添加浏览器前缀
     plugins:[
-        new ExtractTextPlugin("[name].css")
+        new ExtractTextPlugin("[name].[chunkhash:8].css"),
+        new webpack.optimize.CommonsChunkPlugin("vendor","vendor.[chunkhash:8].bundle.js"),
+        new webpack.optimize.UglifyJsPlugin({//压缩
+            compress:{
+                warnings:false
+            }
+        }),
+        new HtmlWebpackPlugin({
+            filename:"index.html",
+            template:path.resolve(__dirname,"index.html"),
+            inject:true,
+            chunks:["app","vendor"]
+        })
     ]
 }

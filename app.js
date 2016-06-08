@@ -17,7 +17,7 @@ import TabBar from "./src/js/UIComponents/TabBar";
 import View from "./src/js/UIComponents/View";
 
 
-import * as Pages from './src/js/pages';
+import * as Pages from './src/js/pages/index';
 console.log("Pages:",Pages);
 
 // 解构赋值
@@ -26,8 +26,9 @@ let {
   ...Components
   } = Pages;
 
+//页面中文名字的映射
 let pageNameMap={
-    "Index":"首页",
+    "Home":"首页",
     "ProductList":"理财计划",
     "UserHome":"用户中心"
 }
@@ -44,9 +45,10 @@ const App = React.createClass({
     let transition = children.props.transition || 'sfr';
 
     return (
-      <Container direction="column" id="sk-container">
+      <Container direction="column" id="sk-container" >
         <Container
           transition={transition}
+          scrollable={true} fill={false}
         >
           {React.cloneElement(children, {key: location.key})}
         </Container>
@@ -59,7 +61,7 @@ const App = React.createClass({
             title="首页"
             icon="star"
             selected={params.component === 'index'}
-            to="/index"
+            to="/home"
           />
           <TabBar.Item
             component={Link}
