@@ -16,24 +16,25 @@ import Group from "../UIComponents/Group";
 import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
 
+
 //默认登录页面:Default component
  let Default=React.createClass({
     handleLogin(){
         let account=this.refs.account.getValue();
         let password=this.refs.password.getValue();
         //if( account !== "13682330541" || password !== "123456" ){
-        //    this.refs.modal.open();
+        //    this.refs.alertModal.open();
         //}else {
         //    //'props.history' and 'context.history' had been deprecated. please use 'context.router'
         //    // method pushState had been deprecated.please use push instead
         //    this.props.history.pushState(null,"/home");
         //}
-        console.log("handleLogin");
+        //console.log("handleLogin");
         DefaultAction.login(account,password);
 
     },
     handleCloseModal(){
-        this.refs.modal.close();
+        this.refs.alertModal.close();
     },
     render (){
         return (
@@ -43,8 +44,11 @@ import Col from "../UIComponents/Col";
                     title="登录"
                 />
                 <Container scrollable>
+                    <div className="flex-container">
+                        <div style={{width:"100px",height:"80px",background:"red",marginRight:"50px"}}></div>
+                        <div style={{width:"100px",height:"80px",background:"red"}}></div>
+                    </div>
                     <div style={{marginTop:"80px"}}>
-                        <h6><span className="sam-test">这个字应该是红色的，字体大小24px</span></h6>
                         <List>
                             <List.Item
                                 media={<Icon name="person" />}
@@ -66,7 +70,7 @@ import Col from "../UIComponents/Col";
                         <Button amStyle="primary" block radius={true} onClick={this.handleLogin}>登录</Button>
                     </div>
                     <Modal
-                        ref="modal"
+                        ref="alertModal"
                         isOpen={false}
                         role="alert"
                         onAction={this.handleCloseModal}
@@ -78,9 +82,15 @@ import Col from "../UIComponents/Col";
         )
     },
     componentDidMount(){
+        console.log("into componentDidMount,this refs:",this.refs);
+        var alertModal=this.refs.alertModal;
         DefaultStore.bind("loginFailed",function(){
-            console.log("into loanPurchaseZoneStore change callback")
-            this.refs.modal.open();
+            console.log("this:",this);
+            alertModal.open();
+        }.bind(this));
+
+        DefaultStore.bind("loginSuccess",function(){
+            this.props.history.pushState(null,"/home");
         }.bind(this));
     }
 });

@@ -41,7 +41,6 @@ const App = React.createClass({
       children,
       ...props
       } = this.props;
-    console.log("this.props:",this.props);
     let transition = children.props.transition || 'sfr';
 
     return (
