@@ -1,4 +1,9 @@
 import React from "react";
+import {
+    Link
+} from 'react-router';
+
+//ui component
 import Container from "../UIComponents/Container";
 import View from "../UIComponents/View";
 import NavBar from "../UIComponents/NavBar";
@@ -16,7 +21,7 @@ import Col from "../UIComponents/Col";
 let Home=React.createClass({
     render(){
         return (
-            <Container scrollable={true}>
+            <Container scrollable={false} style={{overflow:"scroll"}} >
 
                 <Slider>
                     <Slider.Item>
@@ -42,20 +47,22 @@ let Home=React.createClass({
                         </Col>
                     </Grid>
                 </Group>
-                <Group>
-                    <h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>天天赚</h6>
-                    <Grid collapse={true}>
-                        <Col cols={3} style={{borderRight:"1px solid #ececec"}}>
-                            <div className="text-center">9.5%</div>
-                            <div className="text-center" style={{color:"#999",fontSize:"12px"}}>年化收益</div>
-                        </Col>
-                        <Col cols={3}>
-                            <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>投资期限</span> 1个月</div>
-                            <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>可投金额</span> 0.35万</div>
-                        </Col>
-                    </Grid>
-                </Group>
 
+                <Link to="/productList">
+                    <Group>
+                        <h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>天天赚</h6>
+                        <Grid collapse={true}>
+                            <Col cols={3} style={{borderRight:"1px solid #ececec"}}>
+                                <div className="text-center">9.5%</div>
+                                <div className="text-center" style={{color:"#999",fontSize:"12px"}}>年化收益</div>
+                            </Col>
+                            <Col cols={3}>
+                                <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>投资期限</span> 1个月</div>
+                                <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>可投金额</span> 0.35万</div>
+                            </Col>
+                        </Grid>
+                    </Group>
+                </Link>
                 <Group>
                     <h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>季季赚</h6>
                     <Grid collapse={true}>

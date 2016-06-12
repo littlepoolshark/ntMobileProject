@@ -3,6 +3,10 @@ var DefaultAction=require("../actions/DefaultAction.js");
 var DefaultStore=require("../stores/DefaultStore.js");
 
 import React from "react";
+//import {
+//    RouterContext
+//} from 'react-router';
+
 import Container from "../UIComponents/Container";
 import View from "../UIComponents/View";
 import NavBar from "../UIComponents/NavBar";
@@ -22,14 +26,6 @@ import Col from "../UIComponents/Col";
     handleLogin(){
         let account=this.refs.account.getValue();
         let password=this.refs.password.getValue();
-        //if( account !== "13682330541" || password !== "123456" ){
-        //    this.refs.alertModal.open();
-        //}else {
-        //    //'props.history' and 'context.history' had been deprecated. please use 'context.router'
-        //    // method pushState had been deprecated.please use push instead
-        //    this.props.history.pushState(null,"/home");
-        //}
-        //console.log("handleLogin");
         DefaultAction.login(account,password);
 
     },
@@ -43,7 +39,7 @@ import Col from "../UIComponents/Col";
                     amStyle="primary"
                     title="登录"
                 />
-                <Container scrollable>
+                <Container >
                     <div className="flex-container">
                         <div style={{width:"100px",height:"80px",background:"red",marginRight:"50px"}}></div>
                         <div style={{width:"100px",height:"80px",background:"red"}}></div>
@@ -83,7 +79,9 @@ import Col from "../UIComponents/Col";
     },
     componentDidMount(){
         console.log("into componentDidMount,this refs:",this.refs);
+        var _self=this;
         var alertModal=this.refs.alertModal;
+
         DefaultStore.bind("loginFailed",function(){
             console.log("this:",this);
             alertModal.open();
