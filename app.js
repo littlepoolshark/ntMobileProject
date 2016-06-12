@@ -93,6 +93,10 @@ const NotFound = React.createClass({
 });
 
 const Page = React.createClass({
+  handleNavBack(item,event){
+    event.preventDefault();
+    window.history.back();
+  },
   render() {
     let component = this.props.params.componentName;
 
@@ -102,10 +106,9 @@ const Page = React.createClass({
 
     let Component = Components[component] || NotFound;
     let backNav = {
-      component: Link,
+      component:"span",
       icon: 'left-nav',
-      title: '返回',
-      to: '/',
+      title: '返回'
     };
 
     return (
@@ -116,6 +119,7 @@ const Page = React.createClass({
           title={pageNameMap[component]}
           leftNav={[backNav]}
           amStyle="primary"
+          onAction={this.handleNavBack}
         />
         <Component scrollable className="sk-demos" />
       </View>
