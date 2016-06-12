@@ -18,7 +18,6 @@ import View from "./src/js/UIComponents/View";
 
 
 import * as Pages from './src/js/pages/index';
-console.log("Pages:",Pages);
 
 // 解构赋值
 let {
@@ -27,7 +26,7 @@ let {
   } = Pages;
 
 //页面中文名字的映射
-let pageNameMap={
+const pageNameMap={
     "Home":"首页",
     "ProductList":"理财计划",
     "UserHome":"用户中心"
@@ -58,21 +57,21 @@ const App = React.createClass({
             component={Link}
             title="首页"
             icon="star"
-            selected={params.component === 'index'}
+            selected={params.componentName === 'index'}
             to="/home"
           />
           <TabBar.Item
             component={Link}
             title="理财"
             icon="list"
-            selected={params.component === 'productList'}
+            selected={params.componentName === 'productList'}
             to="/productList"
           />
           <TabBar.Item
             component={Link}
             icon="person"
             title="我的"
-            selected={params.component === 'userHome'}
+            selected={params.componentName === 'userHome'}
             to="/UserHome"
           />
         </TabBar>
@@ -93,7 +92,7 @@ const NotFound = React.createClass({
   }
 });
 
-const Detail = React.createClass({
+const Page = React.createClass({
   render() {
     let component = this.props.params.componentName;
 
@@ -127,7 +126,7 @@ const Detail = React.createClass({
 const routes = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <Route path=":componentName" component={Detail} />
+      <Route path=":componentName" component={Page} />
       <IndexRoute component={Default} />
     </Route>
   </Router>
