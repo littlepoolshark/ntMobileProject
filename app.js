@@ -2,6 +2,7 @@ require("./src/scss/amazeui.touch.scss");
 require("./src/css/test.css");
 import React from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
 import {
   Router,
   Route,
@@ -111,6 +112,10 @@ const Page = React.createClass({
       title: '返回'
     };
 
+    let navBarClass=classNames({
+      "hide":component === "Home" ? true : false
+    });
+
     return (
       <View
         id="sk-detail"
@@ -120,6 +125,7 @@ const Page = React.createClass({
           leftNav={[backNav]}
           amStyle="primary"
           onAction={this.handleNavBack}
+          className={navBarClass}
         />
         <Component scrollable className="sk-demos" />
       </View>

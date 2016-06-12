@@ -146,6 +146,14 @@ $am-dimensions: (null, h, v, top, right, bottom, left) !default;
   }
 }
 
+//show and hide
+.hide {
+  display:none !important;
+}
+.show {
+  display:block !important;
+}
+
 // CSS transition helpers
 // Used by CollapseMixin
 // -----------------------------------------------------------------------------
