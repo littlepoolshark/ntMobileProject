@@ -1,0 +1,42 @@
+
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+.login-Container {
+    width:100%;
+    height:100%;
+    padding:rem-calc(60) rem-calc(26) 0;
+    background: url("../../img/login_bg.png") 0 0 no-repeat;
+    background-size:cover;
+    position:relative;
+}
+img.login-ntLogo {
+    width:rem-calc(184);
+    height:auto;
+}
+#login-form {
+    margin-top:rem-calc(40);
+    margin-bottom:rem-calc(10);
+    padding: 0;
+    background:transparent;
+
+    & > li {
+        padding:0;
+    }
+    .item-input input {
+        padding:rem-calc(21) 0;
+        background:transparent;
+    }
+}
+.loginBtn-wrapper {
+    margin-top:rem-calc(30);
+}
+.registerBtn-wrapper {
+    width:100%;
+    margin-top:rem-calc(100);
+    color:#626566;
+}
+

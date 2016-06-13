@@ -1,5 +1,5 @@
 require("./src/scss/amazeui.touch.scss");
-require("./src/css/test.css");
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
@@ -33,6 +33,11 @@ const pageNameMap={
     "UserHome":"用户中心"
 }
 
+//不需要显示navBar的页面
+let noNavBarPage=["Home","UserHome"];
+//需要显示tabBar的页面
+let hasTabBarPage=["home","productList","userHome"];
+
 const App = React.createClass({
   render() {
     let {
@@ -42,6 +47,9 @@ const App = React.createClass({
       ...props
       } = this.props;
     let transition = children.props.transition || 'sfr';
+    let tabBarClass= classNames({
+        hide:hasTabBarPage.indexOf(params.componentName) > -1 ? false :true
+    })
 
     return (
       <Container direction="column" id="sk-container" >
@@ -53,12 +61,13 @@ const App = React.createClass({
 
         <TabBar
           amStyle="primary"
+          className={tabBarClass}
         >
           <TabBar.Item
             component={Link}
             title="首页"
             icon="star"
-            selected={params.componentName === 'index'}
+            selected={params.componentName === 'home'}
             to="/home"
           />
           <TabBar.Item
@@ -73,22 +82,10 @@ const App = React.createClass({
             icon="person"
             title="我的"
             selected={params.componentName === 'userHome'}
-            to="/UserHome"
+            to="/userHome"
           />
         </TabBar>
       </Container>
-    );
-  }
-});
-
-const NotFound = React.createClass({
-  render() {
-    return (
-      <Group
-        header="404"
-      >
-        <h2>Not found.</h2>
-      </Group>
     );
   }
 });
@@ -106,23 +103,21 @@ const Page = React.createClass({
     }
 
     let Component = Components[component] || NotFound;
-    let backNav = {
-      component:"span",
-      icon: 'left-nav',
-      title: '返回'
-    };
+    //let backNav = {
+    //  component:"span",
+    //  icon: 'left-nav',
+    //  title: '返回'
+    //};
 
     let navBarClass=classNames({
-      "hide":component === "Home" ? true : false
+      "hide":noNavBarPage.indexOf(component) > -1 ? true : false
     });
 
     return (
-      <View
-        id="sk-detail"
-      >
+      <View>
         <NavBar
           title={pageNameMap[component]}
-          leftNav={[backNav]}
+          leftNav={[]}
           amStyle="primary"
           onAction={this.handleNavBack}
           className={navBarClass}
@@ -131,6 +126,19 @@ const Page = React.createClass({
       </View>
     );
   }
+});
+
+
+const NotFound = React.createClass({
+    render() {
+        return (
+            <Group
+                header="404"
+            >
+                <h2>Not found.</h2>
+            </Group>
+        );
+    }
 });
 
 const routes = (

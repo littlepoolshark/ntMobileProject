@@ -154,6 +154,12 @@ $am-dimensions: (null, h, v, top, right, bottom, left) !default;
   display:block !important;
 }
 
+//Responsive img
+img.responsive {
+  max-width:100%;
+  height:auto;
+}
+
 // CSS transition helpers
 // Used by CollapseMixin
 // -----------------------------------------------------------------------------

@@ -1,0 +1,26 @@
+.msg-box-wrapper {
+  width:100%;
+  height:rem-calc(40);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:absolute;
+  bottom:rem-calc(100);
+  left:0;
+  opacity:0;
+  transition:opacity 2s ease-in-out ;
+}
+.msg-box {
+  width:auto;
+  height:rem-calc(40);
+  padding:0 rem-calc(15);
+  line-height:rem-calc(40);
+  text-align:center;
+  color:#fff;
+  background:#000;
+  opacity:0.5;
+  border-radius:rem-calc(25);
+}
+.msg-hide {
+  opacity:0;
+}

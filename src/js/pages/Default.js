@@ -1,11 +1,12 @@
-require("../../css/test.css");
+require("../../scss/page/login.scss");
 var DefaultAction=require("../actions/DefaultAction.js");
 var DefaultStore=require("../stores/DefaultStore.js");
 
 import React from "react";
-//import {
-//    RouterContext
-//} from 'react-router';
+import ReactDOM from "react-dom";
+import {
+    Link
+} from 'react-router';
 
 import Container from "../UIComponents/Container";
 import View from "../UIComponents/View";
@@ -19,7 +20,7 @@ import Slider from "../UIComponents/Slider";
 import Group from "../UIComponents/Group";
 import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
-
+import Message from "../UIComponents/Message";
 
 //默认登录页面:Default component
  let Default=React.createClass({
@@ -34,37 +35,32 @@ import Col from "../UIComponents/Col";
     },
     render (){
         return (
-            <View id="app-index">
-                <NavBar
-                    amStyle="primary"
-                    title="登录"
-                />
-                <Container >
-                    <div className="flex-container">
-                        <div style={{width:"100px",height:"80px",background:"red",marginRight:"50px"}}></div>
-                        <div style={{width:"100px",height:"80px",background:"red"}}></div>
+                <Container className="login-Container" {...this.props}>
+                    <div className="text-center"><img src="./src/img/login_logo.png" alt="" className="login-ntLogo"/></div>
+                    <List id="login-form">
+                        <List.Item
+                            media={<Icon name="person" />}
+                            nested="input"
+                        >
+                            <Field type="text" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
+                        </List.Item>
+                        <List.Item
+                            media={<Icon name="info" />}
+                            nested="input"
+                        >
+                            <Field type="text" label={null} placeholder="请输入您的登录密码" ref="password"></Field>
+                        </List.Item>
+                    </List>
+                    <div className="cf">
+                        <Link to="getBackPassword" className="fr">忘记密码？</Link>
                     </div>
-                    <div style={{marginTop:"80px"}}>
-                        <List>
-                            <List.Item
-                                media={<Icon name="person" />}
-                                nested="input"
-                            >
-                                <Field type="text" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
-                            </List.Item>
-
-                            <List.Item
-                                media={<Icon name="info" />}
-                                nested="input"
-                            >
-                                <Field type="text" label={null} placeholder="请输入您的登录密码" ref="password"></Field>
-                            </List.Item>
-
-                        </List>
-                    </div>
-                    <div style={{padding:"10px",marginTop:"50px"}}>
+                    <div className="loginBtn-wrapper" >
                         <Button amStyle="primary" block radius={true} onClick={this.handleLogin}>登录</Button>
                     </div>
+                    <div className="registerBtn-wrapper text-center">
+                        没有账号？<Link to="register">立即注册</Link>
+                    </div>
+                    <div id="msgContainer"></div>
                     <Modal
                         ref="alertModal"
                         isOpen={false}
@@ -74,17 +70,20 @@ import Col from "../UIComponents/Col";
                         请输入你正确的账号和密码！
                     </Modal>
                 </Container>
-            </View>
         )
     },
     componentDidMount(){
-        console.log("into componentDidMount,this refs:",this.refs);
+        //console.log("into componentDidMount,this refs:",this.refs);
         var _self=this;
         var alertModal=this.refs.alertModal;
+        var msgBox=this.refs.msgBox;
+        console.log("msgBox:",msgBox);
 
-        DefaultStore.bind("loginFailed",function(){
-            console.log("this:",this);
-            alertModal.open();
+        DefaultStore.bind("loginFailed",function(msg){
+            //alertModal.open();
+            //alert(msg);
+            //msgBox.style.opacity=0;
+            ReactDOM.render(<Message>您的密码错误，您还有8次机会！</Message>,document.getElementById("msgContainer"));
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
