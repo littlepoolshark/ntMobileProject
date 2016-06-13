@@ -3,22 +3,39 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 import classNames from 'classnames';
 
 const Message=React.createClass({
+    getInitialState(){
+        return {
+            "hide":true,
+            "msg":""
+        }
+    },
+    broadcast(msg){
+        this.setState({
+            "hide":false,
+            msg:msg
+        })
+    },
     render(){
+        let msgBoxClasses=classNames({"msg-hide":this.state.hide},{"msg-box-wrapper":true});
         return (
-            <div className="msg-box-wrapper" ref="msgBox">
+            <div className={msgBoxClasses} ref="msgBox">
                 <div className="msg-box">
-                    {this.props.children}
+                    {this.state.msg}
                 </div>
             </div>
 
         )
     },
-    componentDidMount(){
-        this.refs.msgBox.style.opacity=1;
-        setTimeout(function(){
-            this.refs.msgBox.style.opacity=0;
-            React.unmountComponentAtNode(document.getElementById("msgContainer"));
-        }.bind(this),2000)
+    componentDidUpdate(){
+        this.refs.msgBox.addEventListener("webkitTransitionEnd", function(){
+            alert("into transitionEnd")
+            setTimeout(function(){
+                this.setState({
+                    "hide":true
+                })
+            }.bind(this),4000)
+        }.bind(this));
+
     }
 });
 

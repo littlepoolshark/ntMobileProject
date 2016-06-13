@@ -60,7 +60,7 @@ import Message from "../UIComponents/Message";
                     <div className="registerBtn-wrapper text-center">
                         没有账号？<Link to="register">立即注册</Link>
                     </div>
-                    <div id="msgContainer"></div>
+                    <Message ref="msgBox"></Message>
                     <Modal
                         ref="alertModal"
                         isOpen={false}
@@ -83,7 +83,9 @@ import Message from "../UIComponents/Message";
             //alertModal.open();
             //alert(msg);
             //msgBox.style.opacity=0;
-            ReactDOM.render(<Message>您的密码错误，您还有8次机会！</Message>,document.getElementById("msgContainer"));
+            //ReactDOM.render(<Message>您的密码错误，您还有8次机会！</Message>,document.getElementById("msgContainer"));
+
+            msgBox.broadcast("您的密码错误，您还有8次机会！");
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
