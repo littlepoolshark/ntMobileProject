@@ -15,6 +15,7 @@ const Field = React.createClass({
     btnAfter: React.PropTypes.node,
     labelBefore: React.PropTypes.node,
     labelAfter: React.PropTypes.node,
+    inputAfter:React.PropTypes.node
   },
 
   getDefaultProps() {
@@ -101,6 +102,8 @@ const Field = React.createClass({
       ...commonProps,
     };
 
+
+
     switch (this.props.type) {
       case 'select':
         field = (
@@ -156,6 +159,7 @@ const Field = React.createClass({
           {this.props.label}
         </span>
         {children}
+        {this.props.inputAfter || null}
         {this.isCheckboxOrRadio() ? (
           <Icon
             className={this.prefixClass('icon')}

@@ -147,6 +147,16 @@
     align-items: center;
     flex: 1;
     margin: 0;
+
+    .getVerificationcode-btn {
+      padding-left:rem-calc(15);
+      font-size:rem-calc(14);
+      border-left:1px solid #ddd;
+      text-decoration: none;
+    }
+    .getVerificationcode-btn.disabled  span{
+      color:#c2c2c2;
+    }
   }
 }
 
@@ -155,7 +165,7 @@
 
   .#{$field-prefix}-label {
     @include fixes-flexbox-for-andriod;
-    width: 35%;
+    width: 30%;
   }
 
   input,

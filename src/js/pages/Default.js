@@ -3,7 +3,6 @@ var DefaultAction=require("../actions/DefaultAction.js");
 var DefaultStore=require("../stores/DefaultStore.js");
 
 import React from "react";
-import ReactDOM from "react-dom";
 import {
     Link
 } from 'react-router';
@@ -42,7 +41,7 @@ import Message from "../UIComponents/Message";
                             media={<Icon name="person" />}
                             nested="input"
                         >
-                            <Field type="text" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
+                            <Field type="number" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
                         </List.Item>
                         <List.Item
                             media={<Icon name="info" />}

@@ -10,7 +10,7 @@
 $namespace: null !default;
 
 // This sets 1rem to be 14px
-$rem-base: 14px;
+$rem-base: 16px;
 
 // The default font-size is set to 100% of the browser style sheet (usually 16px)
 // for compatibility with browser-based text zoom or user-set defaults.
@@ -18,7 +18,7 @@ $rem-base: 14px;
 // Since the typical default browser font-size is 16px, that makes the calculation for grid size.
 // If you want your base font-size to be different and not have it affect the grid breakpoints,
 // set $rem-base to $base-font-size and make sure $base-font-size is a px value.
-$base-font-size: 14px !default;
+$base-font-size: 16px !default;
 
 // $base-line-height is 24px while $base-font-size is 16px
 $base-line-height: 1.5 !default;

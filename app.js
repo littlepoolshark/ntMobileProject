@@ -30,7 +30,8 @@ let {
 const pageNameMap={
     "Home":"首页",
     "ProductList":"理财计划",
-    "UserHome":"用户中心"
+    "UserHome":"用户中心",
+    "GetBackPassword":"找回登录密码"
 }
 
 //不需要显示navBar的页面
@@ -103,11 +104,11 @@ const Page = React.createClass({
     }
 
     let Component = Components[component] || NotFound;
-    //let backNav = {
-    //  component:"span",
-    //  icon: 'left-nav',
-    //  title: '返回'
-    //};
+    let backNav = {
+      component:"a",
+      icon: 'left-nav',
+      title: '返回'
+    };
 
     let navBarClass=classNames({
       "hide":noNavBarPage.indexOf(component) > -1 ? true : false
@@ -117,12 +118,12 @@ const Page = React.createClass({
       <View>
         <NavBar
           title={pageNameMap[component]}
-          leftNav={[]}
+          leftNav={[backNav]}
           amStyle="primary"
           onAction={this.handleNavBack}
           className={navBarClass}
         />
-        <Component scrollable className="sk-demos" />
+        <Component scrollable  />
       </View>
     );
   }
