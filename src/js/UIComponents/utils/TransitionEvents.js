@@ -84,7 +84,7 @@ if (support.animationend) {
 // so we should be A-OK here.
 
 function addEventListener(node, eventName, eventListener) {
-  node.addEventListener(eventName, eventListener, false);
+  node.addEventListener(eventName, eventListener, false);//会监听冒泡事件
 }
 
 function removeEventListener(node, eventName, eventListener) {

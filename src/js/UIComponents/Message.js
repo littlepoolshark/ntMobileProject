@@ -1,5 +1,6 @@
 import React from 'react';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
+import TransitionEvent from './utils/TransitionEvents';
 import classNames from 'classnames';
 
 const Message=React.createClass({
@@ -27,15 +28,15 @@ const Message=React.createClass({
         )
     },
     componentDidUpdate(){
-        this.refs.msgBox.addEventListener("webkitTransitionEnd", function(){
-            alert("into transitionEnd")
-            setTimeout(function(){
-                this.setState({
-                    "hide":true
-                })
-            }.bind(this),4000)
+        TransitionEvent.on(this.refs.msgBox,function(){
+            if(this.state.hide !== true){
+                setTimeout(function(){
+                    this.setState({
+                        "hide":true
+                    })
+                }.bind(this),2000)
+            }
         }.bind(this));
-
     }
 });
 

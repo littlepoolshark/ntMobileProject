@@ -73,19 +73,12 @@ import Message from "../UIComponents/Message";
         )
     },
     componentDidMount(){
-        //console.log("into componentDidMount,this refs:",this.refs);
         var _self=this;
         var alertModal=this.refs.alertModal;
         var msgBox=this.refs.msgBox;
-        console.log("msgBox:",msgBox);
 
         DefaultStore.bind("loginFailed",function(msg){
-            //alertModal.open();
-            //alert(msg);
-            //msgBox.style.opacity=0;
-            //ReactDOM.render(<Message>您的密码错误，您还有8次机会！</Message>,document.getElementById("msgContainer"));
-
-            msgBox.broadcast("您的密码错误，您还有8次机会！");
+            msgBox.broadcast(msg);
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
