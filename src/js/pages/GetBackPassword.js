@@ -1,5 +1,5 @@
-//var DefaultAction=require("../actions/DefaultAction.js");
-//var DefaultStore=require("../stores/DefaultStore.js");
+let GetBackPasswordAction=require("../actions/GetBackPasswordAction.js");
+let GetBackPasswordStore=require("../stores/GetBackPasswordStore.js");
 
 import React from "react";
 import {
@@ -14,61 +14,18 @@ import List from "../UIComponents/List";
 import Icon from "../UIComponents/Icon";
 import Group from "../UIComponents/Group";
 import Message from "../UIComponents/Message";
-
-//发送短信验证码
-const COUNT_DOWN__DURATION=60;//倒数多少秒
-
-let MobileVerificationCode=React.createClass({
-    getInitialState(){
-        return {
-            active:true,
-            remainSeconds:COUNT_DOWN__DURATION
-        }
-    },
-    _handleClick(){
-        if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test("136823305411")){
-            this.props.onAction();
-        } else if(this.state.active){
-            this._countDown();
-        }else {
-            return false;
-        }
-    },
-    _countDown(){
-        this.timer=setInterval(function(){
-            if(this.state.remainSeconds > 1){
-                this.setState({
-                    active:false,
-                    remainSeconds:this.state.remainSeconds - 1
-                })
-            }else {
-                clearInterval(this.timer);
-                this.setState({
-                    active:true,
-                    remainSeconds:COUNT_DOWN__DURATION
-                })
-
-            }
-
-        }.bind(this),1000);
-    },
-    render(){
-        let classes=classNames({
-            "disabled":!this.state.active,
-            "getVerificationcode-btn":true
-        });
-        let btnText=this.state.active ? "发送验证码" : (<span>{this.state.remainSeconds}秒后重发</span>)  ;
-        return (
-            <a href="javascript:void(0)" className={classes} onClick={this._handleClick}>{btnText}</a>
-        )
-    }
-});
+import MobileVerificationCode from "../UIComponents/MobileVerificationCode";
 
 
 //找回密码页面
 let GetBackPassword=React.createClass({
-    _handleWrongPhoneNo(){
-        this.refs.msgBox.broadcast("手机格式不对，请检查！");
+    _getPhoneNo(){
+        return this.refs.phoneNo.getValue();
+    },
+    _submitVerificationCode(){
+        let verificationCode=this.refs.verificationCode.getValue();
+        let idCardNo=this.refs.idCardNo.getValue();
+        GetBackPasswordAction.submitVerificationCode(verificationCode,idCardNo);
     },
     render (){
         return (
@@ -92,7 +49,7 @@ let GetBackPassword=React.createClass({
                                 label="验证码"
                                 placeholder="请输入验证码"
                                 ref="verificationCode"
-                                inputAfter={ <MobileVerificationCode onAction={this._handleWrongPhoneNo}/>}
+                                inputAfter={ <MobileVerificationCode phoneNo={this._getPhoneNo}/>}
                             >
 
                             </Field>
@@ -113,11 +70,21 @@ let GetBackPassword=React.createClass({
                     </List>
                 </Group>
                 <div className="" style={{padding:"0 0.9375rem"}}>
-                    <Button amStyle="primary" block radius={true} onClick={this.handleLogin}>提交</Button>
+                    <Button amStyle="primary" block radius={true} onClick={this._submitVerificationCode}>提交</Button>
                 </div>
-                <Message ref="msgBox"></Message>
             </Container>
         )
+    },
+    componentDidMount(){
+        console.log("this.props.history:",this.props.history);
+        GetBackPasswordStore.bind("submitSuccess",function(msg){
+            console.log("this.props.history:",this.props.history);
+            this.props.history.pushState(null,"/setNewPassword");
+        }.bind(this));
+
+        GetBackPasswordStore.bind("submitFailed",function(msg){
+            Message.broadcast(msg);
+        }.bind(this));
     }
 });
 

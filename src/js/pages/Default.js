@@ -8,17 +8,12 @@ import {
 } from 'react-router';
 
 import Container from "../UIComponents/Container";
-import View from "../UIComponents/View";
-import NavBar from "../UIComponents/NavBar";
 import Button from "../UIComponents/Button";
 import Field from "../UIComponents/Field";
 import List from "../UIComponents/List";
 import Icon from "../UIComponents/Icon";
 import Modal from "../UIComponents/modal/Modal";
-import Slider from "../UIComponents/Slider";
 import Group from "../UIComponents/Group";
-import Grid from "../UIComponents/Grid";
-import Col from "../UIComponents/Col";
 import Message from "../UIComponents/Message";
 
 //默认登录页面:Default component
@@ -59,7 +54,6 @@ import Message from "../UIComponents/Message";
                     <div className="registerBtn-wrapper text-center">
                         没有账号？<Link to="register">立即注册</Link>
                     </div>
-                    <Message ref="msgBox"></Message>
                     <Modal
                         ref="alertModal"
                         isOpen={false}
@@ -74,10 +68,9 @@ import Message from "../UIComponents/Message";
     componentDidMount(){
         var _self=this;
         var alertModal=this.refs.alertModal;
-        var msgBox=this.refs.msgBox;
 
         DefaultStore.bind("loginFailed",function(msg){
-            msgBox.broadcast(msg);
+            Message.broadcast(msg);
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){

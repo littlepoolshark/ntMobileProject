@@ -3,6 +3,7 @@ export Home from './Home';
 export ProductList from './ProductList';
 export UserHome from './UserHome';
 export GetBackPassword from './GetBackPassword';
+export SetNewPassword from './SetNewPassword';
 
 
 

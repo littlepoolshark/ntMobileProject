@@ -31,7 +31,8 @@ const pageNameMap={
     "Home":"首页",
     "ProductList":"理财计划",
     "UserHome":"用户中心",
-    "GetBackPassword":"找回登录密码"
+    "GetBackPassword":"找回登录密码",
+    "SetNewPassword":"设置登录密码"
 }
 
 //不需要显示navBar的页面
@@ -123,7 +124,7 @@ const Page = React.createClass({
           onAction={this.handleNavBack}
           className={navBarClass}
         />
-        <Component scrollable  />
+        <Component scrollable  history={this.props.history}/>
       </View>
     );
   }

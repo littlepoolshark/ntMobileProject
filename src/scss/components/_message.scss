@@ -7,6 +7,7 @@
   position:absolute;
   bottom:rem-calc(100);
   left:0;
+  opacity:1;
   /*这里的transition-property不能为“all”，因为webkitTransitionEnd事件将在元素的每个css属性发生改变之后触发一次*/
   transition:opacity 1s ease-in-out ;
 }

@@ -9,10 +9,10 @@ var ajax=function(options){
 
     xhr.onreadystatechange=function(){
         if(xhr.readyState === 4 && xhr.status === 200){
-            options.success(xhr.responseText);
+            options.success(JSON.parse(xhr.responseText));
         }
     }
-    xhr.open(options.method || "GET",options.url,false);
+    xhr.open(options.method || "GET",options.url,!options.sync || true);
     xhr.setRequestHeader("content-type","application/json");
     xhr.send(options.data || null);
 }

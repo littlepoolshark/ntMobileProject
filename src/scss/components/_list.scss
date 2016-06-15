@@ -166,6 +166,12 @@
   .#{$field-prefix}-label {
     @include fixes-flexbox-for-andriod;
     width: 30%;
+
+    @media screen and (max-width: 320px){
+      & {
+        width:40%;
+      }
+    }
   }
 
   input,

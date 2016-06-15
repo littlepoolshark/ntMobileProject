@@ -22,11 +22,10 @@ appDispatcher.register(function(payload){
                 method:"GET",
                 url:"/mock/login.json",
                 success:function(rs){
-                    var loginResult=JSON.parse(rs);
-                    if(loginResult.success){
+                    if(rs.success){
                         DefaultStore.trigger("loginSuccess");
                     }else {
-                        DefaultStore.trigger("loginFailed",loginResult.msg);
+                        DefaultStore.trigger("loginFailed",rs.msg);
                     }
                 }
             })
