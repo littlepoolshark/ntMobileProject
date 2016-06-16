@@ -36,7 +36,8 @@ const pageNameMap={
 }
 
 //不需要显示navBar的页面
-let noNavBarPage=["Home","UserHome"];
+let noNavBarPage=["Home","UserHome","Register"];
+
 //需要显示tabBar的页面
 let hasTabBarPage=["home","productList","userHome"];
 
@@ -50,7 +51,7 @@ const App = React.createClass({
       } = this.props;
     let transition = children.props.transition || 'sfr';
     let tabBarClass= classNames({
-        hide:hasTabBarPage.indexOf(params.componentName) > -1 ? false :true
+        hide:hasTabBarPage.indexOf(params.componentName) > -1 ? false : true
     })
 
     return (
@@ -58,7 +59,7 @@ const App = React.createClass({
         <Container
           transition={transition}
         >
-          {React.cloneElement(children, {key: location.key})}
+          {React.cloneElement(children, {key: location.key,params:params})}
         </Container>
 
         <TabBar

@@ -6,6 +6,11 @@ import Message from "../UIComponents/Message";
 const COUNT_DOWN__DURATION=60;//倒数多少秒
 
 let MobileVerificationCode=React.createClass({
+    getDefaultProps(){
+        return {
+            autoCountDown:false
+        }
+    },
     getInitialState(){
         return {
             active:true,
@@ -14,6 +19,7 @@ let MobileVerificationCode=React.createClass({
     },
     _handleClick(){
         let phoneNo=this.props.phoneNo();
+        let autoCountDown=this.props.autoCountDown;
         if(phoneNo === ""){
             Message.broadcast("手机号码不能为空，请填写！");
         }else if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(phoneNo)){
@@ -26,9 +32,9 @@ let MobileVerificationCode=React.createClass({
                 sync:false,
                 success:function(rs){
                     if(rs.code === "0001"){
-                        Message.broadcast("手机验证码发送成功！");
+                        !autoCountDown && Message.broadcast("手机验证码发送成功！");
                     }else {
-                        Message.broadcast("手机验证码发送失败！");
+                        !autoCountDown &&Message.broadcast("手机验证码发送失败！");
                     }
 
                 }
@@ -64,6 +70,9 @@ let MobileVerificationCode=React.createClass({
         return (
             <a href="javascript:void(0)" className={classes} onClick={this._handleClick}>{btnText}</a>
         )
+    },
+    componentDidMount(){
+        this.props.autoCountDown && this._handleClick();
     }
 });
 
