@@ -61,7 +61,9 @@ let RegisterView=React.createClass({
         this.refs.modal.close();
     },
     _getVerificationCode(){
-        this.props.history.pushState(null,"/register?phoneNo=13682330541");
+        //this.props.history.pushState(null,"/register?phoneNo=13682330541");
+        let phoneNo=this.refs.account.getValue();
+        DefaultAction.getVerificationCode(phoneNo);
     },
     render(){
         return (
@@ -141,13 +143,20 @@ let RegisterView=React.createClass({
         )
     },
     componentDidMount(){
-        console.log("into Default componentDidMount");
         DefaultStore.bind("loginFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
             this.props.history.pushState(null,"/home");
+        }.bind(this));
+
+        DefaultStore.bind("getVerificationCodeCheckSuccess",function(phoneNo){
+            this.props.history.pushState(null,"register?phoneNo=" + phoneNo);
+        }.bind(this));
+
+        DefaultStore.bind("getVerificationCodeCheckFailed",function(msg){
+            Message.broadcast(msg);
         }.bind(this));
     }
 });

@@ -10,6 +10,14 @@ var DefaultAction={
             }
         })
 
+    },
+    getVerificationCode(phoneNo){
+        appDispatcher.dispatch({
+            actionName:"getVerificationCode",
+            data:{
+                phoneNo:phoneNo
+            }
+        })
     }
 };
 

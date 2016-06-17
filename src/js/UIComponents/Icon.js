@@ -35,7 +35,7 @@ const Icon = React.createClass({
 
     // icon-[iconName]
     classSet[this.prefixClass(name)] = true;
-
+    
     return (
       <Component
         {...props}

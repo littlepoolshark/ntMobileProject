@@ -1,5 +1,5 @@
-//let GetBackPasswordAction=require("../actions/GetBackPasswordAction.js");
-//let GetBackPasswordStore=require("../stores/GetBackPasswordStore.js");
+let registerAction=require("../actions/registerAction.js");
+let registerStore=require("../stores/registerStore.js");
 
 import React from "react";
 import classNames from 'classnames';
@@ -51,6 +51,9 @@ let Register=React.createClass({
     _handleOnDismiss(event){
         this.refs.modal.close();
     },
+    _register(){
+
+    },
     render (){
         let phoneNo=getParamObjFromUrl().phoneNo;
         let backNav = {
@@ -100,7 +103,7 @@ let Register=React.createClass({
                     </List>
                 </Group>
                 <div className="" style={{padding:"0 0.9375rem"}}>
-                    <Button amStyle="primary" block radius={true} onClick={this._submitVerificationCode}>注册</Button>
+                    <Button amStyle="primary" block radius={true} onClick={this._register}>注册</Button>
                 </div>
                 <Modal role="prompt" title=""  ref="modal" onAction={this._handleOnAction} onDismiss={this._handleOnDismiss}>
                     请输入邀请人手机号码或者邀请码
@@ -110,7 +113,13 @@ let Register=React.createClass({
         )
     },
     componentDidMount(){
+        registerStore.bind("registerSuccess",function(){
+            Message.broadcast("您已成功注册！")
+        });
 
+        registerStore.bind("registerFailed",function(msg){
+            Message.broadcast(msg);
+        });
     }
 });
 

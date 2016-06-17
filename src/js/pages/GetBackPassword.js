@@ -77,8 +77,7 @@ let GetBackPassword=React.createClass({
     },
     componentDidMount(){
         GetBackPasswordStore.bind("submitSuccess",function(msg){
-            console.log("this.props.history:",this.props.history);
-            this.props.history.pushState(null,"/setNewPassword");
+            this.props.history.pushState(null,"setNewPassword");
         }.bind(this));
 
         GetBackPasswordStore.bind("submitFailed",function(msg){

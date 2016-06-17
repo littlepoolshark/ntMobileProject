@@ -8,7 +8,7 @@ const COUNT_DOWN__DURATION=60;//倒数多少秒
 let MobileVerificationCode=React.createClass({
     getDefaultProps(){
         return {
-            autoCountDown:false
+            autoCountDown:false//是否自动发送验证码，进入倒计时
         }
     },
     getInitialState(){

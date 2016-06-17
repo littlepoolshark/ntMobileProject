@@ -32,7 +32,6 @@ appDispatcher.register(function(payload){
                     url:"/mock/submitNewPassword.json",
                     success:function(rs){
                         if(rs.success){
-                            console.log("if");
                             SetNewPasswordStore.trigger("submitSuccess");
                         }else {
                             SetNewPasswordStore.trigger("submitFailed",rs.msg);
