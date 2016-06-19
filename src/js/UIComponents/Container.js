@@ -116,6 +116,7 @@ let Container = React.createClass({
     let classSet = this.getClassSet();
 
     // As view transition container
+    // 我将源码中的`view-transition-${transition}`改为"view-transition-"+ transition（有改回去）
     if (transition) {
       return (
         <CSSTransitionGroup

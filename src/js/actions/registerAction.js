@@ -1,12 +1,12 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var RegisterAction={
-    register (account,phoneNo){
+    register (account,password){
         appDispatcher.dispatch({
             actionName:"register",
             data:{
                 account:account,
-                phoneNo:phoneNo
+                password:password
             }
         })
 

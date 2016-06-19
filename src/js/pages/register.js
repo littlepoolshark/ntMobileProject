@@ -52,7 +52,7 @@ let Register=React.createClass({
         this.refs.modal.close();
     },
     _register(){
-
+        registerAction.register(this._getPhoneNo(),this.refs.password.getValue());
     },
     render (){
         let phoneNo=getParamObjFromUrl().phoneNo;
@@ -98,7 +98,7 @@ let Register=React.createClass({
                         <List.Item
                             nested="input"
                         >
-                            <Field type="text" label="登录密码" placeholder="6~20位字符或者数字" ref="phoneNo"></Field>
+                            <Field type="text" label="登录密码" placeholder="6~20位字符或者数字" ref="password"></Field>
                         </List.Item>
                     </List>
                 </Group>

@@ -14,7 +14,7 @@ var DefaultStore={
                 success:false,
                 msg:"账号或者密码不能为空，请填写！"
             }
-        }else if(!this.phoneNoFormatCheck()){
+        }else if(!this.phoneNoFormatCheck(account)){
             validationResult={
                 success:false,
                 msg:"手机号码格式不对，请检查！"
@@ -28,7 +28,7 @@ var DefaultStore={
         return validationResult;
     },
     phoneNoFormatCheck(phoneNo){
-        return /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(phoneNo);
+        return (/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i).test(phoneNo);
     },
     getVerificationCodeCheck(phoneNo){
         let validationResult={
@@ -41,6 +41,7 @@ var DefaultStore={
                 msg:"手机号码不能为空，请填写"
             }
         }else if(!this.phoneNoFormatCheck(phoneNo)){
+            console.log("into else if");
             validationResult={
                 success:false,
                 msg:"手机号码格式不正确，请检查"

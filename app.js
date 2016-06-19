@@ -55,10 +55,8 @@ const App = React.createClass({
     })
 
     return (
-      <Container direction="column" id="sk-container" >
-        <Container
-          transition={transition}
-        >
+      <Container direction="column"  >
+        <Container fill={true}>
           {React.cloneElement(children, {key: location.key,params:params})}
         </Container>
 

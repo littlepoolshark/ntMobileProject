@@ -7,7 +7,7 @@
 // View Container
 .#{$views-prefix} {
   position: relative;
-  flex: 1 1 0;
+  flex: 1 1 0;//flex item property,flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
   @include square(100%);
   overflow: hidden;
 }
