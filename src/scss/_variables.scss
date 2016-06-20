@@ -44,6 +44,32 @@ $global-success: #5eb95e !default;
 $global-warning: #F37B1D !default;
 $global-alert: #dd514c !default;
 
+//ntMobile Colors and Font size
+$C1:$global-primary;
+$C2:#f1f1f1;
+$C3:#333333;
+$C4:#999999;
+$C5:#c2c2c2;
+$C6:#e0e0e0;
+$C7:#e5e5e5;
+$C8:#f7f6f5;
+$C9:#f3c4c1;
+
+$T1:rem-calc(30);
+$T2:rem-calc(37);
+$T3:rem-calc(19);
+$T4:rem-calc(18);
+$T5:rem-calc(17);
+$T6:rem-calc(16);
+$T7:rem-calc(15);
+$T8:rem-calc(14);
+$T9:rem-calc(13);
+$T10:rem-calc(12);
+$T11:rem-calc(11);
+$T12:rem-calc(80);
+$T13:rem-calc(24);
+$T14:rem-calc(43);
+
 // @see http://sassme.arc90.com/
 $gray-darker: lighten($black, 13.5%) !default; // #222
 $gray-dark: lighten($black, 20%) !default;   // #333

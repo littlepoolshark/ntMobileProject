@@ -1,3 +1,4 @@
+require("../../scss/page/Home.scss");
 import React from "react";
 import {
     Link
@@ -37,58 +38,102 @@ let Home=React.createClass({
 
                 <Group header="" noPadded={false} style={{marginTop:0}}>
                     <Grid collapse={true}>
-                        <Col cols={3}>
-                            <div className="text-center">平台介绍</div>
-                            <div className="text-center" style={{color:"#999",fontSize:"12px"}}>上市公司战略投资</div>
+                        <Col cols={3} className="home-introduction-item">
+                            <div className="platform-icon"></div>
+                            <div>
+                                <div className="title">平台介绍</div>
+                                <div className="subtitle">上市公司战略投资</div>
+                            </div>
                         </Col>
-                        <Col cols={3}>
-                            <div className="text-center">邀请有礼</div>
-                            <div className="text-center" style={{color:"#999",fontSize:"12px"}}>一起赚大钱</div>
+                        <Col cols={3} className="home-introduction-item">
+                            <div className="invite-icon"></div>
+                            <div>
+                                <div className="title">邀请有礼</div>
+                                <div className="subtitle" >一起赚大钱</div>
+                            </div>
                         </Col>
                     </Grid>
                 </Group>
 
+                <Group className="home-earnSet-card">
+                    <h6 className="title">
+                        <span className="icon-new"></span>
+                        <span>新手标</span>
+
+                    </h6>
+                    <Grid collapse={true}>
+                        <Col cols={3} className="home-earnSet-card-item">
+                            <div className="text-center yearRate">9.5<span className="unit">%</span></div>
+                            <div className="text-center subtitle" >年化收益</div>
+                        </Col>
+                        <Col cols={3} className="home-earnSet-card-item">
+                            <div className="subtitle">
+                                <div className="subtitle-left">
+                                    <span className="icon-time"></span>
+                                    投资期限
+                                </div>
+                                <div className="subtitle-right">
+                                    <span className="amount">1</span>
+                                    <span className="unit">个月</span>
+                                </div>
+                            </div>
+                            <div className="subtitle" style={{marginTop:"5px"}}>
+                                <div className="subtitle-left">
+                                    <span className="icon-money"></span>
+                                    可投金额
+                                </div>
+                                <div className="subtitle-right">
+                                    <span className="amount">100</span>
+                                    <span className="unit">万</span>
+                                </div>
+                            </div>
+                        </Col>
+                    </Grid>
+                    <div className="newbieLoan-label"></div>
+                </Group>
+
                 <Link to="/productList">
-                    <Group>
-                        <h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>天天赚</h6>
+                    <Group className="home-earnSet-card">
+                        <h6 className="title">
+                            <span className="icon-day"></span>
+                            <span>天天赚</span>
+                            <span className="dailyEarn-label">银行活期的26倍</span>
+                        </h6>
                         <Grid collapse={true}>
-                            <Col cols={3} style={{borderRight:"1px solid #ececec"}}>
-                                <div className="text-center">9.5%</div>
-                                <div className="text-center" style={{color:"#999",fontSize:"12px"}}>年化收益</div>
+                            <Col cols={3} className="home-earnSet-card-item">
+                                <div className="text-center yearRate">8.0<span className="unit">%</span></div>
+                                <div className="text-center subtitle" >年化收益</div>
                             </Col>
-                            <Col cols={3}>
-                                <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>投资期限</span> 1个月</div>
-                                <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>可投金额</span> 0.35万</div>
+                            <Col cols={3} className="home-earnSet-card-item">
+                                <div className="subtitle">
+                                    <div className="subtitle-left">
+                                        <span className="icon-time"></span>
+                                        投资期限
+                                    </div>
+                                    <div className="subtitle-right">
+                                        <span className="amount">活期</span>
+                                    </div>
+                                </div>
+                                <div className="subtitle" style={{marginTop:"5px"}}>
+                                    <div className="subtitle-left">
+                                        <span className="icon-money"></span>
+                                        可投金额
+                                    </div>
+                                    <div className="subtitle-right">
+                                        <span className="amount">100</span>
+                                        <span className="unit">万</span>
+                                    </div>
+
+                                </div>
                             </Col>
                         </Grid>
                     </Group>
                 </Link>
-                <Group>
-                    <h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>季季赚</h6>
-                    <Grid collapse={true}>
-                        <Col cols={3} style={{borderRight:"1px solid #ececec"}}>
-                            <div className="text-center">10.5%</div>
-                            <div className="text-center" style={{color:"#999",fontSize:"12px"}}>年化收益</div>
-                        </Col>
-                        <Col cols={3}>
-                            <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>投资期限</span> 3个月</div>
-                            <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>可投金额</span> 1.35万</div>
-                        </Col>
-                    </Grid>
-                </Group>
-                <Group>
-                    <h6 style={{borderBottom:"1px solid #ececec",paddingBottom:"5px"}}>季季赚</h6>
-                    <Grid collapse={true}>
-                        <Col cols={3} style={{borderRight:"1px solid #ececec"}}>
-                            <div className="text-center">10.5%</div>
-                            <div className="text-center" style={{color:"#999",fontSize:"12px"}}>年化收益</div>
-                        </Col>
-                        <Col cols={3}>
-                            <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>投资期限</span> 3个月</div>
-                            <div className="text-center"><span style={{color:"#999",fontSize:"12px"}}>可投金额</span> 1.35万</div>
-                        </Col>
-                    </Grid>
-                </Group>
+                <div className="home-dashboard">
+                    <p className="title text-center">农泰金融已累计为 <strong>168900</strong>位用户撮合交易金额（元）</p>
+                    <p className="amount text-center">169,806,570</p>
+                    <div className="remark text-center">交易过程阳光保险全程保障</div>
+                </div>
             </Container>
 
 

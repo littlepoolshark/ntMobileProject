@@ -1,0 +1,155 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+
+.home-introduction-item {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+
+  .platform-icon {
+    background:url("../../img/home_icon_platform.png") 0 0 no-repeat;
+  }
+
+  .invite-icon {
+    background:url("../../img/home_icon_invitation.png") 0 0 no-repeat;
+  }
+
+  .platform-icon,
+  .invite-icon {
+    width:rem-calc(40);
+    height:rem-calc(40);
+    margin-right:rem-calc(8);
+    background-size: cover;
+  }
+
+  .subtitle {
+    color:#999;
+    font-size:rem-calc(12);
+  }
+}
+
+.home-earnSet-card {
+  position:relative;
+
+  .title {
+    display:flex;
+    align-items: center;
+    color:$C3;
+    font-size:$T5;
+    font-weight:normal;
+  }
+  .dailyEarn-label {
+    display:inline-block;
+    width:rem-calc(120);
+    height:rem-calc(20);
+    text-align:center;
+    line-height:rem-calc(18);
+    font-size:$T8;
+    color:#fbac03;
+    border:1px solid #fbac03;
+    border-radius:rem-calc(20);
+    //flex item的margin不与相邻flex item的折叠，margin为auto值时flex父元素剩余的空间将会分配到flex item的外边距margin上
+    // 利用这个特性可以实现水平的居左，居中，居右
+    margin-left:auto;
+  }
+  .newbieLoan-label {
+    width:rem-calc(75);
+    height:rem-calc(27);
+    background-image: url("../../img/home_labe.png");
+    background-size:cover;
+    position:absolute;
+    top:0;
+    right:rem-calc(15);
+  }
+  .icon-day,
+  .icon-new {
+    display:inline-block;
+    width:rem-calc(20);
+    height:rem-calc(20);
+    margin-right:rem-calc(5);
+    background-size: cover;
+  }
+  .icon-day {
+    background-image:url("../../img/home_icon_day.png");
+  }
+  .icon-new {
+    background-image: url("../../img/home_icon_new.png");
+  }
+  .home-earnSet-card-item {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right:1px solid #ececec;
+
+    &:last-child {
+      border:none;
+    }
+  }
+  .title {
+    border-bottom:1px solid #ececec;
+    padding-bottom:rem-calc(13);
+  }
+  .subtitle {
+    height:rem-calc(25);
+    line-height:rem-calc(28);
+    color:$C4;
+    font-size:$T8;
+
+    .subtitle-left{
+      width:60%;
+      float:left;
+    }
+    .subtitle-right {
+      width:40%;
+      float:left;
+    }
+
+    .subtitle-left {
+      display:flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
+    .icon-time {
+      background:url(../../img/home_icon_time.png) no-repeat;
+    }
+    .icon-money {
+      background:url(../../img/home_icon_money.png) no-repeat;
+    }
+    .icon-time,
+    .icon-money {
+      display:inline-block;
+      width:rem-calc(25);
+      height:rem-calc(25);
+      background-size: cover;
+    }
+
+    .amount {
+      margin-left:rem-calc(5);
+      color:$C3;
+      font-size:$T4;
+    }
+
+    .unit {
+      color:$C3;
+      font-size:$T8;
+    }
+  }
+  .yearRate {
+    height:rem-calc(40);
+    line-height:rem-calc(40);
+    color:$C1;
+    font-size:rem-calc(40);
+
+    .unit {
+      font-size:$T13;
+    }
+
+  }
+
+}
+
