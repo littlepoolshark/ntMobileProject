@@ -190,3 +190,9 @@ $legacy-android-uc: 'ua-stupid-uc';
     }
   }
 }
+
+//根据传入的颜色和文字的级别，返回对应的样式集合
+@mixin color-and-fontSize($C,$T) {
+  color:$C;
+  font-size:$T;
+}

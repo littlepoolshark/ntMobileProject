@@ -4,6 +4,9 @@
 // Variables
 @import "../variables";
 
+// Mixin
+@import "../helper/mixins";
+
 
 .home-introduction-item {
   display:flex;
@@ -38,9 +41,11 @@
   .title {
     display:flex;
     align-items: center;
+    padding:0 rem-calc(15) rem-calc(12) rem-calc(15);
     color:$C3;
     font-size:$T5;
     font-weight:normal;
+    border-bottom:1px solid #ececec;
   }
   .dailyEarn-label {
     display:inline-block;
@@ -68,8 +73,8 @@
   .icon-day,
   .icon-new {
     display:inline-block;
-    width:rem-calc(20);
-    height:rem-calc(20);
+    width:rem-calc(17);
+    height:rem-calc(17);
     margin-right:rem-calc(5);
     background-size: cover;
   }
@@ -88,68 +93,106 @@
     &:last-child {
       border:none;
     }
-  }
-  .title {
-    border-bottom:1px solid #ececec;
-    padding-bottom:rem-calc(13);
-  }
-  .subtitle {
-    height:rem-calc(25);
-    line-height:rem-calc(28);
-    color:$C4;
-    font-size:$T8;
 
-    .subtitle-left{
-      width:60%;
-      float:left;
-    }
-    .subtitle-right {
-      width:40%;
-      float:left;
-    }
-
-    .subtitle-left {
-      display:flex;
-      justify-content: flex-end;
-      align-items: flex-start;
-    }
-
-    .icon-time {
-      background:url(../../img/home_icon_time.png) no-repeat;
-    }
-    .icon-money {
-      background:url(../../img/home_icon_money.png) no-repeat;
-    }
-    .icon-time,
-    .icon-money {
-      display:inline-block;
-      width:rem-calc(25);
+    .subtitle {
       height:rem-calc(25);
+      line-height:rem-calc(28);
+      color:$C4;
+      font-size:$T8;
+
+      .subtitle-left{
+        width:60%;
+        float:left;
+      }
+      .subtitle-right {
+        width:40%;
+        float:left;
+      }
+
+      .subtitle-left {
+        display:flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+      }
+
+      .icon-time {
+        background:url(../../img/home_icon_time.png) no-repeat;
+      }
+      .icon-money {
+        background:url(../../img/home_icon_money.png) no-repeat;
+      }
+      .icon-time,
+      .icon-money {
+        display:inline-block;
+        width:rem-calc(25);
+        height:rem-calc(25);
+        background-size: cover;
+      }
+
+      .amount {
+        margin-left:rem-calc(5);
+        color:$C3;
+        font-size:$T4;
+      }
+
+      .unit {
+        color:$C3;
+        font-size:$T8;
+      }
+    }
+
+    .yearRate {
+      height:rem-calc(40);
+      line-height:rem-calc(40);
+      color:$C1;
+      font-size:rem-calc(40);
+
+      .unit {
+        font-size:$T13;
+      }
+
+    }
+  }
+
+
+
+
+}
+
+
+.home-dashboard {
+  .title {
+    @include color-and-fontSize($C3,$T9);
+
+    strong {
+      color:$C1;
+    }
+  }
+
+  .amount {
+    height:rem-calc(35);
+    line-height:rem-calc(35);
+    margin-top:rem-calc(10);
+    color:#6c6c6c;
+    font-size:rem-calc(35);
+  }
+
+  .remark {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:rem-calc(21);
+    margin-bottom:rem-calc(15);
+    line-height:1;
+    @include color-and-fontSize($C4,$T10);
+
+    .icon-insurance {
+      display:inline-block;
+      width:rem-calc(15);
+      height:rem-calc(15);
+      background-image: url("../../img/home_icon_insurance.png");
       background-size: cover;
     }
-
-    .amount {
-      margin-left:rem-calc(5);
-      color:$C3;
-      font-size:$T4;
-    }
-
-    .unit {
-      color:$C3;
-      font-size:$T8;
-    }
   }
-  .yearRate {
-    height:rem-calc(40);
-    line-height:rem-calc(40);
-    color:$C1;
-    font-size:rem-calc(40);
-
-    .unit {
-      font-size:$T13;
-    }
-
-  }
-
 }
 

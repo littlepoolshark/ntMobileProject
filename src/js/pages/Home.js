@@ -36,7 +36,7 @@ let Home=React.createClass({
                     </Slider.Item>
                 </Slider>
 
-                <Group header="" noPadded={false} style={{marginTop:0}}>
+                <Group header=""  style={{marginTop:0}}>
                     <Grid collapse={true}>
                         <Col cols={3} className="home-introduction-item">
                             <div className="platform-icon"></div>
@@ -55,7 +55,7 @@ let Home=React.createClass({
                     </Grid>
                 </Group>
 
-                <Group className="home-earnSet-card">
+                <Group className="home-earnSet-card" noSidePadded={true}>
                     <h6 className="title">
                         <span className="icon-new"></span>
                         <span>新手标</span>
@@ -93,7 +93,7 @@ let Home=React.createClass({
                 </Group>
 
                 <Link to="/productList">
-                    <Group className="home-earnSet-card">
+                    <Group className="home-earnSet-card" noSidePadded={true}>
                         <h6 className="title">
                             <span className="icon-day"></span>
                             <span>天天赚</span>
@@ -130,9 +130,9 @@ let Home=React.createClass({
                     </Group>
                 </Link>
                 <div className="home-dashboard">
-                    <p className="title text-center">农泰金融已累计为 <strong>168900</strong>位用户撮合交易金额（元）</p>
-                    <p className="amount text-center">169,806,570</p>
-                    <div className="remark text-center">交易过程阳光保险全程保障</div>
+                    <div className="title text-center">农泰金融已累计为 <strong>168900</strong>位用户撮合交易金额（元）</div>
+                    <div className="amount text-center">169,806,570</div>
+                    <div className="remark"><span className="icon-insurance"></span>交易过程阳光保险全程保障</div>
                 </div>
             </Container>
 

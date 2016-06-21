@@ -1,0 +1,49 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+#productList .tabs {
+  margin-top:0;
+
+  .tabs-body .tab-panel{
+    padding:0;
+  }
+
+  .tabs-nav {
+    margin-bottom:-1px;
+    padding:rem-calc(10) rem-calc(15);
+    border-top:1px solid $separation-line-color;
+    border-bottom:1px solid $separation-line-color;
+
+    .btn-sm {
+      @include color-and-fontSize($C3,$T5);
+    }
+  }
+
+  .btn-hollow.btn-primary {
+    border:none;
+    color:$C3;
+
+    &.active {
+      background:#fff;
+      color:$C1;
+    }
+  }
+
+  td.title {
+    width:25%;
+    @include color-and-fontSize($C3,$T7);
+  }
+
+  td.content {
+    @include color-and-fontSize($C4,$T7);
+  }
+}
+
+
+
+

@@ -73,6 +73,9 @@ const Tabs = React.createClass({
 
   renderNav() {
     let activeKey = this.state.activeKey;
+    let childLength=this.props.children.length;
+
+
 
     let navs = React.Children.map(this.props.children, (child, index) => {
       let {
@@ -103,12 +106,15 @@ const Tabs = React.createClass({
       );
     });
 
+    let slideLineWidth=(document.body.clientWidth - 2 *15) / childLength;
+    let slideLineLeft=slideLineWidth * activeKey + 15;
     return (
       <ButtonGroup
         className={this.prefixClass('nav')}
         justify
       >
         {navs}
+        <span className="slide-line" style={{width:slideLineWidth,left:slideLineLeft}}></span>
       </ButtonGroup>
     )
   },

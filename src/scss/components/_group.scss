@@ -4,7 +4,7 @@
 // Output
 // -----------------------------------------------------------------------------
 .#{$group-prefix} {
-  margin: $global-spacing * 2 0;
+  margin: $global-spacing 0;
 
   .#{$list-prefix} {
     margin: 0;
@@ -18,6 +18,11 @@
 
   .#{$group-prefix}-no-padded & {
     padding: 0;
+  }
+
+  .#{$group-prefix}-no-sidePadded & {
+    padding-left:0;
+    padding-right:0;
   }
 }
 

@@ -11,6 +11,7 @@ let Group = React.createClass({
     header: React.PropTypes.node,
     footer: React.PropTypes.node,
     noPadded: React.PropTypes.bool,
+    noSidePadded:React.PropTypes.bool
   },
 
   getDefaultProps() {
@@ -35,10 +36,12 @@ let Group = React.createClass({
       header,
       footer,
       noPadded,
+      noSidePadded,
       ...props,
     } = this.props;
     let classSet = this.getClassSet();
     classSet[this.prefixClass('no-padded')] = noPadded;
+    classSet[this.prefixClass('no-sidePadded')] = noSidePadded;
 
     let bodyClasses = {
       [this.prefixClass('body')]: true,
