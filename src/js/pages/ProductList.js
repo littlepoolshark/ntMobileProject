@@ -1,8 +1,13 @@
 require("../../scss/page/ProductList.scss");
 import React from "react";
 
+import Container from "../UIComponents/Container";
 import Tabs from "../UIComponents/Tabs";
 import List from "../UIComponents/List";
+
+//utilites component
+import DailyEarnCard from "./utilities/DailyEarnCard";
+import CommonCard from "./utilities/CommonCard";
 
 let data=[
     {
@@ -27,12 +32,63 @@ let data=[
     }
 ];
 
+let newbieLoanData={
+    title:"新手标",
+    type:"newbieLoan",
+    yearRate:"15.0",
+    deadline:"1",
+    deadlineUnit:"个月",
+    remainAmount:100000,
+    isSoldOut:false
+};
+
+let monthlyEarnData={
+    title:"月月赚",
+    type:"monthlyEarn",
+    yearRate:"9.5",
+    deadline:"1",
+    deadlineUnit:"个月",
+    remainAmount:100000,
+    isSoldOut:false
+}
+
+let quarterlyEarnData={
+    title:"季季赚",
+    type:"quarterlyEarn",
+    yearRate:"10.5",
+    deadline:"3",
+    deadlineUnit:"个月",
+    remainAmount:1000000,
+    isSoldOut:true
+}
+
+let fixedLoanData={
+    title:"好采投",
+    type:"fixedLoan",
+    yearRate:"10.8",
+    deadline:"3",
+    deadlineUnit:"个月",
+    remainAmount:1000000,
+    isSoldOut:false
+}
+
+let creditorRightData={
+    title:"债权转让",
+    type:"creditorRight",
+    yearRate:"10.8",
+    deadline:"5",
+    deadlineUnit:"个月",
+    remainAmount:800000,
+    isSoldOut:true
+}
+
 //理财列表页：ProductList component
 let ProductList=React.createClass({
     render(){
         return (
-            <div id="productList">
-                <Tabs defaultActiveKey={0}>
+            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList">
+
+                {/* <Tabs defaultActiveKey={0}>
 
                     <Tabs.Item
                         title="项目介绍"
@@ -74,8 +130,14 @@ let ProductList=React.createClass({
                             </tbody>
                         </table>
                     </Tabs.Item>
-                </Tabs>
-            </div>
+                </Tabs>*/}
+                <DailyEarnCard isSoldOut={true}/>
+                <CommonCard  {...newbieLoanData}/>
+                <CommonCard  {...monthlyEarnData}/>
+                <CommonCard  {...quarterlyEarnData}/>
+                <CommonCard  {...fixedLoanData}/>
+                <CommonCard  {...creditorRightData}/>
+            </Container>
         )
     }
 });

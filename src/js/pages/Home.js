@@ -18,6 +18,9 @@ import Group from "../UIComponents/Group";
 import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
 
+//utilites component
+import DailyEarnCard from "./utilities/DailyEarnCard";
+
 //首页:Index component
 let Home=React.createClass({
     render(){
@@ -92,43 +95,9 @@ let Home=React.createClass({
                     <div className="newbieLoan-label"></div>
                 </Group>
 
-                <Link to="/productList">
-                    <Group className="home-earnSet-card" noSidePadded={true}>
-                        <h6 className="title">
-                            <span className="icon-day"></span>
-                            <span>天天赚</span>
-                            <span className="dailyEarn-label">银行活期的26倍</span>
-                        </h6>
-                        <Grid collapse={true}>
-                            <Col cols={3} className="home-earnSet-card-item">
-                                <div className="text-center yearRate">8.0<span className="unit">%</span></div>
-                                <div className="text-center subtitle" >年化收益</div>
-                            </Col>
-                            <Col cols={3} className="home-earnSet-card-item">
-                                <div className="subtitle">
-                                    <div className="subtitle-left">
-                                        <span className="icon-time"></span>
-                                        投资期限
-                                    </div>
-                                    <div className="subtitle-right">
-                                        <span className="amount">活期</span>
-                                    </div>
-                                </div>
-                                <div className="subtitle" style={{marginTop:"5px"}}>
-                                    <div className="subtitle-left">
-                                        <span className="icon-money"></span>
-                                        可投金额
-                                    </div>
-                                    <div className="subtitle-right">
-                                        <span className="amount">100</span>
-                                        <span className="unit">万</span>
-                                    </div>
 
-                                </div>
-                            </Col>
-                        </Grid>
-                    </Group>
-                </Link>
+                    <DailyEarnCard yearRate="8.0" isSoldOut={false}/>
+
                 <div className="home-dashboard">
                     <div className="title text-center">农泰金融已累计为 <strong>168900</strong>位用户撮合交易金额（元）</div>
                     <div className="amount text-center">169,806,570</div>

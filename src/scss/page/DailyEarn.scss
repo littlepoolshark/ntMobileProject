@@ -7,37 +7,7 @@
 // Mixin
 @import "../helper/mixins";
 
-
-.home-introduction-item {
-  display:flex;
-  align-items:center;
-  justify-content: center;
-
-  .platform-icon {
-    background:url("../../img/home_icon_platform.png") 0 0 no-repeat;
-  }
-
-  .invite-icon {
-    background:url("../../img/home_icon_invitation.png") 0 0 no-repeat;
-  }
-
-  .platform-icon,
-  .invite-icon {
-    width:rem-calc(40);
-    height:rem-calc(40);
-    margin-right:rem-calc(8);
-    background-size: cover;
-  }
-
-  .subtitle {
-    color:#999;
-    font-size:rem-calc(12);
-  }
-}
-
-.home-earnSet-card {
-  position:relative;
-
+.dailyEarn-card {
   .g {
     padding:rem-calc(10) 0;
   }
@@ -64,17 +34,8 @@
     // 利用这个特性可以实现水平的居左，居中，居右
     margin-left:auto;
   }
-  .newbieLoan-label {
-    width:rem-calc(75);
-    height:rem-calc(27);
-    background-image: url("../../img/home_labe.png");
-    background-size:cover;
-    position:absolute;
-    top:0;
-    right:rem-calc(15);
-  }
-  .icon-day,
-  .icon-new {
+
+  .icon-day {
     display:inline-block;
     width:rem-calc(17);
     height:rem-calc(17);
@@ -84,10 +45,7 @@
   .icon-day {
     background-image:url("../../img/home_icon_day.png");
   }
-  .icon-new {
-    background-image: url("../../img/home_icon_new.png");
-  }
-  .home-earnSet-card-item {
+  .dailyEarn-card-item {
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -95,6 +53,16 @@
 
     &:last-child {
       border:none;
+    }
+
+    &.soldOut {
+      justify-content: flex-start;
+
+      .btn {
+        display:block;
+        width:rem-calc(115);
+        margin:0 auto;
+      }
     }
 
     .subtitle {
@@ -157,41 +125,3 @@
     }
   }
 }
-
-
-.home-dashboard {
-  .title {
-    @include color-and-fontSize($C3,$T9);
-
-    strong {
-      color:$C1;
-    }
-  }
-
-  .amount {
-    height:rem-calc(35);
-    line-height:rem-calc(35);
-    margin-top:rem-calc(10);
-    color:#6c6c6c;
-    font-size:rem-calc(35);
-  }
-
-  .remark {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    margin-top:rem-calc(21);
-    margin-bottom:rem-calc(15);
-    line-height:1;
-    @include color-and-fontSize($C4,$T10);
-
-    .icon-insurance {
-      display:inline-block;
-      width:rem-calc(15);
-      height:rem-calc(15);
-      background-image: url("../../img/home_icon_insurance.png");
-      background-size: cover;
-    }
-  }
-}
-

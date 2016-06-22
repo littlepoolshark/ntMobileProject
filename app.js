@@ -29,7 +29,7 @@ let {
 //页面中文名字的映射
 const pageNameMap={
     "Home":"首页",
-    "ProductList":"理财计划",
+    "ProductList":"理财",
     "UserHome":"用户中心",
     "GetBackPassword":"找回登录密码",
     "SetNewPassword":"设置登录密码"

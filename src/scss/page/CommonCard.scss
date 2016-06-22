@@ -1,0 +1,93 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+.commonCard {
+  position:relative;
+
+  .g .g {
+    margin-left:0;
+  }
+
+  .title {
+    display:flex;
+    align-items: center;
+    @include color-and-fontSize($C3,$T5);
+    font-weight:normal;
+
+    span:first-child {
+      margin-right: auto;
+    }
+  }
+
+  .subtitle {
+    @include color-and-fontSize($C4,$T10);
+    text-align:center;
+  }
+
+  .yearRate {
+    @include color-and-fontSize($C1,$T13);
+
+    .unit {
+      @include color-and-fontSize($C1,$T10);
+    }
+  }
+
+  .deadline,
+  .remainAmount {
+    text-align: center;
+    @include color-and-fontSize($C3,$T13);
+
+    .unit {
+      @include color-and-fontSize($C3,$T7);
+    }
+  }
+
+  .tag {
+    display:inline-block;
+    height:rem-calc(16);
+    background-size: cover;
+
+    & + .tag {
+      margin-left:rem-calc(8);
+    }
+  }
+
+  .tag-redPackage {
+    width:rem-calc(35);
+    background-image:url("../../img/financial_laber_redbag.png");
+  }
+
+  .tag-addRate {
+    width:rem-calc(45);
+    background-image:url("../../img/financial_laber_jx.png");
+  }
+
+  .tag-newbie {
+    width:rem-calc(70);
+    background-image:url("../../img/financial_laber_one.png");
+  }
+
+  .tag-transfer {
+    width:rem-calc(20);
+    background-image:url("../../img/financial_laber_transfer.png");
+  }
+
+  .stamp {
+    width:rem-calc(70);
+    height:rem-calc(70);
+    background-size:cover;
+    background-image:url("../../img/icon_soldout.png");
+    position: absolute;
+    top:50%;
+    margin-top:- rem-calc(35);
+    right:rem-calc(15);
+  }
+
+}
