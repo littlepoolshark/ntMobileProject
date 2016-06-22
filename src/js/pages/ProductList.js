@@ -82,11 +82,31 @@ let creditorRightData={
     isSoldOut:true
 }
 
+function getWindowHeight(){
+    var windowHeight = 0;
+    if(document.compatMode == "CSS1Compat"){
+        windowHeight = document.documentElement.clientHeight;
+    }else{
+        windowHeight = document.body.clientHeight;
+    }
+    return windowHeight;
+}
+
 //理财列表页：ProductList component
 let ProductList=React.createClass({
+    _test(){
+        let productList=document.getElementById("productList");
+        let offsetHeight=productList.offsetHeight;
+        let scrollTop=productList.scrollTop;
+        let scrollHeight=productList.scrollHeight;
+        //console.log(scrollHeight ,scrollTop,offsetHeight);
+        if(scrollHeight - offsetHeight - scrollTop < 10){
+            alert("加载中....");
+        }
+    },
     render(){
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList">
+            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" onTouchEnd={this._test}>
 
                 {/* <Tabs defaultActiveKey={0}>
 
