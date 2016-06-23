@@ -12,6 +12,7 @@ import Col from "../UIComponents/Col";
 
 //utilities component
 import Slogan from "./utilities/Slogan";
+import ProgressBar from "./utilities/ProgressBar";
 
 //标的简要介绍
 let Summary=React.createClass({
@@ -29,6 +30,7 @@ let Summary=React.createClass({
                     <span className="label-item">100元起投</span>
                     <span className="label-item">至今0风险</span>
                 </div>
+                <ProgressBar progressPercent="80%"/>
                 <div className="footer">剩余可投10000.00元</div>
             </Group>
         )

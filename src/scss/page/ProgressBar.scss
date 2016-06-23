@@ -1,0 +1,32 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+.progressBar {
+  width:100%;
+  height:rem-calc(6);
+  background-color:#ddd;
+  border-radius: rem-calc(3);
+  position:relative;
+
+  .progressBar-body {
+    width:0;
+    height:100%;
+    border-radius: rem-calc(3);
+    background-color:$C1;
+    transition:width 0.2s ease-in-out;
+  }
+  .progress-percent {
+    display:inline-block;
+    color:#666;
+    font-size:rem-calc(14);
+    position:absolute;
+    top:-20px;
+    right:0;
+  }
+}
