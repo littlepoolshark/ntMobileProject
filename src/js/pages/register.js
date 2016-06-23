@@ -36,8 +36,10 @@ let Register=React.createClass({
         return getParamObjFromUrl().phoneNo;
     },
     _handleNavBack(obj){
-        //this.props.history.pushState(null,"/");//there is a problem here.
-        if(obj.title === "邀请人"){
+
+        if(obj.title === "返回"){
+            this.props.history.pushState(null,"/");
+        }else if(obj.title === "邀请人"){
             this.refs.modal.open();
         }
     },

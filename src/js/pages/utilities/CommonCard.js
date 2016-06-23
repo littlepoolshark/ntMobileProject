@@ -1,6 +1,7 @@
 require("../../../scss/page/CommonCard.scss");
 import React from "react";
 import classNames from 'classnames';
+import { Link } from 'react-router';
 
 import Group from "../../UIComponents/Group";
 import Grid from "../../UIComponents/Grid";
@@ -62,28 +63,30 @@ let CommonCard=React.createClass({
     },
     render(){
         return (
-            <Group noPadded={false} className="commonCard">
-                <CommonCardTitle title={this.props.title} type={this.props.type} isSoldOut={this.props.isSoldOut}/>
-                <Grid collapse={true}>
-                    <Col cols={4}>
-                        <Grid collapse={true}>
-                            <Col cols={2}>
-                                <div className="subtitle text-left" >年化收益</div>
-                                <div className="yearRate">{this.props.yearRate}<span className="unit">%</span></div>
-                            </Col>
-                            <Col cols={4}>
-                                <div className="subtitle" >投资期限</div>
-                                <div className="deadline">{this.props.deadline}<span className="unit">{this.props.deadlineUnit}</span></div>
-                            </Col>
-                        </Grid>
-                    </Col>
-                    <Col cols={2} className={this.props.isSoldOut ? "hide" : ""}>
-                        <div className="subtitle" >可购金额</div>
-                        <div className="remainAmount">{this._amountFormater(this.props.remainAmount)}<span className="unit">万</span></div>
-                    </Col>
-                </Grid>
-                <div className={this.props.isSoldOut ? "stamp" : "stamp hide"}></div>
-            </Group>
+            <Link to={{pathname:"earnSetIntroduction/",query:{type:this.props.type}}}>
+                <Group noPadded={false} className="commonCard">
+                    <CommonCardTitle title={this.props.title} type={this.props.type} isSoldOut={this.props.isSoldOut}/>
+                    <Grid collapse={true}>
+                        <Col cols={4}>
+                            <Grid collapse={true}>
+                                <Col cols={2}>
+                                    <div className="subtitle text-left" >年化收益</div>
+                                    <div className="yearRate">{this.props.yearRate}<span className="unit">%</span></div>
+                                </Col>
+                                <Col cols={4}>
+                                    <div className="subtitle" >投资期限</div>
+                                    <div className="deadline">{this.props.deadline}<span className="unit">{this.props.deadlineUnit}</span></div>
+                                </Col>
+                            </Grid>
+                        </Col>
+                        <Col cols={2} className={this.props.isSoldOut ? "hide" : ""}>
+                            <div className="subtitle" >可购金额</div>
+                            <div className="remainAmount">{this._amountFormater(this.props.remainAmount)}<span className="unit">万</span></div>
+                        </Col>
+                    </Grid>
+                    <div className={this.props.isSoldOut ? "stamp" : "stamp hide"}></div>
+                </Group>
+            </Link>
         )
     }
 });

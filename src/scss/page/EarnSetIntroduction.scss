@@ -1,0 +1,63 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#earnSetIntroduction {
+  .summary {
+    .subtitle {
+      margin-top:18px;
+      text-align: center;
+      @include color-and-fontSize($C4,$T7);
+    }
+    .yearRate {
+      height:rem-calc(70);
+      line-height:rem-calc(70);
+      margin-top:rem-calc(10);
+      text-align: center;
+
+      .amount {
+        @include color-and-fontSize($C1,$T12);
+      }
+
+      .unit {
+        @include color-and-fontSize($C1,$T13);
+      }
+    }
+
+    .slogan {
+      margin-top:rem-calc(12);
+    }
+
+    .label {
+      height:rem-calc(14);
+      line-height:rem-calc(14);
+      display: flex;
+      justify-content: center;
+      margin-top:rem-calc(15);
+      margin-bottom:rem-calc(30);
+      @include color-and-fontSize($C3,$T7);
+
+      .label-item {
+        display:inline-block;
+        padding:0 rem-calc(12);
+        border-right:1px solid $separation-line-color;
+
+        &:last-child {
+          border-right:none;
+        }
+      }
+    }
+
+    .footer {
+      margin-top:rem-calc(16);
+      margin-bottom:rem-calc(10);
+      text-align:center;
+      @include color-and-fontSize($C3,$T7);
+    }
+  }
+}

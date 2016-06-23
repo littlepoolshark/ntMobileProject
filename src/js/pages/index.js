@@ -5,6 +5,7 @@ export UserHome from './UserHome';
 export GetBackPassword from './GetBackPassword';
 export SetNewPassword from './SetNewPassword';
 export Register from './Register';
+export EarnSetIntroduction from './EarnSetIntroduction';
 
 
 

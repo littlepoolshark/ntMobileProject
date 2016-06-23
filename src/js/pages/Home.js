@@ -20,6 +20,7 @@ import Col from "../UIComponents/Col";
 
 //utilites component
 import DailyEarnCard from "./utilities/DailyEarnCard";
+import Slogan from "./utilities/Slogan";
 
 //首页:Index component
 let Home=React.createClass({
@@ -101,7 +102,7 @@ let Home=React.createClass({
                 <div className="home-dashboard">
                     <div className="title text-center">农泰金融已累计为 <strong>168900</strong>位用户撮合交易金额（元）</div>
                     <div className="amount text-center">169,806,570</div>
-                    <div className="remark"><span className="icon-insurance"></span>交易过程阳光保险全程保障</div>
+                    <Slogan />
                 </div>
             </Container>
 

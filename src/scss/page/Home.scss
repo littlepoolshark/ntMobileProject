@@ -176,22 +176,5 @@
     font-size:rem-calc(35);
   }
 
-  .remark {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    margin-top:rem-calc(21);
-    margin-bottom:rem-calc(15);
-    line-height:1;
-    @include color-and-fontSize($C4,$T10);
-
-    .icon-insurance {
-      display:inline-block;
-      width:rem-calc(15);
-      height:rem-calc(15);
-      background-image: url("../../img/home_icon_insurance.png");
-      background-size: cover;
-    }
-  }
 }
 

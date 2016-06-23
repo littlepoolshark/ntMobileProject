@@ -32,7 +32,11 @@ const pageNameMap={
     "ProductList":"理财",
     "UserHome":"用户中心",
     "GetBackPassword":"找回登录密码",
-    "SetNewPassword":"设置登录密码"
+    "SetNewPassword":"设置登录密码",
+    "EarnSetIntroduction.newbieLoan":"新手标",
+    "EarnSetIntroduction.dailyEarn":"天天赚",
+    "EarnSetIntroduction.monthlyEarn":"月月赚",
+    "EarnSetIntroduction.quarterlyEarn":"季季赚"
 }
 
 //不需要显示navBar的页面
@@ -98,12 +102,14 @@ const Page = React.createClass({
   },
   render() {
     let component = this.props.params.componentName;
+    let queryStr=this.props.location.query.type;
 
     if (component) {
       component = component.charAt(0).toUpperCase() + component.slice(1);
     }
-
+    let key=queryStr ? component + "." + queryStr : component;
     let Component = Components[component] || NotFound;
+      console.log("Component:",Component);
     let backNav = {
       component:"a",
       icon: 'left-nav',
@@ -117,7 +123,7 @@ const Page = React.createClass({
     return (
       <View>
         <NavBar
-          title={pageNameMap[component]}
+          title={pageNameMap[key]}
           leftNav={[backNav]}
           amStyle="primary"
           onAction={this.handleNavBack}

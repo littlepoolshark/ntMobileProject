@@ -1,9 +1,12 @@
 require("../../scss/page/ProductList.scss");
+let ProductListAction=require("../actions/ProductListAction.js");
+let ProductListStore=require("../stores/ProductListStore.js");
 import React from "react";
 
 import Container from "../UIComponents/Container";
 import Tabs from "../UIComponents/Tabs";
 import List from "../UIComponents/List";
+import Loader from "../UIComponents/Loader";
 
 //utilites component
 import DailyEarnCard from "./utilities/DailyEarnCard";
@@ -82,31 +85,39 @@ let creditorRightData={
     isSoldOut:true
 }
 
-function getWindowHeight(){
-    var windowHeight = 0;
-    if(document.compatMode == "CSS1Compat"){
-        windowHeight = document.documentElement.clientHeight;
-    }else{
-        windowHeight = document.body.clientHeight;
-    }
-    return windowHeight;
-}
-
 //理财列表页：ProductList component
 let ProductList=React.createClass({
-    _test(){
-        let productList=document.getElementById("productList");
-        let offsetHeight=productList.offsetHeight;
-        let scrollTop=productList.scrollTop;
-        let scrollHeight=productList.scrollHeight;
-        //console.log(scrollHeight ,scrollTop,offsetHeight);
-        if(scrollHeight - offsetHeight - scrollTop < 10){
-            alert("加载中....");
+    getInitialState(){
+        ProductListAction.getDataFromServer();
+        return {
+            isLoading:false,
+            commonCardList:ProductListStore.getAll()
         }
+    },
+    _loadMoreData(){
+        let productList=document.getElementById("productList");
+        let offsetHeight=productList.offsetHeight;//元素出现在视口中区域的高度
+        let scrollTop=productList.scrollTop;//元素已经滚动的距离
+        let scrollHeight=productList.scrollHeight;//元素总的内容高度
+        if(scrollHeight - offsetHeight - scrollTop < 1){
+            ProductListAction.getDataFromServer();
+            this.setState({
+                isLoading:true
+            })
+        }
+    },
+    _commonCardRender(){
+        return (
+            this.state.commonCardList.map(function(item,index){
+                return (
+                    <CommonCard  {...item}/>
+                )
+            })
+        )
     },
     render(){
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" onTouchEnd={this._test}>
+            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" onScroll={this._loadMoreData}>
 
                 {/* <Tabs defaultActiveKey={0}>
 
@@ -152,13 +163,19 @@ let ProductList=React.createClass({
                     </Tabs.Item>
                 </Tabs>*/}
                 <DailyEarnCard isSoldOut={true}/>
-                <CommonCard  {...newbieLoanData}/>
-                <CommonCard  {...monthlyEarnData}/>
-                <CommonCard  {...quarterlyEarnData}/>
-                <CommonCard  {...fixedLoanData}/>
-                <CommonCard  {...creditorRightData}/>
+                {this._commonCardRender()}
+                <Loader amStyle="success" rounded={true} className={this.state.isLoading ? "" : "hide"}/>
             </Container>
         )
+    },
+    componentDidMount(){
+        ProductListStore.bind("change",function(){
+            let commonCardList=ProductListStore.getAll();
+            this.setState({
+                commonCardList:commonCardList,
+                isLoading:false
+            })
+        }.bind(this));
     }
 });
 

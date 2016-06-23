@@ -152,7 +152,7 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckSuccess",function(phoneNo){
-            this.props.history.pushState(null,"register?phoneNo=" + phoneNo);
+            this.props.history.pushState(null,"register/?phoneNo=" + phoneNo);
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckFailed",function(msg){

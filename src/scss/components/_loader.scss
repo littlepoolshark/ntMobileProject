@@ -7,7 +7,8 @@
 // Output
 // -----------------------------------------------------------------------------
 .#{$loader-prefix} {
-  display: inline-block;
+  display: block;
+  margin:0 auto;
   text-align: center;
 
   > div {
