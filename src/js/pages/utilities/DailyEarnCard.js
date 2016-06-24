@@ -23,7 +23,7 @@ let DailyEarnCard=React.createClass({
             "soldOut":this.props.isSoldOut
         });
         return (
-            <Link to="/productList">
+            <Link to={{pathname:"earnSetIntroduction/",query:{type:"dailyEarn"}}}>
                 <Group className="dailyEarn-card" noSidePadded={true}>
                     <h6 className="title">
                         <span className="icon-day"></span>

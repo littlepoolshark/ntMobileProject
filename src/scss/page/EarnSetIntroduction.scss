@@ -8,9 +8,30 @@
 @import "../helper/mixins";
 
 #earnSetIntroduction {
+  /*简要介绍组件*/
   .summary {
+    position:relative;
+
+    .tag {
+      display:block;
+      height:rem-calc(24);
+      background-size:cover;
+      position:absolute;
+      left:0;
+      top:-1px;
+
+      &.newbieLoan-tag {
+        width:rem-calc(127);
+        background-image: url("../../img/month_noviceexclusive.png");
+      }
+
+      &.dailyEarn-tag {
+        width:rem-calc(107);
+        background-image: url("../../img/day_label.png");
+      }
+    }
     .subtitle {
-      margin-top:18px;
+      margin-top:rem-calc(5);
       text-align: center;
       @include color-and-fontSize($C4,$T7);
     }
@@ -39,7 +60,7 @@
       display: flex;
       justify-content: center;
       margin-top:rem-calc(15);
-      margin-bottom:rem-calc(30);
+      margin-bottom:rem-calc(15);
       @include color-and-fontSize($C3,$T7);
 
       .label-item {
@@ -54,10 +75,145 @@
     }
 
     .footer {
-      margin-top:rem-calc(16);
+      margin-top:rem-calc(0);
       margin-bottom:rem-calc(10);
       text-align:center;
       @include color-and-fontSize($C3,$T7);
+    }
+  }
+
+  /*规则描述组件*/
+  .rule-description {
+    ul {
+      padding:0;
+      margin:0;
+      list-style: none;
+
+      li {
+        display:flex;
+        align-items: center;
+        height:rem-calc(18);
+        line-height: rem-calc(18);
+        margin-bottom:rem-calc(5);
+        @include color-and-fontSize($C4,$T8);
+
+        &:last-child {
+          margin-bottom:0;
+        }
+
+        span {
+          display:inline-block;
+          width:rem-calc(18);
+          height:rem-calc(18);
+          margin-right:rem-calc(5);
+          background-size: cover;
+
+          &.icon-benefit {
+            background-image: url("../../img/month_icon_earnings.png");
+          }
+
+          &.icon-apply {
+            background-image: url("../../img/month_icon_apply.png");
+          }
+
+          &.icon-limit {
+            background-image: url("../../img/month_icon_limit.png");
+          }
+        }
+      }
+    }
+  }
+
+  /*产品收益对比图*/
+  .comparison-chart {
+    .subtitle {
+      margin:0;
+      margin-bottom:rem-calc(10);
+      font-weight: normal;
+      @include color-and-fontSize($C4,$T8);
+    }
+    .content {
+      margin-top:rem-calc(10);
+      &.dailyEarn {
+        width:rem-calc(289);
+        height:rem-calc(117);
+        background-image: url("../../img/day_form.png");
+        background-size: cover;
+      }
+      .content-item {
+        display:flex;
+        align-items: center;
+        @include color-and-fontSize($C3,$T7);
+
+        strong {
+          @include color-and-fontSize($C1,$T7)
+        }
+
+        .label {
+          width:rem-calc(65);
+          margin-right:rem-calc(5);
+        }
+      }
+    }
+  }
+
+
+  .tabs {
+    margin-top:0;
+    background-color:transparent;
+
+    .tabs-body .tab-panel{
+      padding:0;
+    }
+
+    .tabs-nav {
+      margin-bottom:-1px;
+      padding:rem-calc(5) rem-calc(15);
+      border-top:1px solid $separation-line-color;
+      border-bottom:1px solid $separation-line-color;
+      background:#fff;
+
+      .btn-sm {
+        @include color-and-fontSize($C3,$T5);
+      }
+    }
+
+    .btn-hollow.btn-primary {
+      border:none;
+      color:$C3;
+
+      &.active {
+        background:#fff;
+        color:$C1;
+      }
+    }
+
+    table {
+      background:#fff;
+    }
+
+    td.title {
+      width:25%;
+      text-align:left;
+      @include color-and-fontSize($C3,$T7);
+    }
+
+    td.content {
+      text-align:left;
+      @include color-and-fontSize($C4,$T7);
+    }
+
+    .group {
+      h6 {
+        margin-bottom:rem-calc(10);
+        @include color-and-fontSize($C3,$T7);
+        font-weight:normal;
+      }
+
+      .content {
+        @include color-and-fontSize($C4,$T8);
+        text-align: justify;
+      }
     }
   }
 }

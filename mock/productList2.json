@@ -2,6 +2,24 @@
   "code":"0001",
   "data":[
     {
+      "title":"新手标",
+      "type":"newbieLoan",
+      "yearRate":"15.0",
+      "deadline":"1",
+      "deadlineUnit":"个月",
+      "remainAmount":100000,
+      "isSoldOut":false
+    },
+    {
+      "title":"天天赚",
+      "type":"dailyEarn",
+      "yearRate":"8.0",
+      "deadline":"0",
+      "deadlineUnit":"个月",
+      "remainAmount":10000,
+      "isSoldOut":false
+    },
+    {
       "title":"月月赚",
       "type":"monthlyEarn",
       "yearRate":"10.8",
@@ -13,15 +31,6 @@
     {
       "title":"季季赚",
       "type":"quarterlyEarn",
-      "yearRate":"10.8",
-      "deadline":"3",
-      "deadlineUnit":"个月",
-      "remainAmount":100000,
-      "isSoldOut":false
-    },
-    {
-      "title":"月月赚",
-      "type":"monthlyEarn",
       "yearRate":"10.8",
       "deadline":"3",
       "deadlineUnit":"个月",

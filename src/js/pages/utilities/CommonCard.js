@@ -10,6 +10,7 @@ import Col from "../../UIComponents/Col";
 //新手标，月月赚，季季赚，好采投和债权转让共用的card组件
 const Type_To_Tag_Map ={
     newbieLoan:["tag-newbie"],
+    dailyEarn:[],
     monthlyEarn:["tag-addRate"],
     quarterlyEarn:["tag-addRate","tag-redPackage"],
     fixedLoan:["tag-addRate","tag-redPackage"],

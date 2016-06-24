@@ -1,13 +1,24 @@
+
 table {
   width:100%;
   border-collapse: collapse;
   border:none;
 
+  thead {
+    th {
+      height:rem-calc(40);
+      text-align:center;
+      font-weight: normal;
+      @include color-and-fontSize($C3,$T7);
+      background-color:$C2;
+    }
+  }
   tbody {
     tr {
       border-top:1px solid $separation-line-color;
 
       td {
+        text-align:center;
         padding:rem-calc(10) $global-spacing;
 
         &:first-child {

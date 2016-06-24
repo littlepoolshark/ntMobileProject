@@ -61,7 +61,7 @@ const App = React.createClass({
     return (
       <Container direction="column"  >
         <Container fill={true}>
-          {React.cloneElement(children, {key: location.key,params:params})}
+          {React.cloneElement(children, {key: location.key,params:params,location:location})}
         </Container>
 
         <TabBar
@@ -109,7 +109,6 @@ const Page = React.createClass({
     }
     let key=queryStr ? component + "." + queryStr : component;
     let Component = Components[component] || NotFound;
-      console.log("Component:",Component);
     let backNav = {
       component:"a",
       icon: 'left-nav',
@@ -129,7 +128,7 @@ const Page = React.createClass({
           onAction={this.handleNavBack}
           className={navBarClass}
         />
-        <Component scrollable  history={this.props.history}/>
+        <Component scrollable  history={this.props.history} location={this.props.location}/>
       </View>
     );
   }

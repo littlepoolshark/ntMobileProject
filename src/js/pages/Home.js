@@ -59,46 +59,45 @@ let Home=React.createClass({
                     </Grid>
                 </Group>
 
-                <Group className="home-earnSet-card" noSidePadded={true}>
-                    <h6 className="title">
-                        <span className="icon-new"></span>
-                        <span>新手标</span>
+                <Link to={{pathname:"earnSetIntroduction/",query:{type:"newbieLoan"}}}>
+                    <Group className="home-earnSet-card" noSidePadded={true}>
+                        <h6 className="title">
+                            <span className="icon-new"></span>
+                            <span>新手标</span>
 
-                    </h6>
-                    <Grid collapse={true}>
-                        <Col cols={3} className="home-earnSet-card-item">
-                            <div className="text-center yearRate">9.5<span className="unit">%</span></div>
-                            <div className="text-center subtitle" >年化收益</div>
-                        </Col>
-                        <Col cols={3} className="home-earnSet-card-item">
-                            <div className="subtitle">
-                                <div className="subtitle-left">
-                                    <span className="icon-time"></span>
-                                    投资期限
+                        </h6>
+                        <Grid collapse={true}>
+                            <Col cols={3} className="home-earnSet-card-item">
+                                <div className="text-center yearRate">9.5<span className="unit">%</span></div>
+                                <div className="text-center subtitle" >年化收益</div>
+                            </Col>
+                            <Col cols={3} className="home-earnSet-card-item">
+                                <div className="subtitle">
+                                    <div className="subtitle-left">
+                                        <span className="icon-time"></span>
+                                        投资期限
+                                    </div>
+                                    <div className="subtitle-right">
+                                        <span className="amount">1</span>
+                                        <span className="unit">个月</span>
+                                    </div>
                                 </div>
-                                <div className="subtitle-right">
-                                    <span className="amount">1</span>
-                                    <span className="unit">个月</span>
+                                <div className="subtitle" style={{marginTop:"5px"}}>
+                                    <div className="subtitle-left">
+                                        <span className="icon-money"></span>
+                                        可投金额
+                                    </div>
+                                    <div className="subtitle-right">
+                                        <span className="amount">100</span>
+                                        <span className="unit">万</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="subtitle" style={{marginTop:"5px"}}>
-                                <div className="subtitle-left">
-                                    <span className="icon-money"></span>
-                                    可投金额
-                                </div>
-                                <div className="subtitle-right">
-                                    <span className="amount">100</span>
-                                    <span className="unit">万</span>
-                                </div>
-                            </div>
-                        </Col>
-                    </Grid>
-                    <div className="newbieLoan-label"></div>
-                </Group>
-
-
-                    <DailyEarnCard yearRate="8.0" isSoldOut={false}/>
-
+                            </Col>
+                        </Grid>
+                        <div className="newbieLoan-label"></div>
+                    </Group>
+                </Link>
+                <DailyEarnCard yearRate="8.0" isSoldOut={false}/>
                 <div className="home-dashboard">
                     <div className="title text-center">农泰金融已累计为 <strong>168900</strong>位用户撮合交易金额（元）</div>
                     <div className="amount text-center">169,806,570</div>

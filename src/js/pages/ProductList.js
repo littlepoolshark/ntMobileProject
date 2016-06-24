@@ -3,6 +3,7 @@ let ProductListAction=require("../actions/ProductListAction.js");
 let ProductListStore=require("../stores/ProductListStore.js");
 import React from "react";
 
+//ui component
 import Container from "../UIComponents/Container";
 import Tabs from "../UIComponents/Tabs";
 import List from "../UIComponents/List";
@@ -12,28 +13,7 @@ import Loader from "../UIComponents/Loader";
 import DailyEarnCard from "./utilities/DailyEarnCard";
 import CommonCard from "./utilities/CommonCard";
 
-let data=[
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"退出规则",
-        after:<div>1.期满一次性还本付息<br/>2.月月赚暂不支持提前退出</div>
-    }
-];
+
 
 let newbieLoanData={
     title:"新手标",
@@ -119,49 +99,7 @@ let ProductList=React.createClass({
         return (
             <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" onScroll={this._loadMoreData}>
 
-                {/* <Tabs defaultActiveKey={0}>
 
-                    <Tabs.Item
-                        title="项目介绍"
-                        key={0}
-                        navStyle={null}
-                    >
-                        <table >
-                            <tbody>
-                            {
-                                data.map((item,i) => {
-                                    return (
-                                       <tr>
-                                           <td className="title">{item.title}</td>
-                                           <td className="content">{item.after}</td>
-                                       </tr>
-                                    )
-                                })
-                            }
-                            </tbody>
-                        </table>
-                    </Tabs.Item>
-                    <Tabs.Item
-                        title="投资记录"
-                        key={1}
-                        navStyle={null}
-                    >
-                        <table >
-                            <tbody>
-                            {
-                                data.map((item,i) => {
-                                    return (
-                                        <tr>
-                                            <td className="title">{item.title}</td>
-                                            <td className="content">{item.after}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                            </tbody>
-                        </table>
-                    </Tabs.Item>
-                </Tabs>*/}
                 <DailyEarnCard isSoldOut={true}/>
                 {this._commonCardRender()}
                 <Loader amStyle="success" rounded={true} className={this.state.isLoading ? "" : "hide"}/>
