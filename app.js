@@ -36,7 +36,8 @@ const pageNameMap={
     "EarnSetIntroduction.newbieLoan":"新手标",
     "EarnSetIntroduction.dailyEarn":"天天赚",
     "EarnSetIntroduction.monthlyEarn":"月月赚",
-    "EarnSetIntroduction.quarterlyEarn":"季季赚"
+    "EarnSetIntroduction.quarterlyEarn":"季季赚",
+    "EarnSetPayment":"支付"
 }
 
 //不需要显示navBar的页面

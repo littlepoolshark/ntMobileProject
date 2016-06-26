@@ -6,6 +6,7 @@ export GetBackPassword from './GetBackPassword';
 export SetNewPassword from './SetNewPassword';
 export Register from './Register';
 export EarnSetIntroduction from './EarnSetIntroduction';
+export EarnSetPayment from './EarnSetPayment';
 
 
 
