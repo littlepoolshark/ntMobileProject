@@ -8,8 +8,11 @@
 @import "../helper/mixins";
 
 #earnSetIntroduction {
+  padding-bottom:rem-calc(42);
+
   /*简要介绍组件*/
   .summary {
+    margin-top:0;
     position:relative;
 
     .tag {
@@ -160,6 +163,7 @@
 
   .tabs {
     margin-top:0;
+    padding-top:rem-calc(50);
     background-color:transparent;
 
     .tabs-body .tab-panel{
@@ -172,6 +176,10 @@
       border-top:1px solid $separation-line-color;
       border-bottom:1px solid $separation-line-color;
       background:#fff;
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
 
       .btn-sm {
         @include color-and-fontSize($C3,$T5);
@@ -216,4 +224,12 @@
       }
     }
   }
+
+  .popup-header {
+    z-index:9999;
+  }
+  .popup-body {
+    padding:0;
+  }
+
 }

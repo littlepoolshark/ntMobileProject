@@ -67,7 +67,7 @@
   position: absolute;
   right: rem-calc(5);
   top: rem-calc(5);
-  color: rgba($gray-light, .5);
+  color: #fff;
   cursor: pointer;
 
   &:active {
@@ -228,7 +228,7 @@
   width: 100%;
   height: rem-calc($modal-popup-title-height);
   border-bottom: 1px solid $modal-border-color;
-  background-color: #fff;
+  background-color: $C1;
 }
 
 .#{$modal-popup-prefix}-icon {
@@ -243,7 +243,7 @@
   font-weight: bold;
   line-height: rem-calc(43);
   text-align: center;
-  color: $gray-dark;
+  color: #fff;
 }
 
 .#{$modal-popup-prefix}-body {
