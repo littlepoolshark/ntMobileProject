@@ -37,7 +37,11 @@ const pageNameMap={
     "EarnSetIntroduction.dailyEarn":"天天赚",
     "EarnSetIntroduction.monthlyEarn":"月月赚",
     "EarnSetIntroduction.quarterlyEarn":"季季赚",
-    "EarnSetPayment":"支付"
+    "EarnSetPayment.newbieLoan":"支付",
+    "EarnSetPayment.dailyEarn":"支付",
+    "EarnSetPayment.monthlyEarn":"支付",
+    "EarnSetPayment.quarterlyEarn":"支付",
+    "PurchaseSuccess":"购买成功"
 }
 
 //不需要显示navBar的页面

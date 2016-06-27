@@ -1,0 +1,108 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#purchaseSuccess {
+  .title {
+    display:flex;
+    align-items: center;
+    @include color-and-fontSize($C3,$T7);
+    position:relative;
+
+    &:last-child {
+      margin-bottom:rem-calc(20);
+    }
+
+    .subtitle {
+      @include color-and-fontSize($C5,$T11);
+      position:absolute;
+      top:rem-calc(30);
+      left:rem-calc(40);
+    }
+  }
+  span {
+    display:inline-block;
+    width:rem-calc(30);
+    height:rem-calc(30);
+    margin-right:rem-calc(10);
+    background-size: cover;
+
+    &.icon-success {
+      background-image: url("../../img/pay_icon_buysuccess_red.png");
+    }
+    &.icon-start {
+      background-image: url("../../img/pay_icon_count_red.png");
+    }
+    &.icon-end {
+      background-image: url("../../img/pay_icon_interest_gray.png");
+    }
+  }
+  .placeholder {
+    width:100%;
+    height:rem-calc(43);
+    margin-top:rem-calc(-4);
+    margin-left:rem-calc(14);
+    padding-left:rem-calc(14);
+
+    &.first-stage {
+      border-left:2px solid $C1;
+    }
+
+    &.second-stage {
+      border-left:2px dotted $separation-line-color;
+    }
+  }
+
+  #dailyEarn {
+    .group-body {
+      display:flex;
+      justify-content: center;
+    }
+
+    .stage-one,
+    .stage-two {
+      width:rem-calc(130);
+      text-align:center;
+      position:relative;
+
+      .stage-line {
+        width:rem-calc(115);
+        height:rem-calc(2);
+        background-color: $C1;
+        position:absolute;
+        left:50%;
+        top:rem-calc(14);
+        margin-left:rem-calc(15);
+      }
+    }
+
+    .icon-start,
+    .icon-success {
+      margin-right:0;
+    }
+
+    .title {
+      display:block;
+      margin:0;
+      text-align:center;
+    }
+    .subtitle {
+      @include color-and-fontSize($C5,$T11);
+    }
+    .dailyEarn-placeholder {
+      width:rem-calc(30);
+      height:rem-calc(2);
+      background-color:$C1;
+    }
+
+  }
+
+  .accordion-content {
+    padding:0;
+  }
+}

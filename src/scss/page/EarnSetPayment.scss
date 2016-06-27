@@ -1,0 +1,50 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#earnSetPayment {
+  .title {
+    margin-bottom:rem-calc(10);
+    @include color-and-fontSize($C3,$T6);
+    font-weight: normal;
+  }
+  .subtitle {
+    @include color-and-fontSize($C4,$T8);
+  }
+
+  strong {
+    color:$C1;
+    font-weight:normal;
+  }
+
+  #purchaseZone {
+    .group-body {
+      padding-right:0;
+      padding-top:0;
+      padding-bottom:0;
+    }
+    .item {
+      padding-left:0;
+
+      a {
+        padding-left:0;
+      }
+    }
+    .subtitle.usableAmount {
+      padding:rem-calc(15) 0 rem-calc(3);
+    }
+    .subtitle.expectedReward {
+      padding:rem-calc(5) 0 rem-calc(15);
+    }
+    .useALL-btn {
+      padding-left:rem-calc(15);
+      color:$C1;
+      border-left:1px solid $separation-line-color;
+    }
+  }
+}
