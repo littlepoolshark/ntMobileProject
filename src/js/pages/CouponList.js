@@ -69,6 +69,7 @@ let CouponCard=React.createClass({
         }
     },
     _jumpBack(event){
+
         let arr=[];
         (function getParentsNodeByClassName(element,className){
            if(CSSCore.hasClass(element,className)){
@@ -83,6 +84,8 @@ let CouponCard=React.createClass({
         }else {
             this.props.history.pushState(null,"/earnSetPayment/?type="+this.props.type+"&couponAmount="+20);
         }
+
+
     },
     render(){
         let type=this.props.type;
