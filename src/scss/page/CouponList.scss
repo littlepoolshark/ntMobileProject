@@ -1,0 +1,98 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#couponList {
+  padding:rem-calc(15);
+  background-color:#ececec;
+  overflow-y: scroll;
+
+  .btn {
+    @include color-and-fontSize($C3,$T6);
+    background-color:#fff;
+
+    &:active,
+    &:focus {
+      background-color:#fff;
+      border:none;
+    }
+  }
+
+  .coupon-card {
+     position:relative;
+     width:100%;
+     height:rem-calc(122);
+     margin-bottom:rem-calc(20);
+
+    &:last-child {
+      margin-bottom:0;
+    }
+
+    .coupon-card-body {
+      height:rem-calc(95);
+      padding:rem-calc(15);
+      background-color:#fff;
+
+      .coupon-card-body-left {
+         width:35%;
+      }
+      .coupon-card-body-right {
+        width:65%;
+      }
+    }
+
+    .coupon-card-footer {
+      height:rem-calc(27);
+      line-height:rem-calc(31);
+      padding:0 rem-calc(5);
+      background-color:#f8f7f7;
+    }
+
+    .coupon-card-border-top,
+    .coupon-card-border-bottom {
+      width:100%;
+      height:rem-calc(3);
+      background-size:cover;
+      position:absolute;
+      left:0;
+    }
+    .coupon-card-border-top {
+      background-image:url("../../img/redbag_bg_up.png");
+      top:-3px;
+    }
+    .coupon-card-border-bottom {
+      background-image:url("../../img/redbag_bg_down.png");
+      bottom:-3px;
+    }
+
+    .title {
+      @include color-and-fontSize($C3,$T6);
+    }
+    .subtitle {
+      @include color-and-fontSize($C4,$T10);
+    }
+    .amount {
+      @include color-and-fontSize($C1,$T14);
+      @media screen and (max-width: 320px) {
+        @include color-and-fontSize($C1,$T2);
+      }
+    }
+    .unit {
+      @include color-and-fontSize($C1,$T5);
+    }
+  }
+
+  .coupon-card.disabled {
+    .title,
+    .amount,
+    .unit {
+      color:$C4;
+    }
+
+  }
+}

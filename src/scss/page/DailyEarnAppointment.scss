@@ -1,0 +1,39 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#dailyEarnAppointment {
+
+  .title {
+    @include color-and-fontSize($C3,$T6);
+  }
+
+  .subtitle {
+    margin-top:rem-calc(5);
+    @include color-and-fontSize($C4,$T8);
+  }
+
+  strong {
+    font-weight: normal;
+    color:$C1;
+  }
+
+  .block-btn-wrapper {
+    padding:0 rem-calc(15);
+  }
+  .warm-hint {
+    margin-top:0;
+    padding:rem-calc(5) rem-calc(15);
+    font-size:$T10;
+    color:#acacac;
+
+    .label {
+      color:#636262;
+    }
+  }
+}

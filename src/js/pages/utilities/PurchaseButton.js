@@ -26,7 +26,9 @@ let PurchaseButton=React.createClass({
     _handleOnClick(){
         if(this.props.isSoldOut && this.props.type !== "dailyEarn"){
             Message.broadcast("该标的已经售罄！");
-        }else {
+        }else if(this.props.isSoldOut && this.props.type === "dailyEarn"){
+            this.props.history.pushState(null,"DailyEarnAppointment");
+        } else {
             this.props.history.pushState(null,"/EarnSetPayment/?type="+this.props.type);
         }
     },

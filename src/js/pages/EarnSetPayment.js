@@ -1,5 +1,6 @@
 require("../../scss/page/EarnSetPayment.scss");
 import React from "react";
+import {Link} from "react-router";
 
 //ui component
 import Group from "../UIComponents/Group";
@@ -8,8 +9,8 @@ import Button from "../UIComponents/Button";
 import Field from "../UIComponents/Field";
 import Container from "../UIComponents/Container";
 
-const CAN_USE_INTERESTRATE=["monthlyEarn","quarterlyEarn"];
-const CAN_USE_REDPACKAGTE=["quarterlyEarn"];
+const CAN_USE_COUPON=["monthlyEarn","quarterlyEarn","fixedLoan"];
+
 
 let EarnSetPayment=React.createClass({
     _renderInvestmentLimit(type){
@@ -23,10 +24,11 @@ let EarnSetPayment=React.createClass({
             return null;
         }
     },
-    _renderInterestRate(type){
-        if(CAN_USE_INTERESTRATE.indexOf(type) > -1){
+    _renderCouponBar(type){
+
+        if(CAN_USE_COUPON.indexOf(type) > -1){
             return (
-                <List.Item href="#" after="查看" title="加息券" />
+            <List.Item href="javascript:void(0)" after="3张未使用" title="优惠券" onClick={this._jumpToCouponList}/>
             )
         }else {
             return null;
@@ -39,28 +41,16 @@ let EarnSetPayment=React.createClass({
             )
         }
     },
-    _renderRedPackage(type){
-        if(CAN_USE_REDPACKAGTE.indexOf(type) > -1){
-            return (
-                <Group
-                    header=""
-                    noPadded
-                >
-                    <List>
-                        <List.Item href="#" after="查看" title="红包" />
-                    </List>
-                </Group>
-            )
-        }else {
-            return null;
-        }
-    },
     _pay(){
-        this.props.history.pushState(null,"/purchaseSuccess/?type="+this.props.type);
+        let type=this.props.location.query.type;
+        this.props.history.pushState(null,"/purchaseSuccess/?type="+type);
+    },
+    _jumpToCouponList(){
+        let purchaseAmount=this.refs.purchaseAmount.getValue() || 0;
+        this.props.history.pushState(null,"/couponList/?purchaseAmount="+purchaseAmount);
     },
     render(){
         let type=this.props.location.query.type;
-        console.log("type:",type);
         return (
             <Container id="earnSetPayment">
                 <Group>
@@ -94,12 +84,10 @@ let EarnSetPayment=React.createClass({
                             </Field>
 
                         </List.Item>
-                        {this._renderInterestRate(type)}
+                        {this._renderCouponBar(type)}
                     </List>
                     {this._renderExpectedReward(type)}
                 </Group>
-
-                {this._renderRedPackage(type)}
 
                 <div style={{padding:"20px 15px"}}>
                     <Button amStyle="primary" block ={true} radius={true} onClick={this._pay}>确认支付</Button>
