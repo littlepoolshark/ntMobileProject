@@ -8,7 +8,9 @@ export Register from './Register';
 export EarnSetIntroduction from './EarnSetIntroduction';
 export EarnSetPayment from './EarnSetPayment';
 export PurchaseSuccess from './PurchaseSuccess';
-
+export AppointmentSuccess from './AppointmentSuccess';
+export DailyEarnAppointment from './DailyEarnAppointment';
+export CouponList from './CouponList';
 
 
 

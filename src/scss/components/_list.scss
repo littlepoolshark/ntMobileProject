@@ -138,7 +138,7 @@
 // List item: field in item
 // -----------------------------------------------------------------------------
 %item-field {
-  border-color: #ddd;
+  border-color: $list-border-color;
   padding-top: 0;
   padding-bottom: 0;
 
@@ -151,7 +151,7 @@
     .getVerificationcode-btn {
       padding-left:rem-calc(15);
       font-size:rem-calc(14);
-      border-left:1px solid #ddd;
+      border-left:1px solid $list-border-color;
       text-decoration: none;
     }
     .getVerificationcode-btn.disabled  span{
