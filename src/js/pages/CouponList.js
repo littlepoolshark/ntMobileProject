@@ -1,4 +1,5 @@
 require("../../scss/page/CouponList.scss");
+let PaymentAction=require("../actions/PaymentAction.js");
 import React from "react";
 import classNames from "classnames";
 import CSSCore from "../UIComponents/utils/CSSCore";
@@ -10,41 +11,46 @@ import Container from "../UIComponents/Container";
 const CAN_USE_COUPON=["monthlyEarn","quarterlyEarn","fixedLoan"];
 let couponList=[
     {
+        id:1,
         type:"redPackage",
-        couponAmount:20,
-        investmentLimit:5000,
+        couponAmount:200,
+        investmentMinLimit:5000,
         useScope:"季季赚，好采投",
         source:"主动派送加息券",
         deadline:"2016-07-01"
     },
     {
+        id:2,
         type:"interestRate",
         couponAmount:0.5,
-        investmentLimit:5000,
+        investmentMinLimit:5000,
         useScope:"月月赚，季季赚，好采投",
         source:"主动派送加息券",
         deadline:"2016-07-01"
     },
     {
+        id:3,
         type:"interestRate",
         couponAmount:0.5,
-        investmentLimit:5000,
+        investmentMinLimit:5000,
         useScope:"月月赚，季季赚，好采投",
         source:"主动派送加息券",
         deadline:"2016-07-01"
     },
     {
+        id:4,
         type:"interestRate",
         couponAmount:0.5,
-        investmentLimit:5000,
+        investmentMinLimit:5000,
         useScope:"月月赚，季季赚，好采投",
         source:"主动派送加息券",
         deadline:"2016-07-01"
     },
     {
+        id:5,
         type:"interestRate",
         couponAmount:0.5,
-        investmentLimit:5000,
+        investmentMinLimit:5000,
         useScope:"月月赚，季季赚，好采投",
         source:"主动派送加息券",
         deadline:"2016-07-01"
@@ -68,39 +74,26 @@ let CouponCard=React.createClass({
             )
         }
     },
-    _jumpBack(event){
-
-        let arr=[];
-        (function getParentsNodeByClassName(element,className){
-           if(CSSCore.hasClass(element,className)){
-               arr.push(element);
-           }else {
-               getParentsNodeByClassName(element.parentNode,className);
-           }
-        })(event.target,"coupon-card");
-
-        if(CSSCore.hasClass(arr[0],"disabled")){
-            return false;
-        }else {
-            this.props.history.pushState(null,"/earnSetPayment/?type="+this.props.type+"&couponAmount="+20);
-        }
-
-
-    },
     render(){
         let type=this.props.type;
         let amount=this.props.couponAmount;
         let couponClass=classNames({
-            disabled:type === "redPackage" && this.props.purchaseAmount < this.props.investmentLimit
+            disabled:type === "redPackage" && this.props.purchaseAmount < this.props.investmentMinLimit
             }, "coupon-card");
 
         return (
-            <div className={couponClass} onClick={this._jumpBack}>
+            <div
+                className={couponClass}
+                data-id={this.props.id}
+                data-amount={this.props.couponAmount}
+                data-type={this.props.type}
+                data-minimumlimit={this.props.investmentMinLimit}
+            >
                 <div className="coupon-card-body cf">
                     {this._renderCouponAmount(type,amount)}
                     <div className="coupon-card-body-right fl">
                         <div className="title">{type === "interestRate" ? "加息券" : "红包"}</div>
-                        <div className="subtitle">使用方式：单笔投资满{this.props.investmentLimit}</div>
+                        <div className="subtitle">使用方式：单笔投资满{this.props.investmentMinLimit}</div>
                         <div className="subtitle">使用范围：{this.props.useScope}</div>
                     </div>
                 </div>
@@ -118,6 +111,7 @@ let CouponCard=React.createClass({
 
 let CouponList=React.createClass({
     _doNotUseCoupon(){
+        PaymentAction.doNotUseCoupon();
         this.props.history.goBack();
     },
     render(){
@@ -128,12 +122,30 @@ let CouponList=React.createClass({
                 {(
                     couponList.map(function(item,index){
                         return (
-                            <CouponCard {...item} purchaseAmount={purchaseAmount} history={this.props.history}/>
+                            <CouponCard {...item} purchaseAmount={purchaseAmount} />
                         )
                     }.bind(this))
                 )}
             </Container>
         )
+    },
+    componentDidMount(){
+        let cards=document.getElementsByClassName("coupon-card");
+        let _self=this;
+        Array.prototype.forEach.call(cards,function(item,index){
+            item.addEventListener("click",function(){
+                if(CSSCore.hasClass(this,"disabled")){
+                    return false;
+                }else {
+                    let id=this.getAttribute("data-id");
+                    let amount=parseFloat(this.getAttribute("data-amount"));
+                    let type=this.getAttribute("data-type");
+                    let minimumLimit=parseFloat(this.getAttribute("data-minimumlimit"));
+                    PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit);
+                    _self.props.history.goBack();
+                }
+            })
+        });
     }
 });
 

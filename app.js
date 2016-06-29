@@ -37,17 +37,17 @@ const pageNameMap={
     "EarnSetIntroduction.dailyEarn":"天天赚",
     "EarnSetIntroduction.monthlyEarn":"月月赚",
     "EarnSetIntroduction.quarterlyEarn":"季季赚",
-    "EarnSetPayment.newbieLoan":"支付",
-    "EarnSetPayment.dailyEarn":"支付",
-    "EarnSetPayment.monthlyEarn":"支付",
-    "EarnSetPayment.quarterlyEarn":"支付",
+    "Payment.newbieLoan":"支付",
+    "Payment.dailyEarn":"支付",
+    "Payment.monthlyEarn":"支付",
+    "Payment.quarterlyEarn":"支付",
     "PurchaseSuccess":"购买成功",
     "DailyEarnAppointment":"预约天天赚",
     "CouponList":"我的优惠券"
 }
 
 //不需要显示navBar的页面
-let noNavBarPage=["Home","UserHome","Register"];
+let noNavBarPage=["Home","UserHome","Register","PurchaseSuccess"];
 
 //需要显示tabBar的页面
 let hasTabBarPage=["home","productList","userHome"];

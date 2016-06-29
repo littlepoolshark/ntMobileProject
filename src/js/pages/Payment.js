@@ -1,4 +1,6 @@
 require("../../scss/page/EarnSetPayment.scss");
+let PaymentAction=require("../actions/PaymentAction");
+let PaymentStore=require("../stores/PaymentStore");
 import React from "react";
 import {Link} from "react-router";
 
@@ -12,7 +14,13 @@ import Container from "../UIComponents/Container";
 const CAN_USE_COUPON=["monthlyEarn","quarterlyEarn","fixedLoan"];
 
 
-let EarnSetPayment=React.createClass({
+let Payment=React.createClass({
+    getInitialState(){
+        return {
+            purchaseAmount:PaymentStore.getAll().purchaseAmount,
+            couponAmount:PaymentStore.getAll().couponAmount
+        }
+    },
     _renderInvestmentLimit(type){
         if(type === "dailyEarn"){
             return (
@@ -27,17 +35,23 @@ let EarnSetPayment=React.createClass({
     _renderCouponBar(type){
 
         if(CAN_USE_COUPON.indexOf(type) > -1){
+            let {
+                couponAmount,
+                couponType
+                }=PaymentStore.getAll();
+            couponAmount= couponType === "interestRate" ? couponAmount+"%" : couponAmount;
             return (
-            <List.Item href="javascript:void(0)" after="3张未使用" title="优惠券" onClick={this._jumpToCouponList}/>
+            <List.Item href="javascript:void(0)" after={couponAmount ? <span className="coupon-wrapper">{couponAmount}</span> : <span>3张未使用</span>} title="优惠券" onClick={this._jumpToCouponList}/>
             )
         }else {
             return null;
         }
     },
     _renderExpectedReward(type){
+        let expectedReward=PaymentStore.getAll().expectedReward;
         if(type !== "dailyEarn"){
             return (
-                <div className="subtitle expectedReward" style={{paddingTop:"5px"}}>预期收益：<strong>1000.00</strong>元</div>
+                <div className="subtitle expectedReward" style={{paddingTop:"5px"}}>预期收益：<strong>{expectedReward}</strong>元</div>
             )
         }
     },
@@ -48,6 +62,9 @@ let EarnSetPayment=React.createClass({
     _jumpToCouponList(){
         let purchaseAmount=this.refs.purchaseAmount.getValue() || 0;
         this.props.history.pushState(null,"/couponList/?purchaseAmount="+purchaseAmount);
+    },
+    _handlePurchaseAmountChange(event){
+        PaymentAction.changePurchaseAmount(parseFloat(event.target.value));
     },
     render(){
         let type=this.props.location.query.type;
@@ -79,6 +96,8 @@ let EarnSetPayment=React.createClass({
                                 placeholder="100元起投"
                                 ref="purchaseAmount"
                                 inputAfter={(<span className="useALL-btn">全余额</span>)}
+                                onChange={this._handlePurchaseAmountChange}
+                                value={this.state.purchaseAmount ? this.state.purchaseAmount : ""}
                                 >
 
                             </Field>
@@ -94,7 +113,15 @@ let EarnSetPayment=React.createClass({
                 </div>
             </Container>
         )
+    },
+    componentDidMount(){
+        PaymentStore.bind("change",function(){
+            this.setState({
+                purchaseAmount:PaymentStore.getAll().purchaseAmount,
+                couponAmount:PaymentStore.getAll().couponAmount
+            })
+        }.bind(this));
     }
 });
 
-export default  EarnSetPayment;
+export default  Payment;

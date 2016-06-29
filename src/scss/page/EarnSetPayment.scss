@@ -47,4 +47,15 @@
       border-left:1px solid $separation-line-color;
     }
   }
+
+  .coupon-wrapper {
+    display:inline-block;
+    width:rem-calc(45);
+    height:rem-calc(25);
+    line-height: rem-calc(28);
+    text-align:center;
+    @include color-and-fontSize($C1,$T10);
+    background-image: url("../../img/icon_vouchers_bg.png");
+    background-size:cover;
+  }
 }

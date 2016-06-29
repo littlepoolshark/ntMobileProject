@@ -29,7 +29,7 @@ let PurchaseButton=React.createClass({
         }else if(this.props.isSoldOut && this.props.type === "dailyEarn"){
             this.props.history.pushState(null,"DailyEarnAppointment");
         } else {
-            this.props.history.pushState(null,"/EarnSetPayment/?type="+this.props.type);
+            this.props.history.pushState(null,"/Payment/?type="+this.props.type);
         }
     },
     render(){

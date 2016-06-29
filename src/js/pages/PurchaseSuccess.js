@@ -5,6 +5,7 @@ import React from "react";
 import Group from "../UIComponents/Group";
 import Accordion from "../UIComponents/Accordion";
 import Container from "../UIComponents/Container";
+import NavBar from "../UIComponents/NavBar";
 
 //utilities component
 import InvestmentRecord from "./utilities/InvestmentRecord";
@@ -92,10 +93,23 @@ let PurchaseSuccess=React.createClass({
 
         }
     },
+    _handleNavDone(){
+        this.props.history.pushState(null,"/productList");
+    },
     render(){
         let type=this.props.location.query.type;
+        let doneNav= {
+            component:"a",
+            title: '完成'
+        };
         return (
             <Container id="purchaseSuccess" scroll={false} style={{overflowY:"scroll"}}>
+                <NavBar
+                    title="购买成功"
+                    rightNav={[doneNav]}
+                    amStyle="primary"
+                    onAction={this._handleNavDone}
+                />
                 {this._renderStageBar(type)}
                 <Accordion defaultActiveKey={0}>
                     <Accordion.Item
