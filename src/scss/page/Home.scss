@@ -7,7 +7,7 @@
 // Mixin
 @import "../helper/mixins";
 
-
+/*平台介绍 && 邀请有礼*/
 .home-introduction-item {
   display:flex;
   align-items:center;
@@ -35,6 +35,8 @@
   }
 }
 
+
+/*标的卡片*/
 .home-earnSet-card {
   position:relative;
 
@@ -49,6 +51,11 @@
     font-size:$T5;
     font-weight:normal;
     border-bottom:1px solid #ececec;
+
+    .text {
+      height:rem-calc(17);
+    }
+
   }
   .dailyEarn-label {
     display:inline-block;
@@ -74,11 +81,12 @@
     right:rem-calc(15);
   }
   .icon-day,
-  .icon-new {
+  .icon-new,
+  .icon-redStar {
     display:inline-block;
     width:rem-calc(17);
     height:rem-calc(17);
-    margin-right:rem-calc(5);
+    margin-right:rem-calc(3);
     background-size: cover;
   }
   .icon-day {
@@ -86,6 +94,9 @@
   }
   .icon-new {
     background-image: url("../../img/home_icon_new.png");
+  }
+  .icon-redStar {
+    background-image: url("../../img/home_icon_mouth.png");
   }
   .home-earnSet-card-item {
     display:flex;

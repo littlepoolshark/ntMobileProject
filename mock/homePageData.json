@@ -1,0 +1,52 @@
+{
+  "code": 0,
+  "data": {
+    "totalAmountOfInvestment": "609,090,600",
+    "list": [
+      {
+        "buyProgress": 77,
+        "id": 298,
+        "preRepayDate": "2016-01-01",
+        "productApr": 0.08,
+        "productMoney": 1018200,
+        "productName": "天天赚",
+        "remainAmount": 230000,
+        "repaymentLimit": 0,
+        "repaymentTypeUnit": "活期",
+        "rewardRate": 0,
+        "status": "already_publish",
+        "type": "ttz_product"
+      },
+      {
+        "buyProgress": 28,
+        "id": 820,
+        "preRepayDate": "2016-06-28",
+        "productApr": 0.095,
+        "productMoney": 200000,
+        "productName": "月月赚160526-6",
+        "remainAmount": 143200,
+        "repaymentLimit": 1,
+        "repaymentTypeUnit": "个月",
+        "rewardRate": 0,
+        "status": "already_publish",
+        "type":"yyz_product"
+      },
+      {
+        "buyProgress": 28,
+        "id": 821,
+        "preRepayDate": "2016-06-28",
+        "productApr": 0.105,
+        "productMoney": 200000,
+        "productName": "季季赚160526-6",
+        "remainAmount": 143200,
+        "repaymentLimit":3,
+        "repaymentTypeUnit": "个月",
+        "rewardRate": 0,
+        "status": "perpublish",
+        "type":"yyz_product"
+      }
+    ],
+    "registerUserCount": "161,345"
+  },
+  "description": "成功"
+}

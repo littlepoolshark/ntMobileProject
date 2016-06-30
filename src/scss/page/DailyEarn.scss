@@ -19,6 +19,10 @@
     font-size:$T5;
     font-weight:normal;
     border-bottom:1px solid #ececec;
+
+    .text {
+      height:rem-calc(18);
+    }
   }
   .dailyEarn-label {
     display:inline-block;
@@ -39,7 +43,7 @@
     display:inline-block;
     width:rem-calc(17);
     height:rem-calc(17);
-    margin-right:rem-calc(5);
+    margin-right:rem-calc(3);
     background-size: cover;
   }
   .icon-day {
