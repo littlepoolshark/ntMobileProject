@@ -12,21 +12,21 @@ let PurchaseButton=React.createClass({
     getDefaultProps(){
         return {
             isSoldOut:false,
-            type:"monthlyEarn"
+            type:"new_product"
         }
     },
     _renderButtonText(){
         let buttonText="";
-        if(this.props.type === "dailyEarn"){
+        if(this.props.type === "ttz_product"){
             return this.props.isSoldOut ? "预约" : "立即购买";
         }else {
             return this.props.isSoldOut ? "售罄" : "立即购买";
         }
     },
     _handleOnClick(){
-        if(this.props.isSoldOut && this.props.type !== "dailyEarn"){
+        if(this.props.isSoldOut && this.props.type !== "ttz_product"){
             Message.broadcast("该标的已经售罄！");
-        }else if(this.props.isSoldOut && this.props.type === "dailyEarn"){
+        }else if(this.props.isSoldOut && this.props.type === "ttz_product"){
             this.props.history.pushState(null,"DailyEarnAppointment");
         } else {
             this.props.history.pushState(null,"/Payment/?type="+this.props.type);

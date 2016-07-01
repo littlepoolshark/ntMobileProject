@@ -1,0 +1,20 @@
+{
+  "code": 0,
+  "data": {
+    "buyProgress": 0.65,
+    "id": 278,
+    "preRepayDate": "2016-07-01",
+    "productApr": 0.095,
+    "productMoney": 1115000,
+    "productName": "月月赚",
+    "remainAmount": 1114900,
+    "rewardRate": 0,
+    "status": "already_publish",
+    "type": "yyz_product",
+    "repaymentLimit":"1",
+    "repaymentTypeUnit": "个月",
+    "interestDate":"2016-07-01",
+    "preRepayDate":"2016-08-02"
+  },
+  "description": "成功"
+}

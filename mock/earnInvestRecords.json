@@ -1,0 +1,35 @@
+{
+  "code": 0,
+  "data": {
+    "list": [
+      {
+        "id": 150,
+        "inverstAmount": 50500.00,
+        "inverstTime": "2016-01-07",
+        "realName": "周**"
+      },
+      {
+        "id": 149,
+        "inverstAmount": 100.00,
+        "inverstTime": "2016-01-07",
+        "realName": "冉**"
+      },
+      {
+        "id": 148,
+        "inverstAmount": 30300.00,
+        "inverstTime": "2016-01-07",
+        "realName": "肖**"
+      },
+      {
+        "id": 147,
+        "inverstAmount": 36300.00,
+        "inverstTime": "2016-01-07",
+        "realName": "周**"
+      }
+    ],
+    "pageIndex": 1,
+    "pageSize": 10,
+    "recordCount": 9
+  },
+  "description": "成功"
+}

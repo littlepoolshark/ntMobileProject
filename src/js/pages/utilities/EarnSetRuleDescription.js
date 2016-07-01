@@ -11,16 +11,16 @@ let RuleDescription=React.createClass({
     _renderCouponRule(){
         let CouponRuleText="";
         switch (this.props.type){
-            case "newbieLoan":
+            case "new_product":
                 CouponRuleText="不可以使用加息券，不可以使用红包";
                 break;
-            case "dailyEarn":
+            case "ttz_product":
                 CouponRuleText="不可以使用加息券，不可以使用红包";
                 break;
-            case "monthlyEarn":
+            case "yyz_product":
                 CouponRuleText="可以使用加息券，不可以使用红包";
                 break;
-            case "quarterlyEarn":
+            case "jjz_product":
                 CouponRuleText="可以使用加息券，可以使用红包";
                 break;
             default :
@@ -36,7 +36,7 @@ let RuleDescription=React.createClass({
             <Group className="rule-description">
                 <ul>
                     {
-                        this.props.type === "newbieLoan" ?
+                        this.props.type === "new_product" ?
                             (
                                 <li><span className="icon-benefit"></span>加息5.5%，合计15%的年化收益</li>
                             ) : null

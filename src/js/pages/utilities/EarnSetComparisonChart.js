@@ -6,21 +6,20 @@ import Group from "../../UIComponents/Group";
 //utilities component
 import Slogan from "./Slogan";
 import ProgressBar from "./ProgressBar";
-
-const LABEL_TEXT_MAP={
-    newbieLoan:"新手标",
-    dailyEarn:"天天赚",
-    monthlyEarn:"月月赚",
-    quarterlyEarn:"季季赚"
-}
+import config from "../../config";
 
 //赚系列产品收益对比图表
 let ComparisonChart=React.createClass({
     propTypes:{
         type:React.PropTypes.string.isRequired
     },
+    getDefaultProps(){
+        return {
+            type:"ttz_product"
+        }
+    },
     _renderChartContent(){
-        if(this.props.type === "dailyEarn"){
+        if(this.props.type === "ttz_product"){
             return (
                 <div className="content dailyEarn">
                 </div>
@@ -31,14 +30,14 @@ let ComparisonChart=React.createClass({
                     <div className="content-item">
                         <sapn className="label">银行利息</sapn>
                         <ProgressBar width="150px" hasProgressPercent={false} percent="20%"/>
-                        <strong>{this.props.type === "quarterlyEarn" ? "33.80" : "2.50"}</strong>元
+                        <strong>{this.props.type === "jjz_product" ? "33.80" : "2.50"}</strong>元
                     </div>
                     <div className="content-item">
-                        <sapn className="label">{LABEL_TEXT_MAP[this.props.type]}</sapn>
+                        <sapn className="label">{config.productNameMap[this.props.type]}</sapn>
                         <ProgressBar width="150px" hasProgressPercent={false} percent="20%"/>
-                        <strong>{this.props.type === "quarterlyEarn" ? "262.50" : "79.20"}</strong>元
+                        <strong>{this.props.type === "jjz_product" ? "262.50" : "79.20"}</strong>元
                     </div>
-                    <div className="content-item">同期比多<strong>{this.props.type === "quarterlyEarn" ? "228.70" : "76.70"}</strong>元</div>
+                    <div className="content-item">同期比多<strong>{this.props.type === "jjz_product" ? "228.70" : "76.70"}</strong>元</div>
                 </div>
             )
         }

@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "description": "成功",
+  "data": {
+    "pageIndex": 1,
+    "pageSize": 2,
+    "recordCount": 2,
+    "list": [
+      {
+        "link": "https://www.ntjrchina.com/recommendGift.jsp",
+        "pic": "./src/img/banner_01.jpg",
+        "title": "邀请奖励"
+      },
+      {
+        "link": "https://www.ntjrchina.com//sinosig.jsp",
+        "pic": "./src/img/banner_02.jpg",
+        "title": "阳光保险"
+      },
+      {
+        "link": "https://www.ntjrchina.com//sinosig.jsp",
+        "pic": "./src/img/banner_04.jpg",
+        "title": "推荐有礼"
+      }
+    ]
+  }
+
+}

@@ -12,11 +12,11 @@ import ProgressBar from "./ProgressBar";
 let Summary=React.createClass({
     propTypes: {
         type: React.PropTypes.string.isRequired,
-        yearRate:React.PropTypes.oneOfType([
+        productApr:React.PropTypes.oneOfType([
             React.PropTypes.number,
             React.PropTypes.string
         ]),
-        progressPercent:React.PropTypes.oneOfType([
+        buyProgress:React.PropTypes.oneOfType([
             React.PropTypes.number,
             React.PropTypes.string
         ]),
@@ -27,54 +27,45 @@ let Summary=React.createClass({
     },
     getDefaultProps(){
         return {
-            type:"newbieLoan",
-            yearRate:0.0,
-            progressPercent:"0.0%",
-            remainAmount:0.0
+            type:"new_product",
+            productApr:"0.0",
+            buyProgress:"0.0",
+            remainAmount:"0.00",
+            repaymentLimit:"--",
+            repaymentTypeUnit:"--"
         }
-    },
-    _renderLabelItem (){
-        let labelText="";
-        switch (this.props.type){
-            case "newbieLoan":
-                labelText="1个月";
-                break;
-            case "dailyEarn":
-                labelText="随存随取";
-                break;
-            case "monthlyEarn":
-                labelText="1个月";
-                break;
-            case "quarterlyEarn":
-                labelText="3个月";
-                break;
-            default :
-                break;
-        }
-
-        return labelText;
     },
     render(){
+        let {
+            type,
+            productApr,
+            repaymentLimit,
+            repaymentTypeUnit,
+            remainAmount,
+            buyProgress
+            }=this.props;
+
         let tagClass=classNames({
-            "dailyEarn-tag":this.props.type === "dailyEarn",
-            "newbieLoan-tag":this.props.type === "newbieLoan",
+            "dailyEarn-tag":type === "ttz_product",
+            "newbieLoan-tag":type === "new_product",
             "tag":true
         });
+
         return (
             <Group className="summary">
                 <div className="subtitle">年化利率</div>
                 <div className="yearRate">
-                    <span className="amount">{this.props.yearRate}</span>
+                    <span className="amount">{productApr}</span>
                     <span className="unit">%</span>
                 </div>
                 <Slogan />
                 <div className="label">
-                    <span className="label-item">{this._renderLabelItem()}</span>
+                    <span className="label-item">{repaymentLimit + repaymentTypeUnit}</span>
                     <span className="label-item">100元起投</span>
                     <span className="label-item">至今0风险</span>
                 </div>
-                <ProgressBar percent={this.props.progressPercent}/>
-                <div className="footer">剩余可投{this.props.remainAmount}元</div>
+                <ProgressBar percent={buyProgress}/>
+                <div className="footer">剩余可投{remainAmount}元</div>
                 <div className={tagClass}></div>
             </Group>
         )

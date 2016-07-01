@@ -1,6 +1,6 @@
 require("../../scss/page/EarnSetIntroduction.scss");
-//let EarnSetIntroductionAction=require("../actions/EarnSetIntroductionAction.js");
-//let EarnSetIntroductionStore=require("../stores/EarnSetIntroductionStore.js");
+let EarnSetIntroductionAction=require("../actions/EarnSetIntroductionAction.js");
+let EarnSetIntroductionStore=require("../stores/EarnSetIntroductionStore.js");
 import React from "react";
 import classNames from "classnames"
 
@@ -18,14 +18,14 @@ import RuleDescription from "./utilities/EarnSetRuleDescription.js";
 import ComparisonChart from "./utilities/EarnSetComparisonChart.js";
 import InvestmentRecord from "./utilities/InvestmentRecord.js"
 import PurchaseButton from "./utilities/PurchaseButton.js";
+import RepaymentDescription from "./utilities/RepaymentDescription"
+import FundGuaranteeDescription from "./utilities/FundGuaranteeDescription"
+import ServiceAgreement from "./utilities/ServiceAgreement"
+import ProductDescription from "./utilities/ProductDescription";
+import ProductIntroduction from "./utilities/ProductIntroduction";
+import config from "../config";
 
 let initialOffsetTop=0;
-const LABEL_TEXT_MAP={
-    newbieLoan:"新手标",
-    dailyEarn:"天天赚",
-    monthlyEarn:"月月赚",
-    quarterlyEarn:"季季赚"
-}
 let data=[
     {
         title:"项目名称",
@@ -92,11 +92,22 @@ let recordList=[
 
 
 
-
 let EarnSetIntroduction=React.createClass({
-    _handleOnScroll(){
+    _getAllDataFromStore(){
+        return EarnSetIntroductionStore.getAll();
     },
-    _test2(event){
+    getDefaultProps(){
+
+    },
+    getInitialState(){
+        let {
+            productId,
+            type
+            }=this.props.location.query;
+        EarnSetIntroductionAction.getDataFromServer(type,productId);
+        return this._getAllDataFromStore()
+    },
+    _handleOnScroll(event){
         let container=document.getElementById("earnSetIntroduction");
         let offsetHeight=container.offsetHeight;
         let scrollHeight=container.scrollHeight;
@@ -110,13 +121,13 @@ let EarnSetIntroduction=React.createClass({
     },
     render(){
         let productionType=this.props.location.query.type;
-        let modalTitle=LABEL_TEXT_MAP[productionType];
+        let modalTitle=config.productNameMap[productionType];
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}} id="earnSetIntroduction" onTouchEnd={this._handleOnScroll} onScroll={this._test2}>
-                <Summary type={productionType}/>
-                <RuleDescription type={productionType}/>
-                <ComparisonChart type={productionType}/>
-                <PurchaseButton isSoldOut={false} type={productionType} history={this.props.history}/>
+            <Container scrollable={false} style={{overflow:"scroll"}} id="earnSetIntroduction"  onScroll={this._handleOnScroll}>
+                <Summary  {...this.state}/>
+                <RuleDescription {...this.state}/>
+                <ComparisonChart {...this.state}/>
+                <PurchaseButton isSoldOut={true} {...this.state} {...this.props}/>
                 <Modal
                     title={modalTitle + "详情"}
                     ref="modal"
@@ -131,39 +142,15 @@ let EarnSetIntroduction=React.createClass({
                             key={0}
                             navStyle={null}
                             >
-                            <table >
-                                <tbody>
-                                {
-                                    data.map((item,i) => {
-                                        return (
-                                            <tr>
-                                                <td className="title">{item.title}</td>
-                                                <td className="content">{item.after}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                                </tbody>
-                            </table>
-                            <Group>
-                                <h6>产品说明</h6>
-                                <div className="content">产品说明产品说明产品说明产品说明产品说明产品说明产品说明产品说明产品说明产品说明产品说明产品说明产品说明产品说明</div>
-                            </Group>
+                            <ProductIntroduction {...this.state}/>
+                            <ProductDescription {...this.state}/>
 
-                            <Group>
-                                <h6>还款保障</h6>
-                                <div>还款保障还款保障还款保障还款保障还款保障还款保障还款保障还款保障还款保障还款保障还款保障还款保障还款保障还款保障</div>
-                            </Group>
+                            <RepaymentDescription />
 
-                            <Group>
-                                <h6>资金保障</h6>
-                                <div>资金保障资金保障资金保障资金保障资金保障资金保障资金保障资金保障资金保障资金保障资金保障资金保障资金保障资金保障</div>
-                            </Group>
+                            <FundGuaranteeDescription />
 
-                            <Group>
-                                <h6>服务协议</h6>
-                                <div>服务协议服务协议服务协议服务协议服务协议服务协议服务协议服务协议服务协议服务协议服务协议服务协议服务协议服务协议</div>
-                            </Group>
+                            <ServiceAgreement {...this.state}/>
+
                         </Tabs.Item>
                         <Tabs.Item
                             title="投资记录"
@@ -179,6 +166,9 @@ let EarnSetIntroduction=React.createClass({
     },
     componentDidMount(){
 
+        EarnSetIntroductionStore.bind("change",function(){
+            this.setState(this._getAllDataFromStore())
+        }.bind(this));
     }
 });
 

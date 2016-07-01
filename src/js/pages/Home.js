@@ -42,6 +42,7 @@ let  HomeCommonCard=React.createClass({
     },
     render(){
         let {
+            id,
             type,
             productName,
             productApr,
@@ -53,7 +54,7 @@ let  HomeCommonCard=React.createClass({
         let pathName=type === "loan_product" ? "fixLoanIntroduction" : "earnSetIntroduction";
 
         return (
-            <Link to={{pathname:pathName,query:{type:type}}}>
+            <Link to={{pathname:pathName,query:{type:type,productId:id}}}>
                 <Group className="home-earnSet-card" noSidePadded={true}>
                     <h6 className="title">
                         {
@@ -96,11 +97,9 @@ let  HomeCommonCard=React.createClass({
                 </Group>
             </Link>
         )
-    },
-    componentDidMount(){
-        console.log("into HomeCommonCard componentDidMount");
     }
 });
+
 
 //首页:Index component
 HomeAction.getDataFromServer();
@@ -113,20 +112,18 @@ let Home=React.createClass({
         return this._getAllDataFromStore();
     },
     render(){
-        console.log("into home render");
         return (
             <Container scrollable={false} style={{overflow:"scroll"}} >
 
                 <Slider>
-                    <Slider.Item>
-                        <img src="./src/img/banner_01.jpg" />
-                    </Slider.Item>
-                    <Slider.Item>
-                        <img src="./src/img/banner_02.jpg" />
-                    </Slider.Item>
-                    <Slider.Item>
-                        <img src="./src/img/banner_04.jpg" />
-                    </Slider.Item>
+                    {this.state.bannerList.map(function(item,index){
+                        return (
+                            <Slider.Item key={index + 1}>
+                                <img src={item.pic} />
+                            </Slider.Item>
+                        )
+
+                    })}
                 </Slider>
 
                 <Group header=""  style={{marginTop:0}}>
@@ -149,15 +146,15 @@ let Home=React.createClass({
                 </Group>
 
                 {
-                    this.state.list.map(function(item,index){
+                    this.state.productList.map(function(item,index){
                         if(item.type === "ttz_product"){
                             let statusText=this.getProductStatusText(item.type,item.status);
                             return (
-                                <DailyEarnCard {...item}/>
+                                <DailyEarnCard {...item} key={item.id}/>
                             )
                         }else {
                             return (
-                                <HomeCommonCard {...item}/>
+                                <HomeCommonCard {...item} key={item.id}/>
                             )
                         }
                     }.bind(this))
@@ -174,7 +171,6 @@ let Home=React.createClass({
         )
     },
     componentDidMount(){
-        console.log("into Home componentDidMount");
         HomeStore.bind("change",function(){
             this.setState(this._getAllDataFromStore())
         }.bind(this));
