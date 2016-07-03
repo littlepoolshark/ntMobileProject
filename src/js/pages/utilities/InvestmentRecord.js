@@ -47,14 +47,18 @@ let InvestmentRecord=React.createClass({
         )
     },
     componentDidMount(){
-        console.log("into InvestmentRecord componentDidUpdate");
         InvestmentRecordStore.bind("change",function(){
             this.setState(this._getAllDateFromStore())
         }.bind(this));
+
+        InvestmentRecordStore.bind("canNotLoadMore",function(){
+            Loader.toggle();
+        }.bind(this));
+
     },
     componentDidUpdate(){
-        console.log("into InvestmentRecord componentDidUpdate,test:",this.refs.test);
-        this.refs.test.style.display="none";
+        console.log("into InvestmentRecord componentDidUpdate")
+        Loader.hide();
     }
 });
 

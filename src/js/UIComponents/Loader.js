@@ -2,6 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 
+let microEvent=require("../lib/microevent");
+let pubsub={};
+microEvent.mixin(pubsub);
+
 const Loader = React.createClass({
   mixins: [ClassNameMixin],
 
@@ -19,6 +23,13 @@ const Loader = React.createClass({
     };
   },
 
+  getInitialState(){
+    return {
+      loading:false,
+      showHint:false
+    }
+  },
+
   render() {
     let classSet = this.getClassSet();
     const {
@@ -28,16 +39,64 @@ const Loader = React.createClass({
     } = this.props;
 
     return (
-      <Component
-        {...props}
-        className={classNames(classSet, className)}
-      >
-        <div className={this.prefixClass('bounce1')} />
-        <div className={this.prefixClass('bounce2')} />
-        <div className={this.prefixClass('bounce3')} />
-      </Component>
+        <div>
+          {
+            this.state.showHint ?
+              (
+                  <div className="text-center" style={{margin:"15px 0"}}>没有更多数据了！</div>
+              ) :
+              (
+                  <Component
+                      {...props}
+                      className={classNames(classSet, className,this.state.loading ? "" : "hide")}
+                      >
+                    <div>
+                      <div className={this.prefixClass('bounce1')} />
+                      <div className={this.prefixClass('bounce2')} />
+                      <div className={this.prefixClass('bounce3')} />
+                    </div>
+                  </Component>
+              )
+          }
+
+        </div>
+
     )
+  },
+  componentDidMount(){
+    pubsub.bind("loader.loading",function(){
+      this.setState({
+        loading:true
+      })
+    }.bind(this));
+
+    pubsub.bind("loader.loaded",function(){
+      this.setState({
+        loading:false
+      })
+    }.bind(this));
+
+    pubsub.bind("loader.toggleToNomoreDataHint",function(){
+      this.setState({
+        loading:false,
+        showHint:true
+      })
+    }.bind(this));
+
+
   }
 });
+
+Loader.show=function(){
+  pubsub.trigger("loader.loading");
+};
+
+Loader.hide=function(){
+  pubsub.trigger("loader.loaded");
+};
+
+Loader.toggle=function(){
+  pubsub.trigger("loader.toggleToNomoreDataHint");
+}
 
 export default Loader;

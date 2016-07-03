@@ -13,6 +13,7 @@ import Group from "../UIComponents/Group";
 import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
 import Modal from "../UIComponents/modal/Modal";
+import Loader from "../UIComponents/Loader";
 
 //utilities component
 import Summary from "./utilities/EarnSetSummary.js";
@@ -63,6 +64,7 @@ let EarnSetIntroduction=React.createClass({
             let scrollHeight=event.target.scrollHeight;
             let scrollTop=event.target.scrollTop;
             if(scrollTop > scrollHeight-offsetHeight-1){
+                Loader.show();
                 InvestmentRecordAction.loadNextPage();
             }
         }
