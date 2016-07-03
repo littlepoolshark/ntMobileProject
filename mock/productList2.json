@@ -10,15 +10,7 @@
       "remainAmount":100000,
       "isSoldOut":false
     },
-    {
-      "title":"天天赚",
-      "type":"dailyEarn",
-      "yearRate":"8.0",
-      "deadline":"0",
-      "deadlineUnit":"个月",
-      "remainAmount":10000,
-      "isSoldOut":false
-    },
+
     {
       "title":"月月赚",
       "type":"monthlyEarn",

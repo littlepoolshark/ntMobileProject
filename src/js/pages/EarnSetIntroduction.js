@@ -1,8 +1,10 @@
 require("../../scss/page/EarnSetIntroduction.scss");
 let EarnSetIntroductionAction=require("../actions/EarnSetIntroductionAction.js");
 let EarnSetIntroductionStore=require("../stores/EarnSetIntroductionStore.js");
+let InvestmentRecordAction=require("../actions/InvestmentRecordAction.js");
 import React from "react";
-import classNames from "classnames"
+import classNames from "classnames";
+import CSSCore from "../UIComponents/utils/CSSCore";
 
 //ui component
 import Container from "../UIComponents/Container";
@@ -26,70 +28,6 @@ import ProductIntroduction from "./utilities/ProductIntroduction";
 import config from "../config";
 
 let initialOffsetTop=0;
-let data=[
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"项目名称",
-        after:<span>新手标160101-11</span>
-    },
-    {
-        title:"退出规则",
-        after:<div>1.期满一次性还本付息<br/>2.月月赚暂不支持提前退出</div>
-    }
-];
-
-let recordList=[
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    }
-]
-
-
-
-
 
 
 let EarnSetIntroduction=React.createClass({
@@ -108,6 +46,7 @@ let EarnSetIntroduction=React.createClass({
         return this._getAllDataFromStore()
     },
     _handleOnScroll(event){
+        //console.log("event target from _handleOnScroll:",event.target);
         let container=document.getElementById("earnSetIntroduction");
         let offsetHeight=container.offsetHeight;
         let scrollHeight=container.scrollHeight;
@@ -116,7 +55,20 @@ let EarnSetIntroduction=React.createClass({
             this.refs.modal.open();
         }
     },
+    _test(event){
+        let investList=document.getElementById("test");
+
+        if(CSSCore.hasClass(investList,"active")){
+            let offsetHeight=event.target.offsetHeight;
+            let scrollHeight=event.target.scrollHeight;
+            let scrollTop=event.target.scrollTop;
+            if(scrollTop > scrollHeight-offsetHeight-1){
+                InvestmentRecordAction.loadNextPage();
+            }
+        }
+    },
     _handleClose(){
+        InvestmentRecordAction.clearAll();
         this.refs.modal.close();
     },
     render(){
@@ -134,8 +86,9 @@ let EarnSetIntroduction=React.createClass({
                     isOpen={false}
                     role="popup"
                     onDismiss={this._handleClose}
+                    onScroll={this._test}
                     >
-                    <Tabs defaultActiveKey={0}>
+                    <Tabs defaultActiveKey={0} >
 
                         <Tabs.Item
                             title="项目介绍"
@@ -156,8 +109,10 @@ let EarnSetIntroduction=React.createClass({
                             title="投资记录"
                             key={1}
                             navStyle={null}
+                            ref="investmentList"
+                            id="test"
                             >
-                            <InvestmentRecord recordList={recordList}/>
+                            <InvestmentRecord type={productionType} />
                         </Tabs.Item>
                     </Tabs>
                 </Modal>
@@ -169,6 +124,7 @@ let EarnSetIntroduction=React.createClass({
         EarnSetIntroductionStore.bind("change",function(){
             this.setState(this._getAllDataFromStore())
         }.bind(this));
+
     }
 });
 
