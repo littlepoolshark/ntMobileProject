@@ -29,7 +29,7 @@ let ProductListCommonCardTitle=React.createClass({
                 <span>{this.props.title}</span>
                 {
                     !this.props.isSoldOut ?
-                    tagArr.map(function(item,index){
+                    tagArr && tagArr.map(function(item,index){
                         let classes="tag " + item;
                         return (
                             <span className={classes}></span>

@@ -15,7 +15,7 @@ import ProductListCommonCard from "./utilities/ProductListCommonCard";
 
 
 //理财列表页：ProductList component
-ProductListAction.getDataFromServer();
+ProductListAction.getDataFromServer(0);
 let ProductList=React.createClass({
     getInitialState(){
         return {
@@ -28,7 +28,7 @@ let ProductList=React.createClass({
         let scrollTop=productList.scrollTop;//元素已经滚动的距离
         let scrollHeight=productList.scrollHeight;//元素总的内容高度
         if(scrollHeight - offsetHeight - scrollTop < 1){
-            //ProductListAction.getDataFromServer();
+            ProductListAction.getDataFromServer(1);
             Loader.show();
         }
     },
@@ -44,7 +44,7 @@ let ProductList=React.createClass({
                             )
                         }else {
                             return (
-                                <ProductListCommonCard  key={item.type+item.id} {...item}/>
+                                <ProductListCommonCard   {...item}/>
                             )
                         }
                     })

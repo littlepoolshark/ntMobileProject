@@ -1,0 +1,45 @@
+{
+  "code": 0,
+  "data": {
+    "xmzt": {
+      "list": [
+        {
+          "buyProgress": 4,
+          "id": 3919,
+          "preRepayDate":"" ,
+          "productApr": 0.11,
+          "productMoney": 20000,
+          "productName": "测试建标001",
+          "publishtime": "2016-06-01 14:28:29",
+          "publishtimeL": 1464762509000,
+          "remainAmount": 19200,
+          "repaymentLimit": 6,
+          "repaymentTypeUnit": "个月",
+          "rewardRate": 0,
+          "status": "prepublish",
+          "type": "loan_product"
+        },
+        {
+          "buyProgress": 4,
+          "id": 3920,
+          "preRepayDate":"" ,
+          "productApr": 0.11,
+          "productMoney": 20000,
+          "productName": "测试建标002",
+          "publishtime": "2016-06-01 14:28:29",
+          "publishtimeL": 1464762509000,
+          "remainAmount": 19200,
+          "repaymentLimit": 6,
+          "repaymentTypeUnit": "个月",
+          "rewardRate": 0,
+          "status": "prepublish",
+          "type": "loan_product"
+        }
+      ],
+      "pageIndex": 2,
+      "pageSize": 10,
+      "recordCount": 1179
+    }
+  },
+  "description": "成功"
+}
