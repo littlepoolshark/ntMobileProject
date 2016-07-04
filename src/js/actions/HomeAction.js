@@ -3,7 +3,7 @@ var appDispatcher=require("../dispatcher/dispatcher.js");
 var HomeAction={
     getDataFromServer(){
         appDispatcher.dispatch({
-            actionName:"getDataFromServer"
+            actionName:"home_getDataFromServer"
         })
     }
 };

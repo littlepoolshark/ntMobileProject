@@ -6,9 +6,16 @@
 
 // Output
 // -----------------------------------------------------------------------------
+.noMoreData-hint {
+  margin:rem-calc(15) 0;
+  text-align: center;
+  @include color-and-fontSize($C4,$T8);
+}
 .#{$loader-prefix} {
   display: block;
   margin:0 auto;
+  padding-top:rem-calc(15);
+  padding-bottom:rem-calc(10);
   text-align: center;
 
   > div {

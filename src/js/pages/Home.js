@@ -16,89 +16,10 @@ import Col from "../UIComponents/Col";
 
 //utilites component
 import DailyEarnCard from "./utilities/DailyEarnCard";
+import HomeCommonCard from "./utilities/HomeCommonCard";
 import Slogan from "./utilities/Slogan";
 import productStatusMixin from "./utilities/productStatusMixin";
 
-//除了天天赚，首页中所有标的（新手标，月月赚，季季赚和好采投）的展示都用这个组件
-let  HomeCommonCard=React.createClass({
-    mixins:[productStatusMixin],
-    _renderCardStatus(productType,productStatus,remainAmount){
-        let statusText=this.getProductStatusText(productType,productStatus);
-        if(statusText !== "售罄"){
-            return (
-                <div className="subtitle-right">
-                    <span className="amount">{remainAmount}</span>
-                    <span className="unit">万</span>
-                </div>
-            )
-        }else {
-            return (
-                <div className="subtitle-right">
-                    <span className="amount">售罄</span>
-                    <span className="unit"></span>
-                </div>
-            )
-        }
-    },
-    render(){
-        let {
-            id,
-            type,
-            productName,
-            productApr,
-            repaymentLimit,
-            repaymentTypeUnit,
-            remainAmount,
-            status
-            }=this.props;
-        let pathName=type === "loan_product" ? "fixLoanIntroduction" : "earnSetIntroduction";
-
-        return (
-            <Link to={{pathname:pathName,query:{type:type,productId:id}}}>
-                <Group className="home-earnSet-card" noSidePadded={true}>
-                    <h6 className="title">
-                        {
-                            type === "new_product" ?
-                            (<span className="icon-new"></span>) :
-                            (<span className="icon-redStar"></span>)
-                        }
-                        <span className="text">{productName}</span>
-                    </h6>
-                    <Grid collapse={true}>
-                        <Col cols={3} className="home-earnSet-card-item">
-                            <div className="text-center yearRate">{productApr}<span className="unit">%</span></div>
-                            <div className="text-center subtitle" >年化收益</div>
-                        </Col>
-                        <Col cols={3} className="home-earnSet-card-item">
-                            <div className="subtitle">
-                                <div className="subtitle-left">
-                                    <span className="icon-time"></span>
-                                    投资期限
-                                </div>
-                                <div className="subtitle-right">
-                                    <span className="amount">{repaymentLimit}</span>
-                                    <span className="unit">{repaymentTypeUnit}</span>
-                                </div>
-                            </div>
-                            <div className="subtitle" style={{marginTop:"5px"}}>
-                                <div className="subtitle-left">
-                                    <span className="icon-money"></span>
-                                    可投金额
-                                </div>
-                                {this._renderCardStatus(type,status,remainAmount)}
-                            </div>
-                        </Col>
-                    </Grid>
-                    {
-                        type === "new_product" ?
-                        (<div className="newbieLoan-label"></div>)  :
-                        null
-                    }
-                </Group>
-            </Link>
-        )
-    }
-});
 
 
 //首页:Index component
@@ -148,7 +69,6 @@ let Home=React.createClass({
                 {
                     this.state.productList.map(function(item,index){
                         if(item.type === "ttz_product"){
-                            let statusText=this.getProductStatusText(item.type,item.status);
                             return (
                                 <DailyEarnCard {...item} key={item.id}/>
                             )

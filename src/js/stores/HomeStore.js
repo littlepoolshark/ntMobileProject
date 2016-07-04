@@ -31,7 +31,7 @@ MicroEvent.mixin(HomeStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "getDataFromServer":
+        case "home_getDataFromServer":
             ajax({
                 url:config.createFullPath("homePageData"),
                 method:"GET",

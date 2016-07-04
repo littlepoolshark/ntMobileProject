@@ -11,67 +11,15 @@ import Loader from "../UIComponents/Loader";
 
 //utilites component
 import DailyEarnCard from "./utilities/DailyEarnCard";
-import CommonCard from "./utilities/CommonCard";
+import ProductListCommonCard from "./utilities/ProductListCommonCard";
 
-
-
-let newbieLoanData={
-    title:"新手标",
-    type:"newbieLoan",
-    yearRate:"15.0",
-    deadline:"1",
-    deadlineUnit:"个月",
-    remainAmount:100000,
-    isSoldOut:false
-};
-
-let monthlyEarnData={
-    title:"月月赚",
-    type:"monthlyEarn",
-    yearRate:"9.5",
-    deadline:"1",
-    deadlineUnit:"个月",
-    remainAmount:100000,
-    isSoldOut:false
-}
-
-let quarterlyEarnData={
-    title:"季季赚",
-    type:"quarterlyEarn",
-    yearRate:"10.5",
-    deadline:"3",
-    deadlineUnit:"个月",
-    remainAmount:1000000,
-    isSoldOut:true
-}
-
-let fixedLoanData={
-    title:"好采投",
-    type:"fixedLoan",
-    yearRate:"10.8",
-    deadline:"3",
-    deadlineUnit:"个月",
-    remainAmount:1000000,
-    isSoldOut:false
-}
-
-let creditorRightData={
-    title:"债权转让",
-    type:"creditorRight",
-    yearRate:"10.8",
-    deadline:"5",
-    deadlineUnit:"个月",
-    remainAmount:800000,
-    isSoldOut:true
-}
 
 //理财列表页：ProductList component
+ProductListAction.getDataFromServer();
 let ProductList=React.createClass({
     getInitialState(){
-        ProductListAction.getDataFromServer();
         return {
-            isLoading:false,
-            commonCardList:ProductListStore.getAll()
+            productList:ProductListStore.getAll()
         }
     },
     _loadMoreData(){
@@ -80,40 +28,42 @@ let ProductList=React.createClass({
         let scrollTop=productList.scrollTop;//元素已经滚动的距离
         let scrollHeight=productList.scrollHeight;//元素总的内容高度
         if(scrollHeight - offsetHeight - scrollTop < 1){
-            ProductListAction.getDataFromServer();
-            this.setState({
-                isLoading:true
-            })
+            //ProductListAction.getDataFromServer();
+            Loader.show();
         }
-    },
-    _commonCardRender(){
-        return (
-            this.state.commonCardList.map(function(item,index){
-                return (
-                    <CommonCard  {...item}/>
-                )
-            })
-        )
     },
     render(){
         return (
             <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" onScroll={this._loadMoreData}>
 
+                {
+                    this.state.productList.map(function(item,index){
+                        if(item.type === "ttz_product"){
+                            return (
+                                <DailyEarnCard key={item.type+item.id} {...item}/>
+                            )
+                        }else {
+                            return (
+                                <ProductListCommonCard  key={item.type+item.id} {...item}/>
+                            )
+                        }
+                    })
+                }
 
-                <DailyEarnCard isSoldOut={true}/>
-                {this._commonCardRender()}
-                <Loader amStyle="success" rounded={true} className={this.state.isLoading ? "" : "hide"}/>
+                <Loader amStyle="success" rounded={true} />
             </Container>
         )
     },
     componentDidMount(){
         ProductListStore.bind("change",function(){
-            let commonCardList=ProductListStore.getAll();
+            let productList=ProductListStore.getAll();
             this.setState({
-                commonCardList:commonCardList,
-                isLoading:false
+                productList:productList
             })
         }.bind(this));
+    },
+    componentDidUpdate(){
+        Loader.hide();
     }
 });
 

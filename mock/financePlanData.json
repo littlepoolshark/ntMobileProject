@@ -1,0 +1,95 @@
+{
+  "code": 0,
+  "data": {
+    "hq": {
+      "buyProgress": 82,
+      "id": 305,
+      "preRepayDate":"2016-07-05" ,
+      "productApr": 0.08,
+      "productMoney": 1133900,
+      "productName": "天天赚",
+      "publishtime": null,
+      "publishtimeL": 0,
+      "remainAmount": 200000,
+      "repaymentLimit": "",
+      "repaymentTypeUnit": "活期",
+      "rewardRate": 0,
+      "status": "already_publish",
+      "type": "ttz_product"
+    },
+    "lcjh": [
+      {
+        "buyProgress": 53,
+        "id": 310,
+        "preRepayDate":"2016-07-05" ,
+        "productApr": 0.095,
+        "productMoney": 1133900,
+        "productName": "月月赚20160701",
+        "publishtime": null,
+        "publishtimeL": 0,
+        "remainAmount": 200000,
+        "repaymentLimit": 1,
+        "repaymentTypeUnit":"个月",
+        "rewardRate": 0,
+        "status": "already_publish",
+        "type": "yyz_product"
+      },
+      {
+        "buyProgress": 75,
+        "id": 3144,
+        "preRepayDate": "2016-08-31",
+        "productApr": 0.105,
+        "productMoney": 300000,
+        "productName": "季季赚160531-001",
+        "publishtime": "null",
+        "publishtimeL": 0,
+        "remainAmount": 74000,
+        "repaymentLimit": 3,
+        "repaymentTypeUnit": "个月",
+        "rewardRate": 0,
+        "status": "already_publish",
+        "type": "jjz_product"
+      }
+    ],
+    "xmzt": {
+      "list": [
+        {
+          "buyProgress": 4,
+          "id": 919,
+          "preRepayDate":"" ,
+          "productApr": 0.11,
+          "productMoney": 20000,
+          "productName": "测试建标001",
+          "publishtime": "2016-06-01 14:28:29",
+          "publishtimeL": 1464762509000,
+          "remainAmount": 19200,
+          "repaymentLimit": 6,
+          "repaymentTypeUnit": "个月",
+          "rewardRate": 0,
+          "status": "prepublish",
+          "type": "loan_product"
+        },
+        {
+          "buyProgress": 4,
+          "id": 919,
+          "preRepayDate":"" ,
+          "productApr": 0.11,
+          "productMoney": 20000,
+          "productName": "测试建标001",
+          "publishtime": "2016-06-01 14:28:29",
+          "publishtimeL": 1464762509000,
+          "remainAmount": 19200,
+          "repaymentLimit": 6,
+          "repaymentTypeUnit": "个月",
+          "rewardRate": 0,
+          "status": "prepublish",
+          "type": "loan_product"
+        }
+      ],
+      "pageIndex": 1,
+      "pageSize": 10,
+      "recordCount": 1179
+    }
+  },
+  "description": "成功"
+}

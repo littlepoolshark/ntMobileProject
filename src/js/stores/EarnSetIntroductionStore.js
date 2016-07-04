@@ -25,7 +25,7 @@ MicroEvent.mixin(EarnSetIntroductionStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "getDataFromServer":
+        case "earnSetIntroduction_getDataFromServer":
             ajax({
                 url:config.createFullPath("earnProductDetail"),
                 method:"GET",

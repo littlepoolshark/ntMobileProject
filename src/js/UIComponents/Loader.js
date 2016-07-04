@@ -43,18 +43,16 @@ const Loader = React.createClass({
           {
             this.state.showHint ?
               (
-                  <div className="text-center" style={{margin:"15px 0"}}>没有更多数据了！</div>
+                  <div className="noMoreData-hint" style={{margin:"15px 0"}}>没有更多数据了！</div>
               ) :
               (
                   <Component
                       {...props}
                       className={classNames(classSet, className,this.state.loading ? "" : "hide")}
                       >
-                    <div>
                       <div className={this.prefixClass('bounce1')} />
                       <div className={this.prefixClass('bounce2')} />
                       <div className={this.prefixClass('bounce3')} />
-                    </div>
                   </Component>
               )
           }
