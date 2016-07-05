@@ -17,6 +17,7 @@ let DailyEarnCard=React.createClass({
     mixins:[productStatusMixin],
     render(){
         let {
+            id,
             type,
             productName,
             productApr,
@@ -31,7 +32,7 @@ let DailyEarnCard=React.createClass({
             "soldOut":isSoldOut
         });
         return (
-            <Link to={{pathname:"earnSetIntroduction",query:{type:type}}}>
+            <Link to={{pathname:"earnSetIntroduction",query:{type:type,productId:id}}}>
                 <Group className="dailyEarn-card" noSidePadded={true}>
                     <h6 className="title">
                         <span className="icon-day"></span>

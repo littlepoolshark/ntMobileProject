@@ -36,7 +36,7 @@ let EarnSetIntroduction=React.createClass({
         return EarnSetIntroductionStore.getAll();
     },
     getDefaultProps(){
-
+    /*在这里无法取到this.props的值,why?*/
     },
     getInitialState(){
         let {
@@ -47,7 +47,6 @@ let EarnSetIntroduction=React.createClass({
         return this._getAllDataFromStore()
     },
     _handleOnScroll(event){
-        //console.log("event target from _handleOnScroll:",event.target);
         let container=document.getElementById("earnSetIntroduction");
         let offsetHeight=container.offsetHeight;
         let scrollHeight=container.scrollHeight;

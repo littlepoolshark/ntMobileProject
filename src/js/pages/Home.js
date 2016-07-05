@@ -33,11 +33,17 @@ let Home=React.createClass({
         return this._getAllDataFromStore();
     },
     render(){
+        let {
+            bannerList,
+            productList,
+            registerUserCount,
+            totalAmountOfInvestment
+            }=this.state;
         return (
             <Container scrollable={false} style={{overflow:"scroll"}} >
 
                 <Slider>
-                    {this.state.bannerList.map(function(item,index){
+                    {bannerList.map(function(item,index){
                         return (
                             <Slider.Item key={index + 1}>
                                 <img src={item.pic} />
@@ -67,7 +73,7 @@ let Home=React.createClass({
                 </Group>
 
                 {
-                    this.state.productList.map(function(item,index){
+                    productList.map(function(item,index){
                         if(item.type === "ttz_product"){
                             return (
                                 <DailyEarnCard {...item} key={item.id}/>
@@ -81,8 +87,8 @@ let Home=React.createClass({
                 }
 
                 <div className="home-dashboard">
-                    <div className="title text-center">农泰金融已累计为 <strong>{this.state.registerUserCount}</strong>位用户撮合交易金额（元）</div>
-                    <div className="amount text-center">{this.state.totalAmountOfInvestment}</div>
+                    <div className="title text-center">农泰金融已累计为 <strong>{registerUserCount}</strong>位用户撮合交易金额（元）</div>
+                    <div className="amount text-center">{totalAmountOfInvestment}</div>
                     <Slogan />
                 </div>
             </Container>

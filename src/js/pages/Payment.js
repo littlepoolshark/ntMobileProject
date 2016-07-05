@@ -13,7 +13,12 @@ import Container from "../UIComponents/Container";
 
 const CAN_USE_COUPON=["yyz_product","jjz_product","loan_product"];
 
-
+/*
+ * @desc 除了天天赚预约的情况之外，其他产品公用的支付页面。
+ *
+ * @author sam liu
+ * @date 2016-07-05
+ */
 let Payment=React.createClass({
     getInitialState(){
         return {

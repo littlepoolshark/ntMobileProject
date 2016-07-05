@@ -164,5 +164,5 @@ const routes = (
 );
 
 document.addEventListener('DOMContentLoaded', function() {
-  ReactDOM.render(routes, document.getElementById('sk-root'));
+  ReactDOM.render(routes, document.getElementById('app-root'));
 });

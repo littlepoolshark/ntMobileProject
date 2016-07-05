@@ -7,6 +7,12 @@ import Message from "../../UIComponents/Message";
 //utilites component
 import productStatusMixin from "./productStatusMixin";
 
+/*
+* @desc 所有产品在详情页的购买按钮。主要是根据产品的类型和状态，跳转到不同的支付页面（天天赚的预约页面和公用的支付页面）。
+*
+* @author sam liu
+* @date 2016-07-05
+*/
 let PurchaseButton=React.createClass({
     mixins:[productStatusMixin],
     _renderButtonText(){

@@ -8,6 +8,12 @@ import List from "../UIComponents/List";
 import Field from "../UIComponents/Field";
 import Button from "../UIComponents/Button";
 
+/*
+ * @desc 天天赚预约页面
+ *
+ * @author sam liu
+ * @date 2016-07-05
+ */
 let DailyEarnAppointment=React.createClass({
     _confirmAppointment(){
         this.props.history.pushState(null,"/appointmentSuccess");
