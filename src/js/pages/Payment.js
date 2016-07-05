@@ -11,7 +11,7 @@ import Button from "../UIComponents/Button";
 import Field from "../UIComponents/Field";
 import Container from "../UIComponents/Container";
 
-const CAN_USE_COUPON=["monthlyEarn","quarterlyEarn","fixedLoan"];
+const CAN_USE_COUPON=["yyz_product","jjz_product","loan_product"];
 
 
 let Payment=React.createClass({
@@ -22,7 +22,7 @@ let Payment=React.createClass({
         }
     },
     _renderInvestmentLimit(type){
-        if(type === "dailyEarn"){
+        if(type === "ttz_product"){
             return (
                 <div className="subtitle">
                     个人投资限额：<strong>10000</strong>元
@@ -49,7 +49,7 @@ let Payment=React.createClass({
     },
     _renderExpectedReward(type){
         let expectedReward=PaymentStore.getAll().expectedReward;
-        if(type !== "dailyEarn"){
+        if(type !== "ttz_product"){
             return (
                 <div className="subtitle expectedReward" style={{paddingTop:"5px"}}>预期收益：<strong>{expectedReward}</strong>元</div>
             )
@@ -61,7 +61,8 @@ let Payment=React.createClass({
     },
     _jumpToCouponList(){
         let purchaseAmount=this.refs.purchaseAmount.getValue() || 0;
-        this.props.history.pushState(null,"/couponList/?purchaseAmount="+purchaseAmount);
+        let type=this.props.location.query.type;
+        this.props.history.pushState(null,"/couponList/?purchaseAmount="+purchaseAmount+"&productType="+type);
     },
     _handlePurchaseAmountChange(event){
         PaymentAction.changePurchaseAmount(parseFloat(event.target.value));

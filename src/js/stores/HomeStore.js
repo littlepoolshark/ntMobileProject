@@ -1,6 +1,7 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
+var $=require("jquery");
 
 import config from "../config";
 
@@ -49,6 +50,21 @@ appDispatcher.register(function(payload){
                     }
                 }
             });
+
+
+            //$.ajax({
+            //    type:"post",
+            //    url:"http://localhost:9090/ci.jsp",
+            //    data:{ciUrl:"/ci/platinfo/v2/homePageData",content:"{\"imei\":\"23ffgffffffffffffffff\",\"opSource\":\"wx\",\"terminal\":\"wx\",\"version\":\"2.0\",\"accountName\":\"15817457250\",\"password\":\"123456\"}"},
+            //    dataType: "jsonp",
+            //    success:function(data){
+            //        console.log("asfsadfd");
+            //        //console.info(data);
+            //    },
+            //    error(xhr,status,error){
+            //        console.log("into error,status:",status);
+            //    }
+            //});
 
             ajax({
                 url:config.createFullPath("articleAdverList"),

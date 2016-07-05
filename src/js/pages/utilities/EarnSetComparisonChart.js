@@ -19,7 +19,8 @@ let ComparisonChart=React.createClass({
         }
     },
     _renderChartContent(){
-        if(this.props.type === "ttz_product"){
+        let productType=this.props.type;
+        if(productType === "ttz_product"){
             return (
                 <div className="content dailyEarn">
                 </div>
@@ -29,15 +30,15 @@ let ComparisonChart=React.createClass({
                 <div className="content">
                     <div className="content-item">
                         <sapn className="label">银行利息</sapn>
-                        <ProgressBar width="150px" hasProgressPercent={false} percent="20%"/>
-                        <strong>{this.props.type === "jjz_product" ? "33.80" : "2.50"}</strong>元
+                        <ProgressBar width="150px" hasProgressPercent={false} percent="2%"/>
+                        <strong>{productType === "jjz_product" ? "33.80" : "2.50"}</strong>元
                     </div>
                     <div className="content-item">
-                        <sapn className="label">{config.productNameMap[this.props.type]}</sapn>
-                        <ProgressBar width="150px" hasProgressPercent={false} percent="20%"/>
-                        <strong>{this.props.type === "jjz_product" ? "262.50" : "79.20"}</strong>元
+                        <sapn className="label">{config.productNameMap[productType]}</sapn>
+                        <ProgressBar width="150px" hasProgressPercent={false} percent={productType === "jjz_product" ? "15.5%" : "63.4%"}/>
+                        <strong>{productType === "jjz_product" ? "262.50" : "79.20"}</strong>元
                     </div>
-                    <div className="content-item">同期比多<strong>{this.props.type === "jjz_product" ? "228.70" : "76.70"}</strong>元</div>
+                    <div className="content-item">同期比多<strong>{productType === "jjz_product" ? "228.70" : "76.70"}</strong>元</div>
                 </div>
             )
         }

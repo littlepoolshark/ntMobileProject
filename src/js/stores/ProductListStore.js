@@ -27,7 +27,6 @@ appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "ProductList.getDataFromServer":
             let pageIndex=payload.data.pageIndex;
-            console.log("pageIndex:",pageIndex);
 
                 ajax({
                     url:config.createFullPath("financePlanData"+ (pageIndex ? pageIndex : "")),
@@ -50,7 +49,6 @@ appDispatcher.register(function(payload){
                             }
                             ProductListStore.updateAll(source);
                             ProductListStore.trigger("change");
-                            console.log("ProductListStore.getAll:",ProductListStore.getAll());
                         }
                     }
                 })

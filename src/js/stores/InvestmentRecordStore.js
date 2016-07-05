@@ -38,7 +38,6 @@ appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "loadNextPage":
             if(InvestmentRecordStore.canLoadMore()){
-                console.log("into if");
                 let currPageIndex=InvestmentRecordStore.getCurrentPageIndex();
                 let ajaxUrl= currPageIndex ?
                              config.createFullPath("earnInvestRecords"+ (currPageIndex+1)) :

@@ -11,44 +11,6 @@ import NavBar from "../UIComponents/NavBar";
 import InvestmentRecord from "./utilities/InvestmentRecord";
 
 
-let investmentList=[
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    },
-    {
-        user:"黄＊＊",
-        amount:"100,000",
-        date:"2-16-02-04"
-    }
-];
-
 let PurchaseSuccess=React.createClass({
     _renderStageBar(type){
         if(type === "dailyEarn"){
@@ -116,7 +78,9 @@ let PurchaseSuccess=React.createClass({
                         title="投资记录"
                         key={0}
                     >
-                        <InvestmentRecord recordList={investmentList}/>
+                       这里是用户对这个产品的投资记录
+                        这里是用户对这个产品的投资记录
+                        这里是用户对这个产品的投资记录
                     </Accordion.Item>
                 </Accordion>
             </Container>

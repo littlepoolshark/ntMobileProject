@@ -8,7 +8,7 @@ import CSSCore from "../UIComponents/utils/CSSCore";
 import Button from "../UIComponents/Button";
 import Container from "../UIComponents/Container";
 
-const CAN_USE_COUPON=["monthlyEarn","quarterlyEarn","fixedLoan"];
+const CAN_USE_COUPON=["yyz_product","jjz_product","loan_product"];
 let couponList=[
     {
         id:1,
@@ -75,31 +75,41 @@ let CouponCard=React.createClass({
         }
     },
     render(){
-        let type=this.props.type;
-        let amount=this.props.couponAmount;
+        let {
+            id,
+            couponAmount,
+            type,
+            purchaseAmount,
+            investmentMinLimit,
+            productType,
+            useScope,
+            source,
+            deadline
+            }=this.props;
+        //购买金额小于单笔投资最小金额或者当前的产品类型是月月赚的话，则不能使用红包
         let couponClass=classNames({
-            disabled:type === "redPackage" && this.props.purchaseAmount < this.props.investmentMinLimit
+            disabled:type === "redPackage" && (purchaseAmount < investmentMinLimit || productType === "yyz_product")
             }, "coupon-card");
 
         return (
             <div
                 className={couponClass}
-                data-id={this.props.id}
-                data-amount={this.props.couponAmount}
-                data-type={this.props.type}
-                data-minimumlimit={this.props.investmentMinLimit}
+                data-id={id}
+                data-amount={couponAmount}
+                data-type={type}
+                data-minimumlimit={investmentMinLimit}
             >
                 <div className="coupon-card-body cf">
-                    {this._renderCouponAmount(type,amount)}
+                    {this._renderCouponAmount(type,couponAmount)}
                     <div className="coupon-card-body-right fl">
                         <div className="title">{type === "interestRate" ? "加息券" : "红包"}</div>
-                        <div className="subtitle">使用方式：单笔投资满{this.props.investmentMinLimit}</div>
-                        <div className="subtitle">使用范围：{this.props.useScope}</div>
+                        <div className="subtitle">使用方式：单笔投资满{investmentMinLimit}</div>
+                        <div className="subtitle">使用范围：{useScope}</div>
                     </div>
                 </div>
                 <div className="coupon-card-footer subtitle cf">
-                    <span className="fl">来源：{this.props.source}</span>
-                    <span className="fr">有效期至：{this.props.deadline}</span>
+                    <span className="fl">来源：{source}</span>
+                    <span className="fr">有效期至：{deadline}</span>
                 </div>
                 <div className="coupon-card-border-top"></div>
                 <div className="coupon-card-border-bottom"></div>
@@ -115,14 +125,18 @@ let CouponList=React.createClass({
         this.props.history.goBack();
     },
     render(){
-        let purchaseAmount=this.props.location.query.purchaseAmount;
+        let {
+            purchaseAmount,
+            productType
+            }=this.props.location.query;
+
         return (
             <Container id="couponList">
                 <Button block radius onClick={this._doNotUseCoupon}>不使用加息券</Button>
                 {(
                     couponList.map(function(item,index){
                         return (
-                            <CouponCard {...item} purchaseAmount={purchaseAmount} />
+                            <CouponCard {...item} purchaseAmount={purchaseAmount} productType={productType} />
                         )
                     }.bind(this))
                 )}

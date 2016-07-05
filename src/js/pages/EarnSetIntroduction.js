@@ -81,7 +81,7 @@ let EarnSetIntroduction=React.createClass({
                 <Summary  {...this.state}/>
                 <RuleDescription {...this.state}/>
                 <ComparisonChart {...this.state}/>
-                <PurchaseButton isSoldOut={true} {...this.state} {...this.props}/>
+                <PurchaseButton  {...this.state} {...this.props}/>
                 <Modal
                     title={modalTitle + "详情"}
                     ref="modal"

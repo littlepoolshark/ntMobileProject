@@ -4,35 +4,27 @@ import React from "react";
 import Button from "../../UIComponents/Button";
 import Message from "../../UIComponents/Message";
 
+//utilites component
+import productStatusMixin from "./productStatusMixin";
+
 let PurchaseButton=React.createClass({
-    propTypes:{
-        isSoldOut:React.PropTypes.bool.isRequired,
-        type:React.PropTypes.string.isRequired
-    },
-    getDefaultProps(){
-        return {
-            isSoldOut:false,
-            type:"new_product"
-        }
-    },
+    mixins:[productStatusMixin],
     _renderButtonText(){
-        let buttonText="";
-        if(this.props.type === "ttz_product"){
-            return this.props.isSoldOut ? "预约" : "立即购买";
-        }else {
-            return this.props.isSoldOut ? "售罄" : "立即购买";
-        }
+        let buttonText=this.getProductStatusText(this.props.type,this.props.status);
+        return buttonText;
     },
     _handleOnClick(){
-        if(this.props.isSoldOut && this.props.type !== "ttz_product"){
+        let productStatusText=this.getProductStatusText(this.props.type,this.props.status);
+        if(productStatusText === "售罄"){
             Message.broadcast("该标的已经售罄！");
-        }else if(this.props.isSoldOut && this.props.type === "ttz_product"){
+        }else if(productStatusText === "预约"){
             this.props.history.pushState(null,"DailyEarnAppointment");
         } else {
             this.props.history.pushState(null,"/Payment/?type="+this.props.type);
         }
     },
     render(){
+
         return (
             <div className="purchaseButton-wrapper"
                  onClick={this._handleOnClick}

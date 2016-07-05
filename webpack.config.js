@@ -17,7 +17,7 @@ const AUTOPREFIXER_BROWSERS = [
 
 module.exports={
     entry:{//对应要运行的命令是：webpack-dev-sever --inline --hot
-        app:['webpack/hot/only-dev-server','webpack-dev-server/client?http://localhost:8080',path.resolve(__dirname,"app.js")]
+        app:['webpack/hot/only-dev-server','webpack-dev-server/client?http://localhost:1024',path.resolve(__dirname,"app.js")]
     },
     output:{
         path:path.resolve(__dirname,"build"),
