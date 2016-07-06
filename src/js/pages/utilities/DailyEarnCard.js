@@ -11,10 +11,10 @@ import Col from "../../UIComponents/Col";
 import Button from "../../UIComponents/Button";
 
 //utilites component
-import productStatusMixin from "./productStatusMixin";
+import mixin from "./mixin";
 
 let DailyEarnCard=React.createClass({
-    mixins:[productStatusMixin],
+    mixins:[mixin],
     render(){
         let {
             id,
@@ -26,7 +26,7 @@ let DailyEarnCard=React.createClass({
             remainAmount,
             status
             }=this.props;
-        let isSoldOut=this.getProductStatusText(type,status) === "售罄" ? true : false ;
+        let isSoldOut=this._getProductStatusText(type,status) === "售罄" ? true : false ;
         let dailyEarnCardItemClasses =classNames({
             "dailyEarn-card-item":true,
             "soldOut":isSoldOut
@@ -41,7 +41,7 @@ let DailyEarnCard=React.createClass({
                     </h6>
                     <Grid collapse={true}>
                         <Col cols={3} className="dailyEarn-card-item">
-                            <div className="text-center yearRate">{productApr}<span className="unit">%</span></div>
+                            <div className="text-center yearRate">{(productApr * 100).toFixed(1)}<span className="unit">%</span></div>
                             <div className="text-center subtitle" >年化收益</div>
                         </Col>
                         <Col cols={3} className={dailyEarnCardItemClasses}>
@@ -67,7 +67,7 @@ let DailyEarnCard=React.createClass({
                                     !isSoldOut ?
                                     (
                                         <div className="subtitle-right">
-                                            <span className="amount">{remainAmount}</span>
+                                            <span className="amount">{(remainAmount / 10000).toFixed(2)}</span>
                                             <span className="unit">万</span>
                                         </div> ): null
                                 }

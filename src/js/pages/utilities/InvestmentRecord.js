@@ -2,10 +2,6 @@ let InvestmentRecordStore=require("../../stores/InvestmentRecordStore");
 let InvestmentRecordAction=require("../../actions/InvestmentRecordAction");
 import React from "react";
 
-//ui component
-import Loader from "../../UIComponents/Loader";
-
-InvestmentRecordAction.loadNextPage();
 let InvestmentRecord=React.createClass({
     _getAllDateFromStore(){
       return   InvestmentRecordStore.getAll();
@@ -42,23 +38,21 @@ let InvestmentRecord=React.createClass({
                     {this._renderRecordList()}
                     </tbody>
                 </table>
-                <Loader amStyle="success" rounded={true} ref="test"/>
             </div>
         )
     },
     componentDidMount(){
+        let {
+            type,
+            id
+            }=this.props;
+        InvestmentRecordAction.loadNextPage(type,id);
+
         InvestmentRecordStore.bind("change",function(){
             this.setState(this._getAllDateFromStore())
         }.bind(this));
 
-        InvestmentRecordStore.bind("canNotLoadMore",function(){
-            Loader.toggle();
-        }.bind(this));
 
-    },
-    componentDidUpdate(){
-        console.log("into InvestmentRecord componentDidUpdate")
-        Loader.hide();
     }
 });
 

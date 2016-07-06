@@ -25,27 +25,27 @@ MicroEvent.mixin(ProductListStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "ProductList.getDataFromServer":
-            let pageIndex=payload.data.pageIndex;
+        case "productList.getNextPage":
+            let pageIndex=ProductListStore.getCurrPageIndex()+1;
 
                 ajax({
-                    url:config.createFullPath("financePlanData"+ (pageIndex ? pageIndex : "")),
-                    method:"GET",
+                    ciUrl:"/platinfo/v2/financePlanData",
+                    data:{reqPageNum:pageIndex},
                     success:function(rs){
                         if(rs.code === 0){
                             let source={},list=[];
-                            if(rs.data.hq){
-                                list=list.concat(rs.data.hq);
-                            }
-                            if(rs.data.lcjh){
-                                list=list.concat(rs.data.lcjh);
-                            }
-                            if(rs.data.xmzt){
-                                list=list.concat(rs.data.xmzt.list);
-                            }
-                            source={
-                                list:list,
-                                pageIndex:rs.data.xmzt.pageInex
+                            //在这个接口里面，由于请求第一页返回的数据跟请求其他页数返回的数据结构不一样，所以要写两个分支
+                            if(pageIndex === 1){
+                                list=list.concat(rs.data.hq,rs.data.lcjh,rs.data.xmzt.list);
+                                source={
+                                    list:list,
+                                    pageIndex:rs.data.xmzt.pageIndex
+                                }
+                            }else {
+                                source={
+                                    list:rs.data.list,
+                                    pageIndex:rs.data.pageIndex
+                                }
                             }
                             ProductListStore.updateAll(source);
                             ProductListStore.trigger("change");

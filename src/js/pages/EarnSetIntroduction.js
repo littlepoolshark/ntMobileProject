@@ -113,7 +113,7 @@ let EarnSetIntroduction=React.createClass({
                             ref="investmentList"
                             id="test"
                             >
-                            <InvestmentRecord type={productionType} />
+                            <InvestmentRecord {...this.state} />
                         </Tabs.Item>
                     </Tabs>
                 </Modal>

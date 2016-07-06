@@ -38,15 +38,20 @@ function ProductIntroduction(props){
     let item19={ title:"起息日期", content:"成交后的第二日"};
     let item20={ title:"二次转让", content:"持有达到30天，且在标的到期7天前"};
 
+    //新手标多出来或者不同于月月赚的item
+    let item21= { title:"退出规则", content: <div>1.期满一次性还本付息<br/>2.新手标赚暂不支持提前退出</div>};
+
     //将item组合成对应的产品介绍栏目数组
+    let new_product=[item1,item2,item3,item9,item10,item5,item6,item7,item21];
     let ttz_product=[item1,item2,item3,item4,item5,item6,item7,item8];
-    let yyz_product=[item1,item2,item3,item9,item10,item5,item11,item12];
+    let yyz_product=[item1,item2,item3,item9,item10,item5,item6,item11,item12];
     let jjz_product=[item1,item2,item3,item9,item10,item5,item13,item14];
     let loan_product=[item1,item3,item15,item18,item6,item16,item17];
     let creditor_product=[item1,item3,item15,item19,item6,item16,item20];
 
     //从产品类型到产品介绍栏目数组的映射
     let productIntroductionObj={
+        new_product:new_product,
         ttz_product:ttz_product,
         yyz_product:yyz_product,
         jjz_product:jjz_product,

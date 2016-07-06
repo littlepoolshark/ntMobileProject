@@ -2,7 +2,6 @@ let MicroEvent = require('../lib/microevent.js');
 let appDispatcher=require('../dispatcher/dispatcher.js');
 let ajax=require("../lib/ajax.js");
 
-import config from "../config";
 
 let  EarnSetIntroductionStore={
     _all:{
@@ -14,7 +13,7 @@ let  EarnSetIntroductionStore={
         return this._all;
     },
     processData(data){
-        data.buyProgress=(data.buyProgress * 100).toFixed(1)+"%";
+        data.buyProgress=data.buyProgress + "%";
         data.productApr=(data.productApr * 100).toFixed(1);
         data.remainAmount=data.remainAmount.toFixed(2);
         return data;
@@ -27,8 +26,11 @@ appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "earnSetIntroduction_getDataFromServer":
             ajax({
-                url:config.createFullPath("earnProductDetail"),
-                method:"GET",
+                ciUrl:"/invest/v2/earnProductDetail",
+                data:{
+                    type:payload.data.type,
+                    productId:payload.data.productId
+                },
                 success:function(rs){
                     if(rs.code === 0){
                         EarnSetIntroductionStore.setAll(EarnSetIntroductionStore.processData(rs.data));

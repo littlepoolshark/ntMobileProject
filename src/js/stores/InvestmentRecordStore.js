@@ -2,33 +2,22 @@ var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
 
-import config from "../config.js";
 
 var InvestmentRecordStore={
     _all:{
-        pageIndex:0,
-        pageSize:1,
         list:[]
     },
     getAll(){
         return this._all;
     },
     updateAll(source){
-        source.list=this._all.list.concat(source.list);
-        Object.assign(this._all,source);
-    },
-    canLoadMore(){
-        return (this._all.pageIndex +1) <=  this._all.pageSize ;
+        this._all.list=this._all.list.concat(source);
     },
     getCurrentPageIndex(){
         return this._all.pageIndex;
     },
     clearAll(){
-        this._all={
-            pageIndex:0,
-            pageSize:1,
-            list:[]
-        }
+        this._all.list=[];
     }
 };
 MicroEvent.mixin(InvestmentRecordStore);
@@ -37,27 +26,21 @@ MicroEvent.mixin(InvestmentRecordStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "loadNextPage":
-            if(InvestmentRecordStore.canLoadMore()){
-                let currPageIndex=InvestmentRecordStore.getCurrentPageIndex();
-                let ajaxUrl= currPageIndex ?
-                             config.createFullPath("earnInvestRecords"+ (currPageIndex+1)) :
-                             config.createFullPath("earnInvestRecords") ;
                 ajax({
-                    url: ajaxUrl,
-                    method:"GET",
+                    ciUrl: "/invest/v2/earnInvestRecords",
+                    data:{
+                        regularId:payload.data.productId,
+                        type:payload.data.type
+                    },
                     success:function(rs){
                         if(rs.code === 0){
-                            InvestmentRecordStore.updateAll(rs.data);
+                            InvestmentRecordStore.updateAll(rs.data.list);
                             InvestmentRecordStore.trigger("change");
                         }else {
                             InvestmentRecordStore.trigger("getDataFailed");
                         }
                     }
                 });
-            }else {
-                InvestmentRecordStore.trigger("canNotLoadMore");
-            }
-
             break;
         case "clearAllStoreData":
             InvestmentRecordStore.clearAll();

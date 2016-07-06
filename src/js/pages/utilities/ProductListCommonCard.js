@@ -9,7 +9,7 @@ import Grid from "../../UIComponents/Grid";
 import Col from "../../UIComponents/Col";
 
 //utilities component
-import productStatusMixin from "./productStatusMixin";
+import mixin from "./mixin";
 
 //新手标，月月赚，季季赚，好采投和债权转让共用的card组件,目前用于理财列表页
 const Type_To_Tag_Map ={
@@ -43,7 +43,7 @@ let ProductListCommonCardTitle=React.createClass({
 });
 
 let ProductListCommonCard=React.createClass({
-    mixins:[productStatusMixin],
+    mixins:[mixin],
     propTypes: {
         type: React.PropTypes.string,
         title: React.PropTypes.string,
@@ -64,11 +64,9 @@ let ProductListCommonCard=React.createClass({
             isSoldOut:true
         }
     },
-    _amountFormater(amount){
-        return (amount / 1000).toFixed(2);
-    },
     render(){
         let {
+            id,
             type,
             productName,
             productApr,
@@ -77,9 +75,10 @@ let ProductListCommonCard=React.createClass({
             remainAmount,
             status
             }=this.props;
-        let isSoldOut=this.getProductStatusText(type,status) === "售罄" ? true : false ;
+        let isSoldOut=this._getProductStatusText(type,status) === "售罄" ? true : false ;
+        let pathName= (type === "loan_product" || type === "creditor_product") ? "fixLoanIntroduction" : "earnSetIntroduction";
         return (
-            <Link to={{pathname:"earnSetIntroduction",query:{type:type}}}>
+            <Link to={{pathname:pathName,query:{type:type,productId:id}}}>
                 <Group noPadded={false} className="commonCard">
                     <ProductListCommonCardTitle title={productName} type={type} isSoldOut={isSoldOut}/>
                     <Grid collapse={true}>
@@ -87,7 +86,7 @@ let ProductListCommonCard=React.createClass({
                             <Grid collapse={true}>
                                 <Col cols={2}>
                                     <div className="subtitle text-left" >年化收益</div>
-                                    <div className="yearRate">{productApr}<span className="unit">%</span></div>
+                                    <div className="yearRate">{this._yearRateFormater(productApr)}<span className="unit">%</span></div>
                                 </Col>
                                 <Col cols={4}>
                                     <div className="subtitle" >投资期限</div>

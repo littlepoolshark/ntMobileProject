@@ -9,13 +9,13 @@ import Grid from "../../UIComponents/Grid";
 import Col from "../../UIComponents/Col";
 
 //utilites component
-import productStatusMixin from "./productStatusMixin";
+import mixin from "./mixin";
 
 //除了天天赚，首页中所有标的（新手标，月月赚，季季赚和好采投）的展示都用这个组件
 let  HomeCommonCard=React.createClass({
-    mixins:[productStatusMixin],
+    mixins:[mixin],
     _renderCardStatus(productType,productStatus,remainAmount){
-        let statusText=this.getProductStatusText(productType,productStatus);
+        let statusText=this._getProductStatusText(productType,productStatus);
         if(statusText !== "售罄"){
             return (
                 <div className="subtitle-right">
@@ -59,7 +59,7 @@ let  HomeCommonCard=React.createClass({
                     </h6>
                     <Grid collapse={true}>
                         <Col cols={3} className="home-earnSet-card-item">
-                            <div className="text-center yearRate">{productApr}<span className="unit">%</span></div>
+                            <div className="text-center yearRate">{this._yearRateFormater(productApr)}<span className="unit">%</span></div>
                             <div className="text-center subtitle" >年化收益</div>
                         </Col>
                         <Col cols={3} className="home-earnSet-card-item">

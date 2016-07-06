@@ -18,14 +18,14 @@ import Col from "../UIComponents/Col";
 import DailyEarnCard from "./utilities/DailyEarnCard";
 import HomeCommonCard from "./utilities/HomeCommonCard";
 import Slogan from "./utilities/Slogan";
-import productStatusMixin from "./utilities/productStatusMixin";
+import mixin from "./utilities/mixin";
 
 
 
 //首页:Index component
 HomeAction.getDataFromServer();
 let Home=React.createClass({
-    mixins:[productStatusMixin],
+    mixins:[mixin],
     _getAllDataFromStore(){
         return HomeStore.getAll();
     },

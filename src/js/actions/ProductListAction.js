@@ -1,14 +1,10 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var ProductListAction={
-    getDataFromServer (pageIndex){
+    getNextPage (){
         appDispatcher.dispatch({
-            actionName:"ProductList.getDataFromServer",
-            data:{
-                pageIndex:pageIndex
-            }
+            actionName:"productList.getNextPage",
         })
-
     }
 };
 

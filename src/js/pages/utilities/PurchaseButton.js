@@ -5,7 +5,7 @@ import Button from "../../UIComponents/Button";
 import Message from "../../UIComponents/Message";
 
 //utilites component
-import productStatusMixin from "./productStatusMixin";
+import mixin from "./mixin";
 
 /*
 * @desc 所有产品在详情页的购买按钮。主要是根据产品的类型和状态，跳转到不同的支付页面（天天赚的预约页面和公用的支付页面）。
@@ -14,13 +14,13 @@ import productStatusMixin from "./productStatusMixin";
 * @date 2016-07-05
 */
 let PurchaseButton=React.createClass({
-    mixins:[productStatusMixin],
+    mixins:[mixin],
     _renderButtonText(){
-        let buttonText=this.getProductStatusText(this.props.type,this.props.status);
+        let buttonText=this._getProductStatusText(this.props.type,this.props.status);
         return buttonText;
     },
     _handleOnClick(){
-        let productStatusText=this.getProductStatusText(this.props.type,this.props.status);
+        let productStatusText=this._getProductStatusText(this.props.type,this.props.status);
         if(productStatusText === "售罄"){
             Message.broadcast("该标的已经售罄！");
         }else if(productStatusText === "预约"){
