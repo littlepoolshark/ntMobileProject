@@ -1,9 +1,7 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
-var $=require("jquery");
 
-import config from "../config";
 
 var HomeStore={
     _all:{
@@ -11,14 +9,6 @@ var HomeStore={
         registerUserCount:"--",
         productList:[],
         bannerList:[]
-    },
-    processProductListData(list){
-        if(list.length){
-            for(let i=0;i<list.length;i++){
-                list[i].productApr=(list[i].productApr * 100).toFixed(1);
-                list[i].remainAmount=(list[i].remainAmount / 10000).toFixed(2);
-            }
-        }
     },
     setAll(source){
         Object.assign(this._all,source);
@@ -33,12 +23,11 @@ MicroEvent.mixin(HomeStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "home_getDataFromServer":
+
             ajax({
-                url:config.createFullPath("homePageData"),
-                method:"GET",
+                ciUrl:"/platinfo/v2/homePageData",
                 success:function(rs){
                     if(rs.code === 0){
-                        HomeStore.processProductListData(rs.data.list);
                         HomeStore.setAll({
                             totalAmountOfInvestment:rs.data.totalAmountOfInvestment,
                             registerUserCount:rs.data.registerUserCount,
@@ -51,26 +40,13 @@ appDispatcher.register(function(payload){
                 }
             });
 
-
-            //$.ajax({
-            //    type:"post",
-            //    url:"http://localhost:9090/ci.jsp",
-            //    data:{ciUrl:"/ci/platinfo/v2/homePageData",content:"{\"imei\":\"23ffgffffffffffffffff\",\"opSource\":\"wx\",\"terminal\":\"wx\",\"version\":\"2.0\",\"accountName\":\"15817457250\",\"password\":\"123456\"}"},
-            //    dataType: "jsonp",
-            //    success:function(data){
-            //        console.log("asfsadfd");
-            //        //console.info(data);
-            //    },
-            //    error(xhr,status,error){
-            //        console.log("into error,status:",status);
-            //    }
-            //});
-
             ajax({
-                url:config.createFullPath("articleAdverList"),
-                method:"GET",
+                ciUrl:"/platinfo/v2/articleAdvertList",
                 success:function(rs){
                     if(rs.code === 0){
+                        for(let i=0;i<rs.data.list.length;i++){
+                            rs.data.list[i].pic="http://192.168.1.90:9090"+rs.data.list[i].pic;
+                        }
                         HomeStore.setAll({
                             bannerList:rs.data.list
                         });
