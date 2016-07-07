@@ -7,6 +7,7 @@ import {
     Link
 } from 'react-router';
 
+//ui component
 import Container from "../UIComponents/Container";
 import Button from "../UIComponents/Button";
 import Field from "../UIComponents/Field";
@@ -15,6 +16,9 @@ import Icon from "../UIComponents/Icon";
 import Modal from "../UIComponents/modal/Modal";
 import Group from "../UIComponents/Group";
 import Message from "../UIComponents/Message";
+
+//utilities
+import cookie from "../lib/cookie";
 
  //登录组件
  let LoginView=React.createClass({
@@ -148,11 +152,19 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
-            this.props.history.pushState(null,"/home");
+            cookie.setCookie("token","13682330541",59);
+            this.context.router.push({
+               pathname:"/home"
+            })
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckSuccess",function(phoneNo){
-            this.props.history.pushState(null,"register/?phoneNo=" + phoneNo);
+            this.context.router.push({
+                pathname:"/register",
+                query:{
+                    phoneNo:phoneNo
+                }
+            })
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckFailed",function(msg){
@@ -160,5 +172,9 @@ let RegisterView=React.createClass({
         }.bind(this));
     }
 });
+
+Default.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 export default Default;

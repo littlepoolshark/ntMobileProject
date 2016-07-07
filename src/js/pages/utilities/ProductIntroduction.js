@@ -39,7 +39,7 @@ function ProductIntroduction(props){
     let item20={ title:"二次转让", content:"持有达到30天，且在标的到期7天前"};
 
     //新手标多出来或者不同于月月赚的item
-    let item21= { title:"退出规则", content: <div>1.期满一次性还本付息<br/>2.新手标赚暂不支持提前退出</div>};
+    let item21= { title:"退出规则", content: <div>1.期满一次性还本付息<br/>2.新手标暂不支持提前退出</div>};
 
     //将item组合成对应的产品介绍栏目数组
     let new_product=[item1,item2,item3,item9,item10,item5,item6,item7,item21];

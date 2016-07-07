@@ -19,6 +19,7 @@ import DailyEarnCard from "./utilities/DailyEarnCard";
 import HomeCommonCard from "./utilities/HomeCommonCard";
 import Slogan from "./utilities/Slogan";
 import mixin from "./utilities/mixin";
+import cookie from "../lib/cookie";
 
 
 
@@ -97,6 +98,7 @@ let Home=React.createClass({
         )
     },
     componentDidMount(){
+        console.log("token:",cookie.getCookie("token"));
         HomeStore.bind("change",function(){
             this.setState(this._getAllDataFromStore())
         }.bind(this));

@@ -126,6 +126,10 @@ let EarnSetIntroduction=React.createClass({
             this.setState(this._getAllDataFromStore())
         }.bind(this));
 
+    },
+    routerWillLeave(nextLocation){
+        console.log("you can not go!");
+        return false;
     }
 });
 

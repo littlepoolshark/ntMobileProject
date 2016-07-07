@@ -19,7 +19,7 @@ let  HomeCommonCard=React.createClass({
         if(statusText !== "售罄"){
             return (
                 <div className="subtitle-right">
-                    <span className="amount">{remainAmount}</span>
+                    <span className="amount">{this._amountFormater(remainAmount)}</span>
                     <span className="unit">万</span>
                 </div>
             )

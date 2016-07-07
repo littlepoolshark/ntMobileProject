@@ -4,8 +4,7 @@ import Group from "../../UIComponents/Group";
 // 还款保障组件
 //这是无状态组件，意在整个组件树更新的时候，跳过virtual DOM的diff比较，从而提高性能。
 //为了避免一定程度的浪费，react官方还在0.14版本中加入了无状态组件
-function RepaymentDescription(props){
-    console.log("props from RepaymentDescription:",props.type);
+function RepaymentDescription(){
     return (
         <Group>
             <h6>还款保障</h6>

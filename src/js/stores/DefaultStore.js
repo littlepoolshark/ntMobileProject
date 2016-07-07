@@ -41,7 +41,6 @@ var DefaultStore={
                 msg:"手机号码不能为空，请填写"
             }
         }else if(!this.phoneNoFormatCheck(phoneNo)){
-            console.log("into else if");
             validationResult={
                 success:false,
                 msg:"手机号码格式不正确，请检查"
