@@ -65,7 +65,6 @@ let RegisterView=React.createClass({
         this.refs.modal.close();
     },
     _getVerificationCode(){
-        //this.props.history.pushState(null,"/register?phoneNo=13682330541");
         let phoneNo=this.refs.account.getValue();
         DefaultAction.getVerificationCode(phoneNo);
     },
@@ -80,7 +79,11 @@ let RegisterView=React.createClass({
                         <Field type="number" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
                     </List.Item>
                 </List>
-                <div><input type="checkbox" defaultChecked />同意<a href="javascript:void(0);" onClick={this._showPopupWindow}>《农泰金融注册服务协议》</a></div>
+                <div>
+                    <input type="checkbox" defaultChecked />
+                    同意
+                    <a href="javascript:void(0);" onClick={this._showPopupWindow}>《农泰金融注册服务协议》</a>
+                </div>
                 <div className="btn-wrapper" >
                     <Button amStyle="primary" block radius={true} onClick={this._getVerificationCode}>获取验证码</Button>
                 </div>

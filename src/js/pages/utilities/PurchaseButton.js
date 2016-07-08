@@ -24,24 +24,33 @@ let PurchaseButton=React.createClass({
         return buttonText;
     },
     _handleOnClick(){
-        let productStatusText=this._getProductStatusText(this.props.type,this.props.status);
+        let {
+            type,
+            status,
+            productName,
+            remainAmount,
+            productApr
+            }=this.props;
+        let productStatusText=this._getProductStatusText(type,status);
         let isLogin=!!cookie.getCookie("token");
+        let locationQuery={
+            type:type,
+            productName:productName,
+            remainAmount:remainAmount,
+            productApr:productApr
+        };
         if(!isLogin){
             this.refs.modal.open();
         } else if(productStatusText === "售罄"){
             Message.broadcast("该标的已经售罄！");
         }else if(productStatusText === "预约"){
-            //"this.props.history" and "pushState" had been deprecated,so use context.router instead
-            //this.props.history.pushState(null,"DailyEarnAppointment");
             this.context.router.push({
                 pathname:"/dailyEarnAppointment"
             });
         } else {
             this.context.router.push({
                 pathname:"/payment",
-                query:{
-                    type:this.props.type
-                }
+                query:locationQuery
             });
         }
     },

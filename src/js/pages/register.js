@@ -32,9 +32,6 @@ let Register=React.createClass({
     _formatPhoneNo(phoneNo){
         return phoneNo.slice(0,3) + "****" + phoneNo.slice(7);
     },
-    _getPhoneNo(){
-        return getParamObjFromUrl().phoneNo;
-    },
     _handleNavBack(obj){
 
         if(obj.title === "返回"){
@@ -44,20 +41,24 @@ let Register=React.createClass({
         }
     },
     _handleOnAction(data){
-        //console.log("prompt data:",data);
         if(data === ""){
             return false;
+        }else {
+            registerAction.fillInviterCode(data);
+            return true;
         }
-        return true;
     },
     _handleOnDismiss(event){
         this.refs.modal.close();
     },
     _register(){
-        registerAction.register(this._getPhoneNo(),this.refs.password.getValue());
+        let phoneNo=this.props.location.query.phoneNo;
+        let loginPassword=this.refs.password.getValue();
+        let verificationCode=this.refs.verificationCode.getValue();
+        registerAction.register(phoneNo,loginPassword,verificationCode);
     },
     render (){
-        let phoneNo=getParamObjFromUrl().phoneNo;
+        let phoneNo=this.props.location.query.phoneNo;
         let backNav = {
             component:"a",
             icon: 'left-nav',
@@ -94,7 +95,7 @@ let Register=React.createClass({
                                 label="验证码"
                                 placeholder="请输入验证码"
                                 ref="verificationCode"
-                                inputAfter={ <MobileVerificationCode phoneNo={this._getPhoneNo} autoCountDown={true} />}
+                                inputAfter={ <MobileVerificationCode phoneNo={phoneNo} autoSend={true} type="1"/>}
                             />
                         </List.Item>
                         <List.Item
@@ -109,20 +110,26 @@ let Register=React.createClass({
                 </div>
                 <Modal role="prompt" title=""  ref="modal" onAction={this._handleOnAction} onDismiss={this._handleOnDismiss}>
                     请输入邀请人手机号码或者邀请码
-                    <Field type="text"  placeholder="" ref="phoneNo" />
+                    <Field type="text"  placeholder="" ref="inviterPhoneNo" />
                 </Modal>
             </Container>
         )
     },
     componentDidMount(){
         registerStore.bind("registerSuccess",function(){
-            Message.broadcast("您已成功注册！")
-        });
+            this.context.router.push({
+                pathname:"/productList"
+            })
+        }.bind(this));
 
         registerStore.bind("registerFailed",function(msg){
             Message.broadcast(msg);
         });
     }
 });
+
+Register.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 export default Register;

@@ -11,6 +11,9 @@ import Button from "../UIComponents/Button";
 import Field from "../UIComponents/Field";
 import Container from "../UIComponents/Container";
 
+//utilities
+import mixin from "./utilities/mixin";
+
 const CAN_USE_COUPON=["yyz_product","jjz_product","loan_product"];
 
 /*
@@ -26,6 +29,12 @@ let Payment=React.createClass({
             couponAmount:PaymentStore.getAll().couponAmount
         }
     },
+    /*
+    * @desc 天天赚投资限额栏的渲染
+    *
+    * @pram {string} //产品的类型，只有当产品类型为“ttz_product”的时候才显示这一栏。
+    * @return {reactElement} //react元素
+    */
     _renderInvestmentLimit(type){
         if(type === "ttz_product"){
             return (
@@ -37,6 +46,12 @@ let Payment=React.createClass({
             return null;
         }
     },
+    /*
+     * @desc 优惠券入口的渲染
+     *
+     * @pram {string} //产品的类型，只有该产品类型为可使用优惠券类型的时候才显示这一栏。
+     * @return {reactElement} //react元素
+     */
     _renderCouponBar(type){
 
         if(CAN_USE_COUPON.indexOf(type) > -1){
@@ -52,6 +67,12 @@ let Payment=React.createClass({
             return null;
         }
     },
+    /*
+     * @desc 预期收益的渲染
+     *
+     * @pram {string} //产品的类型，除了天天赚，其他类型的产品都会显示这一栏。
+     * @return {reactElement} //react元素
+     */
     _renderExpectedReward(type){
         let expectedReward=PaymentStore.getAll().expectedReward;
         if(type !== "ttz_product"){
@@ -73,16 +94,21 @@ let Payment=React.createClass({
         PaymentAction.changePurchaseAmount(parseFloat(event.target.value));
     },
     render(){
-        let type=this.props.location.query.type;
+        let {
+            type,
+            productName,
+            remainAmount,
+            productApr
+            }=this.props.location.query;
         return (
             <Container id="earnSetPayment">
                 <Group>
-                    <h6 className="title">新手标</h6>
+                    <h6 className="title">{productName}</h6>
                     <div className="subtitle">
-                        年华利率：<strong>9.5%</strong>
+                        年华利率：<strong>{productApr+"%"}</strong>
                     </div>
                     <div className="subtitle">
-                        项目可投金额：<strong>10000</strong>元
+                        项目可投金额：<strong>{remainAmount}</strong>元
                     </div>
                     {this._renderInvestmentLimit(type)}
                 </Group>
@@ -129,5 +155,9 @@ let Payment=React.createClass({
         }.bind(this));
     }
 });
+
+Payment.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 export default  Payment;

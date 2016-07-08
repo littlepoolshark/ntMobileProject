@@ -1,9 +1,9 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
-//var superAgent=require("superagent");
 var ajax=require("../lib/ajax.js");
 
 var RegisterStore={
+    _all:{},
     passwordCheck(password){
         let validationResult={
             success:true,
@@ -22,6 +22,12 @@ var RegisterStore={
         }
 
         return validationResult;
+    },
+    setInviterCode(inviterCode){
+        this._all.inviterCode=inviterCode;
+    },
+    getInviterCode(){
+        return this._all.inviterCode;
     }
 
 };
@@ -31,12 +37,39 @@ MicroEvent.mixin(RegisterStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "register":
-            let passwordCheckoutResult=RegisterStore.passwordCheck(payload.data.password);
+            let {
+                password,
+                phoneNo,
+                verificationCode
+                }=payload.data;
+            let passwordCheckoutResult=RegisterStore.passwordCheck(password);
             if(passwordCheckoutResult.success){
-                RegisterStore.trigger("registerSuccess");
+                let postData={
+                    accountName:phoneNo,
+                    onePwd:password,
+                    phone:phoneNo,
+                    verifyCode:verificationCode
+                };
+                let inviterCode=RegisterStore.getInviterCode();
+                inviterCode && (postData.inventCode=inviterCode);//如果用户填写了邀请人手机号码，则提交该字段
+                ajax({
+                    ciUrl:"/user/v2/userRegister",
+                    data:postData,
+                    success:function(rs){
+                        if(rs.code === 0){
+                            RegisterStore.trigger("registerSuccess");
+                        }else {
+                            RegisterStore.trigger("registerFailed","注册失败！");
+                        }
+                    }
+                })
+
             }else {
                 RegisterStore.trigger("registerFailed",passwordCheckoutResult.msg);
             }
+            break;
+        case "fillInviterCodeFinished":
+            RegisterStore.setInviterCode(payload.data.inviterCode);
             break;
         default:
         //no op

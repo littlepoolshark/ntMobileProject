@@ -1,6 +1,5 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
-//var superAgent=require("superagent");
 var ajax=require("../lib/ajax.js");
 
 var DefaultStore={
@@ -76,9 +75,7 @@ appDispatcher.register(function(payload){
             break;
         case "getVerificationCode" :
             let getVerificationCodeCheckResult=DefaultStore.getVerificationCodeCheck(payload.data.phoneNo);
-            console.log(getVerificationCodeCheckResult);
             if(getVerificationCodeCheckResult.success){
-                console.log("into if");
                 DefaultStore.trigger("getVerificationCodeCheckSuccess",payload.data.phoneNo);
             }else {
                 DefaultStore.trigger("getVerificationCodeCheckFailed",getVerificationCodeCheckResult.msg);

@@ -8,7 +8,7 @@ const COUNT_DOWN__DURATION=60;//倒数多少秒
 let MobileVerificationCode=React.createClass({
     getDefaultProps(){
         return {
-            autoCountDown:false//是否自动发送验证码，进入倒计时
+            autoSend:false//是否自动发送验证码，进入倒计时
         }
     },
     getInitialState(){
@@ -18,8 +18,10 @@ let MobileVerificationCode=React.createClass({
         }
     },
     _handleClick(){
-        let phoneNo=this.props.phoneNo();
-        let autoCountDown=this.props.autoCountDown;
+        let {
+            phoneNo,
+            type
+            }=this.props;
         if(phoneNo === ""){
             Message.broadcast("手机号码不能为空，请填写！");
         }else if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(phoneNo)){
@@ -27,18 +29,19 @@ let MobileVerificationCode=React.createClass({
         } else if(this.state.active){
             this._countDown();
             ajax({
-                url:"/mock/getVerificationCode.json",
-                method:"GET",
-                sync:false,
-                success:function(rs){
-                    if(rs.code === "0001"){
-                        !autoCountDown && Message.broadcast("手机验证码发送成功！");
-                    }else {
-                        !autoCountDown &&Message.broadcast("手机验证码发送失败！");
-                    }
-
-                }
-            })
+                ciUrl:"/platinfo/v2/getVerifyCode",
+                 data:{
+                     phone:phoneNo,
+                     type:type
+                 },
+                 success:function(rs){
+                     if(rs.code === 0){//发送验证码成功
+                         Message.broadcast("验证码发送成功！");
+                     }else {//发送验证码失败
+                         Message.broadcast("验证码发送失败！");
+                     }
+                 }
+             })
         }else {
             return false;
         }
@@ -72,7 +75,7 @@ let MobileVerificationCode=React.createClass({
         )
     },
     componentDidMount(){
-        this.props.autoCountDown && this._handleClick();
+        this.props.autoSend && this._handleClick();
     }
 });
 

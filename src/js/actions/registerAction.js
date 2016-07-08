@@ -1,15 +1,24 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var RegisterAction={
-    register (account,password){
+    register (phoneNo,password,verificationCode){
         appDispatcher.dispatch({
             actionName:"register",
             data:{
-                account:account,
-                password:password
+                phoneNo:phoneNo,
+                password:password,
+                verificationCode,verificationCode
             }
         })
 
+    },
+    fillInviterCode(inviterCode){
+        appDispatcher.dispatch({
+            actionName:"fillInviterCodeFinished",
+            data:{
+                inviterCode:inviterCode
+            }
+        })
     }
 };
 
