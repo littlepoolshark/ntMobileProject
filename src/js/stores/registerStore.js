@@ -1,15 +1,25 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
+var cookie=require("../lib/cookie.js");
 
 var RegisterStore={
     _all:{},
-    passwordCheck(password){
+    registerCheck(data){
+        let {
+            password,
+            verificationCode
+            }=data;
         let validationResult={
             success:true,
             msg:""
         }
-        if(password === ""){
+        if(verificationCode === ""){
+            validationResult={
+                success:false,
+                msg:"验证码不能为空，请填写"
+            }
+        }else if(password === ""){
             validationResult={
                 success:false,
                 msg:"登录密码不能为空，请填写"
@@ -42,8 +52,8 @@ appDispatcher.register(function(payload){
                 phoneNo,
                 verificationCode
                 }=payload.data;
-            let passwordCheckoutResult=RegisterStore.passwordCheck(password);
-            if(passwordCheckoutResult.success){
+            let registerCheckoutResult=RegisterStore.registerCheck(payload.data);
+            if(registerCheckoutResult.success){
                 let postData={
                     accountName:phoneNo,
                     onePwd:password,
@@ -57,15 +67,16 @@ appDispatcher.register(function(payload){
                     data:postData,
                     success:function(rs){
                         if(rs.code === 0){
+                            cookie.setCookie("token",rs.data.token,59);
                             RegisterStore.trigger("registerSuccess");
                         }else {
-                            RegisterStore.trigger("registerFailed","注册失败！");
+                            RegisterStore.trigger("registerFailed",rs.description);
                         }
                     }
                 })
 
             }else {
-                RegisterStore.trigger("registerFailed",passwordCheckoutResult.msg);
+                RegisterStore.trigger("registerFailed",registerCheckoutResult.msg);
             }
             break;
         case "fillInviterCodeFinished":

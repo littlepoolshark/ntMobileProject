@@ -98,7 +98,8 @@ let Payment=React.createClass({
             type,
             productName,
             remainAmount,
-            productApr
+            productApr,
+            userBalance
             }=this.props.location.query;
         return (
             <Container id="earnSetPayment">
@@ -117,7 +118,7 @@ let Payment=React.createClass({
                     header=""
                     id="purchaseZone"
                     >
-                    <div className="subtitle usableAmount">账户余额：1000.00元</div>
+                    <div className="subtitle usableAmount">账户余额：{userBalance}元</div>
                     <List>
                         <List.Item
                             nested="input"

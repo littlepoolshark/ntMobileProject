@@ -1,6 +1,7 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
+var cookie=require("../lib/cookie.js");
 
 var DefaultStore={
     loginCheck(account,password){
@@ -18,12 +19,12 @@ var DefaultStore={
                 success:false,
                 msg:"手机号码格式不对，请检查！"
             }
-        } else if(account !== "13682330541" || password !== "123456") {
+        }/* else if(account !== "13682330541" || password !== "123456") {
             validationResult={
                 success:false,
                 msg:"账号或者密码不正确!"
             }
-        }
+        }*/
         return validationResult;
     },
     phoneNoFormatCheck(phoneNo){
@@ -55,16 +56,24 @@ MicroEvent.mixin(DefaultStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "login":
-            let loginCheckResult=DefaultStore.loginCheck(payload.data.account,payload.data.password);
+            let {
+                account,
+                password
+                }=payload.data;
+            let loginCheckResult=DefaultStore.loginCheck(account,password);
             if(loginCheckResult.success){
                 ajax({
-                    method:"GET",
-                    url:"/mock/login.json",
+                    ciUrl:"/user/v2/userLogin",
+                    data:{
+                        accountName:account,
+                        password:password
+                    },
                     success:function(rs){
-                        if(rs.success){
+                        if(rs.code === 0){
+                            cookie.setCookie("token",rs.data.token,59);
                             DefaultStore.trigger("loginSuccess");
                         }else {
-                            DefaultStore.trigger("loginFailed",rs.msg);
+                            DefaultStore.trigger("loginFailed","登录失败！"+rs.description);
                         }
                     }
                 })
@@ -72,6 +81,19 @@ appDispatcher.register(function(payload){
                 DefaultStore.trigger("loginFailed",loginCheckResult.msg);
             }
 
+            break;
+        case "logout" :
+            ajax({
+                ciUrl:"/user/v2/userLogout",
+                success:function(rs){
+                    if(rs.code === 0){
+                        cookie.setCookie("token","");
+                        DefaultStore.trigger("logoutSuccess");
+                    }else {
+                        DefaultStore.trigger("logoutFailed","退出失败！"+rs.description);
+                    }
+                }
+            })
             break;
         case "getVerificationCode" :
             let getVerificationCodeCheckResult=DefaultStore.getVerificationCodeCheck(payload.data.phoneNo);

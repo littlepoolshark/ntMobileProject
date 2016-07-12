@@ -52,7 +52,7 @@ let EarnSetIntroduction=React.createClass({
         let scrollHeight=container.scrollHeight;
         let scrollTop=container.scrollTop;
         if(scrollTop > scrollHeight-offsetHeight-1){
-            this.refs.modal.open();
+            this.refs.detailModal.open();
         }
     },
     _test(event){
@@ -70,7 +70,7 @@ let EarnSetIntroduction=React.createClass({
     },
     _handleClose(){
         InvestmentRecordAction.clearAll();
-        this.refs.modal.close();
+        this.refs.detailModal.close();
     },
     render(){
         let productionType=this.props.location.query.type;
@@ -83,7 +83,7 @@ let EarnSetIntroduction=React.createClass({
                 <PurchaseButton  {...this.state} {...this.props}/>
                 <Modal
                     title={modalTitle + "详情"}
-                    ref="modal"
+                    ref="detailModal"
                     isOpen={false}
                     role="popup"
                     onDismiss={this._handleClose}

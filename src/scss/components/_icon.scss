@@ -41,3 +41,18 @@
     }
   }
 }
+
+
+//下面是图片形式的小图标所用到的样式
+.imgIcon {
+  display:block;//使用display:inline-block会使外面的容器的高度增高，why？
+  width:rem-calc(24);
+  height:rem-calc(24);
+  background-size:cover;
+}
+
+@each $imgIcon-name, $imgIcon-url in $imgIcons {
+  .#{$imgIcon-prefix}-#{$imgIcon-name} {
+    background-image:url("#{$imgIcon-path}#{$imgIcon-url}")
+  }
+}

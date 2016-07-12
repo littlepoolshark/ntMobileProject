@@ -66,8 +66,8 @@ const Modal = createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    let isOpen = this.props.isOpen;
 
+    let isOpen = this.props.isOpen;
     if (!isOpen && nextProps.isOpen) {
       this.open();
     } else if (isOpen && !nextProps.isOpen) {
@@ -347,6 +347,7 @@ const Modal = createClass({
   },
 
   render() {
+
     let {
       closed,
       isClosing,

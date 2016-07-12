@@ -22,27 +22,40 @@ import cookie from "../lib/cookie";
 
  //登录组件
  let LoginView=React.createClass({
+     getInitialState(){
+         return {
+             showPassword:false
+         }
+     },
      _handleLogin(){
          let account=this.refs.account.getValue();
          let password=this.refs.password.getValue();
          DefaultAction.login(account,password);
 
      },
+     _toggleOpenEye(){
+         this.setState({
+             showPassword:!this.state.showPassword
+         })
+     },
      render(){
+         let imgIconClass=this.state.showPassword ? "eye-on" : "eye-off";
+         let passwordInputType=this.state.showPassword ? "text" : "password";
          return (
              <div>
                  <List id="login-form">
                      <List.Item
-                         media={<Icon name="person" />}
+                         media={<Icon name="phone" classPrefix="imgIcon" style={{marginTop:"-4px"}}/>}
                          nested="input"
                      >
                          <Field type="number" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
                      </List.Item>
                      <List.Item
-                         media={<Icon name="info" />}
+                         media={<Icon name="password" classPrefix="imgIcon" style={{marginTop:"-4px"}}/>}
                          nested="input"
                      >
-                         <Field type="text" label={null} placeholder="请输入您的登录密码" ref="password"></Field>
+                         <Field type={passwordInputType} label={null} placeholder="请输入您的登录密码" ref="password"></Field>
+                         <Icon name={imgIconClass} classPrefix="imgIcon" style={{marginTop:"px"}} onClick={this._toggleOpenEye}/>
                      </List.Item>
                  </List>
                  <div className="cf">
@@ -73,7 +86,7 @@ let RegisterView=React.createClass({
             <div>
                 <List id="register-form">
                     <List.Item
-                        media={<Icon name="person" />}
+                        media={<Icon name="phone" classPrefix="imgIcon" style={{marginTop:"-4px"}}/>}
                         nested="input"
                     >
                         <Field type="number" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
@@ -138,9 +151,7 @@ let RegisterView=React.createClass({
     render (){
         return (
                 <Container className="default-container" {...this.props}>
-                    <div className="text-center">
-                        <img src="./src/img/login_logo.png" alt="" className="ntLogo"/>
-                    </div>
+                    <div className="text-center ntLogo-wrapper"></div>
                     {this.state.loginView ? <LoginView handleLogin={this._handleLogin}/> : <RegisterView history={this.props.history}/> }
                     <div className="default-footer">
                         {this.state.loginView? "没有账号？" : "已有账号？"}
@@ -155,7 +166,7 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
-            cookie.setCookie("token","13682330541",59);
+
             this.context.router.push({
                pathname:"/home"
             })

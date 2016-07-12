@@ -47,6 +47,8 @@ const Message=React.createClass({
             setTimeout(function(){
                 this.setState({
                     "hide":true
+                },function(){
+                    console.log("into setState callback");
                 })
             }.bind(this),2000)
         }
@@ -64,6 +66,10 @@ const Message=React.createClass({
         //}.bind(this));
     }
 });
+
+Message.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 Message.broadcast=function(msg){
     if(!!!msgBoxContainer){

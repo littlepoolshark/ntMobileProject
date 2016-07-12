@@ -13,9 +13,12 @@
     background-size:cover;
     position:relative;
 }
-img.ntLogo {
+.ntLogo-wrapper {
     width:rem-calc(184);
-    height:auto;
+    height:rem-calc(53);
+    margin:0 auto;
+    background-size:cover;
+    background-image:url("../../img/login_logo.png");
 }
 #login-form,#register-form {
     margin-top:rem-calc(40);

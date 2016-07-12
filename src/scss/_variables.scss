@@ -338,6 +338,17 @@ $icons: (
 ) !default;
 
 
+// imgIcon Variables
+// -----------------------------------------------------------------------------
+$imgIcon-prefix: #{$namespace}imgIcon;
+$imgIcon-path: '../img/';
+$imgIcons:(
+  phone: "login_icon_call.png",
+  password:"login_icon_password.png",
+  eye-off:"login_icon_eye_off.png",
+  eye-on:"login_icon_eye_on.png"
+)!default;
+
 // List Variables
 // -----------------------------------------------------------------------------
 $list-prefix: #{$namespace}list !default;

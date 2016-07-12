@@ -1,5 +1,5 @@
 require("./src/scss/amazeui.touch.scss");
-
+var cookie= require("./src/js/lib/cookie");
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ import Group from "./src/js/UIComponents/Group";
 import NavBar from "./src/js/UIComponents/NavBar";
 import TabBar from "./src/js/UIComponents/TabBar";
 import View from "./src/js/UIComponents/View";
-import cookie from "./src/js/lib/cookie";
+
 
 
 import * as Pages from './src/js/pages/index';
@@ -165,7 +165,7 @@ const NotFound = React.createClass({
 });
 
 
-
+//在进入一些需要用户登录的页面前进行拦截.
 function handleOnEnter(nextState, replace){
     let componentName=nextState.params.componentName;
     let pageName=componentName.charAt(0).toUpperCase() + componentName.slice(1);

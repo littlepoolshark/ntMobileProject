@@ -78,7 +78,7 @@ let Register=React.createClass({
                     amStyle="primary"
                     onAction={this._handleNavBack}
                 />
-                <div style={{marginTop:"10px",fontSize:"14px",textAlign:"center"}}>本次交易短信验证码已经发送到您的手机</div>
+                <div style={{marginTop:"10px",fontSize:"14px",textAlign:"center",color:"#666"}}>本次交易短信验证码已经发送到您的手机</div>
                 <div style={{margin:"10px 0",fontSize:"20px",textAlign:"center"}}>{this._formatPhoneNo(phoneNo)}</div>
                 <Group
                     header=""

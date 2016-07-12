@@ -11,6 +11,11 @@ var DefaultAction={
         })
 
     },
+    logout(){
+        appDispatcher.dispatch({
+            actionName:"logout"
+        })
+    },
     getVerificationCode(phoneNo){
         appDispatcher.dispatch({
             actionName:"getVerificationCode",

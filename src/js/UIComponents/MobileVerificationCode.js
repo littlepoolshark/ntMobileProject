@@ -38,7 +38,7 @@ let MobileVerificationCode=React.createClass({
                      if(rs.code === 0){//发送验证码成功
                          Message.broadcast("验证码发送成功！");
                      }else {//发送验证码失败
-                         Message.broadcast("验证码发送失败！");
+                         Message.broadcast("验证码发送失败！"+rs.description);
                      }
                  }
              })

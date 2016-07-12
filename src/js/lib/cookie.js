@@ -33,4 +33,4 @@ let cookie={
     getCookie:getCookie
 }
 
-export default cookie;
+module.exports=cookie;

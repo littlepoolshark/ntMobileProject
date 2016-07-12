@@ -1,4 +1,4 @@
-
+let cookie=require("./cookie");
 /* @desc 自己封装的ajax，目前主要支持工作中常用的post，get请求。调用方式几乎等同于jquery的ajax封装，略有出入。
 *
 *  @param obj.url {string} //请求的url
@@ -22,6 +22,10 @@ function ajax(obj) {
             "version":"2.0"
         },
     };
+
+    if(cookie.getCookie("token")){
+        initData.token=cookie.getCookie("token");
+    }
 
 
     //基于兼容考虑，创建一个XMLHttpRequest对象
