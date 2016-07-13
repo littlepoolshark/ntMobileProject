@@ -32,18 +32,22 @@ let PurchaseButton=React.createClass({
         return buttonText;
     },
     _handleOnClick(){
+        console.log("purchaseButton component props:",this.props);
         let {
+            id,
             type,
             status,
             productName,
             remainAmount,
             productApr
             }=this.props;
+
         let _self=this;
         let productStatusText=this._getProductStatusText(type,status);
         let isLogin=!!cookie.getCookie("token");
         let locationQuery={
             type:type,
+            productId:id,
             productName:productName,
             remainAmount:remainAmount,
             productApr:productApr

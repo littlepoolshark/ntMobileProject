@@ -1,6 +1,25 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var PaymentAction={
+    storeInitialize(sourceObj){
+        appDispatcher.dispatch({
+            actionName:"payment_storeInitialization",
+            data:sourceObj
+        })
+    },
+    getUnUseCouponCount(type){
+        appDispatcher.dispatch({
+            actionName:"getUnUseCouponCount",
+            data:{
+                productType:type
+            }
+        })
+    },
+    useAllBalance(){
+        appDispatcher.dispatch({
+            actionName:"useAllBalance",
+        })
+    },
     finishedCouponSelection (id,amount,type,minimumLimit){
         appDispatcher.dispatch({
             actionName:"couponChange",
@@ -29,6 +48,11 @@ var PaymentAction={
                 couponAmount:0,
                 couponType:""
             }
+        })
+    },
+    pay(){
+        appDispatcher.dispatch({
+            actionName:"payment"
         })
     }
 };

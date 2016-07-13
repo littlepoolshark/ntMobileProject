@@ -1,5 +1,7 @@
 require("../../scss/page/CouponList.scss");
-let PaymentAction=require("../actions/PaymentAction.js");
+let PaymentAction=require("../actions/PaymentAction");
+let CouponListAction=require("../actions/CouponListAction");
+let CouponListStore=require("../stores/CouponListStore");
 import React from "react";
 import classNames from "classnames";
 import CSSCore from "../UIComponents/utils/CSSCore";
@@ -120,6 +122,11 @@ let CouponCard=React.createClass({
 
 
 let CouponList=React.createClass({
+    getInitialState(){
+        return {
+            couponList:CouponListStore.getAll()
+        }
+    },
     _doNotUseCoupon(){
         PaymentAction.doNotUseCoupon();
         this.props.history.goBack();
@@ -134,7 +141,7 @@ let CouponList=React.createClass({
             <Container id="couponList">
                 <Button block radius onClick={this._doNotUseCoupon}>不使用加息券</Button>
                 {(
-                    couponList.map(function(item,index){
+                    this.state.couponList.map(function(item,index){
                         return (
                             <CouponCard {...item} purchaseAmount={purchaseAmount} productType={productType} />
                         )
@@ -144,6 +151,16 @@ let CouponList=React.createClass({
         )
     },
     componentDidMount(){
+        //根据当前的产品类型获取优惠券列表
+        let productTypeMap={
+            yyz_product:"yyz",
+            jjz_product:"jjz",
+            loan_product:"sanbiao"
+        }
+        let productType=this.props.location.query.productType;
+        CouponListAction.getDataFromSever(productTypeMap[productType]);
+
+        //监听用户的选择，发送相关的action
         let cards=document.getElementsByClassName("coupon-card");
         let _self=this;
         Array.prototype.forEach.call(cards,function(item,index){
@@ -160,6 +177,12 @@ let CouponList=React.createClass({
                 }
             })
         });
+
+        CouponListStore.bind("change",function(){
+            this.setState({
+                couponList:CouponListStore.getAll()
+            })
+        }.bind(this))
     }
 });
 
