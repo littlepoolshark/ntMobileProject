@@ -1,6 +1,7 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
-var ajax=require("../lib/ajax.js");
+var ajax=require("../lib/ajax");
+var cookie=require("../lib/cookie");
 
 var GetBackPasswordStore={
     checkVerificationCode(verificationCode,idCardNo){
@@ -30,21 +31,26 @@ MicroEvent.mixin(GetBackPasswordStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "submitVerificationCode":
-            let validationResult=GetBackPasswordStore.checkVerificationCode(payload.data.verificationCode,payload.data.idCardNo);
-            if(validationResult.success){
+            let VerificationCodeCheck=GetBackPasswordStore.checkVerificationCode(payload.data.verificationCode,payload.data.idCardNo);
+            if(VerificationCodeCheck.success){
                 ajax({
-                    method:"GET",
-                    url:"/mock/submitVerificationCode.json",
+                    ciUrl:"/platinfo/v2/getPwdBackCheck",
+                    data:{
+                        userId:cookie.getCookie("tempUserId"),
+                        verifyCode:payload.data.verificationCode,
+                        idcardNum:payload.data.idCardNo,
+                        phone:payload.data.phoneNo
+                    },
                     success:function(rs){
-                        if(rs.success){
-                            GetBackPasswordStore.trigger("submitSuccess");
+                        if(rs.code === 0){
+                            GetBackPasswordStore.trigger("VerificationCodeCheckSuccess",payload.data.verificationCode);
                         }else {
-                            GetBackPasswordStore.trigger("submitFailed",rs.msg);
+                            GetBackPasswordStore.trigger("VerificationCodeCheckFailed",rs.description);
                         }
                     }
                 })
             }else {
-                GetBackPasswordStore.trigger("submitFailed",validationResult.msg);
+                GetBackPasswordStore.trigger("submitFailed",VerificationCodeCheck.msg);
             }
 
             break;

@@ -32,7 +32,6 @@ let PurchaseButton=React.createClass({
         return buttonText;
     },
     _handleOnClick(){
-        console.log("purchaseButton component props:",this.props);
         let {
             id,
             type,
@@ -75,7 +74,8 @@ let PurchaseButton=React.createClass({
                             })
                         } else if(productStatusText === "预约"){
                             _self.context.router.push({
-                                pathname:"/dailyEarnAppointment"
+                                pathname:"/dailyEarnAppointment",
+                                query:locationQuery
                             });
                         } else {
                             _self.context.router.push({

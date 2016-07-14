@@ -25,7 +25,8 @@ let GetBackPassword=React.createClass({
     _submitVerificationCode(){
         let verificationCode=this.refs.verificationCode.getValue();
         let idCardNo=this.refs.idCardNo.getValue();
-        GetBackPasswordAction.submitVerificationCode(verificationCode,idCardNo);
+        let phoneNo=this.refs.phoneNo.getValue();
+        GetBackPasswordAction.submitVerificationCode(verificationCode,idCardNo,phoneNo);
     },
     render (){
         return (
@@ -49,7 +50,7 @@ let GetBackPassword=React.createClass({
                                 label="验证码"
                                 placeholder="请输入验证码"
                                 ref="verificationCode"
-                                inputAfter={ <MobileVerificationCode phoneNo={this._getPhoneNo}/>}
+                                inputAfter={ <MobileVerificationCode phoneNo={this._getPhoneNo} type={2}/>}
                             >
 
                             </Field>
@@ -76,14 +77,23 @@ let GetBackPassword=React.createClass({
         )
     },
     componentDidMount(){
-        GetBackPasswordStore.bind("submitSuccess",function(msg){
-            this.props.history.pushState(null,"setNewPassword");
+        GetBackPasswordStore.bind("VerificationCodeCheckSuccess",function(verificationCode){
+            this.context.router.push({
+                pathname:"/setNewPassword",
+                query:{
+                    verificationCode:verificationCode
+                }
+            })
         }.bind(this));
 
-        GetBackPasswordStore.bind("submitFailed",function(msg){
+        GetBackPasswordStore.bind("VerificationCodeCheckFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
     }
 });
+
+GetBackPassword.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 export default GetBackPassword;

@@ -1,6 +1,7 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
-var ajax=require("../lib/ajax.js");
+var ajax=require("../lib/ajax");
+var cookie=require("../lib/cookie");
 
 var SetNewPasswordStore={
     confirmNewPassword (newPassword,confirmNewPassword){
@@ -28,18 +29,22 @@ appDispatcher.register(function(payload){
             let confirmResult=SetNewPasswordStore.confirmNewPassword(payload.data.newPassword,payload.data.confirmNewPassword);
             if(confirmResult.success){
                 ajax({
-                    method:"GET",
-                    url:"/mock/submitNewPassword.json",
+                    ciUrl:"/platinfo/v2/getLoginPwdBack",
+                    data:{
+                        userId:cookie.getCookie("tempUserId"),
+                        newPwd:payload.data.newPassword,
+                        verifyCode:payload.data.verificationCode
+                    },
                     success:function(rs){
-                        if(rs.success){
-                            SetNewPasswordStore.trigger("submitSuccess");
+                        if(rs.code === 0){
+                            SetNewPasswordStore.trigger("setNewPasswordSuccess");
                         }else {
-                            SetNewPasswordStore.trigger("submitFailed",rs.msg);
+                            SetNewPasswordStore.trigger("setNewPasswordFailed",rs.description);
                         }
                     }
                 })
             }else {
-                SetNewPasswordStore.trigger("confirmFailed",confirmResult.msg);
+                SetNewPasswordStore.trigger("setNewPasswordFailed",confirmResult.msg);
             }
 
             break;

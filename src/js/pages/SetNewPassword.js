@@ -19,10 +19,13 @@ let SetNewPassword=React.createClass({
     _submitNewPassword(){
         let newPassword=this.refs.newPassword.getValue();
         let confirmNewPassword=this.refs.confirmNewPassword.getValue();
-        SetNewPasswordAction.submitNewPassword(newPassword,confirmNewPassword);
+        let verificationCode=this.props.location.query.verificationCode;
+        SetNewPasswordAction.submitNewPassword(newPassword,confirmNewPassword,verificationCode);
     },
     _handleCloseModal(){
-        this.props.history.pushState(null,"/");
+        this.context.router.push({
+            pathname:"/"
+        })
     },
     render (){
         return (
@@ -66,21 +69,19 @@ let SetNewPassword=React.createClass({
     },
     componentDidMount(){
         let modal=this.refs.modal;
-        SetNewPasswordStore.bind("confirmFailed",function(msg){
+        SetNewPasswordStore.bind("setNewPasswordFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
 
-        SetNewPasswordStore.bind("submitSuccess",function(){
-            console.log("into submitSuccess");
-            //this.props.history.pushState(null,"/");
-            //console.log("this.refs.modal_alert:",this.refs.modal_alert);
+        SetNewPasswordStore.bind("setNewPasswordSuccess",function(){
             modal.open();
         }.bind(this));
 
-        SetNewPasswordStore.bind("submitFailed",function(msg){
-            Message.broadcast(msg);
-        }.bind(this));
     }
 });
+
+SetNewPassword.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 export default SetNewPassword;

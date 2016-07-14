@@ -27,7 +27,6 @@ let DailyEarnCard=React.createClass({
             status
             }=this.props;
         let isSoldOut=this._getProductStatusText(type,status) === "预约" ? true : false ;
-        console.log("isSoldOut:",isSoldOut);
         let dailyEarnCardItemClasses =classNames({
             "dailyEarn-card-item":true,
             "soldOut":isSoldOut

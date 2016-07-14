@@ -47,8 +47,6 @@ const Message=React.createClass({
             setTimeout(function(){
                 this.setState({
                     "hide":true
-                },function(){
-                    console.log("into setState callback");
                 })
             }.bind(this),2000)
         }

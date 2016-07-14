@@ -195,7 +195,6 @@ appDispatcher.register(function(payload){
                        }
                     }
                 })
-                console.log("current PaymentStore data:",PaymentStore.getAll());
             }else {
                 PaymentStore.trigger("paymentCheckFailed",paymentCheckResult.msg)
             }

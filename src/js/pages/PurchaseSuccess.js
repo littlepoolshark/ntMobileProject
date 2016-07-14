@@ -3,29 +3,37 @@ import React from "react";
 
 //ui component
 import Group from "../UIComponents/Group";
-import Accordion from "../UIComponents/Accordion";
 import Container from "../UIComponents/Container";
 import NavBar from "../UIComponents/NavBar";
+import List from "../UIComponents/List";
 
 //utilities component
 import InvestmentRecord from "./utilities/InvestmentRecord";
 
 
 let PurchaseSuccess=React.createClass({
-    _renderStageBar(type){
-        if(type === "dailyEarn"){
+    _renderStageBar(productType,investMoney,lixiTime,endTime,expectedReward){
+        let productTypeMap={
+            new_product:"新手标",
+            ttz_product:"天天赚",
+            yyz_product:"月月赚",
+            jjz_product:"季季赚",
+            loan_product:"好采投",
+            creditor_product:"债权转让"
+        };
+        if(productType === "dailyEarn"){
             return (
                 <Group id="dailyEarn">
                     <div className="stage-one">
                         <div><span className="icon-success"></span></div>
                         <div className="subtitle">今天</div>
-                        <div className="title">成功购买<br/>天天赚1000000元</div>
+                        <div className="title">成功购买<br/>天天赚{investMoney}元</div>
                         <div className="stage-line"></div>
                     </div>
 
                     <div className="stage-two">
                         <div><span className="icon-start"></span></div>
-                        <div className="subtitle">2016-02-02</div>
+                        <div className="subtitle">{lixiTime}</div>
                         <div className="title">开始计息</div>
                     </div>
                 </Group>
@@ -35,20 +43,20 @@ let PurchaseSuccess=React.createClass({
                 <Group>
                     <div className="title">
                         <span className="icon-success"></span>
-                        成功购买月月赚1000元
+                        成功购买{productTypeMap[productType]}{investMoney}元
                         <div className="subtitle">今天</div>
                     </div>
                     <div className="placeholder first-stage"></div>
                     <div className="title">
                         <span className="icon-start"></span>
                         开始计息
-                        <div className="subtitle">2016-02-01</div>
+                        <div className="subtitle">{lixiTime}</div>
                     </div>
                     <div className="placeholder second-stage"></div>
                     <div className="title">
                         <span className="icon-end"></span>
-                        项目到期预计收益110.11元
-                        <div className="subtitle">2016-02-05</div>
+                        项目到期预计收益{expectedReward}元
+                        <div className="subtitle">{endTime}</div>
                     </div>
                 </Group>
             )
@@ -56,10 +64,19 @@ let PurchaseSuccess=React.createClass({
         }
     },
     _handleNavDone(){
-        this.props.history.pushState(null,"/productList");
+        this.context.router.push({
+            pathname:"/productList"
+        });
     },
     render(){
-        let type=this.props.location.query.type;
+        let {
+            productType,//产品类型
+            investMoney,//投资金额
+            lixiTime,//起息时间
+            endTime,//预计到期时间
+            expectedReward//预计收益
+            }=this.props.location.query;
+
         let doneNav= {
             component:"a",
             title: '完成'
@@ -72,20 +89,17 @@ let PurchaseSuccess=React.createClass({
                     amStyle="primary"
                     onAction={this._handleNavDone}
                 />
-                {this._renderStageBar(type)}
-                <Accordion defaultActiveKey={0}>
-                    <Accordion.Item
-                        title="投资记录"
-                        key={0}
-                    >
-                       这里是用户对这个产品的投资记录
-                        这里是用户对这个产品的投资记录
-                        这里是用户对这个产品的投资记录
-                    </Accordion.Item>
-                </Accordion>
+                {this._renderStageBar(productType,investMoney,lixiTime,endTime,expectedReward)}
+                <List>
+                    <List.Item href="#/earnSetInvestmentRecord" title="投资记录" />
+                </List>
             </Container>
         )
     }
 });
+
+PurchaseSuccess.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 export default  PurchaseSuccess;

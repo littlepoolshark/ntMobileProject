@@ -1,6 +1,8 @@
 let ajax=require("../lib/ajax");
+let cookie=require("../lib/cookie");
 import React from "react";
 import classNames from 'classnames';
+
 
 import Message from "../UIComponents/Message";
 const COUNT_DOWN__DURATION=60;//倒数多少秒
@@ -18,10 +20,12 @@ let MobileVerificationCode=React.createClass({
         }
     },
     _handleClick(){
+
         let {
             phoneNo,
             type
             }=this.props;
+        phoneNo=typeof phoneNo === "function" ? phoneNo() : phoneNo ;
         if(phoneNo === ""){
             Message.broadcast("手机号码不能为空，请填写！");
         }else if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(phoneNo)){
@@ -37,6 +41,7 @@ let MobileVerificationCode=React.createClass({
                  success:function(rs){
                      if(rs.code === 0){//发送验证码成功
                          Message.broadcast("验证码发送成功！");
+                         cookie.setCookie("tempUserId",rs.data.userId,59);//将临时userid设置到cookie中，供需要该字段的接口使用
                      }else {//发送验证码失败
                          Message.broadcast("验证码发送失败！"+rs.description);
                      }

@@ -50,7 +50,7 @@ const pageNameMap={
 }
 
 //不需要显示navBar的页面
-let noNavBarPage=["Home","UserHome","Register","PurchaseSuccess"];
+let noNavBarPage=["Home","UserHome","Register","PurchaseSuccess","AppointmentSuccess"];
 
 //需要显示tabBar的页面
 let hasTabBarPage=["home","productList","userHome"];

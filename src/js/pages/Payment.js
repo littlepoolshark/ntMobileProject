@@ -214,6 +214,7 @@ let Payment=React.createClass({
             })
         }.bind(this));
 
+        //购买验证不通过
         PaymentStore.bind("paymentCheckFailed",function(msg){
             if(msg.indexOf("充值") > -1){
                 this.setState({
@@ -231,6 +232,9 @@ let Payment=React.createClass({
         }.bind(this));
 
         PaymentStore.bind("purchaseSuccess",function(data){
+            let expectedReward=PaymentStore.getAll().expectedReward;
+            expectedReward && (data.expectedReward=expectedReward);
+            data.productType=type;
             this.context.router.push({
                 pathname:"/PurchaseSuccess",
                 query:data
