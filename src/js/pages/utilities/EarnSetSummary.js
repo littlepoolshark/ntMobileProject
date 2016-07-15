@@ -3,10 +3,13 @@ import classNames from "classnames"
 
 //ui component
 import Group from "../../UIComponents/Group";
+import Grid from "../../UIComponents/Grid";
+import Col from "../../UIComponents/Col";
 
 //utilities component
 import Slogan from "./Slogan";
 import ProgressBar from "./ProgressBar";
+
 
 //赚系列产品简要介绍
 let Summary=React.createClass({
@@ -42,7 +45,7 @@ let Summary=React.createClass({
             repaymentLimit,
             repaymentTypeUnit,
             remainAmount,
-            buyProgress
+            buyProgress,
             }=this.props;
 
         let tagClass=classNames({
@@ -50,25 +53,57 @@ let Summary=React.createClass({
             "newbieLoan-tag":type === "new_product",
             "tag":true
         });
+        if(type === "loan_product" || type === "creditor_product"){
+            return (
+                <Group className="fixedLoan summary">
+                    <Grid>
+                        <Col cols={2}>
+                            <div className="title">
+                                <span className="amount">{productApr}</span>
+                                <span className="unit">%</span>
+                            </div>
+                            <div className="subtitle">年化利率</div>
+                        </Col>
+                        <Col cols={2}>
+                            <div className="title">
+                                <span className="amount">{repaymentLimit}</span>
+                                <span className="unit">{repaymentTypeUnit}</span>
+                            </div>
+                            <div className="subtitle">项目期限</div>
+                        </Col>
+                        <Col cols={2}>
+                            <div className="title">
+                                <span className="amount">1000000</span>
+                            </div>
+                            <div className="subtitle">项目额度</div>
+                        </Col>
+                    </Grid>
+                    <ProgressBar percent={buyProgress}/>
+                    <div className="footer">剩余可投{remainAmount}元</div>
+                    <Slogan />
+                </Group>
+            )
+        }else {
+            return (
+                <Group className="earnSet summary">
+                    <div className="subtitle">年化利率</div>
+                    <div className="yearRate">
+                        <span className="amount">{productApr}</span>
+                        <span className="unit">%</span>
+                    </div>
+                    <Slogan />
+                    <div className="label">
+                        <span className="label-item">{repaymentLimit + repaymentTypeUnit}</span>
+                        <span className="label-item">100元起投</span>
+                        <span className="label-item">至今0风险</span>
+                    </div>
+                    <ProgressBar percent={buyProgress}/>
+                    <div className="footer">剩余可投{remainAmount}元</div>
+                    <div className={tagClass}></div>
+                </Group>
+            )
+        }
 
-        return (
-            <Group className="summary">
-                <div className="subtitle">年化利率</div>
-                <div className="yearRate">
-                    <span className="amount">{productApr}</span>
-                    <span className="unit">%</span>
-                </div>
-                <Slogan />
-                <div className="label">
-                    <span className="label-item">{repaymentLimit + repaymentTypeUnit}</span>
-                    <span className="label-item">100元起投</span>
-                    <span className="label-item">至今0风险</span>
-                </div>
-                <ProgressBar percent={buyProgress}/>
-                <div className="footer">剩余可投{remainAmount}元</div>
-                <div className={tagClass}></div>
-            </Group>
-        )
     }
 });
 

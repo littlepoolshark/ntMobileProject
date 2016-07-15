@@ -38,6 +38,13 @@ let mixin={
                     statusText="售罄";
                 }
                 break;
+            case "creditor_product":
+                if(productStatus === "transfered"){
+                    statusText="售罄";
+                }else {
+                    statusText="立即抢购";
+                }
+                break;
             default:
                 break;
         }

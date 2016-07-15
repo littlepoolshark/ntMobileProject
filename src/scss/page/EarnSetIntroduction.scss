@@ -79,10 +79,24 @@
 
     .footer {
       margin-top:rem-calc(0);
-      margin-bottom:rem-calc(10);
+      margin-bottom:rem-calc(0);
       text-align:center;
       @include color-and-fontSize($C3,$T7);
     }
+  }
+  .fixedLoan.summary {
+      .title,.amount,.unit {
+        text-align:center;
+        @include color-and-fontSize($C1,$T5);
+      }
+      .subtitle {
+        margin-bottom:rem-calc(10);
+        @include color-and-fontSize($C4,$T9);
+      }
+
+      .slogan {
+        margin-bottom:0;
+      }
   }
 
   /*规则描述组件*/

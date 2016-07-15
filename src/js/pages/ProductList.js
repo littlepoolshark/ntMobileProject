@@ -2,6 +2,7 @@ require("../../scss/page/ProductList.scss");
 let ProductListAction=require("../actions/ProductListAction.js");
 let ProductListStore=require("../stores/ProductListStore.js");
 import React from "react";
+import { Link } from 'react-router';
 
 //ui component
 import Container from "../UIComponents/Container";
@@ -15,26 +16,16 @@ import ProductListCommonCard from "./utilities/ProductListCommonCard";
 
 
 //理财列表页：ProductList component
-ProductListAction.getNextPage();
+
 let ProductList=React.createClass({
     getInitialState(){
         return {
             productList:ProductListStore.getAll()
         }
     },
-    _loadMoreData(){
-        let productList=document.getElementById("productList");
-        let offsetHeight=productList.offsetHeight;//元素出现在视口中区域的高度
-        let scrollTop=productList.scrollTop;//元素已经滚动的距离
-        let scrollHeight=productList.scrollHeight;//元素总的内容高度
-        if(scrollHeight - offsetHeight - scrollTop < 1){
-            ProductListAction.getNextPage();
-            Loader.show();
-        }
-    },
     render(){
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" onScroll={this._loadMoreData}>
+            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" >
 
                 {
                     this.state.productList.map(function(item,index){
@@ -49,21 +40,19 @@ let ProductList=React.createClass({
                         }
                     })
                 }
-
-                <Loader amStyle="success" rounded={true} />
+                <Link to="/moreProductList"><div className="checkMore-button">点击查看更多</div></Link>
             </Container>
         )
     },
     componentDidMount(){
+        ProductListAction.getNextPage();
+
         ProductListStore.bind("change",function(){
             let productList=ProductListStore.getAll();
             this.setState({
                 productList:productList
             })
         }.bind(this));
-    },
-    componentDidUpdate(){
-        Loader.hide();
     }
 });
 

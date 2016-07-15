@@ -4,8 +4,7 @@ let ajax=require("../lib/ajax.js");
 
 
 let  EarnSetIntroductionStore={
-    _all:{
-    },
+    _all:{},
     setAll(source){
         Object.assign(this._all,source);
     },

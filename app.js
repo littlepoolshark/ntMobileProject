@@ -33,6 +33,7 @@ let {
 const pageNameMap={
     "Home":"首页",
     "ProductList":"理财",
+    "MoreProductList":"更多理财产品",
     "UserHome":"用户中心",
     "GetBackPassword":"找回登录密码",
     "SetNewPassword":"设置登录密码",

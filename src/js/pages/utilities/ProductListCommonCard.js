@@ -24,11 +24,12 @@ const Type_To_Tag_Map ={
 let ProductListCommonCardTitle=React.createClass({
     render(){
         let tagArr=Type_To_Tag_Map[this.props.type];
+        let titleClass=this.props.type === "creditor_product" ? "creditor-title" : "" ;
         return (
             <h6 className="title">
-                <span>{this.props.title}</span>
+                <span  className={titleClass}>{this.props.title}</span>
                 {
-                    !this.props.isSoldOut ?
+                    !this.props.isSoldOut || this.props.type === "creditor_product" ?
                     tagArr && tagArr.map(function(item,index){
                         let classes="tag " + item;
                         return (
@@ -73,13 +74,15 @@ let ProductListCommonCard=React.createClass({
             repaymentLimit,
             repaymentTypeUnit,
             remainAmount,
-            status
+            status,
+            isFirstChild
             }=this.props;
         let isSoldOut=this._getProductStatusText(type,status) === "售罄" ? true : false ;
-        let pathName= (type === "loan_product" || type === "creditor_product") ? "fixLoanIntroduction" : "earnSetIntroduction";
+        let pathName= (type === "loan_product" || type === "creditor_product") ? "fixedLoanIntroduction" : "earnSetIntroduction";
+        let groupHeader=(type === "loan_product" && isFirstChild) ?  "项目直投" : (isFirstChild ? "理财计划" : "");
         return (
             <Link to={{pathname:pathName,query:{type:type,productId:id}}}>
-                <Group noPadded={false} className="commonCard">
+                <Group  header={groupHeader} noPadded={false} className="commonCard">
                     <ProductListCommonCardTitle title={productName} type={type} isSoldOut={isSoldOut}/>
                     <Grid collapse={true}>
                         <Col cols={4}>

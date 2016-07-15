@@ -23,6 +23,10 @@
 
     span:first-child {
       margin-right: auto;
+
+      &.creditor-title {
+        margin-right:rem-calc(10);
+      }
     }
   }
 

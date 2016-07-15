@@ -6,9 +6,12 @@
 
 // Mixin
 @import "../helper/mixins";
-#productList {
+#moreProductList {
   .tabs {
     margin-top:0;
+    margin-bottom:0;
+    padding-top:rem-calc(50);
+    background-color:transparent;
 
     .tabs-body .tab-panel{
       padding:0;
@@ -16,9 +19,14 @@
 
     .tabs-nav {
       margin-bottom:-1px;
-      padding:rem-calc(10) rem-calc(15);
+      padding:rem-calc(5) rem-calc(15);
       border-top:1px solid $separation-line-color;
       border-bottom:1px solid $separation-line-color;
+      background:#fff;
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
 
       .btn-sm {
         @include color-and-fontSize($C3,$T5);
@@ -35,21 +43,33 @@
       }
     }
 
+    table {
+      background:#fff;
+    }
+
     td.title {
       width:25%;
+      text-align:left;
       @include color-and-fontSize($C3,$T7);
     }
 
     td.content {
+      text-align:left;
       @include color-and-fontSize($C4,$T7);
     }
-  }
 
-  .checkMore-button {
-    margin:rem-calc(15) 0;
-    padding:rem-calc(5) 0;
-    text-align:center;
-    @include color-and-fontSize($C4,$T8);
+    .group {
+      h6 {
+        margin-bottom:rem-calc(10);
+        @include color-and-fontSize($C3,$T7);
+        font-weight:normal;
+      }
+
+      .content {
+        @include color-and-fontSize($C4,$T8);
+        text-align: justify;
+      }
+    }
   }
 }
 

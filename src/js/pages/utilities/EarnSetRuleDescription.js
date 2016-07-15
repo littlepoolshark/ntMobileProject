@@ -15,12 +15,14 @@ let RuleDescription=React.createClass({
                 CouponRuleText="不可以使用加息券，不可以使用红包";
                 break;
             case "ttz_product":
+            case "creditor_product":
                 CouponRuleText="不可以使用加息券，不可以使用红包";
                 break;
             case "yyz_product":
                 CouponRuleText="可以使用加息券，不可以使用红包";
                 break;
             case "jjz_product":
+            case "loan_product":
                 CouponRuleText="可以使用加息券，可以使用红包";
                 break;
             default :
@@ -41,7 +43,13 @@ let RuleDescription=React.createClass({
                                 <li><span className="icon-benefit"></span>加息5.5%，合计15%的年化收益</li>
                             ) : null
                     }
-                    <li><span className="icon-apply"></span>使用风险准备金本息垫付计划</li>
+                    {
+                        this.props.type == "loan_product" || this.props.type == "creditor_product" ?
+                            null :
+                            (
+                                <li><span className="icon-apply"></span>使用风险准备金本息垫付计划</li>
+                            )
+                    }
                     {this._renderCouponRule()}
                 </ul>
             </Group>
