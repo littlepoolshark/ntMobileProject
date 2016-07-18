@@ -80,8 +80,8 @@ let Payment=React.createClass({
             )
         }
     },
-    _pay(){
-        PaymentAction.pay();
+    _pay(productType){
+        PaymentAction.pay(productType);
     },
     _jumpToCouponList(){
         let purchaseAmount=this.refs.purchaseAmount.getValue() || 0;
@@ -167,7 +167,7 @@ let Payment=React.createClass({
                 </Group>
 
                 <div style={{padding:"20px 15px"}}>
-                    <Button amStyle="primary" block ={true} radius={true} onClick={this._pay}>确认支付</Button>
+                    <Button amStyle="primary" block ={true} radius={true} onClick={this._pay.bind(null,type)}>确认支付</Button>
                 </div>
                 <Modal
                     title=""

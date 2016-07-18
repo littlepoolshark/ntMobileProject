@@ -1,0 +1,98 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+/*简要介绍组件*/
+.summary {
+  margin-top:0;
+  position:relative;
+
+  .tag {
+    display:block;
+    height:rem-calc(24);
+    background-size:cover;
+    position:absolute;
+    left:0;
+    top:-1px;
+
+    &.newbieLoan-tag {
+      width:rem-calc(127);
+      background-image: url("../../img/month_noviceexclusive.png");
+    }
+
+    &.dailyEarn-tag {
+      width:rem-calc(107);
+      background-image: url("../../img/day_label.png");
+    }
+  }
+  .subtitle {
+    margin-top:rem-calc(5);
+    text-align: center;
+    @include color-and-fontSize($C4,$T7);
+  }
+  .yearRate {
+    height:rem-calc(70);
+    line-height:rem-calc(70);
+    margin-top:rem-calc(10);
+    text-align: center;
+
+    .amount {
+      @include color-and-fontSize($C1,$T12);
+    }
+
+    .unit {
+      @include color-and-fontSize($C1,$T13);
+    }
+  }
+
+  .slogan {
+    margin-top:rem-calc(12);
+  }
+
+  .label {
+    height:rem-calc(14);
+    line-height:rem-calc(14);
+    display: flex;
+    justify-content: center;
+    margin-top:rem-calc(15);
+    margin-bottom:rem-calc(15);
+    @include color-and-fontSize($C3,$T7);
+
+    .label-item {
+      display:inline-block;
+      padding:0 rem-calc(12);
+      border-right:1px solid $separation-line-color;
+
+      &:last-child {
+        border-right:none;
+      }
+    }
+  }
+
+  .footer {
+    margin-top:rem-calc(0);
+    margin-bottom:rem-calc(0);
+    text-align:center;
+    @include color-and-fontSize($C3,$T7);
+  }
+}
+
+.fixedLoan.summary {
+   .title,.amount,.unit {
+     text-align:center;
+     @include color-and-fontSize($C1,$T5);
+   }
+   .subtitle {
+     margin-bottom:rem-calc(10);
+     @include color-and-fontSize($C4,$T9);
+   }
+
+   .slogan {
+     margin-bottom:0;
+   }
+ }

@@ -50,10 +50,30 @@ var PaymentAction={
             }
         })
     },
-    pay(){
-        appDispatcher.dispatch({
-            actionName:"payment"
-        })
+    pay(productType){
+        switch (productType){
+            case "new_product":
+            case "ttz_product":
+            case "yyz_product":
+            case "jjz_product":
+                appDispatcher.dispatch({
+                    actionName:"payment_earnSet"
+                });
+                break;
+            case "loan_product":
+                appDispatcher.dispatch({
+                    actionName:"payment_fixedLoan"
+                });
+                break;
+            case "creditor_product":
+                appDispatcher.dispatch({
+                    actionName:"payment_creditorLoan"
+                });
+                break;
+            default:
+                break;
+        }
+
     }
 };
 

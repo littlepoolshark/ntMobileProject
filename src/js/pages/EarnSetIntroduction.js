@@ -16,9 +16,9 @@ import Modal from "../UIComponents/modal/Modal";
 import Loader from "../UIComponents/Loader";
 
 //utilities component
-import Summary from "./utilities/EarnSetSummary.js";
-import RuleDescription from "./utilities/EarnSetRuleDescription.js";
-import ComparisonChart from "./utilities/EarnSetComparisonChart.js";
+import Summary from "./utilities/Summary.js";
+import RuleDescription from "./utilities/RuleDescription.js";
+import ComparisonChart from "./utilities/ComparisonChart.js";
 import InvestmentRecord from "./utilities/InvestmentRecord.js"
 import PurchaseButton from "./utilities/PurchaseButton.js";
 import RepaymentDescription from "./utilities/RepaymentDescription"
@@ -55,19 +55,6 @@ let EarnSetIntroduction=React.createClass({
             this.refs.detailModal.open();
         }
     },
-    _test(event){
-        let investList=document.getElementById("test");
-
-        if(CSSCore.hasClass(investList,"active")){
-            let offsetHeight=event.target.offsetHeight;
-            let scrollHeight=event.target.scrollHeight;
-            let scrollTop=event.target.scrollTop;
-            if(scrollTop > scrollHeight-offsetHeight-1){
-                Loader.show();
-                InvestmentRecordAction.loadNextPage();
-            }
-        }
-    },
     _handleClose(){
         InvestmentRecordAction.clearAll();
         this.refs.detailModal.close();
@@ -87,7 +74,6 @@ let EarnSetIntroduction=React.createClass({
                     isOpen={false}
                     role="popup"
                     onDismiss={this._handleClose}
-                    onScroll={this._test}
                     >
                     <Tabs defaultActiveKey={0} >
 
@@ -111,7 +97,6 @@ let EarnSetIntroduction=React.createClass({
                             key={1}
                             navStyle={null}
                             ref="investmentList"
-                            id="test"
                             >
                             <InvestmentRecord {...this.state} />
                         </Tabs.Item>

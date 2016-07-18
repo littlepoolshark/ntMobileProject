@@ -1,0 +1,41 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+/*产品收益对比图*/
+.comparison-chart {
+  .subtitle {
+    margin:0;
+    margin-bottom:rem-calc(10);
+    font-weight: normal;
+    @include color-and-fontSize($C4,$T8);
+  }
+  .content {
+    margin-top:rem-calc(10);
+    &.dailyEarn {
+      width:rem-calc(289);
+      height:rem-calc(117);
+      background-image: url("../../img/day_form.png");
+      background-size: cover;
+    }
+    .content-item {
+      display:flex;
+      align-items: center;
+      @include color-and-fontSize($C3,$T7);
+
+      strong {
+        @include color-and-fontSize($C1,$T7)
+      }
+
+      .label {
+        width:rem-calc(65);
+        margin-right:rem-calc(5);
+      }
+    }
+  }
+}

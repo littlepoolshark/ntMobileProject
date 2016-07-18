@@ -7,12 +7,11 @@
 // Mixin
 @import "../helper/mixins";
 
-#earnSetIntroduction {
+#FixedLoanIntroduction {
   padding-bottom:rem-calc(42);
 
   @import "./Summary";
   @import "./RuleDescription";
-  @import "./ComparisonChart";
 
   .tabs {
     margin-top:0;
@@ -50,25 +49,6 @@
       }
     }
 
-    table {
-      background:#fff;
-    }
-
-    td.title {
-      width:25%;
-      text-align:left;
-      @include color-and-fontSize($C3,$T7);
-      @media screen and (max-width:320px){
-        width:30%;
-        padding-right:0;
-      }
-    }
-
-    td.content {
-      text-align:left;
-      @include color-and-fontSize($C4,$T7);
-    }
-
     .group {
       h6 {
         margin-bottom:rem-calc(10);
@@ -81,6 +61,26 @@
         text-align: justify;
       }
     }
+  }
+
+  table {
+    background:#fff;
+  }
+
+  td.title {
+    width:25%;
+    text-align:left;
+    @include color-and-fontSize($C3,$T7);
+
+    @media screen and (max-width:320px){
+      width:30%;
+      padding-right:0;
+    }
+  }
+
+  td.content {
+    text-align:left;
+    @include color-and-fontSize($C4,$T7);
   }
 
   .popup-header {

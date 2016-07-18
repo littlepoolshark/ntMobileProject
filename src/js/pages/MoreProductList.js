@@ -46,7 +46,7 @@ let MoreProductList=React.createClass({
                     >
                         {
                             this.state.fixedLoanList.map(function(item,index){
-                                return <ProductListCommonCard {...item} key={item.id}/>
+                                return <ProductListCommonCard {...item} key={item.type+item.id}/>
                             })
                         }
                     </Tabs.Item>
@@ -57,7 +57,7 @@ let MoreProductList=React.createClass({
                     >
                         {
                             this.state.creditorLoanList.map(function(item,index){
-                                return <ProductListCommonCard {...item} key={item.id}/>
+                                return <ProductListCommonCard {...item} key={item.type+item.id}/>
                             })
                         }
                     </Tabs.Item>

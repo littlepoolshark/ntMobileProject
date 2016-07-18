@@ -106,6 +106,9 @@ let ProductListCommonCard=React.createClass({
                 </Group>
             </Link>
         )
+    },
+    componentDidMount(){
+        console.log("into ProductListCommonCard componentDidMount");
     }
 });
 

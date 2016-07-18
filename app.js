@@ -41,13 +41,14 @@ const pageNameMap={
     "EarnSetIntroduction.ttz_product":"天天赚",
     "EarnSetIntroduction.yyz_product":"月月赚",
     "EarnSetIntroduction.jjz_product":"季季赚",
+    "FixedLoanIntroduction":"好采投",
     "Payment.newbieLoan":"支付",
     "Payment.dailyEarn":"支付",
     "Payment.monthlyEarn":"支付",
     "Payment.quarterlyEarn":"支付",
     "PurchaseSuccess":"购买成功",
     "DailyEarnAppointment":"预约天天赚",
-    "CouponList":"我的优惠券"
+    "CouponList":"我的优惠券",
 }
 
 //不需要显示navBar的页面
@@ -124,7 +125,8 @@ const Page = React.createClass({
       component = component.charAt(0).toUpperCase() + component.slice(1);
     }
     let Component = Components[component] || NotFound;
-    let key=queryStr ? component + "." + queryStr : component;
+    // 赚系列的页面名字的key使用命名空间来映射
+    let key=(component === "EarnSetIntroduction" && queryStr   )? component + "." + queryStr : component;
 
     let backNav = {
       component:"a",

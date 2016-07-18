@@ -1,0 +1,23 @@
+{
+  code: 0,
+  data: {
+    minNotRateTime: ,
+    amount: 300000,
+    overplusTime: 152,
+    createTime: 1463562975000,
+    title: 好采投160516-001,
+    buyProgress: 100,
+    status: transfered,
+    creditorId: 10135,
+    mainMonth: 4,
+    rewardRate: 0,
+    investAmount: 300000,
+    maxNotRateTime: ,
+    yearRate: 0.11,
+    loanId: 774，
+    repaymentType：按月结息，到期还本,
+    minProfit:0.21,
+    maxProfit:0.31
+  },
+  description: 成功
+}

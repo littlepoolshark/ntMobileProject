@@ -11,7 +11,7 @@ import Slogan from "./Slogan";
 import ProgressBar from "./ProgressBar";
 
 
-//赚系列产品简要介绍
+//平台所用产品的简要介绍
 let Summary=React.createClass({
     propTypes: {
         type: React.PropTypes.string.isRequired,
@@ -35,7 +35,8 @@ let Summary=React.createClass({
             buyProgress:"0.0",
             remainAmount:"0.00",
             repaymentLimit:"--",
-            repaymentTypeUnit:"--"
+            repaymentTypeUnit:"--",
+            totalAmount:0
         }
     },
     render(){
@@ -46,6 +47,7 @@ let Summary=React.createClass({
             repaymentTypeUnit,
             remainAmount,
             buyProgress,
+            totalAmount
             }=this.props;
 
         let tagClass=classNames({
@@ -73,7 +75,7 @@ let Summary=React.createClass({
                         </Col>
                         <Col cols={2}>
                             <div className="title">
-                                <span className="amount">1000000</span>
+                                <span className="amount">{totalAmount}</span>
                             </div>
                             <div className="subtitle">项目额度</div>
                         </Col>

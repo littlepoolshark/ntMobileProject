@@ -160,9 +160,9 @@ appDispatcher.register(function(payload){
             });
             PaymentStore.trigger("change");
             break;
-        case "payment"://确认支付
-            let paymentCheckResult=PaymentStore.paymentCheck();
-            if(paymentCheckResult.success){
+        case "payment_earnSet"://赚系列的支付
+            let paymentCheckResult_earnSet=PaymentStore.paymentCheck();
+            if(paymentCheckResult_earnSet.success){
                 let {
                     productType,
                     productId,
@@ -196,9 +196,46 @@ appDispatcher.register(function(payload){
                     }
                 })
             }else {
-                PaymentStore.trigger("paymentCheckFailed",paymentCheckResult.msg)
+                PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_earnSet.msg)
             }
             break;
+        case "payment_fixedLoan"://好采投的支付
+            let paymentCheckResult_fixedLoan=PaymentStore.paymentCheck();
+            if(paymentCheckResult_fixedLoan.success){
+                let {
+                    productId,
+                    purchaseAmount,
+                    couponType,
+                    couponAmount,
+                    couponId
+                    }=PaymentStore.getAll();
+                let postData={
+                    investId:productId,
+                    amount:purchaseAmount
+                };
+                if(couponType && couponAmount){
+                    if(couponType === "interestRate"){
+                        postData.interestId=couponId;
+                    }else if(couponType === "redPackage"){
+                        postData.redpackageId=couponId;
+                    }
+                }
+                ajax({
+                    ciUrl:"/invest/v2/loanForBuy",
+                    data:postData,
+                    success(rs){
+                        if(rs.code === 0){
+                            PaymentStore.trigger("purchaseSuccess",rs.data)
+                        }else {
+                            PaymentStore.trigger("purchaseFailed",rs.description);
+                        }
+                    }
+                })
+            }else {
+                PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_fixedLoan.msg)
+            }
+            break;
+
         default:
         //no op
     }
