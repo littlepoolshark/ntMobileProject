@@ -8,6 +8,7 @@ export SetNewPassword from './SetNewPassword';
 export Register from './Register';
 export EarnSetIntroduction from './EarnSetIntroduction';
 export FixedLoanIntroduction from './FixedLoanIntroduction';
+export CreditorLoanIntroduction from './CreditorLoanIntroduction';
 export Payment from './Payment';
 export PurchaseSuccess from './PurchaseSuccess';
 export AppointmentSuccess from './AppointmentSuccess';

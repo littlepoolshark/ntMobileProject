@@ -42,6 +42,7 @@ const pageNameMap={
     "EarnSetIntroduction.yyz_product":"月月赚",
     "EarnSetIntroduction.jjz_product":"季季赚",
     "FixedLoanIntroduction":"好采投",
+    "CreditorLoanIntroduction":"好采投.转",
     "Payment.newbieLoan":"支付",
     "Payment.dailyEarn":"支付",
     "Payment.monthlyEarn":"支付",

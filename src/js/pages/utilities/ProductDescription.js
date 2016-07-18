@@ -24,6 +24,12 @@ function ProductDescription(props){
         case "jjz_product":
             productDescriptionText="季季赚是农泰金融为满足投资人多样化理财需求而推出的自动投资工具。加入季季赚的资金自动分散投资到适用于100%用户利益保障的借款项目和债权。服务期满系统将自动进行债权转让，每月还息到期还本。给投资人更省心、便捷的投资体验。";
             break;
+        case "loan_product":
+            productDescriptionText="这是好采投的产品说明";
+            break;
+        case "creditor_product":
+            productDescriptionText="这是债权转让的产品说明";
+            break;
         default:
             break;
     }

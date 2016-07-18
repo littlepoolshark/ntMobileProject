@@ -78,7 +78,18 @@ let ProductListCommonCard=React.createClass({
             isFirstChild
             }=this.props;
         let isSoldOut=this._getProductStatusText(type,status) === "售罄" ? true : false ;
-        let pathName= (type === "loan_product" || type === "creditor_product") ? "fixedLoanIntroduction" : "earnSetIntroduction";
+        let pathName="";
+        switch (type){
+            case "loan_product":
+                pathName="fixedLoanIntroduction";
+                break;
+            case "creditor_product":
+                pathName="creditorLoanIntroduction";
+                break;
+            default :
+                pathName="EarnSetIntroduction";
+                break;
+        };
         let groupHeader=(type === "loan_product" && isFirstChild) ?  "项目直投" : (isFirstChild ? "理财计划" : "");
         return (
             <Link to={{pathname:pathName,query:{type:type,productId:id}}}>

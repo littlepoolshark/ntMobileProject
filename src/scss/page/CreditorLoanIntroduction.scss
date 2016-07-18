@@ -1,0 +1,93 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#creditorIntroduction {
+  padding-bottom:rem-calc(42);
+
+  @import "./Summary";
+  @import "./RuleDescription";
+
+  .tabs {
+    margin-top:0;
+    margin-bottom:0;
+    padding-top:rem-calc(50);
+    background-color:transparent;
+
+    .tabs-body .tab-panel{
+      padding:0;
+    }
+
+    .tabs-nav {
+      margin-bottom:-1px;
+      padding:rem-calc(5) rem-calc(15);
+      border-top:1px solid $separation-line-color;
+      border-bottom:1px solid $separation-line-color;
+      background:#fff;
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
+
+      .btn-sm {
+        @include color-and-fontSize($C3,$T5);
+      }
+    }
+
+    .btn-hollow.btn-primary {
+      border:none;
+      color:$C3;
+
+      &.active {
+        background:#fff;
+        color:$C1;
+      }
+    }
+
+    .group {
+      h6 {
+        margin-bottom:rem-calc(10);
+        @include color-and-fontSize($C3,$T7);
+        font-weight:normal;
+      }
+
+      .content {
+        @include color-and-fontSize($C4,$T8);
+        text-align: justify;
+      }
+    }
+  }
+
+  table {
+    background:#fff;
+  }
+
+  td.title {
+    width:25%;
+    text-align:left;
+    @include color-and-fontSize($C3,$T7);
+
+    @media screen and (max-width:320px){
+      width:30%;
+      padding-right:0;
+    }
+  }
+
+  td.content {
+    text-align:left;
+    @include color-and-fontSize($C4,$T7);
+  }
+
+  .popup-header {
+    z-index:9999;
+  }
+  .popup-body {
+    padding:0;
+  }
+
+}
