@@ -13,6 +13,7 @@ import Group from "../UIComponents/Group";
 import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
 import Modal from "../UIComponents/modal/Modal";
+import List from "../UIComponents/List";
 
 //utilities component
 import Summary from "./utilities/Summary.js";
@@ -34,7 +35,7 @@ let CreditorLoanIntroduction=React.createClass({
         return CreditorLoanIntroductionStore.getAll();
     },
     _handleOnScroll(event){
-        let container=document.getElementById("CreditorLoanIntroduction");
+        let container=document.getElementById("creditorLoanIntroduction");
         let offsetHeight=container.offsetHeight;
         let scrollHeight=container.scrollHeight;
         let scrollTop=container.scrollTop;
@@ -72,7 +73,7 @@ let CreditorLoanIntroduction=React.createClass({
                             >
                             <ProductDescription {...this.state}/>
                             <List>
-                                <List.Item href={"#/FixedLoanIntroduction/?productId="+this.state.loanId} title="查看原标的详情" />
+                                <List.Item href={"#/FixedLoanIntroduction/?productId="+this.state.loanId+"&type=loan_product"} title="查看原标的详情" />
                             </List>
                             <ServiceAgreement {...this.state}/>
                         </Tabs.Item>

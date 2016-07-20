@@ -17,6 +17,14 @@ var MoreProductListStore={
             creditorLoanList:this._all.creditorLoanList
         };
     },
+    clearAll(){
+        this._all={
+            fixedLoanList:[],
+            creditorLoanList:[],
+            fixedLoanPageIndex:0,
+            creditorLoanPageIndex:0,
+        };
+    },
     getCurrPageIndex(listType){
         if(listType === "fixedLoan"){
             return this._all.fixedLoanPageIndex;

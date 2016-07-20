@@ -53,6 +53,10 @@ let ProductList=React.createClass({
                 productList:productList
             })
         }.bind(this));
+    },
+    componentWillUnmount(){
+        ProductListStore.unbind("change");
+        ProductListStore.clearAll();
     }
 });
 

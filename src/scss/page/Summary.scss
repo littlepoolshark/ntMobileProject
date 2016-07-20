@@ -82,17 +82,3 @@
   }
 }
 
-.fixedLoan.summary {
-   .title,.amount,.unit {
-     text-align:center;
-     @include color-and-fontSize($C1,$T5);
-   }
-   .subtitle {
-     margin-bottom:rem-calc(10);
-     @include color-and-fontSize($C4,$T9);
-   }
-
-   .slogan {
-     margin-bottom:0;
-   }
- }

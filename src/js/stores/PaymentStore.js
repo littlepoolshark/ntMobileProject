@@ -235,6 +235,32 @@ appDispatcher.register(function(payload){
                 PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_fixedLoan.msg)
             }
             break;
+        case "payment_creditorLoan":
+            let paymentCheckResult_creditorLoan=PaymentStore.paymentCheck();
+            if(paymentCheckResult_creditorLoan.success){
+                let {
+                    productId,
+                    purchaseAmount,
+                    }=PaymentStore.getAll();
+                let postData={
+                    investId:productId,
+                    amount:purchaseAmount
+                };
+                ajax({
+                    ciUrl:"/invest/v2/creditorForBuy",
+                    data:postData,
+                    success(rs){
+                        if(rs.code === 0){
+                            PaymentStore.trigger("purchaseSuccess",rs.data)
+                        }else {
+                            PaymentStore.trigger("purchaseFailed",rs.description);
+                        }
+                    }
+                })
+            }else {
+                PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_creditorLoan.msg)
+            }
+            break;
 
         default:
         //no op

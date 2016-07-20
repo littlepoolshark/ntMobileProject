@@ -6,7 +6,7 @@ let ajax=require("../lib/ajax.js");
 let  CreditorLoanIntroductionStore={
     _all:{
         id:"",
-        type:"loan_product",
+        type:"creditor_product",
         productApr:0,
         buyProgress:0,
         remainAmount:0,
@@ -37,9 +37,9 @@ appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "creditorLoanIntroduction_getDataFromServer":
             ajax({
-                ciUrl:"/invest/v2/loanInvestDetail",
+                ciUrl:"/invest/v2/creditorTransferDetail",
                 data:{
-                    loanId:payload.data.productId
+                    investId:payload.data.productId
                 },
                 success:function(rs){
                     if(rs.code === 0){
@@ -56,7 +56,8 @@ appDispatcher.register(function(payload){
                             totalAmount:data.amount,
                             productName:data.title,
                             status:data.status,
-                            publishTime:data.overplusTime //这是一个时间戳
+                            publishTime:data.createTime ,//这是一个时间戳
+                            bidDays:7//债权转让默认是7天后就"流标"
                         };
                         CreditorLoanIntroductionStore.setAll(CreditorLoanIntroductionStore.processData(source));
                         CreditorLoanIntroductionStore.trigger("change");

@@ -7,11 +7,27 @@
 // Mixin
 @import "../helper/mixins";
 
-#creditorIntroduction {
+#creditorLoanIntroduction {
   padding-bottom:rem-calc(42);
 
   @import "./Summary";
   @import "./RuleDescription";
+
+  .summary {
+    .title,.amount,.unit {
+      text-align:center;
+      @include color-and-fontSize($C1,$T5);
+    }
+    .subtitle {
+      margin-top:0;
+      margin-bottom:rem-calc(10);
+      @include color-and-fontSize($C4,$T9);
+    }
+
+    .slogan {
+      margin-bottom:0;
+    }
+  }
 
   .tabs {
     margin-top:0;
@@ -83,6 +99,9 @@
     @include color-and-fontSize($C4,$T7);
   }
 
+  .popup {
+    background:#f8f8f8;
+  }
   .popup-header {
     z-index:9999;
   }

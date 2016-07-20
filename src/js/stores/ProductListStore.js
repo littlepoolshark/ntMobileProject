@@ -11,6 +11,9 @@ var ProductListStore={
     getAll(){
         return this._all.productList;
     },
+    clearAll(){
+        this._all.productList=[];
+    },
     updateAll(source){//to be remember,concat 不是变异方法。
         this._all.productList=this._all.productList.concat(source.list);
     }

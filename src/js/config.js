@@ -10,7 +10,7 @@ let config={
         yyz_product:"月月赚",
         jjz_product:"季季赚",
         loan_product:"好采投",
-        creditor_product:"好采投.转"
+        creditor_product:"债权转让"
     }
 }
 

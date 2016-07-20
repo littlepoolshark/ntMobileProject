@@ -44,11 +44,13 @@ let CountDown=React.createClass({
         }
 
     },
-    componentWillReceiveProps(nextProps){
-        this.setState({
-            countDownDuration:nextProps.countDownDuration
-        },this._tick.bind(this));
+    componentDidMount(){
+        this._tick();
+    },
+    componentWillUnmount(){
+        this._clearTimer();
     }
+
 });
 
 export  default CountDown;

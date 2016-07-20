@@ -15,7 +15,8 @@ let  FixedLoanIntroductionStore={
         totalAmount:0,
         productName:"",
         bidDays:0,
-        publishTime:new Date()
+        publishTime:new Date(),
+        status:""
     },
     setAll(source){
         Object.assign(this._all,source);

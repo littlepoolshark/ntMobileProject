@@ -11,10 +11,12 @@ import CountDown from "./CountDown";
 //为了避免一定程度的浪费，react官方还在0.14版本中加入了无状态组件
 
 function ProductIntroduction(props){
-    //用于倒数的开始时间戳，结束时间戳，倒数的时间段
+    let productStatusText=mixin._getProductStatusText(props.type,props.status);
+    //用于倒数的开始时间戳(毫秒数)，结束时间戳(毫秒数)，倒数的时间段（秒数）
     let startTimeStamp=(new Date()).getTime();
     let endTimeStamp=(new Date(props.publishTime)).getTime() + (props.bidDays * 24 * 60 * 60 * 1000);
     let countDownDuration=parseInt((endTimeStamp-startTimeStamp > 0 ? endTimeStamp-startTimeStamp : 0) / 1000);
+
 
     //天天赚item
     let item1= { title:"项目名称", content:props.productName };
@@ -37,7 +39,7 @@ function ProductIntroduction(props){
     let item14= { title:"退出规则", content: <div>1.每月付息，到期付本<br/>2.季季赚暂不支持提前退出</div>};
 
     //好采投多出来或者不同于天天赚的item
-    let item15={ title:"剩余时间", content:(<CountDown countDownDuration={countDownDuration} />)};
+    let item15={ title:"剩余时间", content: countDownDuration && productStatusText !== "售罄" ? <CountDown countDownDuration={countDownDuration} /> : "已满标"};
     let item16={ title:"还款方式", content:"按月结息，到期付本"};
     let item17={ title:"债权转让", content:"持有达到30天，且在标的到期7天前"};
     let item18={ title:"起息日期", content:"放款后的第二日"};

@@ -28,7 +28,11 @@ function ProductDescription(props){
             productDescriptionText="这是好采投的产品说明";
             break;
         case "creditor_product":
-            productDescriptionText="这是债权转让的产品说明";
+            productDescriptionText="债权转让交易系统是为了提高资金流动性而设计，适用于当农泰金融借款项目债权持有人";
+            productDescriptionText +="需要提前转让未到期债权而获得资金流动性的场景。债权持有人可在我的定期投资记录中";
+            productDescriptionText +="选择需要出让的债权，投放到债权转让交易系统，债权受让人可在债权转让交易系统中购";
+            productDescriptionText +="买被转让的债权，从而完成债权转让。既满足了债权持有人的资金流动性也提供了灵活的";
+            productDescriptionText +="理财期限";
             break;
         default:
             break;

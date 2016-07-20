@@ -70,6 +70,50 @@ let FixedLoanIntroduction=React.createClass({
                             key={0}
                             navStyle={null}
                         >
+                            <Group noPadded={false} >
+                                <h6>借款人资料</h6>
+                                <div className="content">
+                                    <Grid>
+                                        <Col cols={3}>姓名：刘**</Col>
+                                        <Col cols={3}>性别：男</Col>
+                                    </Grid>
+                                    <Grid>
+                                        <Col cols={3}>年龄：26</Col>
+                                        <Col cols={3}>婚姻状况：已婚</Col>
+                                    </Grid>
+                                </div>
+                            </Group>
+                            <Group noPadded={false} >
+                                <h6>资质信息</h6>
+                                <div className="content">
+                                    <Grid>
+                                        <Col cols={3}>借款人及担保人身份证</Col>
+                                        <Col cols={3}>结婚证</Col>
+                                    </Grid>
+                                    <Grid>
+                                        <Col cols={3}>户口本</Col>
+                                        <Col cols={3}>相关担保机构</Col>
+                                    </Grid>
+                                </div>
+                            </Group>
+                            <Group noPadded={false} >
+                                <h6>项目介绍</h6>
+                                <div className="content">
+                                    项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍
+                                </div>
+                            </Group>
+                            <Group noPadded={false} >
+                                <h6>借款用途</h6>
+                                <div className="content">
+                                   采购农资
+                                </div>
+                            </Group>
+                            <Group noPadded={false} >
+                                <h6>还款来源</h6>
+                                <div className="content">
+                                    经营回款
+                                </div>
+                            </Group>
                             <ServiceAgreement {...this.state}/>
                         </Tabs.Item>
                         <Tabs.Item
@@ -77,6 +121,33 @@ let FixedLoanIntroduction=React.createClass({
                             key={1}
                             navStyle={null}
                         >
+                            <Group noPadded={false} >
+                                <h6>担保人资质</h6>
+                                <div className="content">
+                                    <Grid>
+                                        <Col cols={3}>担保人身份证</Col>
+                                        <Col cols={3}>担保人营业执照</Col>
+                                    </Grid>
+                                </div>
+                            </Group>
+                            <Group noPadded={false} >
+                                <h6>担保情况</h6>
+                                <div className="content">
+                                    担保情况担保情况担保情况担保情况担保情况担保情况担保情况担保情况担保情况
+                                </div>
+                            </Group>
+                            <Group noPadded={false} >
+                                <h6>风险控制综述</h6>
+                                <div className="content">
+                                    风险控制综述风险控制综述风险控制综述风险控制综述风险控制综述风险控制综述风险控制综述
+                                </div>
+                            </Group>
+                            <Group noPadded={false} >
+                                <h6>担保措施</h6>
+                                <div className="content">
+                                    担保措施担保措施担保措施担保措施担保措施担保措施担保措施担保措施担保措施
+                                </div>
+                            </Group>
                             <RepaymentDescription />
                             <FundGuaranteeDescription />
                         </Tabs.Item>

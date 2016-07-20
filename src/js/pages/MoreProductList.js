@@ -75,6 +75,10 @@ let MoreProductList=React.createClass({
     },
     componentDidUpdate(){
         Loader.hide();
+    },
+    componentWillUnmount(){
+        MoreProductListStore.unbind("change");
+        MoreProductListStore.clearAll();
     }
 });
 
