@@ -60,4 +60,4 @@ let ProductList=React.createClass({
     }
 });
 
-export  default ProductList;
+module.exports=ProductList;

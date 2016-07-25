@@ -4,14 +4,51 @@ let config={
     createFullPath(path){
         return this._apiBasicPath + path + this._apiUrlSuffix;
     },
-    productNameMap:{
+    productNameMap:{//产品名称的映射表
         new_product:"新手标",
         ttz_product:"天天赚",
         yyz_product:"月月赚",
         jjz_product:"季季赚",
         loan_product:"好采投",
         creditor_product:"债权转让"
-    }
+    },
+    pageNameMap:{//组件/页面名称的映射表
+        Home:"首页",
+        ProductList:"理财",
+        MoreProductList:"更多理财产品",
+        UserHome:"用户中心",
+        GetBackPassword:"找回登录密码",
+        SetNewPassword:"设置登录密码",
+        "EarnSetIntroduction.new_product":"新手标",
+        "EarnSetIntroduction.ttz_product":"天天赚",
+        "EarnSetIntroduction.yyz_product":"月月赚",
+        "EarnSetIntroduction.jjz_product":"季季赚",
+        FixedLoanIntroduction:"好采投",
+        CreditorLoanIntroduction:"好采投.转",
+        "Payment.newbieLoan":"支付",
+        "Payment.dailyEarn":"支付",
+        "Payment.monthlyEarn":"支付",
+        "Payment.quarterlyEarn":"支付",
+        PurchaseSuccess:"购买成功",
+        DailyEarnAppointment:"预约天天赚",
+        CouponList:"我的优惠券"
+    },
+    noNavBarPages:[//不需要显示navBar的页面
+        "Home",
+        "UserHome",
+        "Register",
+        "PurchaseSuccess",
+        "AppointmentSuccess"
+    ],
+    hasTabBarPages:[//需要显示tabBar的页面
+        "Home",
+        "ProductList",
+        "UserHome"
+    ],
+    needToInterceptPages:[//需要进行登录拦截的页面
+        "DailyEarnAppointment",
+        "Payment"
+    ]
 }
 
 export  default config;

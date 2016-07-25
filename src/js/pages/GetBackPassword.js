@@ -96,4 +96,4 @@ GetBackPassword.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default GetBackPassword;
+module.exports=GetBackPassword;

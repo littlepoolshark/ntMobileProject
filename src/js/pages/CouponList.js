@@ -186,4 +186,4 @@ let CouponList=React.createClass({
     }
 });
 
-export default  CouponList;
+module.exports=CouponList;

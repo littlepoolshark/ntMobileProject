@@ -55,25 +55,31 @@ let EarnSetIntroduction=React.createClass({
             this.refs.detailModal.open();
         }
     },
-    _handleClose(){
+    _handleModalClose(){
         InvestmentRecordAction.clearAll();
         this.refs.detailModal.close();
+    },
+    _handleModalOpen(){
+        this.refs.detailModal.open();
     },
     render(){
         let productionType=this.props.location.query.type;
         let modalTitle=config.productNameMap[productionType];
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}} id="earnSetIntroduction"  onScroll={this._handleOnScroll}>
+            <Container scrollable={false} style={{overflow:"scroll"}} id="earnSetIntroduction"  onScroll={this._handleOnScroll} ref="earnSetIntroduction">
                 <Summary  {...this.state}/>
                 <RuleDescription {...this.state}/>
-                <ComparisonChart {...this.state}/>
+                <ComparisonChart {...this.state} id="comparisonChart"/>
+                <div  className="checkLoanDetail"  id="checkMoreDetail" onClick={this._handleModalOpen}>
+                    <span className="imgIcon imgIcon-slide-up"></span>滑动或者点击查看详情
+                </div>
                 <PurchaseButton  {...this.state} {...this.props}/>
                 <Modal
                     title={modalTitle + "详情"}
                     ref="detailModal"
                     isOpen={false}
                     role="popup"
-                    onDismiss={this._handleClose}
+                    onDismiss={this._handleModalClose}
                     >
                     <Tabs defaultActiveKey={0} >
 
@@ -111,7 +117,16 @@ let EarnSetIntroduction=React.createClass({
             this.setState(this._getAllDataFromStore())
         }.bind(this));
 
+        //支持滑动查看标的详情的交互方式
+        let checkMoreDetail=document.getElementById("checkMoreDetail");
+        let comparisonChart=document.getElementById("comparisonChart");
+        let container=document.getElementById("earnSetIntroduction");
+        if(container.scrollHeight <= container.offsetHeight){
+            let paddingBottom=(container.scrollHeight  + 44) - (comparisonChart.offsetTop  + comparisonChart.offsetHeight + checkMoreDetail.offsetHeight + 15);
+            checkMoreDetail.style.paddingBottom=paddingBottom + 30 + "px";//通过填过30px，撑开容器的垂直高度，使之出现滚动条
+        }
+
     }
 });
 
-export default EarnSetIntroduction;
+module.exports=EarnSetIntroduction;

@@ -82,4 +82,4 @@ let MoreProductList=React.createClass({
     }
 });
 
-export  default MoreProductList;
+module.exports=MoreProductList;

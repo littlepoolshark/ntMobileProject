@@ -105,4 +105,4 @@ DailyEarnAppointment.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default  DailyEarnAppointment;
+module.exports=DailyEarnAppointment;

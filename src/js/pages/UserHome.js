@@ -30,4 +30,4 @@ UserHome.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default UserHome;
+module.exports=UserHome;

@@ -132,4 +132,4 @@ Register.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default Register;
+module.exports=Register;

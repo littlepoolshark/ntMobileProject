@@ -34,7 +34,7 @@ let FixedLoanIntroduction=React.createClass({
         return FixedLoanIntroductionStore.getAll();
     },
     _handleOnScroll(event){
-        let container=document.getElementById("FixedLoanIntroduction");
+        let container=document.getElementById("fixedLoanIntroduction");
         let offsetHeight=container.offsetHeight;
         let scrollHeight=container.scrollHeight;
         let scrollTop=container.scrollTop;
@@ -42,26 +42,32 @@ let FixedLoanIntroduction=React.createClass({
             this.refs.detailModal.open();
         }
     },
-    _handleClose(){
+    _handleModalClose(){
         this.refs.detailModal.close();
+    },
+    _handleModalOpen(){
+        this.refs.detailModal.open();
     },
     render(){
         let productionType=this.props.location.query.type;
         let modalTitle=config.productNameMap[productionType];
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}}  id="FixedLoanIntroduction"  onScroll={this._handleOnScroll}>
+            <Container scrollable={false} style={{overflow:"scroll"}}  id="fixedLoanIntroduction"  onScroll={this._handleOnScroll}>
                 <Summary  {...this.state}/>
                 <RuleDescription {...this.state}/>
-                <Group noPadded={true}>
+                <Group noPadded={true} id="productIntroduction">
                     <ProductIntroduction {...this.state} />
                 </Group>
+                <div  className="checkLoanDetail"  id="checkMoreDetail" onClick={this._handleModalOpen}>
+                    <span className="imgIcon imgIcon-slide-up"></span>滑动或者点击查看详情
+                </div>
                 <PurchaseButton  {...this.state} {...this.props}/>
                 <Modal
                     title={modalTitle + "详情"}
                     ref="detailModal"
                     isOpen={false}
                     role="popup"
-                    onDismiss={this._handleClose}
+                    onDismiss={this._handleModalClose}
                 >
                     <Tabs defaultActiveKey={0} >
 
@@ -156,7 +162,7 @@ let FixedLoanIntroduction=React.createClass({
                             key={2}
                             navStyle={null}
                         >
-                            投资记录
+                            <InvestmentRecord {...this.state} />
                         </Tabs.Item>
                     </Tabs>
                 </Modal>
@@ -170,7 +176,17 @@ let FixedLoanIntroduction=React.createClass({
         FixedLoanIntroductionStore.bind("change",function(){
            this.setState(FixedLoanIntroductionStore.getAll()) ;
         }.bind(this));
+
+
+        //支持滑动查看标的详情的交互方式
+        let checkMoreDetail=document.getElementById("checkMoreDetail");
+        let productIntroduction=document.getElementById("productIntroduction");
+        let container=document.getElementById("fixedLoanIntroduction");
+        if(container.scrollHeight <= container.offsetHeight){
+            let paddingBottom=(container.scrollHeight  + 44) - (productIntroduction.offsetTop  + productIntroduction.offsetHeight + checkMoreDetail.offsetHeight + 15);
+            checkMoreDetail.style.paddingBottom=paddingBottom + 30 + "px";//通过填过30px，撑开容器的垂直高度，使之出现滚动条
+        }
     }
 });
 
-export default FixedLoanIntroduction;
+module.exports=FixedLoanIntroduction;

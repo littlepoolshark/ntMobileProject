@@ -14,7 +14,7 @@ let InvestmentRecord=React.createClass({
         return (
             this.state.list.map(function(item,index){
                 return (
-                    <tr key={productType + item.id}>
+                    <tr key={productType + index}>
                         <td>{item.realName}</td>
                         <td>{item.inverstAmount}</td>
                         <td>{item.inverstTime}</td>
@@ -51,8 +51,9 @@ let InvestmentRecord=React.createClass({
         InvestmentRecordStore.bind("change",function(){
             this.setState(this._getAllDateFromStore())
         }.bind(this));
-
-
+    },
+    componentWillUnmount(){
+        InvestmentRecordAction.clearAll();
     }
 });
 

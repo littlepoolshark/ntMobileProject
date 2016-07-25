@@ -43,4 +43,4 @@ AppointmentSuccess.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default  AppointmentSuccess;
+module.exports=AppointmentSuccess;

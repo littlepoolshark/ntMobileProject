@@ -82,7 +82,7 @@ let PurchaseSuccess=React.createClass({
             title: '完成'
         };
         return (
-            <Container id="purchaseSuccess" scroll={false} style={{overflowY:"scroll"}}>
+            <Container id="purchaseSuccess" scroll={false} >
                 <NavBar
                     title="购买成功"
                     rightNav={[doneNav]}
@@ -102,4 +102,4 @@ PurchaseSuccess.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default  PurchaseSuccess;
+module.exports=PurchaseSuccess;

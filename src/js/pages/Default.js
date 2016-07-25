@@ -191,4 +191,4 @@ Default.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default Default;
+module.exports=Default;

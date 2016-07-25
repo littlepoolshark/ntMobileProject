@@ -105,4 +105,4 @@ let Home=React.createClass({
     }
 });
 
-export default Home;
+module.exports=Home;

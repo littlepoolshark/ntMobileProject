@@ -248,4 +248,4 @@ Payment.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default  Payment;
+module.exports=Payment;

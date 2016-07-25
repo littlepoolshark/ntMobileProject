@@ -84,4 +84,4 @@ SetNewPassword.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-export default SetNewPassword;
+module.exports=SetNewPassword;

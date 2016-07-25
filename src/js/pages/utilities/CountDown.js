@@ -27,15 +27,16 @@ let CountDown=React.createClass({
     render(){
         let leftseconds=this.state.countDownDuration;
         if(leftseconds > 0){
-            let hour = Math.floor(leftseconds / 3600) < 0 ? 0: Math.floor(leftseconds / 3600);
-            let minute = Math.floor((leftseconds - hour * 3600) / 60) < 0 ? 0: Math.floor((leftseconds - hour * 3600) / 60);
-            let second = Math.floor(leftseconds - hour * 3600- minute * 60) < 0 ? 0 : Math.floor(leftseconds - hour * 3600- minute * 60);
+            let day =parseInt(leftseconds / ( 24 * 3600)) ;
+            let hour =parseInt((leftseconds - day * 24 * 3600) / 3600);
+            let minute =parseInt((leftseconds - day * 24 * 3600 - hour * 3600) / 60);
+            let second =leftseconds  - day * 24 * 3600 - hour * 3600 -  minute * 60 ;
 
-            hour= hour<10 ? "0"+hour : hour;
-            minute= minute<10 ? "0"+minute : minute;
-            second= second<10 ? "0"+second : second;
+            hour= hour < 10 ? "0"+hour : hour;
+            minute= minute < 10 ? "0"+minute : minute;
+            second= second < 10 ? "0"+second : second;
             return (
-                <span>{hour}小时{minute}分钟{second}秒</span>
+                <span>{day ? day + "天" : ""}{hour}小时{minute}分钟{second}秒</span>
             )
         }else {
             return (

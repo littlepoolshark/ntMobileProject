@@ -27,7 +27,7 @@ let ComparisonChart=React.createClass({
             )
         }else {
             return (
-                <div className="content">
+                <div className="content" >
                     <div className="content-item">
                         <sapn className="label">银行利息</sapn>
                         <ProgressBar width="150px" hasProgressPercent={false} percent="2%"/>
@@ -45,7 +45,7 @@ let ComparisonChart=React.createClass({
     },
     render(){
         return (
-            <Group className="comparison-chart">
+            <Group className="comparison-chart" id={this.props.id}>
                 <h6 className="subtitle">10000元同期银行存款收益对比</h6>
                 {this._renderChartContent()}
             </Group>

@@ -1,4 +1,5 @@
 export Default from './Default';
+export NotFound from "./NotFound";
 export Home from './Home';
 export ProductList from './ProductList';
 export MoreProductList from './MoreProductList';
