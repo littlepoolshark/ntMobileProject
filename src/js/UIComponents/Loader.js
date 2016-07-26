@@ -25,7 +25,7 @@ const Loader = React.createClass({
 
   getInitialState(){
     return {
-      loading:false,
+      loading:true,
       showHint:false
     }
   },

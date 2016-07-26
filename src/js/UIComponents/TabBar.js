@@ -112,10 +112,13 @@ TabBar.Item = React.createClass({
   renderIcon() {
     let {
       icon,
+      selectedIcon,
+      iconClassPrefix,
+      selected
       } = this.props;
 
-    return icon ? (
-      <Icon name={icon} key="tabbarIcon">
+    return selectedIcon  ? (
+      <Icon name={selected ? selectedIcon : icon} key="tabbarIcon" classPrefix={iconClassPrefix ? iconClassPrefix : "icon"}>
         {this.renderBadge()}
       </Icon>) : null
   },

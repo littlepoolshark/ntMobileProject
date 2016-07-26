@@ -9,8 +9,9 @@
 // Set classes namespace, e.g. `am-`
 $namespace: null !default;
 
-// This sets 1rem to be 14px
+// This sets 1rem to be 16px
 $rem-base: 16px;
+
 
 // The default font-size is set to 100% of the browser style sheet (usually 16px)
 // for compatibility with browser-based text zoom or user-set defaults.
@@ -73,7 +74,7 @@ $T14:rem-calc(43);
 $separation-line-color:#e5e5e5;
 
 // @see http://sassme.arc90.com/
-$gray-darker: lighten($black, 13.5%) !default; // #222
+$gray-darker: lighten($black, 20%) !default; // #222
 $gray-dark: lighten($black, 20%) !default;   // #333
 $gray: lighten($black, 33.5%) !default; // #555
 // $gray-light: lighten($black, 46.7%) !default; // #777
@@ -96,7 +97,8 @@ $am-colors: (
     success: $global-success,
     warning: $global-warning,
     alert: $global-alert,
-    dark: $dark-alt
+    dark: $dark-alt,
+    white:$white
 );
 
 $am-sizes: (
@@ -347,7 +349,13 @@ $imgIcons:(
   password:"login_icon_password.png",
   eye-off:"login_icon_eye_off.png",
   eye-on:"login_icon_eye_on.png",
-  slide-up:"icon_sliding.png"
+  slide-up:"icon_sliding.png",
+  home:"home_btn_uncheck.png",
+  home_active:"home_btn_check.png",
+  financial-pig:"home_btn_uncheck_financial.png",
+  financial-pig_active:"home_btn_check_financial.png",
+  person:"home_btn_uncheck_my.png",
+  person_active:"home_btn_check_my.png"
 )!default;
 
 // List Variables

@@ -19,6 +19,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 module.exports={
+    devtool: false,
     entry:{//对应要运行的命令是：webpack-dev-sever --inline --hot
         app:path.resolve(__dirname,"app_production.js"),
         vendor:["react","react-dom","react-router"] //基于类库代码的变动性和浏览器缓存策略，将外部提供的类库提取出来整合一个chunk
@@ -62,16 +63,21 @@ module.exports={
     plugins:[
         new ExtractTextPlugin("[name].[chunkhash:8].css"),
         new webpack.optimize.CommonsChunkPlugin("vendor","vendor.[chunkhash:8].bundle.js"),
- /*       new webpack.optimize.UglifyJsPlugin({//压缩
+        new webpack.optimize.UglifyJsPlugin({//压缩
             compress:{
                 warnings:false
             }
-        }),*/
+        }),
         new HtmlWebpackPlugin({
             filename:"index.html",
             template:path.resolve(__dirname,"index_production.html"),
             inject:true,
             chunks:["app","vendor"]
+        }),
+        new webpack.DefinePlugin({//Tell Webpack to use Node's production environment
+            'process.env': {
+                NODE_ENV: JSON.stringify("production")
+            }
         })
     ]
 }

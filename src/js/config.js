@@ -34,11 +34,13 @@ let config={
         CouponList:"我的优惠券"
     },
     noNavBarPages:[//不需要显示navBar的页面
+        "/",
         "Home",
         "UserHome",
         "Register",
         "PurchaseSuccess",
-        "AppointmentSuccess"
+        "AppointmentSuccess",
+        "Default"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

@@ -43,7 +43,7 @@ let Payment=React.createClass({
         if(type === "ttz_product"){
             return (
                 <div className="subtitle">
-                    个人投资限额：<strong>10000</strong>元
+                    <span>个人投资限额：</span><strong>10000</strong>元
                 </div>
             )
         }else {
@@ -76,7 +76,7 @@ let Payment=React.createClass({
     _renderExpectedReward(type,expectedReward){
         if(type !== "ttz_product"){
             return (
-                <div className="subtitle expectedReward" style={{paddingTop:"5px"}}>预期收益：<strong>{expectedReward}</strong>元</div>
+                <div className="subtitle expectedReward" style={{paddingTop:"5px"}}><span>预期收益：</span><strong>{expectedReward}</strong>元</div>
             )
         }
     },
@@ -131,10 +131,10 @@ let Payment=React.createClass({
                 <Group>
                     <h6 className="title">{productName}</h6>
                     <div className="subtitle">
-                        年华利率：<strong>{productApr+"%"}</strong>
+                        <span>年华利率：</span><strong>{productApr+"%"}</strong>
                     </div>
                     <div className="subtitle">
-                        项目可投金额：<strong>{remainAmount}</strong>元
+                        <span>项目可投金额：</span><strong>{remainAmount}</strong>元
                     </div>
                     {this._renderInvestmentLimit(type)}
                 </Group>
@@ -143,7 +143,7 @@ let Payment=React.createClass({
                     header=""
                     id="purchaseZone"
                     >
-                    <div className="subtitle usableAmount">账户余额：{userBalance}元</div>
+                    <div className="subtitle usableAmount"><span>账户余额：</span>{userBalance}元</div>
                     <List>
                         <List.Item
                             nested="input"

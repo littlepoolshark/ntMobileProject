@@ -13,6 +13,14 @@ body {
   overflow: hidden;
   font-size: $base-font-size;
 }
+@media screen and (max-width: 320px){
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+    font-size: 14px;/*在iphone5下面，全面缩小字体大小*/
+  }
+}
 
 // Set box-sizing globally to handle padding and border widths
 html {

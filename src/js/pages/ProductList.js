@@ -9,6 +9,7 @@ import Container from "../UIComponents/Container";
 import Tabs from "../UIComponents/Tabs";
 import List from "../UIComponents/List";
 import Loader from "../UIComponents/Loader";
+import Modal from "../UIComponents/modal/Modal";
 
 //utilites component
 import DailyEarnCard from "./utilities/DailyEarnCard";
@@ -24,8 +25,11 @@ let ProductList=React.createClass({
         }
     },
     render(){
+        let scrollable=this.state.productList.length > 0 ? true : false;
+        let isModalOpen=this.state.productList.length > 0 ? false : true;
+        let checkMoreClass=this.state.productList.length > 0 ? "show" : "hide"
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}}  id="productList" >
+            <Container scrollable={scrollable}   id="productList" >
 
                 {
                     this.state.productList.map(function(item,index){
@@ -40,7 +44,14 @@ let ProductList=React.createClass({
                         }
                     })
                 }
-                <Link to="/moreProductList"><div className="checkMore-button">点击查看更多</div></Link>
+                <Link to="/moreProductList" className={checkMoreClass}><div className="checkMore-button">点击查看更多</div></Link>
+                <Modal
+                    title={"努力加载中..."}
+                    isOpen={isModalOpen}
+                    role="loading"
+                >
+                    <Loader />
+                </Modal>
             </Container>
         )
     },
@@ -50,9 +61,12 @@ let ProductList=React.createClass({
         ProductListStore.bind("change",function(){
             let productList=ProductListStore.getAll();
             this.setState({
-                productList:productList
+                productList:productList,
+                isModalOpen:false,
+                scrollable:true
             })
         }.bind(this));
+
     },
     componentWillUnmount(){
         ProductListStore.unbind("change");

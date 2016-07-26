@@ -35,7 +35,7 @@ let MoreProductList=React.createClass({
     },
     render(){
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}}  id="moreProductList" onScroll={this._loadMoreData} >
+            <Container scrollable={true}   id="moreProductList" onScroll={this._loadMoreData} >
                 <Tabs defaultActiveKey={0} >
 
                     <Tabs.Item

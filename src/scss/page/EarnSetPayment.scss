@@ -15,6 +15,9 @@
   }
   .subtitle {
     @include color-and-fontSize($C4,$T8);
+    & > span {
+      margin-right:3px;
+    }
   }
 
   strong {
@@ -33,6 +36,10 @@
 
       a {
         padding-left:0;
+      }
+
+      .field-label {
+        width:22%;
       }
     }
     .subtitle.usableAmount {

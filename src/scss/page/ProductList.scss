@@ -7,6 +7,9 @@
 // Mixin
 @import "../helper/mixins";
 #productList {
+  ::-webkit-scrollbar {
+    width:0;
+  }
   .tabs {
     margin-top:0;
 

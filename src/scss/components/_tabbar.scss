@@ -4,9 +4,7 @@
 // Mixins
 // -----------------------------------------------------------------------------
 
-@mixin tabbar-style(
-  $background: $tabbar-background
-) {
+@mixin tabbar-style($background: $tabbar-background) {
   background: $background;
   border-top: 1px solid darken($background, 5);
 
@@ -102,4 +100,30 @@ $tabbar-styles: map_merge($am-colors, (dark: $dark-alt)) !default;
 // common style
 #{keys-to-selector($tabbar-styles, $tabbar-prefix)} {
   @include tabbar-link-color(#dedede, $white);
+}
+
+//针对 ntmobile项目具体定制的样式
+.tabbar-white {
+  height:rem-calc(55);
+  padding:0;
+  background-color:#fff;
+  border-top:1px solid #eee;
+
+  a {
+    color:$C3;
+
+    &.active {
+      color:$C3;
+    }
+  }
+
+  .imgIcon {
+    margin-top:rem-calc(2);
+  }
+  
+  .tabbar-label {
+    margin-top:rem-calc(1);
+    @include color-and-fontSize($C3,$T8);
+  }
+
 }

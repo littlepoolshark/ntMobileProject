@@ -55,26 +55,32 @@ const App = React.createClass({
         </Container>
 
         <TabBar
-          amStyle="primary"
+          amStyle="white"
           className={tabBarClass}
         >
           <TabBar.Item
             component={Link}
             title="首页"
-            icon="star"
+            iconClassPrefix="imgIcon"
+            icon="home"
+            selectedIcon="home_active"
             selected={params.componentName === 'home'}
             to="/home"
           />
           <TabBar.Item
             component={Link}
             title="理财"
-            icon="list"
+            iconClassPrefix="imgIcon"
+            icon="financial-pig"
+            selectedIcon="financial-pig_active"
             selected={params.componentName === 'productList'}
             to="/productList"
           />
           <TabBar.Item
             component={Link}
+            iconClassPrefix="imgIcon"
             icon="person"
+            selectedIcon="person_active"
             title="我的"
             selected={params.componentName === 'userHome'}
             to="/userHome"

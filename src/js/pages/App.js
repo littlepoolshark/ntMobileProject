@@ -27,8 +27,14 @@ const App = React.createClass({
             ...props
             } = this.props;
         let transition = children.props.transition || 'sfr';
-        let pathname=location.pathname.indexOf("/") > -1 ? location.pathname.slice(1) : location.pathname;
-        let currPageName=pathname.charAt(0).toUpperCase() + pathname.slice(1);
+        let pathname=location.pathname;
+        let currPageName;
+        if(pathname !== "/"){
+            pathname=pathname.indexOf("/") > -1 ? pathname.slice(1) : pathname;
+            currPageName=pathname.charAt(0).toUpperCase() + pathname.slice(1);
+        }else {
+            currPageName=pathname;
+        }
 
         let tabBarClass= classNames({
             hide:config.hasTabBarPages.indexOf(currPageName) > -1 ? false : true
@@ -48,7 +54,6 @@ const App = React.createClass({
         let key=(currPageName === "EarnSetIntroduction" && queryStr   )? currPageName + "." + queryStr : currPageName;
 
 
-
         return (
             <Container direction="column"  >
                 <Container fill={true}>
@@ -65,29 +70,35 @@ const App = React.createClass({
                 </Container>
 
                 <TabBar
-                    amStyle="primary"
+                    amStyle="white"
                     className={tabBarClass}
                 >
                     <TabBar.Item
                         component={Link}
                         title="首页"
-                        icon="star"
-                        selected={params.componentName === 'home'}
-                        to="home"
+                        iconClassPrefix="imgIcon"
+                        icon="home"
+                        selectedIcon="home_active"
+                        selected={currPageName === 'Home'}
+                        to="/home"
                     />
                     <TabBar.Item
                         component={Link}
                         title="理财"
-                        icon="list"
-                        selected={params.componentName === 'productList'}
-                        to="productList"
+                        iconClassPrefix="imgIcon"
+                        icon="financial-pig"
+                        selectedIcon="financial-pig_active"
+                        selected={currPageName === 'ProductList'}
+                        to="/productList"
                     />
                     <TabBar.Item
                         component={Link}
+                        iconClassPrefix="imgIcon"
                         icon="person"
+                        selectedIcon="person_active"
                         title="我的"
-                        selected={params.componentName === 'userHome'}
-                        to="userHome"
+                        selected={currPageName === 'UserHome'}
+                        to="/userHome"
                     />
                 </TabBar>
             </Container>
