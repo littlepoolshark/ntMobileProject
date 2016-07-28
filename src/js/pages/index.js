@@ -15,7 +15,8 @@ export PurchaseSuccess from './PurchaseSuccess';
 export AppointmentSuccess from './AppointmentSuccess';
 export DailyEarnAppointment from './DailyEarnAppointment';
 export CouponList from './CouponList';
-
+export MessageList from './MessageList';
+export Recharge from './Recharge';
 
 
 

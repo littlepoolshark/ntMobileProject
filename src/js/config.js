@@ -31,7 +31,9 @@ let config={
         "Payment.quarterlyEarn":"支付",
         PurchaseSuccess:"购买成功",
         DailyEarnAppointment:"预约天天赚",
-        CouponList:"我的优惠券"
+        CouponList:"我的优惠券",
+        MessageList:"我的消息",
+        Recharge:"充值"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -49,7 +51,8 @@ let config={
     ],
     needToInterceptPages:[//需要进行登录拦截的页面
         "DailyEarnAppointment",
-        "Payment"
+        "Payment",
+        "UserHome"
     ]
 }
 

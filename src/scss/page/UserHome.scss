@@ -1,0 +1,116 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#userHome {
+  .dashboard {
+    padding-top:rem-calc(15);
+    background-color:$C1;
+
+    .header {
+      display:flex;
+      align-items: center;
+      justify-content:flex-start;
+      padding-left:rem-calc(15);
+
+      .message-icon-wrapper {
+        margin-right:auto;
+      }
+
+      .btn-hollow {
+        margin-bottom:0;
+        padding:rem-calc(8) rem-calc(5);
+        @include color-and-fontSize($white,rem-calc(14));
+        border-color:$C9;
+
+        &:hover {
+          background-color:transparent;
+        }
+      }
+    }
+    .subtitle {
+      @include color-and-fontSize($C9,$T10);
+    }
+    .amount {
+      line-height:1;
+      @include color-and-fontSize(#fff,$T3);
+    }
+    strong.amount  {
+      font-weight: normal;
+      @include color-and-fontSize(#fff,rem-calc(30));
+    }
+
+    .sub-dashboard {
+      margin:auto rem-calc(15);
+      padding:rem-calc(10) 0 ;
+      border-top:1px solid #f6695b;
+
+      .col-3:first-child {
+        border-right:1px solid #f6695b;
+      }
+    }
+
+    .data-eye-wrapper {
+      display:inline-block;
+      position:relative;
+
+      .imgIcon {
+        position:absolute;
+        top:rem-calc(-4);
+        right:rem-calc(-70);
+      }
+    }
+
+  }
+  .investmentRecord-entry {
+    border-top:1px solid $separation-line-color;
+    border-bottom:1px solid $separation-line-color;
+
+    .investmentRecord-entry-item {
+      padding:rem-calc(5) 0;
+      border-right:1px solid $separation-line-color;
+
+      & > a {
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+      }
+
+      &:last-child {
+        border:none;
+      }
+
+      .imgIcon {
+        width:rem-calc(35);
+        height:rem-calc(35);
+      }
+
+      .title {
+        @include color-and-fontSize($C3,$T7);
+      }
+
+      .subtitle {
+        @include color-and-fontSize($C5,$T10);
+
+        strong {
+          color:$C1;
+        }
+      }
+    }
+  }
+
+  .list {
+    margin:rem-calc(15) 0;
+
+    .coupon-count {
+      color:$C1;
+    }
+  }
+
+}

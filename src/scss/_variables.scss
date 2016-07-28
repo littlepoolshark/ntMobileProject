@@ -71,7 +71,7 @@ $T12:rem-calc(80);
 $T13:rem-calc(24);
 $T14:rem-calc(43);
 
-$separation-line-color:#e5e5e5;
+$separation-line-color:#eee;
 
 // @see http://sassme.arc90.com/
 $gray-darker: lighten($black, 20%) !default; // #222
@@ -349,13 +349,21 @@ $imgIcons:(
   password:"login_icon_password.png",
   eye-off:"login_icon_eye_off.png",
   eye-on:"login_icon_eye_on.png",
+  white-eye-off:"my_eye_off.png",
+  white-eye-on:"my_eye_on.png",
   slide-up:"icon_sliding.png",
   home:"home_btn_uncheck.png",
   home_active:"home_btn_check.png",
   financial-pig:"home_btn_uncheck_financial.png",
   financial-pig_active:"home_btn_check_financial.png",
   person:"home_btn_uncheck_my.png",
-  person_active:"home_btn_check_my.png"
+  person_active:"home_btn_check_my.png",
+  folder:"my_icon_current.png",
+  money-package:"my_icon_regular.png",
+  calendar:"my_icon_calendar.png",
+  message:"navi_btn_notice.png",
+  letter:"btn_message.png",
+  letter-open:"btn_message_readed.png"
 )!default;
 
 // List Variables
@@ -364,7 +372,7 @@ $list-prefix: #{$namespace}list !default;
 $item-prefix: #{$namespace}item !default;
 $list-margin: $global-spacing * 2 0 !default;
 $list-background: $white !default;
-$list-border-color: $light-alt !default;
+$list-border-color: #eee !default;
 
 
 // Loader Variables

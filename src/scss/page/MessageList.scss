@@ -1,0 +1,62 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#messageList {
+  .messageList {
+    padding:0 rem-calc(15);
+    margin:0;
+    list-style: none;
+  }
+
+  .messageList-item {
+    padding:rem-calc(15) 0 ;
+    border-bottom:1px solid $separation-line-color;
+
+    &:last-child {
+      border:none;
+    }
+
+    .icon-wrapper {
+      float:left;
+      width:10%;
+      margin-right:3%;
+
+      .imgIcon {
+        width:rem-calc(33);
+        height:rem-calc(33);
+      }
+    }
+    .messageList-item-body {
+      float:left;
+      width:87%;
+
+      .title {
+        display:flex;
+        align-items: center;
+        @include color-and-fontSize($C3,$T7);
+      }
+      .title-text {
+        @include color-and-fontSize($C3,$T7);
+      }
+      .date {
+        margin-left:auto;
+        @include color-and-fontSize($C5,rem-calc(12));
+      }
+      .content {
+        margin-top:rem-calc(5);
+        @include color-and-fontSize($C4,$T8);
+      }
+
+    }
+  }
+
+  .modal-popup {
+    background-color:#f8f8f8;
+  }
+}
