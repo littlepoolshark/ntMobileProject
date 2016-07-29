@@ -13,6 +13,7 @@ import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
 import Icon from "../UIComponents/Icon";
 import List from "../UIComponents/List";
+import Modal from "../UIComponents/modal/Modal";
 
 
 //用户中心页面：UserHome component
@@ -20,13 +21,33 @@ let UserHome=React.createClass({
     getInitialState(){
         return {
             data:UserHomeStore.getAll(),
-            ishowData:true
+            ishowData:true,
+            isModalOpen:false,
+            confirmText:""
         }
     },
     _toggleShowData(){
           this.setState({
               ishowData:!this.state.ishowData
           });
+    },
+    _jumpToNextLocation(confirm){
+        if(confirm){
+            this.context.router.push({
+                pathname:"bindBankCard"
+            });
+        }else {
+            this._handleModalClose();
+        }
+
+    },
+    _handleModalClose(){
+        this.setState({
+            isModalOpen:false
+        });
+    },
+    _handleRecharge(){
+        UserHomeAction.recharge();
     },
     render(){
         let {
@@ -46,12 +67,8 @@ let UserHome=React.createClass({
                         <Link className="message-icon-wrapper" to="messageList" >
                             <Icon  classPrefix="imgIcon" name="message"  />
                         </Link>
-                        <Link to="recharge">
-                            <Button  hollow radius >充值</Button>
-                        </Link>
-                        <Link to="messageList">
-                            <Button  hollow radius >提现</Button>
-                        </Link>
+                        <Button  hollow radius onClick={this._handleRecharge}>充值</Button>
+                        <Button  hollow radius >提现</Button>
                     </div>
                     <div className="text-center subtitle" style={{marginTop:"20px"}}>
                         <span className="data-eye-wrapper">
@@ -109,19 +126,46 @@ let UserHome=React.createClass({
                 <List>
                     <List.Item  href="##" title="设置"/>
                 </List>
+                <Modal
+                    title="提示"
+                    ref="modal"
+                    isOpen={this.state.isModalOpen}
+                    role="confirm"
+                    onAction={this._jumpToNextLocation}
+                >
+                    {this.state.confirmText}
+                </Modal>
             </Container>
         )
     },
     componentDidMount(){
-        UserHomeAction.getInitailDataFromServer();
+        UserHomeAction.getInitailDataFromServer();//获取页面显示所需要的数据
+        UserHomeAction.getUserInfoDetail();//获取用户更加详细的数据，包括个人信息，账户信息，安全信息等。
+        UserHomeAction.getBankCardInfo();//获取用户所绑定的银行卡的信息
 
         UserHomeStore.bind("change",function(){
             this.setState(UserHomeStore.getAll());
         }.bind(this));
 
+        //银行卡已经绑定则跳转到充值页面，否则调转到绑卡页面
+        UserHomeStore.bind("bankCardIsBind",function(){
+            this.context.router.push({
+                pathname:"recharge"
+            });
+        }.bind(this));
+
+        UserHomeStore.bind("bankCardIsNotBind",function(msg){
+            this.setState({
+                isModalOpen:true,
+                confirmText:msg
+            })
+        }.bind(this));
+
     },
     componentWillUnmount(){
         UserHomeStore.unbind("change");
+        UserHomeStore.unbind("bankCardIsBind");
+        UserHomeStore.unbind("bankCardIsNotBind");
     }
 });
 

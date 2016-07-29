@@ -45,6 +45,9 @@
       border-bottom: none;
     }
   }
+  input[readonly] {
+    background-color:transparent;
+  }
 }
 
 // item: header

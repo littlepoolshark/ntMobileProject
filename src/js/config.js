@@ -33,7 +33,11 @@ let config={
         DailyEarnAppointment:"预约天天赚",
         CouponList:"我的优惠券",
         MessageList:"我的消息",
-        Recharge:"充值"
+        Recharge:"充值",
+        BindBankCard:"添加银行卡",
+        BankCardList:"选择开户银行",
+        RealNameAuthentication:"实名认证"
+
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",

@@ -17,7 +17,9 @@ export DailyEarnAppointment from './DailyEarnAppointment';
 export CouponList from './CouponList';
 export MessageList from './MessageList';
 export Recharge from './Recharge';
-
+export BindBankCard from "./BindBankCard";
+export BankCardList from "./BankCardList";
+export RealNameAuthentication from "./RealNameAuthentication";
 
 
 

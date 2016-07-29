@@ -70,7 +70,7 @@ appDispatcher.register(function(payload){
                     },
                     success:function(rs){
                         if(rs.code === 0){
-                            cookie.setCookie("token",rs.data.token,59);
+                            cookie.setCookie("token",rs.data.token,59);//用户的登录状态设置为59分钟
                             DefaultStore.trigger("loginSuccess");
                         }else {
                             DefaultStore.trigger("loginFailed","登录失败！"+rs.description);

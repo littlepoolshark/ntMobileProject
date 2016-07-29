@@ -166,10 +166,9 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
-
             this.context.router.push({
                pathname:"/home"
-            })
+            });
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckSuccess",function(phoneNo){
@@ -178,7 +177,7 @@ let RegisterView=React.createClass({
                 query:{
                     phoneNo:phoneNo
                 }
-            })
+            });
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckFailed",function(msg){
