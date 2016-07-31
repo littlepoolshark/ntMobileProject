@@ -1,0 +1,29 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#withdraw {
+  position:relative;
+
+  .withdraw-form {
+    margin-bottom:0;
+  }
+
+  .forgetPassword-wrapper {
+    margin-top:rem-calc(5);
+    padding:0 rem-calc(15);
+    text-align: right;
+  }
+
+  .slogan {
+    position:fixed;
+    left:50%;
+    transform: translateX(-50%);
+    bottom:rem-calc(5);
+  }
+}

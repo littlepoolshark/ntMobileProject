@@ -1,0 +1,47 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#journalAccount {
+  .group {
+    margin-top:0;
+  }
+  .journalAccount-list {
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  .journalAccount-item {
+    padding:rem-calc(10) rem-calc(15);
+    border-bottom:1px solid $separation-line-color;
+
+    &:last-child {
+      border:none;
+    }
+
+    .title {
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .amount {
+        @include color-and-fontSize($C1,$T4);
+      }
+      .desc {
+        @include color-and-fontSize($C3,$T6);
+      }
+    }
+    .subtitle {
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      @include color-and-fontSize($C4,$T10);
+    }
+  }
+
+}

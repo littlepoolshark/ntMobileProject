@@ -1,0 +1,58 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+//animation
+@import "../helper/animation";
+
+//@keyframes slide-from-right {
+//  0% {
+//    top:0;
+//    left:100%;
+//    opacity:0;
+//  }
+//
+//  100% {
+//    top:0;
+//    left:0;
+//    opacity:0.5;
+//  }
+//}
+
+#inviteMyFriend {
+  position:relative;
+
+  .inviteFriend-btn {
+    position:fixed;
+    bottom:0;
+    left:0;
+    margin:0;
+  }
+
+  .mask {
+    width:100%;
+    height:100%;
+    background-color:#333;
+    position:fixed;
+    left:100%;
+    top:0;
+    opacity: 0;
+    color:#fff;
+    transition:all 0.5s ease-in-out ;
+
+    //&.active {
+    //  animation:slide-from-right 0.5s ease-in-out 1;
+    //  animation-fill-mode:forwards;//将元素的状态保留为动画的最后一帧
+    //}
+    &.active {
+      left:0;
+      top:0;
+      opacity: 0.5;
+    }
+  }
+}

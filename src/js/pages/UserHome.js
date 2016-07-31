@@ -119,8 +119,8 @@ let UserHome=React.createClass({
                 </Group>
 
                 <List>
-                    <List.Item  href="##" title="优惠券" after={(<span><strong className="coupon-count">{tikectCount}</strong>张可用</span>)}/>
-                    <List.Item  href="##" title="邀请有礼"/>
+                    <List.Item  href="#/couponList/?productType=all" title="优惠券" after={(<span><strong className="coupon-count">{tikectCount}</strong>张可用</span>)}/>
+                    <List.Item  href="#/inviteReward" title="邀请有礼"/>
                 </List>
 
                 <List>

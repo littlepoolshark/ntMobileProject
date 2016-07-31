@@ -20,7 +20,13 @@ export Recharge from './Recharge';
 export BindBankCard from "./BindBankCard";
 export BankCardList from "./BankCardList";
 export RealNameAuthentication from "./RealNameAuthentication";
-
+export Withdraw from "./Withdraw";
+export GetBackDealPassword from "./GetBackDealPassword";
+export JournalAccount from "./JournalAccount";
+export InviteReward from "./InviteReward";
+export RewardDetailList from "./RewardDetailList";
+export InviteMyFriend from "./InviteMyFriend";
+export My2DCode from "./My2DCode";
 
 
 

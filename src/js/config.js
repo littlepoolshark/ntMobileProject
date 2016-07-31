@@ -36,8 +36,14 @@ let config={
         Recharge:"充值",
         BindBankCard:"添加银行卡",
         BankCardList:"选择开户银行",
-        RealNameAuthentication:"实名认证"
-
+        RealNameAuthentication:"实名认证",
+        Withdraw:"提现",
+        GetBackDealPassword:"找回交易密码",
+        JournalAccount:"资金流水",
+        InviteReward:"邀请有礼物",
+        RewardDetailList:"奖励明细",
+        InviteMyFriend:"邀请好友",
+        My2DCode:"我的二维码"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -55,8 +61,7 @@ let config={
     ],
     needToInterceptPages:[//需要进行登录拦截的页面
         "DailyEarnAppointment",
-        "Payment",
-        "UserHome"
+        "Payment"
     ]
 }
 

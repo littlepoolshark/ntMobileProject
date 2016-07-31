@@ -62,7 +62,7 @@ function ajax(obj) {
         if (xhr.status == 200) {  //判断http的交互是否成功，200表示成功
             obj.success(JSON.parse(xhr.responseText));//将返回的json字符串解析返回
         } else {
-            alert('获取数据错误！错误代号：' + xhr.status + '，错误信息：' + xhr.statusText);
+            //alert('获取数据错误！错误代号：' + xhr.status + '，错误信息：' + xhr.statusText);
         }
     }
 

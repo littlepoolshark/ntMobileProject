@@ -73,6 +73,22 @@
   }
 }
 
+// Slide right
+@keyframes amt-slide-right {
+  0% {
+    top:0;
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    top:0;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
 @keyframes amt-slide-top-fixed {
   0% {
     opacity: 0;

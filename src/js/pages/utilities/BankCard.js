@@ -13,10 +13,11 @@ function BankCard(props){
     let {
         bankName,
         shortIcon:bankLogoUrl,
-        cardno
+        cardno,
+        groupTitle
         }=props;
     return (
-        <Group id="bankCard">
+        <Group id="bankCard" header={groupTitle ? groupTitle : ""}>
             <div className="bankCard">
                 <div className="bankCard-logo" >
                     <img src={bankLogoUrl} alt=""/>

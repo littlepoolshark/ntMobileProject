@@ -1,0 +1,29 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#rewardDetailList {
+
+  .rewardDetail-list {
+    padding:0;
+    margin:0;
+    list-style:none;
+  }
+
+  .rewardDetailList-item {
+    display:flex;
+    align-items: center;
+    justify-content:space-between;
+    padding:rem-calc(10) rem-calc(15);
+    border-bottom:1px solid $separation-line-color;
+
+    .amount {
+      color:$C1;
+    }
+  }
+}

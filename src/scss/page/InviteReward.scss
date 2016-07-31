@@ -1,0 +1,108 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#inviteReward {
+  display:flex;
+  padding:rem-calc(15);
+  flex-direction:column;
+
+  .title {
+    font-size:$T6;
+  }
+  .subtitle {
+    font-size:$T10;
+  }
+  /*奖励明细*/
+  .rewardDetail {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items: center;
+    flex:1 1 0;
+    margin-bottom:rem-calc(10);
+    background-color:#73b8e9;
+    border-radius:rem-calc(4);
+
+    .title,
+    .subtitle {
+      color: $white;
+    }
+    .amount {
+      @include color-and-fontSize($white,$T4);
+    }
+
+    .dashboard {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+
+      .dashboard-item {
+        display:flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items: center;
+
+        &:first-child {
+          margin-right:rem-calc(50);
+        }
+      }
+    }
+    img {
+      width:rem-calc(100);
+      height:auto;
+    }
+  }
+  /*邀请好友*/
+  .inviteFriend {
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    flex:1 1 0;
+    margin-bottom:rem-calc(10);
+    background-color:#ffd066;
+    border-radius:rem-calc(4);
+
+    .title {
+      margin-top:rem-calc(10);
+      color:#b17102;
+    }
+    .subtitle {
+      color:#b17102;
+    }
+    img {
+      width:rem-calc(120);
+      height:auto;
+    }
+  }
+  /*好的二维码*/
+  .my2DCode {
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    flex:1 1 0;
+    background-color:#df4b3c;
+    border-radius:rem-calc(4);
+
+    .title {
+      margin-top:rem-calc(10);
+      color:$white;
+    }
+    .subtitle {
+      color:$white;
+    }
+
+    img {
+      width:rem-calc(120);
+      height:auto;
+    }
+  }
+}

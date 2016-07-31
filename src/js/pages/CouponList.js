@@ -90,16 +90,13 @@ let CouponCard=React.createClass({
             }=this.props;
         //购买金额小于单笔投资最小金额或者当前的产品类型是月月赚的话，则不能使用红包
         let couponClass=classNames({
-            disabled:type === "redPackage" && (purchaseAmount < investmentMinLimit || productType === "yyz_product")
-            }, "coupon-card");
+            disabled:productType === "all" ? false : (type === "redPackage" && (purchaseAmount < investmentMinLimit || productType === "yyz_product")),
+            "coupon-card":true
+            });
 
         return (
             <div
                 className={couponClass}
-                data-id={id}
-                data-amount={couponAmount}
-                data-type={type}
-                data-minimumlimit={investmentMinLimit}
             >
                 <div className="coupon-card-body cf">
                     {this._renderCouponAmount(type,couponAmount)}
@@ -131,6 +128,15 @@ let CouponList=React.createClass({
         PaymentAction.doNotUseCoupon();
         this.props.history.goBack();
     },
+    _handleSelectCoupon(event,id,amount,type,minimumLimit){
+        if(CSSCore.hasClass(event.target,"disabled")){
+            return false;
+        }else {
+            PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit);
+            this.context.router.goBack();
+        }
+
+    },
     render(){
         let {
             purchaseAmount,
@@ -139,12 +145,35 @@ let CouponList=React.createClass({
 
         return (
             <Container id="couponList">
-                <Button block radius onClick={this._doNotUseCoupon}>不使用加息券</Button>
+                {
+                    productType === "all" ?
+                    null :
+                    (
+                        <Button block radius onClick={this._doNotUseCoupon}>不使用加息券</Button>
+                    )
+                }
+
                 {(
-                    this.state.couponList.map(function(item,index){
-                        return (
-                            <CouponCard {...item} purchaseAmount={purchaseAmount} productType={productType} />
-                        )
+                    couponList.map(function(item,index){
+                        if(productType === "all"){//这种情况代表从用户中心跳转过来的，仅仅是展示优惠券
+                            return (
+                                <CouponCard
+                                    {...item}
+                                    purchaseAmount={purchaseAmount}
+                                    productType={productType}
+                                    />
+                            )
+                        }else {//这种情况代表从支付页面跳转过来，不但展示优惠券，也包含了选择所使用的优惠券
+                            return (
+                                <CouponCard
+                                    {...item}
+                                    purchaseAmount={purchaseAmount}
+                                    productType={productType}
+                                    onClick={this._handleSelectCoupon.bind(null,event,item.id,item.amount,item.type,item.minimumLimit)}
+                                    />
+                            )
+                        }
+
                     }.bind(this))
                 )}
             </Container>
@@ -161,22 +190,22 @@ let CouponList=React.createClass({
         CouponListAction.getDataFromSever(productTypeMap[productType]);
 
         //监听用户的选择，发送相关的action
-        let cards=document.getElementsByClassName("coupon-card");
-        let _self=this;
-        Array.prototype.forEach.call(cards,function(item,index){
-            item.addEventListener("click",function(){
-                if(CSSCore.hasClass(this,"disabled")){
-                    return false;
-                }else {
-                    let id=this.getAttribute("data-id");
-                    let amount=parseFloat(this.getAttribute("data-amount"));
-                    let type=this.getAttribute("data-type");
-                    let minimumLimit=parseFloat(this.getAttribute("data-minimumlimit"));
-                    PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit);
-                    _self.props.history.goBack();
-                }
-            })
-        });
+        //let cards=document.getElementsByClassName("coupon-card");
+        //let _self=this;
+        //Array.prototype.forEach.call(cards,function(item,index){
+        //    item.addEventListener("click",function(){
+        //        if(CSSCore.hasClass(this,"disabled")){
+        //            return false;
+        //        }else {
+        //            let id=this.getAttribute("data-id");
+        //            let amount=parseFloat(this.getAttribute("data-amount"));
+        //            let type=this.getAttribute("data-type");
+        //            let minimumLimit=parseFloat(this.getAttribute("data-minimumlimit"));
+        //            PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit);
+        //            _self.props.history.goBack();
+        //        }
+        //    })
+        //});
 
         CouponListStore.bind("change",function(){
             this.setState({
@@ -185,5 +214,9 @@ let CouponList=React.createClass({
         }.bind(this))
     }
 });
+
+CouponList.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 module.exports=CouponList;

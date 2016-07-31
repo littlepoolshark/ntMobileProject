@@ -1,0 +1,53 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#my2DCode {
+  padding:rem-calc(40) rem-calc(30) 0;
+  background-image:url("../../img/qr_bg.png");
+  background-size:cover;
+
+  .my2DCodeImg-wrapper {
+    .header {
+      img  {
+        width:100%;
+        height:auto;
+      }
+    }
+    .body {
+      width:100%;
+      height:rem-calc(230);
+      padding:rem-calc(15);
+      text-align: center;
+      background-color:rgb(255,252,199);
+      position:relative;
+
+      .code-img {
+        width:rem-calc(200);
+        height:rem-calc(200);
+      }
+      .bg-img {
+        display:block;
+        position:absolute;
+        left:0;
+        top:90%;
+      }
+    }
+  }
+
+  .buts-wrapper {
+    width:100%;
+    height:rem-calc(270);
+    padding:rem-calc(100) rem-calc(30) 0;
+    background-image:url("/src/img/qr_colorpiece.png");
+    background-size:cover;
+    position:fixed;
+    left:0;
+    bottom:0;
+  }
+}
