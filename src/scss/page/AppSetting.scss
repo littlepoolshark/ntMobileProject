@@ -1,0 +1,49 @@
+
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#appSetting {
+  .group,
+  .list {
+    margin:rem-calc(10) 0;
+  }
+
+  .imgIcon {
+    width:rem-calc(20);
+    height:rem-calc(20);
+  }
+  .serverPhone-title {
+    display:flex;
+    justify-content: space-between;
+
+    .serverPhoneNo {
+      color:$C1;
+    }
+
+    .icon-wrapper {
+      display:flex;
+      align-items: center;
+
+      .imgIcon:first-child {
+        display: inline-block;
+        margin-right:rem-calc(10);
+      }
+    }
+  }
+
+  .serverPhone-footer {
+    text-align: right;
+  }
+
+  .block-btn-wrapper {
+    margin-top:2rem;
+    padding:0 rem-calc(15);
+  }
+
+}

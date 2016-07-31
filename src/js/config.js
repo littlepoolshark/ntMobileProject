@@ -43,7 +43,8 @@ let config={
         InviteReward:"邀请有礼物",
         RewardDetailList:"奖励明细",
         InviteMyFriend:"邀请好友",
-        My2DCode:"我的二维码"
+        My2DCode:"我的二维码",
+        AppSetting:"设置和帮助"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",

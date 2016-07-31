@@ -124,7 +124,7 @@ let UserHome=React.createClass({
                 </List>
 
                 <List>
-                    <List.Item  href="##" title="设置"/>
+                    <List.Item  href="#/appSetting" title="设置"/>
                 </List>
                 <Modal
                     title="提示"

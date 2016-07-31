@@ -27,6 +27,7 @@ export InviteReward from "./InviteReward";
 export RewardDetailList from "./RewardDetailList";
 export InviteMyFriend from "./InviteMyFriend";
 export My2DCode from "./My2DCode";
+export AppSetting from "./AppSetting";
 
 
 
