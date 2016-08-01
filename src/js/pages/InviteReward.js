@@ -1,8 +1,6 @@
 require("../../scss/page/InviteReward.scss");
-//var BindBankCardAction=require("../actions/BindBankCardAction.js");
-//var BindBankCardStore=require("../stores/BindBankCardStore.js");
-//var InviteRewardAction=require("../actions/InviteRewardAction.js");
-//var InviteRewardStore=require("../stores/InviteRewardStore.js");
+var InviteRewardAction=require("../actions/InviteRewardAction.js");
+var InviteRewardStore=require("../stores/InviteRewardStore.js");
 import React from "react";
 import { Link } from "react-router";
 
@@ -12,6 +10,9 @@ import Group from "../UIComponents/Group";
 
 
 let InviteReward=React.createClass({
+    getInitialState(){
+        return InviteRewardStore.getAll();
+    },
     _jumpToRewardDetailList(){
         this.context.router.push({
             pathname:"rewardDetailList"
@@ -22,13 +23,21 @@ let InviteReward=React.createClass({
             pathname:"inviteMyFriend"
         });
     },
-    _jumpToMy2DCode(){
+    _jumpToMy2DCode(codeUrl){
         this.context.router.push({
-            pathname:"my2DCode"
+            pathname:"my2DCode",
+            query:{
+                codeUrl:codeUrl
+            }
         });
     },
     render(){
-
+        let {
+            totalReward,
+            currMonthReward,
+            link
+            }=this.state;
+        console.log("link:",link);
         return (
             <Container id="inviteReward"  scrollable={false}>
 
@@ -38,11 +47,11 @@ let InviteReward=React.createClass({
                     <div className="dashboard">
                         <div className="dashboard-item">
                             <span className="subtitle">本月已获取奖励(元)</span>
-                            <span className="amount">80.00</span>
+                            <span className="amount">{currMonthReward}</span>
                         </div>
                         <div className="dashboard-item">
                             <span className="subtitle">累计已获取奖励(元)</span>
-                            <span className="amount">800.00</span>
+                            <span className="amount">{totalReward}</span>
                         </div>
                     </div>
                 </div>
@@ -53,7 +62,7 @@ let InviteReward=React.createClass({
                     <div className="subtitle">分享邀请链接给好友</div>
                 </div>
 
-                <div className="my2DCode" onClick={this._jumpToMy2DCode}>
+                <div className="my2DCode" onClick={this._jumpToMy2DCode.bind(null,link)}>
                     <img src="/src/img/invi_pic_qr.png" alt=""/>
                     <div className="title">我的二维码</div>
                     <div className="subtitle">给推荐的好友扫一扫</div>
@@ -62,7 +71,11 @@ let InviteReward=React.createClass({
         )
     },
     componentDidMount(){
+        InviteRewardAction.getInviteRewardData();
 
+        InviteRewardStore.bind("change",function(){
+            this.setState(InviteRewardStore.getAll())
+        }.bind(this));
     }
 });
 

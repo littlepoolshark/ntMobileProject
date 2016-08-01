@@ -154,10 +154,10 @@ let UserHome=React.createClass({
             });
         }.bind(this));
 
-        UserHomeStore.bind("bankCardIsNotBind",function(msg){
+        UserHomeStore.bind("bankCardIsNotBind",function(){
             this.setState({
                 isModalOpen:true,
-                confirmText:msg
+                confirmText:"充值需要先绑定银行卡，去绑卡？"
             })
         }.bind(this));
 

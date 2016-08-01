@@ -43,11 +43,6 @@ let BindBankCard=React.createClass({
     _submitBankCardForm(){
         let cardNo=this.refs.cardNo.getValue();
         BindBankCardAction.submitBankCardForm(cardNo);
-        /*this.setState({
-            isModalOpen:true,
-            modalRole:"confirm",
-            modalContextText:"您还没实名认证，去认证？"
-        });*/
     },
     _handleQuestionMarkClick(){
         this.setState({
@@ -64,8 +59,7 @@ let BindBankCard=React.createClass({
     render (){
         let {
             userName,
-            bankName,
-            cardno
+            bankName
             }=this.state.bankCardInfo;
         return (
             <Container srcollable={true}>
@@ -104,7 +98,6 @@ let BindBankCard=React.createClass({
                             <Field
                                 label="银行卡号"
                                 placeholder="请输入开户银行卡号"
-                                value={cardno}
                                 ref="cardNo"
                             />
                         </List.Item>
@@ -133,6 +126,14 @@ let BindBankCard=React.createClass({
         BindBankCardStore.bind("bindBankCardFailed",function(msg){
             Message.broadcast(msg);
         });
+
+        BindBankCardStore.bind("idCardVerifiedCheckFailed",function(){
+            this.setState({
+                 isModalOpen:true,
+                 modalRole:"confirm",
+                 modalContextText:"您还没实名认证，去认证？"
+            });
+        }.bind(this));
     }
 });
 

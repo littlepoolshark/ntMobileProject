@@ -20,19 +20,19 @@ var UserHomeStore={
         this._all=Object.assign(this._all,source);
     },
     checkIdCardVerifiedSet(){//检查是否已经实名认证
-        return !!this._all.sercuInfo.idCardVerified;
+        return this._all.sercuInfo.idCardVerified === "yes" ? true : false;
     },
     checkDealPasswordSet(){//检查是否设置交易密码
-        return !!this._all.sercuInfo.ispasswordSet;
+        return this._all.sercuInfo.ispasswordSet === "yes" ? true : false;
     },
     checkBankCardBind(){//检查是否已经绑定银行卡
-        return !!this._all.bankCardInfo;
+        return this._all.bankCardInfo === "yes" ? true : false;
     }
 };
 MicroEvent.mixin(UserHomeStore);
 
 
-appDispatcher.register(function(payload){
+UserHomeStore.dispatchToken=appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "getInitailDataFromServer_userHome":
             ajax({
@@ -78,10 +78,10 @@ appDispatcher.register(function(payload){
             });
             break;
         case "recharge":
-            if(UserHomeStore.checkBankCardBind()){
+            if(UserHomeStore.checkBankCardBind()){//检查用户是否已经绑卡
                 UserHomeStore.trigger("bankCardIsBind");
             }else {
-                UserHomeStore.trigger("bankCardIsNotBind","充值需要先绑定银行卡，去绑卡？");
+                UserHomeStore.trigger("bankCardIsNotBind");
             }
             break;
         default:

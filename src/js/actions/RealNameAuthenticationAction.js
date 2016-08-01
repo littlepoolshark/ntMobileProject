@@ -10,6 +10,11 @@ var RealNameAuthenticationAction={
             }
         })
 
+    },
+    refreshUserInfoDetail(){
+        appDispatcher.dispatch({
+            actionName:"getUserInfoDetail"
+        })
     }
 };
 

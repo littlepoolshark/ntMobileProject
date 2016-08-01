@@ -15,6 +15,7 @@
   .my2DCodeImg-wrapper {
     .header {
       img  {
+        display:block;
         width:100%;
         height:auto;
       }
@@ -27,9 +28,11 @@
       background-color:rgb(255,252,199);
       position:relative;
 
-      .code-img {
-        width:rem-calc(200);
-        height:rem-calc(200);
+      .code-img-wrapper {
+        img {
+          display:block;
+          margin:0 auto;
+        }
       }
       .bg-img {
         display:block;
@@ -41,13 +44,19 @@
   }
 
   .buts-wrapper {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width:100%;
-    height:rem-calc(270);
-    padding:rem-calc(100) rem-calc(30) 0;
+    height:rem-calc(200);
+    padding:rem-calc(30) rem-calc(30) 0;
     background-image:url("/src/img/qr_colorpiece.png");
     background-size:cover;
     position:fixed;
     left:0;
     bottom:0;
+
+
   }
 }

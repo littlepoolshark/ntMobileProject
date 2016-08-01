@@ -154,7 +154,7 @@ let CouponList=React.createClass({
                 }
 
                 {(
-                    couponList.map(function(item,index){
+                    this.state.couponList.map(function(item,index){
                         if(productType === "all"){//这种情况代表从用户中心跳转过来的，仅仅是展示优惠券
                             return (
                                 <CouponCard

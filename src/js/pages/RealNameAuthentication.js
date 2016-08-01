@@ -26,6 +26,7 @@ let RealNameAuthentication=React.createClass({
         RealNameAuthenticationAction.submitAuthenticationForm(realName,idCardNo);
     },
     _jumpToNextLocation(){
+        RealNameAuthenticationAction.refreshUserInfoDetail();
         this.context.router.goBack();
     },
     _handleModalClose(){
@@ -83,10 +84,7 @@ let RealNameAuthentication=React.createClass({
         }.bind(this));
 
         RealNameAuthenticationStore.bind("authenticateFailed",function(msg){
-            //Message.broadcast(msg)
-            this.setState({
-                isModalOpen:true
-            });
+            Message.broadcast(msg)
         }.bind(this));
     }
 });

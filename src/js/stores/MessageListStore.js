@@ -60,10 +60,6 @@ appDispatcher.register(function(payload){
         case "MessageList_readMessage":
             MessageListStore.updateMessageStatus(payload.data.id);
             MessageListStore.trigger("change");
-            console.log("data:",{
-                letterIds:payload.data.id+"",
-                updateStatus:payload.data.flag
-            });
             ajax({
                 ciUrl:"/user/v2/letterForChange",
                 data:{

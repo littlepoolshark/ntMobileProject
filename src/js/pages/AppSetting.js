@@ -1,4 +1,6 @@
 require("../../scss/page/AppSetting.scss");
+let AppSettingAction=require("../actions/AppSettingAction");
+let AppSettingStore=require("../stores/AppSettingStore");
 import React from "react";
 import {
     Link
@@ -15,6 +17,9 @@ import List from "../UIComponents/List";
 
 //设置中心页面：AppSetting component
 let AppSetting=React.createClass({
+    _handleLogout(){
+        AppSettingAction.logout();
+    },
     render(){
 
         return (
@@ -71,7 +76,7 @@ let AppSetting=React.createClass({
                 </List>
 
                 <div className="block-btn-wrapper">
-                    <Button amStyle="primary" block radius>退出登录</Button>
+                    <Button amStyle="primary" block radius onClick={this._handleLogout}>退出登录</Button>
                 </div>
 
 
@@ -79,7 +84,11 @@ let AppSetting=React.createClass({
         )
     },
     componentDidMount(){
-
+        AppSettingStore.bind("logoutSuccess",function(){
+            this.context.router.push({
+                pathname:"/"
+            })
+        }.bind(this));
     }
 });
 

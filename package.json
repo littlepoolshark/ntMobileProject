@@ -42,6 +42,8 @@
     "classnames": "^2.2.5",
     "flux": "^2.1.1",
     "jquery": "^3.0.0",
+    "jsqrgen": "^2.0.7",
+    "qrcodejs": "^1.0.0",
     "react": "^15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.1.0",
