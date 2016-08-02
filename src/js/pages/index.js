@@ -28,6 +28,10 @@ export RewardDetailList from "./RewardDetailList";
 export InviteMyFriend from "./InviteMyFriend";
 export My2DCode from "./My2DCode";
 export AppSetting from "./AppSetting";
+export MyBankCard from "./MyBankCard";
+export DeleteBankCardConfirm from "./DeleteBankCardConfirm";
+export DeleteCardApplySuccess from "./DeleteCardApplySuccess";
+export MyBankCardDetail from  "./MyBankCardDetail";
 
 
 

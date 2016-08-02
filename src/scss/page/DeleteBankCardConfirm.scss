@@ -1,0 +1,17 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#deleteBankCardConfirm {
+  p {
+    @include color-and-fontSize($C4,$T9);
+  }
+  .phoneNo {
+    color:$C1;
+  }
+}

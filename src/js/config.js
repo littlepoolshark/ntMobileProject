@@ -44,7 +44,11 @@ let config={
         RewardDetailList:"奖励明细",
         InviteMyFriend:"邀请好友",
         My2DCode:"我的二维码",
-        AppSetting:"设置和帮助"
+        AppSetting:"设置和帮助",
+        MyBankCard:"我的银行卡",
+        DeleteBankCardConfirm:"删卡确认",
+        DeleteCardApplySuccess:"提交成功",
+        MyBankCardDetail:"银行卡详情"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -53,7 +57,9 @@ let config={
         "Register",
         "PurchaseSuccess",
         "AppointmentSuccess",
-        "Default"
+        "Default",
+        "DeleteCardApplySuccess",
+        "MyBankCardDetail"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",
@@ -62,8 +68,7 @@ let config={
     ],
     needToInterceptPages:[//需要进行登录拦截的页面
         "DailyEarnAppointment",
-        "Payment",
-        "UserHome"
+        "Payment"
     ]
 }
 

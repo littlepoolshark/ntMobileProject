@@ -1,0 +1,14 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#myBankCardDetail {
+  .icon-right-nav {
+    color:#ddd;
+  }
+}

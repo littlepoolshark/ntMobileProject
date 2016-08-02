@@ -1,0 +1,100 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#myBankCard {
+  .noBankCard-wrapper {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    margin-top:rem-calc(50);
+    padding:0 rem-calc(15);
+
+    .imgIcon-money-bag {
+      width:rem-calc(50);
+      height:rem-calc(60);
+    }
+
+    .title {
+      @include color-and-fontSize($C4,$T5);
+    }
+
+    .subtitle {
+      margin-top:rem-calc(8);
+      @include color-and-fontSize($C4,$T8);
+    }
+
+    .btn {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-top:rem-calc(23);
+      padding:rem-calc(30) 0;
+      background-color:$white;
+
+      .imgIcon-plus-icon {
+        display:inline-block;
+        width:rem-calc(27);
+        height:rem-calc(27);
+        margin-right:rem-calc(15);
+      }
+    }
+  }
+  .deleteCard-hint {
+    margin-top:rem-calc(20);
+    text-align:center;
+    @include color-and-fontSize($C1,$T7);
+  }
+  .hasBankCard-wrapper {
+    margin: rem-calc(15);
+    padding:rem-calc(15);
+    border:1px solid $separation-line-color;
+    border-radius: rem-calc(5);
+    background-color:#fff;
+
+    .header {
+      display:flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding-bottom:rem-calc(10);
+      border-bottom:1px solid $separation-line-color;
+
+      .bankLogo {
+        width:rem-calc(41);
+        height:rem-calc(41);
+      }
+
+      .title {
+        margin-right:auto;
+        margin-left:rem-calc(10);
+        @include color-and-fontSize($C3,$T4);
+      }
+
+      .icon-right-nav {
+        color:#ddd;
+      }
+    }
+
+    .body {
+      display:flex;
+      justify-content: space-between;
+      margin-top:rem-calc(15);
+    }
+
+    &.disabled {
+      margin-top:rem-calc(5);
+      background-color:#e7e7e7;
+      border:1px solid #ddd;
+
+      .header {
+        border-bottom:1px solid #ddd;
+      }
+    }
+
+  }
+}

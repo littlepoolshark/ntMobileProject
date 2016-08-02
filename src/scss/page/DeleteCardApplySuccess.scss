@@ -1,0 +1,33 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#deleteCardApplySuccess {
+  .icon-success-green {
+    display:block;
+    width:rem-calc(50);
+    height:rem-calc(50);
+    margin:rem-calc(20) auto 0;
+    background-image: url("../../img/icon_success.png");
+    background-size: cover;
+  }
+
+  .title {
+    margin-top:rem-calc(20);
+    text-align:center;
+    @include color-and-fontSize($C3,$T4);
+  }
+
+  .subtitle {
+    margin-top:0;
+    margin-bottom:rem-calc(20);
+    text-align:center;
+    @include color-and-fontSize($C4,$T7);
+  }
+
+}

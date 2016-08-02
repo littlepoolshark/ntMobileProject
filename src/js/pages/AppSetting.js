@@ -32,7 +32,7 @@ let AppSetting=React.createClass({
                         media={<Icon classPrefix="imgIcon" name="love-heart"/>}
                         />
                     <List.Item
-                        href="##"
+                        href="#/myBankCard"
                         title="银行卡"
                         media={<Icon classPrefix="imgIcon" name="love-heart"/>}
                         />
