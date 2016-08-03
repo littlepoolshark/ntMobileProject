@@ -107,7 +107,8 @@ let MessageList=React.createClass({
         MessageListStore.bind("change",function(){
             this.setState({
                 messageList:MessageListStore.getAll()
-            })
+            });
+            Loader.hide();
         }.bind(this))
     },
     componentWillUnmount(){

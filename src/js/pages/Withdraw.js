@@ -1,6 +1,6 @@
 require("../../scss/page/Withdraw.scss");
-//let WithdrawAction=require("../actions/WithdrawAction.js");
-//let WithdrawStore=require("../stores/WithdrawStore.js");
+let WithdrawAction=require("../actions/WithdrawAction.js");
+let WithdrawStore=require("../stores/WithdrawStore.js");
 import { Link } from "react-router";
 
 import React from "react";
@@ -13,6 +13,7 @@ import List from "../UIComponents/List";
 import Icon from "../UIComponents/Icon";
 import Group from "../UIComponents/Group";
 import Message from "../UIComponents/Message";
+import Modal from "../UIComponents/modal/Modal";
 
 import BankCard from "./utilities/BankCard";
 import Slogan from "./utilities/Slogan";
@@ -22,28 +23,37 @@ import Slogan from "./utilities/Slogan";
 let Withdraw=React.createClass({
     getInitialState(){
         return {
-            showSlogan:true
+            showSlogan:true,
+            data:WithdrawStore.getAll(),
+            isModalOpen:false
         }
     },
-  /*  _handleWithdrawSubmit(){
-        WithdrawAction.recharge();
+    _submitWithdrawForm(){
+        let dealPassword=this.refs.dealPassword.getValue();
+        WithdrawAction.submitWithdrawForm(dealPassword);
     },
     _handleWithdrawAmountChange(){
-        let rechargeAmount=this.refs.rechargeAmount.getValue();
-        WithdrawAction.changeWithdrawAmount(parseFloat(rechargeAmount ? rechargeAmount : 0));
-    },*/
+        let withdrawAmount=this.refs.withdrawAmount.getValue();
+        withdrawAmount=withdrawAmount === "" ? 0 : parseFloat(withdrawAmount);
+        WithdrawAction.changeWithdrawAmount(withdrawAmount);
+    },
+    _jumpToNextLocation(){
+
+    },
     render (){
-        let bankCardInfo={
-            bankName:"中国银行",
-            cardno:"6225 **** **** 7889",
-            shortIcon:"/src/img/choice_icon_ccb.png",
-            groupTitle:"提现至该银行卡"
-        };
+        let {
+            bankCardInfo,
+            available
+            }=this.props.location.state;
+        let {
+            handlingCharge,
+            acctAccount
+            }=this.state.data;
         return (
             <Container  {...this.props} scrollable={false} id="withdraw" >
                 <BankCard {...bankCardInfo}/>
                 <Group
-                    header="可提现金额：50.93"
+                    header={ "可提现金额"+ available +  "元"}
                     noPadded
                     className="withdraw-form"
                     >
@@ -54,8 +64,9 @@ let Withdraw=React.createClass({
                             <Field
                                 type="number"
                                 label="提现金额"
-                                placeholder="请输入提现金额"
+                                placeholder="提现金额不能少于2.00元"
                                 ref="withdrawAmount"
+                                onChange={this._handleWithdrawAmountChange}
                                 />
                         </List.Item>
                         <List.Item
@@ -69,19 +80,29 @@ let Withdraw=React.createClass({
                                 />
                         </List.Item>
                     </List>
+                    <div>手续费：{handlingCharge}元</div>
+                    <div>实际到账：{acctAccount}元</div>
                 </Group>
                 <div className="forgetPassword-wrapper">
                     <Link to="getBackDealPassword" >忘记密码?</Link>
                 </div>
                 <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>
-                    <Button amStyle="primary" block radius={true} >完成提现</Button>
+                    <Button amStyle="primary" block radius={true} onClick={this._submitWithdrawForm}>完成提现</Button>
                 </div>
                 {
                     this.state.showSlogan ?
                     <Slogan />    :
                     null
                 }
-
+                <Modal
+                    title="确认信息"
+                    ref="modal"
+                    isOpen={this.state.isModalOpen}
+                    role="confirm"
+                    onAction={this._jumpToNextLocation}
+                >
+                   您还没有设置交易密码，去设置？
+                </Modal>
             </Container>
         )
     },
@@ -94,6 +115,35 @@ let Withdraw=React.createClass({
                showSlogan:currHeight < originHeight ? false : true
             });
         }.bind(this);
+
+        WithdrawStore.bind("formCheckFailed",function(msg){
+            Message.broadcast(msg);
+        });
+
+        WithdrawStore.bind("dealPasswordIsNotSet",function(){
+            this.setState({
+                isModalOpen:true
+            })
+        }.bind(this));
+
+        WithdrawStore.bind("withdrawFailed",function(msg){
+            Message.broadcast(msg);
+        });
+
+        WithdrawStore.bind("withdrawSuccess",function(){
+            Message.broadcast("提现成功！");
+        });
+
+        WithdrawStore.bind("change",function(){
+            this.setState({
+                data:WithdrawStore.getAll()
+            })
+        }.bind(this));
+
+    },
+    componentWillUnmount(){
+        WithdrawStore.unbind("formCheckSuccess");
+        WithdrawStore.unbind("formCheckFailed");
     }
 });
 

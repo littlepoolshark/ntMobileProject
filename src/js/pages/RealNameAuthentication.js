@@ -21,7 +21,7 @@ let RealNameAuthentication=React.createClass({
         }
     },
     _submitAuthenticationForm(){
-        let realName=this.refs.userRealName.getValue();
+        let realName=encodeURI(this.refs.userRealName.getValue());
         let idCardNo=this.refs.idCardNo.getValue();
         RealNameAuthenticationAction.submitAuthenticationForm(realName,idCardNo);
     },

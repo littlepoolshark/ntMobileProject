@@ -23,10 +23,10 @@ var UserHomeStore={
         return this._all.sercuInfo.idCardVerified === "yes" ? true : false;
     },
     checkDealPasswordSet(){//检查是否设置交易密码
-        return this._all.sercuInfo.ispasswordSet === "yes" ? true : false;
+        return this._all.sercuInfo.isDealPwdSet === "yes" ? true : false;
     },
     checkBankCardBind(){//检查是否已经绑定银行卡
-        return this._all.bankCardInfo === "yes" ? true : false;
+        return !!this._all.bankCardInfo  ? true : false;
     }
 };
 MicroEvent.mixin(UserHomeStore);
@@ -79,7 +79,14 @@ UserHomeStore.dispatchToken=appDispatcher.register(function(payload){
             break;
         case "recharge":
             if(UserHomeStore.checkBankCardBind()){//检查用户是否已经绑卡
-                UserHomeStore.trigger("bankCardIsBind");
+                UserHomeStore.trigger("bankCardIsBind_recharge");
+            }else {
+                UserHomeStore.trigger("bankCardIsNotBind");
+            }
+            break;
+        case "withdraw":
+            if(UserHomeStore.checkBankCardBind()){//检查用户是否已经绑卡
+                UserHomeStore.trigger("bankCardIsBind_withdraw");
             }else {
                 UserHomeStore.trigger("bankCardIsNotBind");
             }

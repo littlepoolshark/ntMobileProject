@@ -68,7 +68,8 @@ let config={
     ],
     needToInterceptPages:[//需要进行登录拦截的页面
         "DailyEarnAppointment",
-        "Payment"
+        "Payment",
+        "UserHome"
     ]
 }
 

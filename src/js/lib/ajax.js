@@ -103,7 +103,7 @@ function ajax(obj) {
     if (obj.method === 'post') {
         //post方式需要自己设置http的请求头，来模仿表单提交。
         //放在open方法之后，send方法之前。
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         xhr.send(obj.data);		//post方式将数据放在send()方法里
     } else {
         xhr.send(null);		//get方式则填null

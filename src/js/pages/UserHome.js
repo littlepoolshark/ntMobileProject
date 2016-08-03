@@ -49,6 +49,9 @@ let UserHome=React.createClass({
     _handleRecharge(){
         UserHomeAction.recharge();
     },
+    _handleWithdraw(){
+        UserHomeAction.withdraw();
+    },
     render(){
         let {
             total,
@@ -68,7 +71,7 @@ let UserHome=React.createClass({
                             <Icon  classPrefix="imgIcon" name="message"  />
                         </Link>
                         <Button  hollow radius onClick={this._handleRecharge}>充值</Button>
-                        <Button  hollow radius >提现</Button>
+                        <Button  hollow radius onClick={this._handleWithdraw}>提现</Button>
                     </div>
                     <div className="text-center subtitle" style={{marginTop:"20px"}}>
                         <span className="data-eye-wrapper">
@@ -85,7 +88,7 @@ let UserHome=React.createClass({
                             <div className="amount text-center">{ishowData ? totalProfit : "****"}</div>
                         </Col>
                         <Col cols={3}>
-                            <Link to="messageList">
+                            <Link to="journalAccount">
                                 <div className="subtitle text-center">可用余额(元) <Icon name="right-nav" style={{fontSize:"14px"}}/></div>
                                 <div className="amount text-center">{ishowData ? available : "****"}</div>
                             </Link>
@@ -147,17 +150,31 @@ let UserHome=React.createClass({
             this.setState(UserHomeStore.getAll());
         }.bind(this));
 
-        //银行卡已经绑定则跳转到充值页面，否则调转到绑卡页面
-        UserHomeStore.bind("bankCardIsBind",function(){
+        //银行卡已经绑定则跳转到充值页面/提现页面，否则调转到绑卡页面
+        UserHomeStore.bind("bankCardIsBind_recharge",function(){
             this.context.router.push({
                 pathname:"recharge"
+            });
+        }.bind(this));
+
+        UserHomeStore.bind("bankCardIsBind_withdraw",function(){
+            let {
+                available,
+                bankCardInfo
+                }=UserHomeStore.getAll();
+            this.context.router.push({
+                pathname:"withdraw",
+                state:{
+                    bankCardInfo: bankCardInfo,
+                    available:available
+                }
             });
         }.bind(this));
 
         UserHomeStore.bind("bankCardIsNotBind",function(){
             this.setState({
                 isModalOpen:true,
-                confirmText:"充值需要先绑定银行卡，去绑卡？"
+                confirmText:"充值或者提现需要先绑定银行卡，去绑卡？"
             })
         }.bind(this));
 

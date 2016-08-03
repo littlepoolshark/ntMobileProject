@@ -20,6 +20,11 @@ var UserHOmeAction={
         appDispatcher.dispatch({
             actionName:"recharge"
         });
+    },
+    withdraw(){
+        appDispatcher.dispatch({
+            actionName:"withdraw"
+        });
     }
 };
 
