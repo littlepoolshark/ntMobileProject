@@ -27,6 +27,9 @@ var UserHomeStore={
     },
     checkBankCardBind(){//检查是否已经绑定银行卡
         return !!this._all.bankCardInfo  ? true : false;
+    },
+    checkBankCardIntegrity(){//检查银行卡信息是否完整（开户支行以及开户支行所在的省份和市区，）
+        return !!this._all.bankCardInfo && !!this._all.bankCardInfo.branch && !!this._all.bankCardInfo.parentAreaId && !!this._all.bankCardInfo.region ;
     }
 };
 MicroEvent.mixin(UserHomeStore);
@@ -78,17 +81,26 @@ UserHomeStore.dispatchToken=appDispatcher.register(function(payload){
             });
             break;
         case "recharge":
-            if(UserHomeStore.checkBankCardBind()){//检查用户是否已经绑卡
-                UserHomeStore.trigger("bankCardIsBind_recharge");
-            }else {
+            //跳转到充值页面之前的条件检查
+            if(!UserHomeStore.checkIdCardVerifiedSet() || !UserHomeStore.checkDealPasswordSet()){
+                UserHomeStore.trigger("securityCheckFailed");
+            }else if(!UserHomeStore.checkBankCardBind()){
                 UserHomeStore.trigger("bankCardIsNotBind");
+            }else {
+                UserHomeStore.trigger("rechargeCheckSuccess");
             }
             break;
         case "withdraw":
-            if(UserHomeStore.checkBankCardBind()){//检查用户是否已经绑卡
-                UserHomeStore.trigger("bankCardIsBind_withdraw");
-            }else {
+            //跳转到提现页面之前的条件检查
+            console.log("UserHomeStore.checkBankCardIntegrity():",UserHomeStore.checkBankCardIntegrity());
+            if(!UserHomeStore.checkIdCardVerifiedSet() || !UserHomeStore.checkDealPasswordSet()){
+                UserHomeStore.trigger("securityCheckFailed");
+            }else if(!UserHomeStore.checkBankCardBind()){
                 UserHomeStore.trigger("bankCardIsNotBind");
+            }else if(!UserHomeStore.checkBankCardIntegrity()){
+                UserHomeStore.trigger("bankCardIntegrityCheckFailed");
+            }else {
+                UserHomeStore.trigger("withdrawCheckSuccess");
             }
             break;
         default:

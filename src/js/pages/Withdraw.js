@@ -37,23 +37,27 @@ let Withdraw=React.createClass({
         withdrawAmount=withdrawAmount === "" ? 0 : parseFloat(withdrawAmount);
         WithdrawAction.changeWithdrawAmount(withdrawAmount);
     },
-    _jumpToNextLocation(){
-
+    _jumpToNextLocation(confirm){
+        if(confirm){
+            WithdrawAction.confirmToSubmit();
+        }
+        this.setState({
+            isModalOpen:false
+        });
     },
     render (){
         let {
+            withdrawAmount,
+            handlingCharge,
+            acctAccount,
             bankCardInfo,
             available
-            }=this.props.location.state;
-        let {
-            handlingCharge,
-            acctAccount
             }=this.state.data;
         return (
             <Container  {...this.props} scrollable={false} id="withdraw" >
                 <BankCard {...bankCardInfo}/>
                 <Group
-                    header={ "可提现金额"+ available +  "元"}
+                    header={ "可提现金额"+available+"元"}
                     noPadded
                     className="withdraw-form"
                     >
@@ -80,8 +84,7 @@ let Withdraw=React.createClass({
                                 />
                         </List.Item>
                     </List>
-                    <div>手续费：{handlingCharge}元</div>
-                    <div>实际到账：{acctAccount}元</div>
+
                 </Group>
                 <div className="forgetPassword-wrapper">
                     <Link to="getBackDealPassword" >忘记密码?</Link>
@@ -95,18 +98,23 @@ let Withdraw=React.createClass({
                     null
                 }
                 <Modal
-                    title="确认信息"
+                    title="确认"
                     ref="modal"
                     isOpen={this.state.isModalOpen}
                     role="confirm"
                     onAction={this._jumpToNextLocation}
                 >
-                   您还没有设置交易密码，去设置？
+                    <div>提现金额：{withdrawAmount}元</div>
+                    <div>手续费：{handlingCharge}元</div>
+                    <div>实际到账：{acctAccount}元</div>
                 </Modal>
             </Container>
         )
     },
     componentDidMount(){
+        WithdrawAction.getBankCardInfoFromServer();
+        WithdrawAction.getUserBalance();
+
         //解决了由于输入框获得焦点后，虚拟键盘会把slogan组件顶上去的细节。
         let originHeight=window.innerHeight;
         window.onresize=function(){
@@ -120,7 +128,7 @@ let Withdraw=React.createClass({
             Message.broadcast(msg);
         });
 
-        WithdrawStore.bind("dealPasswordIsNotSet",function(){
+        WithdrawStore.bind("confirmSubmit",function(){
             this.setState({
                 isModalOpen:true
             })

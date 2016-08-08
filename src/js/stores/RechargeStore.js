@@ -39,7 +39,7 @@ MicroEvent.mixin(RechargeStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "getBankCardInfoFromServer":
+        case "getBankCardInfoFromServer_recharge":
             ajax({
                 ciUrl:"/user/v2/myBankCardInfo",
                 success(rs){

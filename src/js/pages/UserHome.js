@@ -23,7 +23,8 @@ let UserHome=React.createClass({
             data:UserHomeStore.getAll(),
             ishowData:true,
             isModalOpen:false,
-            confirmText:""
+            confirmText:"",
+            nextLocation:""
         }
     },
     _toggleShowData(){
@@ -34,7 +35,7 @@ let UserHome=React.createClass({
     _jumpToNextLocation(confirm){
         if(confirm){
             this.context.router.push({
-                pathname:"bindBankCard"
+                pathname:this.state.nextLocation
             });
         }else {
             this._handleModalClose();
@@ -151,32 +152,42 @@ let UserHome=React.createClass({
         }.bind(this));
 
         //银行卡已经绑定则跳转到充值页面/提现页面，否则调转到绑卡页面
-        UserHomeStore.bind("bankCardIsBind_recharge",function(){
+        UserHomeStore.bind("rechargeCheckSuccess",function(){
             this.context.router.push({
                 pathname:"recharge"
             });
         }.bind(this));
 
-        UserHomeStore.bind("bankCardIsBind_withdraw",function(){
-            let {
-                available,
-                bankCardInfo
-                }=UserHomeStore.getAll();
+        UserHomeStore.bind("withdrawCheckSuccess",function(){
             this.context.router.push({
-                pathname:"withdraw",
-                state:{
-                    bankCardInfo: bankCardInfo,
-                    available:available
-                }
+                pathname:"withdraw"
             });
+        }.bind(this));
+
+        UserHomeStore.bind("securityCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了资金安全，请升级您的账户安全级别!",
+                nextLocation:"securityCenter"
+            })
         }.bind(this));
 
         UserHomeStore.bind("bankCardIsNotBind",function(){
             this.setState({
                 isModalOpen:true,
-                confirmText:"充值或者提现需要先绑定银行卡，去绑卡？"
+                confirmText:"充值或者提现需要先绑定银行卡，去绑卡？",
+                nextLocation:"bindBankCard"
             })
         }.bind(this));
+
+        UserHomeStore.bind("bankCardIntegrityCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了资金安全，提现需要完整的银行卡信息，去完善？",
+                nextLocation:"bankCardDetail"
+            })
+        }.bind(this));
+
 
     },
     componentWillUnmount(){

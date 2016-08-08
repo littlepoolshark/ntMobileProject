@@ -48,7 +48,8 @@ let config={
         MyBankCard:"我的银行卡",
         DeleteBankCardConfirm:"删卡确认",
         DeleteCardApplySuccess:"提交成功",
-        MyBankCardDetail:"银行卡详情"
+        MyBankCardDetail:"银行卡详情",
+        SecurityCenter:"安全中心"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",

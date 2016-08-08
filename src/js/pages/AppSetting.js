@@ -20,6 +20,10 @@ let AppSetting=React.createClass({
     _handleLogout(){
         AppSettingAction.logout();
     },
+    _refreshApp(){
+        console.log("asdfsad");
+        window.location.reload(true);
+    },
     render(){
 
         return (
@@ -27,14 +31,14 @@ let AppSetting=React.createClass({
 
                 <List>
                     <List.Item
-                        href="##"
+                        href="#/securityCenter"
                         title="安全中心"
-                        media={<Icon classPrefix="imgIcon" name="love-heart"/>}
+                        media={<Icon classPrefix="imgIcon" name="safe-guarder"/>}
                         />
                     <List.Item
                         href="#/myBankCard"
                         title="银行卡"
-                        media={<Icon classPrefix="imgIcon" name="love-heart"/>}
+                        media={<Icon classPrefix="imgIcon" name="bank-card"/>}
                         />
                 </List>
 
@@ -59,7 +63,7 @@ let AppSetting=React.createClass({
                 <Group>
                     <div className="serverPhone-title">
                         <span className="icon-wrapper">
-                            <Icon classPrefix="imgIcon" name="weixin"/>
+                            <Icon classPrefix="imgIcon" name="phone-call"/>
                             <span>客服电话</span>
                         </span>
                         <span className="serverPhoneNo">400-6322-688</span>
@@ -67,11 +71,11 @@ let AppSetting=React.createClass({
                     <div className="serverPhone-footer">客服时间：工作日9:00-18:00</div>
                 </Group>
 
-                <List>
+                <List onClick={this._refreshApp}>
                     <List.Item
-                        href="##"
-                        title="检查更新"
-                        media={<Icon classPrefix="imgIcon" name="love-heart"/>}
+                        href="javascript:void(0)"
+                        title="刷新应用"
+                        media={<Icon  name="refresh" style={{fontSize:"1rem",color:"#df4b3c",fontWeight:"bold"}}/>}
                         />
                 </List>
 

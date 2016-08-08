@@ -9,7 +9,9 @@ var WithdrawStore={
         withdrawAmount:0,
         dealPassword:"",
         handlingCharge:2,//手续费硬编码为2元
-        acctAccount:0//实际到账
+        acctAccount:0,//实际到账
+        bankCardInfo:{},
+        available:0
     },
     getAll(){
         return this._all;
@@ -49,6 +51,32 @@ MicroEvent.mixin(WithdrawStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
+        case "getBankCardInfoFromServer_withdraw":
+            ajax({
+                ciUrl:"/user/v2/myBankCardInfo",
+                success(rs){
+                    if(rs.code === 0){
+                        WithdrawStore.updateAll({
+                            bankCardInfo:rs.data
+                        });
+                        WithdrawStore.trigger("change");
+                    }
+                }
+            });
+            break;
+        case "getUserBalance_withdraw":
+            ajax({
+                ciUrl: "/user/v2/myUserInfo",
+                success(rs){
+                    if (rs.code === 0) {
+                        WithdrawStore.updateAll({
+                            available: rs.data.available
+                        });
+                        WithdrawStore.trigger("change");
+                    }
+                }
+            });
+            break;
         case "withdrawAmountChange":
             WithdrawStore.updateAll({
                 withdrawAmount:payload.data.withdrawAmount
@@ -56,30 +84,27 @@ appDispatcher.register(function(payload){
             WithdrawStore.trigger("change");
             break;
         case "submitWithdrawForm":
-            appDispatcher.waitFor([UserHomeStore.dispatchToken]);
-
-            if(UserHomeStore.checkDealPasswordSet()){
-                WithdrawStore.updateAll({
-                    dealPassword:payload.data.dealPassword
-                });
-                let formCheckResult=WithdrawStore.checkForm();
-                if(formCheckResult.success){
-                    ajax({
-                        ciUrl:"/user/v2/capitalWithdrawCash",
-                        success(rs){
-                            if(rs.code === 0){
-                                WithdrawStore.trigger("withdrawSuccess");
-                            }else {
-                                WithdrawStore.trigger("withdrawFailed",rs.description);
-                            }
-                        }
-                    });
-                }else {
-                    WithdrawStore.trigger("formCheckFailed",formCheckResult.msg);
-                }
+            WithdrawStore.updateAll({
+                dealPassword:payload.data.dealPassword
+            });
+            let formCheckResult=WithdrawStore.checkForm();
+            if(formCheckResult.success){
+                WithdrawStore.trigger("confirmSubmit");
             }else {
-                WithdrawStore.trigger("dealPasswordIsNotSet");
+                WithdrawStore.trigger("formCheckFailed",formCheckResult.msg);
             }
+            break;
+        case "confirmToSubmitWithdrawForm":
+            ajax({
+                ciUrl:"/user/v2/capitalWithdrawCash",
+                 success(rs){
+                     if(rs.code === 0){
+                        WithdrawStore.trigger("withdrawSuccess");
+                     }else {
+                        WithdrawStore.trigger("withdrawFailed",rs.description);
+                     }
+                 }
+             });
             break;
         default:
         //no op

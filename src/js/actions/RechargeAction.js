@@ -3,7 +3,7 @@ var appDispatcher=require("../dispatcher/dispatcher.js");
 var RechargeAction={
     getBankCardInfoFromServer (){
         appDispatcher.dispatch({
-            actionName:"getBankCardInfoFromServer",
+            actionName:"getBankCardInfoFromServer_recharge",
         })
     },
     recharge(){

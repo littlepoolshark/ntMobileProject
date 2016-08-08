@@ -32,7 +32,7 @@ export MyBankCard from "./MyBankCard";
 export DeleteBankCardConfirm from "./DeleteBankCardConfirm";
 export DeleteCardApplySuccess from "./DeleteCardApplySuccess";
 export MyBankCardDetail from  "./MyBankCardDetail";
-
+export SecurityCenter from  "./SecurityCenter";
 
 
 

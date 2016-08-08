@@ -35,6 +35,10 @@ let RealNameAuthentication=React.createClass({
         });
     },
     render (){
+        let {
+            idcard,
+            realName
+            }=this.props.location.query;
         return (
             <Container  {...this.props} scrollable={false}>
                 <Group
@@ -48,7 +52,11 @@ let RealNameAuthentication=React.createClass({
                                 type="text"
                                 label="姓名"
                                 placeholder="请输入您的真实姓名"
-                                ref="userRealName" />
+                                ref="userRealName"
+                                value={realName ? realName : ""}
+                                readOnly={realName ? true : false}
+                            />
+
                         </List.Item>
 
                         <List.Item nested="input">
@@ -57,13 +65,22 @@ let RealNameAuthentication=React.createClass({
                                 label="身份证"
                                 placeholder="请输入身份证号码"
                                 ref="idCardNo"
+                                value={idcard ? idcard : ""}
+                                readOnly={idcard ? true : false}
                             />
                         </List.Item>
                     </List>
                 </Group>
-                <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>
-                    <Button amStyle="primary" block radius={true} onClick={this._submitAuthenticationForm}>完成认证</Button>
-                </div>
+                {
+                    !!this.props.location.query ?
+                    null   :
+                    (
+                        <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>
+                            <Button amStyle="primary" block radius={true} onClick={this._submitAuthenticationForm}>完成认证</Button>
+                        </div>
+                    )
+                }
+
                 <Modal
                     ref="modal"
                     isOpen={this.state.isModalOpen}

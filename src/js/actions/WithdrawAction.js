@@ -1,6 +1,16 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var WithdrawAction={
+    getBankCardInfoFromServer(){
+        appDispatcher.dispatch({
+            actionName:"getBankCardInfoFromServer_withdraw"
+        })
+    },
+    getUserBalance(){
+        appDispatcher.dispatch({
+            actionName:"getUserBalance_withdraw"
+        })
+    },
     submitWithdrawForm (dealPassword){
         appDispatcher.dispatch({
             actionName:"submitWithdrawForm",
@@ -9,8 +19,12 @@ var WithdrawAction={
             }
         })
     },
+    confirmToSubmit(){
+        appDispatcher.dispatch({
+            actionName:"confirmToSubmitWithdrawForm"
+        })
+    },
     changeWithdrawAmount(withdrawAmount){
-        console.log("withdrawAmount:",withdrawAmount);
         appDispatcher.dispatch({
             actionName:"withdrawAmountChange",
             data:{
