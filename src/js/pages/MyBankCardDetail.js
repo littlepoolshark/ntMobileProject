@@ -22,7 +22,9 @@ import BankCard from "./utilities/BankCard";
 let MyBankCardDetail=React.createClass({
     getInitialState(){
         return {
-            isSelectShow:false
+            isSelectShow:false,
+            provinceName:"",
+            provinceId:""
         }
     },
     _handleNavDone (){
@@ -35,8 +37,11 @@ let MyBankCardDetail=React.createClass({
             pathname:"myBankCard"
         });
     },
-    _selectProvince(value){
-        alert(value);
+    _selectProvince(value,text){
+        this.setState({
+            provinceName:text,
+            provinceId:value
+        })
     },
     _showSelect(){
         this.setState({
@@ -59,36 +64,36 @@ let MyBankCardDetail=React.createClass({
                 text:"广东省"
             },
             {
-                value:1,
+                value:2,
+                text:"湖南省"
+            },
+            {
+                value:3,
+                text:"北京"
+            },
+            {
+                value:4,
+                text:"湖北省"
+            },
+            {
+                value:9,
                 text:"广东省"
             },
             {
-                value:1,
+                value:5,
+                text:"江西省"
+            },
+            {
+                value:8,
                 text:"广东省"
             },
             {
-                value:1,
-                text:"广东省"
+                value:6,
+                text:"云南省"
             },
             {
-                value:1,
-                text:"广东省"
-            },
-            {
-                value:1,
-                text:"广东省"
-            },
-            {
-                value:1,
-                text:"广东省"
-            },
-            {
-                value:1,
-                text:"广东省"
-            },
-            {
-                value:1,
-                text:"广东省"
+                value:7,
+                text:"四川省"
             }
         ];
         return (
@@ -108,8 +113,9 @@ let MyBankCardDetail=React.createClass({
                             label="开户省份"
                             placeholder="请输入"
                             inputAfter={(<Icon name="right-nav"/>)}
-                            readOnly
                             onClick={this._showSelect}
+                            readOnly
+                            value={this.state.provinceName}
                             />
                     </List.Item>
                     <List.Item
