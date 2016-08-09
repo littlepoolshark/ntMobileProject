@@ -551,3 +551,7 @@ $view-transition-timing-function: cubic-bezier(.36, .66, .04, 1) !default;
 // cubic-bezier(0.84, 0, 1, 0.32) !default;
 // cubic-bezier(.36, .66, .04, 1) !default; // iOS
 
+//Select
+
+$select-prefix:#{$namespace}select !default;
+

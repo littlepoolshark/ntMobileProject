@@ -184,7 +184,7 @@ let UserHome=React.createClass({
             this.setState({
                 isModalOpen:true,
                 confirmText:"为了资金安全，提现需要完整的银行卡信息，去完善？",
-                nextLocation:"bankCardDetail"
+                nextLocation:"myBankCardDetail"
             })
         }.bind(this));
 

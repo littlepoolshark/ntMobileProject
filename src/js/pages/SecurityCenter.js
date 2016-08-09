@@ -48,7 +48,7 @@ let SecurityCenter=React.createClass({
             ispasswordSet,
             isDealPwdSet,
             idCardVerified,
-            emailVerified
+            mobile
             }=this.state;
         return (
             <Container scrollable={false} id="securityCenter">
@@ -61,7 +61,7 @@ let SecurityCenter=React.createClass({
                         onClick={this._jumpToRealNameAuthentication}
                     />
                     <List.Item
-                        href="##"
+                        href={"#/setDealPassword/?actionType=" + (isDealPwdSet === "yes" ? "modify" : "setting")}
                         title="交易密码"
                         media={this.renderMedia(isDealPwdSet)}
                         after={isDealPwdSet === "yes" ?  "修改" : "设置"}
@@ -75,6 +75,7 @@ let SecurityCenter=React.createClass({
                     <List.Item
                         title="手机认证"
                         media={this.renderMedia(mobileVerified)}
+                        after={mobile}
                     />
                 </List>
             </Container>

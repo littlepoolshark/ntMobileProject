@@ -53,7 +53,7 @@ let RealNameAuthentication=React.createClass({
                                 label="姓名"
                                 placeholder="请输入您的真实姓名"
                                 ref="userRealName"
-                                value={realName ? realName : ""}
+                                defaultValue={realName ? realName : ""}
                                 readOnly={realName ? true : false}
                             />
 
@@ -65,14 +65,14 @@ let RealNameAuthentication=React.createClass({
                                 label="身份证"
                                 placeholder="请输入身份证号码"
                                 ref="idCardNo"
-                                value={idcard ? idcard : ""}
+                                defaultValue={idcard ? idcard : ""}
                                 readOnly={idcard ? true : false}
                             />
                         </List.Item>
                     </List>
                 </Group>
                 {
-                    !!this.props.location.query ?
+                    !!this.props.location.query.idcard ?
                     null   :
                     (
                         <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>

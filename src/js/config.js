@@ -60,7 +60,8 @@ let config={
         "AppointmentSuccess",
         "Default",
         "DeleteCardApplySuccess",
-        "MyBankCardDetail"
+        "MyBankCardDetail",
+        "SetDealPassword"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

@@ -33,7 +33,7 @@ appDispatcher.register(function(payload){
                 ciUrl:"/user/v2/userInfoDetail",
                 success(rs){
                     if(rs.code === 0){
-                        SecurityCenterStore.updateAll(rs.data.sercuInfo);
+                        SecurityCenterStore.updateAll(Object.assign(rs.data.sercuInfo,{mobile:rs.data.personInfo.mobile}));
                         if(SecurityCenterStore.checkIdCardVerified()){
                             SecurityCenterStore.updateAll({
                                 idcard:rs.data.personInfo.idcard,
