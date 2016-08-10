@@ -36,7 +36,7 @@ let MobileVerificationCode=React.createClass({
                 ciUrl:"/platinfo/v2/getVerifyCode",
                  data:{
                      phone:phoneNo,
-                     type:type
+                     type:type//验证码类型：1: 注册，2：找回登录密码 3:找回交易密码 4:绑定银行卡 5：删除银行卡
                  },
                  success:function(rs){
                      if(rs.code === 0){//发送验证码成功

@@ -1,6 +1,6 @@
 require("../../scss/page/MyBankCardDetail.scss");
-//let MyBankCardDetailAction=require("../actions/MyBankCardDetailAction");
-//let MyBankCardDetailStore=require("../stores/MyBankCardDetailStore");
+let MyBankCardDetailAction=require("../actions/MyBankCardDetailAction");
+let MyBankCardDetailStore=require("../stores/MyBankCardDetailStore");
 import React from "react";
 import {
     Link
@@ -14,6 +14,7 @@ import List from "../UIComponents/List";
 import Field from "../UIComponents/Field";
 import NavBar from "../UIComponents/NavBar";
 import Select from "../UIComponents/Select";
+import Message from "../UIComponents/Message";
 
 import BankCard from "./utilities/BankCard";
 
@@ -22,89 +23,80 @@ import BankCard from "./utilities/BankCard";
 let MyBankCardDetail=React.createClass({
     getInitialState(){
         return {
-            isSelectShow:false,
-            provinceName:"",
-            provinceId:""
+            selectModalType:"province",
+            isSelectModalOpen:false,
+            bankCardInfo:MyBankCardDetailStore.getAll().bankCardInfo,
+            provinceList:[],
+            cityList:[]
         }
     },
-    _handleNavDone (){
+    _jumpToDeleteBankCard (){
         this.context.router.push({
-           pathname:"deleteBankCardConfirm"
+           pathname:"deleteBankCardConfirm",
+           query:{
+               bankCardId:MyBankCardDetailStore.getAll().bankCardInfo.id
+           }
         });
+    },
+    _handleNavClick(obj){
+        if(obj.title === "返回"){
+            this.context.router.goBack();
+        }else if(obj.title === "删除银行卡"){
+            this._jumpToDeleteBankCard();
+        }
     },
     _submitBankCardForm(){
-        this.context.router.push({
-            pathname:"myBankCard"
-        });
+        let branch=this.refs.branch.getValue();
+        MyBankCardDetailAction.submitBankCardForm(branch);
     },
-    _selectProvince(value,text){
+    _onProvinceSelect(value,text){
         this.setState({
+            provinceId:value,
             provinceName:text,
-            provinceId:value
+            isSelectModalOpen:false
         })
     },
-    _showSelect(){
-        this.setState({
-            isSelectShow:true
-        });
+    _selectProvince(){
+        MyBankCardDetailAction.selectProvince();
+    },
+    _onProvinceSelect(value,text){
+        MyBankCardDetailAction.finishProvinceSelection(value,text);
+    },
+    _selectCity(){
+        MyBankCardDetailAction.selectCity();
+    },
+    _onCitySelect(value,text){
+        MyBankCardDetailAction.finishCitySelection(value,text);
     },
     render(){
         let rightNav= {
             component:"a",
             title: "删除银行卡"
         };
-        let bankCardInfo={
-            bankName:"中国建设银行",
-            shortIcon:"/src/img/choice_icon_ccb.png",
-            cardno:"6225 **** **** 8789"
+        let leftNav= {
+            component:"a",
+            icon: 'left-nav',
+            title: '返回'
         };
-        let options=[
-            {
-                value:1,
-                text:"广东省"
-            },
-            {
-                value:2,
-                text:"湖南省"
-            },
-            {
-                value:3,
-                text:"北京"
-            },
-            {
-                value:4,
-                text:"湖北省"
-            },
-            {
-                value:9,
-                text:"广东省"
-            },
-            {
-                value:5,
-                text:"江西省"
-            },
-            {
-                value:8,
-                text:"广东省"
-            },
-            {
-                value:6,
-                text:"云南省"
-            },
-            {
-                value:7,
-                text:"四川省"
-            }
-        ];
+        let {
+            bankName,
+            branch,//支行名称
+            cardno,
+            parentAreaStr,//省份名字
+            regionStr,//市区名字
+            shortIcon//银行logo图片在服务器的路径
+            }=this.state.bankCardInfo;
+
         return (
             <Container scrollable={false} id="myBankCardDetail">
                 <NavBar
                     title="银行卡详情"
                     rightNav={[rightNav]}
+                    leftNav={[leftNav]}
                     amStyle="primary"
-                    onAction={this._handleNavDone}
+                    onAction={this._handleNavClick}
                     />
-                <BankCard {...bankCardInfo}/>
+                <BankCard bankName={bankName} cardno={cardno} shortIcon={shortIcon}/>
                 <List>
                     <List.Item
                         nested="input"
@@ -113,9 +105,9 @@ let MyBankCardDetail=React.createClass({
                             label="开户省份"
                             placeholder="请输入"
                             inputAfter={(<Icon name="right-nav"/>)}
-                            onClick={this._showSelect}
                             readOnly
-                            value={this.state.provinceName}
+                            value={parentAreaStr}
+                            onClick={this._selectProvince}
                             />
                     </List.Item>
                     <List.Item
@@ -126,6 +118,8 @@ let MyBankCardDetail=React.createClass({
                             placeholder="请输入"
                             inputAfter={(<Icon name="right-nav"/>)}
                             readOnly
+                            value={regionStr}
+                            onClick={this._selectCity}
                             />
                     </List.Item>
                     <List.Item
@@ -134,6 +128,8 @@ let MyBankCardDetail=React.createClass({
                         <Field
                             label="开户城市"
                             placeholder="可以通过电话或者网上查询"
+                            value={branch}
+                            ref="branch"
                             />
                     </List.Item>
                 </List>
@@ -141,12 +137,51 @@ let MyBankCardDetail=React.createClass({
                 <div className="block-btn-wrapper" style={{margin:"20px 15px"}}>
                     <Button amStyle="primary" block radius onClick={this._submitBankCardForm}>保存</Button>
                 </div>
-                <Select onSelect={this._selectProvince} options={options} show={this.state.isSelectShow} />
+                <Select
+                    onSelect={this.state.selectModalType === "province" ? this._onProvinceSelect : this._onCitySelect}
+                    options={this.state.selectModalType === "province" ? this.state.provinceList : this.state.cityList}
+                    show={this.state.isSelectModalOpen}
+                />
             </Container>
         )
     },
     componentDidMount(){
+        MyBankCardDetailAction.getMyBankCardDetail();
 
+        MyBankCardDetailStore.bind("change_bankCardInfo",function(){
+            this.setState({
+                bankCardInfo:MyBankCardDetailStore.getAll().bankCardInfo,
+                isSelectModalOpen:false
+            })
+        }.bind(this));
+
+        MyBankCardDetailStore.bind("change_provinceList",function(){
+            this.setState({
+                selectModalType:"province",
+                provinceList:MyBankCardDetailStore.getAll().provinceList,
+                isSelectModalOpen:true
+            })
+        }.bind(this));
+
+        MyBankCardDetailStore.bind("change_cityList",function(){
+            this.setState({
+                selectModalType:"city",
+                cityList:MyBankCardDetailStore.getAll().cityList,
+                isSelectModalOpen:true
+            })
+        }.bind(this));
+
+        MyBankCardDetailStore.bind("getCityListCheckFailed",function(msg){
+            Message.broadcast(msg);
+        });
+
+        MyBankCardDetailStore.bind("bankCardSubmitSuccess",function(){
+            this.context.router.goBack();
+        }.bind(this));
+
+        MyBankCardDetailStore.bind("bankCardSubmitFailed",function(msg){
+            Message.broadcast(msg);
+        });
     }
 });
 

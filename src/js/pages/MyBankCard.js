@@ -1,6 +1,9 @@
 require("../../scss/page/MyBankCard.scss");
+let MyBankCardAction=require("../actions/MyBankCardAction");
+let MyBankCardStore=require("../stores/MyBankCardStore");
 import React from "react";
 import { Link } from "react-router";
+import className from "classnames";
 
 import Container from "../UIComponents/Container";
 import Group from "../UIComponents/Group";
@@ -25,40 +28,95 @@ let NoBankCard=React.createClass({
 });
 
 let HasBankCard=React.createClass({
+    _renderCardNo(cardNo){
+        let cardNo_start=cardNo.slice(0,4);
+        let cardNo_end=cardNo.slice(-4);
+        return (
+            <div className="body">
+                <span>{cardNo_start}</span>
+                <span>****</span>
+                <span>****</span>
+                <span>{cardNo_end}</span>
+            </div>
+        )
+    },
+    _jumpToBankCardDetail(status){
+        if(status === "on"){
+            this.context.router.push({
+                pathname:"myBankCardDetail"
+            })
+        }else {
+            return false;
+        }
+    },
     render(){
+        let {
+            bankName,
+            status,
+            fullCardNo,
+            shortIcon
+            }=this.props;
+        let classes=className({
+            "hasBankCard-wrapper":true,
+            disabled:status === "pending" ? true : false
+        });
         return (
             <div>
-                {/*<div className="deleteCard-hint">删卡审核中...</div>*/}
-                <Link to="myBankCardDetail">
-                    <div className="hasBankCard-wrapper">
-                        <div className="header">
-                            <Icon classPrefix="imgIcon" name="money-bag" className="bankLogo"/>
-                            <span className="title">中国建设银行</span>
-                            <Icon  name="right-nav"/>
-                        </div>
-                        <div className="body">
-                            <span>6225</span>
-                            <span>****</span>
-                            <span>****</span>
-                            <span>8789</span>
-                        </div>
+                {
+                    status === "pending" ?
+                    (
+                        <div className="deleteCard-hint">删卡审核中...</div>
+                    )   :
+                    null
+                }
+                <div className={classes} onClick={this._jumpToBankCardDetail.bind(null,status)}>
+                    <div className="header">
+                        <img src={shortIcon} alt=""/>
+                        <span className="title">{bankName}</span>
+                        <Icon  name="right-nav"/>
                     </div>
-                </Link>
+                    {
+                        this._renderCardNo(fullCardNo)
+                    }
+                </div>
             </div>
 
         )
     }
 });
 
+HasBankCard.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
+
 
 
 let MyBankCard = React.createClass({
+    getInitialState(){
+        return {
+            bankCardInfo:MyBankCardStore.getAll()
+        }
+    },
     render() {
+        console.log(this.state.bankCardInfo === null || !!!this.state.bankCardInfo.id);
         return (
             <Container id="myBankCard">
-                <NoBankCard/>
+                {
+                    (this.state.bankCardInfo === null || !!!this.state.bankCardInfo.id) ?
+                    <NoBankCard /> :
+                    <HasBankCard {...this.state.bankCardInfo}/>
+                }
             </Container>
         );
+    },
+    componentDidMount(){
+        MyBankCardAction.getMyBankCardDetail();
+
+        MyBankCardStore.bind("change",function(){
+            this.setState({
+                bankCardInfo:MyBankCardStore.getAll()
+            })
+        }.bind(this));
     }
 });
 

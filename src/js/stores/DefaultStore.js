@@ -71,6 +71,7 @@ appDispatcher.register(function(payload){
                     success:function(rs){
                         if(rs.code === 0){
                             cookie.setCookie("token",rs.data.token,59);//用户的登录状态设置为59分钟
+                            cookie.setCookie("phoneNo",account);//将用户的手机号码设置到cookie,以备将来使用
                             DefaultStore.trigger("loginSuccess");
                         }else {
                             DefaultStore.trigger("loginFailed","登录失败！"+rs.description);

@@ -5,12 +5,11 @@ import TransitionEvent from './utils/TransitionEvents';
 let Select=React.createClass({
     getInitialState(){
         return {
-            isSelectShow:this.props.show,
+            isSelectShow:this.props.show
         }
     },
     _handleSelected(value,text){
         this.props.onSelect(value,text);
-        this._closeSelectModal();
     },
     _closeSelectModal(){
         this.setState({
@@ -30,7 +29,6 @@ let Select=React.createClass({
             "select-mask":true,
             "in":this.state.isSelectShow
         });
-        console.log("classes",classes);
         return (
             <div className={classes} ref="selectMask" onClick={this._closeSelectModal}>
                 <div className="select-container" >
@@ -50,12 +48,13 @@ let Select=React.createClass({
     componentWillReceiveProps(nextProps){
         if(nextProps.show){
             this._openSelectModal();
+        }else {
+            this._closeSelectModal();
         }
     },
     componentDidMount(){
         TransitionEvent.on(this.refs.selectMask,function(){
-            console.log("TransitionEvent");
-
+            //console.log("TransitionEvent");
         }.bind(this));
     }
 });

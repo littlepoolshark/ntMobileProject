@@ -8,7 +8,7 @@
   display:flex;
   justify-content: center;
   align-items: center;
-  transition:all 0.2s ease-in ;
+  transition:all 0.5s ease-in ;
   z-index:-1;
 
   &.in {
@@ -27,7 +27,7 @@
   background-color:$white;
   overflow-y: scroll;
   overflow-x: hidden;
-  transition:all 0.2s ease-in;
+  transition:all 0.3s ease-in;
   transform:scale(0,0);
 }
 
