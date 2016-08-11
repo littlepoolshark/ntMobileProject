@@ -5,7 +5,7 @@ var UserHomeStore=require("./UserHomeStore");
 
 var BindBankCardStore={
     _all:{
-       userName:"刘其深",
+       userName:"",
        bankId:"",
        bankName:"",
        cardNo:"",
@@ -24,6 +24,12 @@ MicroEvent.mixin(BindBankCardStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
+        case "getUserNameFromLocation":
+            BindBankCardStore.updateAll({
+                userName:payload.data.userName
+            });
+            BindBankCardStore.trigger("change");
+            break;
         case "selectbankCard":
             BindBankCardStore.updateAll({
                 bankId:payload.data.bankId,

@@ -98,7 +98,6 @@ let MyBankCard = React.createClass({
         }
     },
     render() {
-        console.log(this.state.bankCardInfo === null || !!!this.state.bankCardInfo.id);
         return (
             <Container id="myBankCard">
                 {

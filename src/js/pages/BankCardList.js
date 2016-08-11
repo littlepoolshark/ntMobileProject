@@ -35,7 +35,7 @@ let BankCardList=React.createClass({
                                         title={item.name}
                                         subTitle={"单笔限额"+item.singleLimit+"元，单日最高限额"+item.everydayLimit+"元"}
                                         media={<img src={item.shortIcon} className="bankCard-logo" alt=""/>}
-                                        href={null}
+                                        href="javascript:void(0)"
                                         key={item.id}
                                         onClick={this._handleSelectBankCard.bind(null,item.id,item.name)}
                                     />
@@ -56,7 +56,9 @@ let BankCardList=React.createClass({
         }.bind(this));
 
         BindBankCardStore.bind("bankCardSelectionFinished",function(){
-            this.context.router.goBack();
+            this.context.router.push({
+                pathname:"bindBankCard"
+            });
         }.bind(this));
 
     }

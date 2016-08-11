@@ -12,6 +12,7 @@ var UserHomeStore={
         dqAmount:"----",
         hcCount:"--",
         tikectCount:"--",
+        sercuInfo:{}
     },
     getAll(){
         return this._all;
@@ -92,7 +93,6 @@ UserHomeStore.dispatchToken=appDispatcher.register(function(payload){
             break;
         case "withdraw":
             //跳转到提现页面之前的条件检查
-            console.log("UserHomeStore.checkBankCardIntegrity():",UserHomeStore.checkBankCardIntegrity());
             if(!UserHomeStore.checkIdCardVerifiedSet() || !UserHomeStore.checkDealPasswordSet()){
                 UserHomeStore.trigger("securityCheckFailed");
             }else if(!UserHomeStore.checkBankCardBind()){

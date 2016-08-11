@@ -57,9 +57,10 @@ let BindBankCard=React.createClass({
         });
     },
     render (){
+
         let {
-            userName,
-            bankName
+            bankName,
+            userName
             }=this.state.bankCardInfo;
         return (
             <Container srcollable={true}>
@@ -119,6 +120,17 @@ let BindBankCard=React.createClass({
         )
     },
     componentDidMount(){
+        let userName=this.props.location.query.realName;
+        if(userName){
+            BindBankCardAction.getUserNameFromLocation(userName);
+        }
+
+        BindBankCardStore.bind("change",function(){
+            this.setState({
+                bankCardInfo:BindBankCardStore.getAll()
+            })
+        }.bind(this));
+
         BindBankCardStore.bind("bindBankCardSuccess",function(){
             Message.broadcast("绑卡成功！");
         });

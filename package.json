@@ -39,6 +39,7 @@
   "author": "sam",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^2.2.1",
     "classnames": "^2.2.5",
     "flux": "^2.1.1",
     "jquery": "^3.0.0",

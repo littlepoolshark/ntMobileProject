@@ -34,9 +34,14 @@ let UserHome=React.createClass({
     },
     _jumpToNextLocation(confirm){
         if(confirm){
-            this.context.router.push({
-                pathname:this.state.nextLocation
-            });
+            let locationData={
+                pathname:this.state.nextLocation,
+                query:{}
+            }
+            if(this.state.nextLocation === "bindBankCard"){
+                locationData.query.realName=UserHomeStore.getAll().personInfo.realName;
+            }
+            this.context.router.push(locationData);
         }else {
             this._handleModalClose();
         }
@@ -89,7 +94,7 @@ let UserHome=React.createClass({
                             <div className="amount text-center">{ishowData ? totalProfit : "****"}</div>
                         </Col>
                         <Col cols={3}>
-                            <Link to="journalAccount">
+                            <Link to="totalAccountDetail">
                                 <div className="subtitle text-center">可用余额(元) <Icon name="right-nav" style={{fontSize:"14px"}}/></div>
                                 <div className="amount text-center">{ishowData ? available : "****"}</div>
                             </Link>

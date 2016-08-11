@@ -1,0 +1,88 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#totalAccountDetail{
+  .doughnut-box {
+    position:relative;
+    width:rem-calc(200);
+    height:rem-calc(200);
+    margin:rem-calc(5) auto 0;
+
+    .doughnut-body {
+      width:rem-calc(120);
+      height:rem-calc(120);
+      background-color:#fff;
+      border-radius:50%;
+      position:absolute;
+      left:50%;
+      top:53%;
+      transform:translate(-50%,-50%);
+      display:flex;
+      flex-direction:column;
+      justify-content: center;
+      align-items: center;
+
+      .amount {
+        @include color-and-fontSize($C3,$T4);
+      }
+
+      .subtitle {
+        @include color-and-fontSize($C4,$T8);
+      }
+
+    }
+  }
+
+  .legend-color-block {
+    display:inline-block;
+    width:rem-calc(15);
+    height:rem-calc(15);
+    margin-right:rem-calc(10);
+
+    &.c1 {
+      background-color:#ff7659;
+    }
+    &.c2 {
+      background-color:#ffbe40;
+    }
+    &.c3 {
+      background-color:#a2c221;
+    }
+    &.c4 {
+      background-color:#3abbce;
+    }
+    &.c5 {
+      background-color:#ae7bb4;
+    }
+
+  }
+
+  #legendList {
+    margin-top:rem-calc(15);
+    margin-bottom:rem-calc(15);
+
+    .item {
+      padding:rem-calc(7) rem-calc(15);
+    }
+    .list-item-title {
+      display:flex;
+      align-items: center;
+    }
+  }
+
+  .buttons-wrapper {
+    display:flex;
+    justify-content: space-between;
+
+    & > button {
+      width:rem-calc(120);
+      margin:0;
+    }
+  }
+}

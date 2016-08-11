@@ -34,5 +34,5 @@ export DeleteCardApplySuccess from "./DeleteCardApplySuccess";
 export MyBankCardDetail from  "./MyBankCardDetail";
 export SecurityCenter from  "./SecurityCenter";
 export SetDealPassword from  "./SetDealPassword";
-
+export TotalAccountDetail from "./TotalAccountDetail";
 
