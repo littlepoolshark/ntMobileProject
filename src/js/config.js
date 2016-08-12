@@ -63,7 +63,8 @@ let config={
         "DeleteCardApplySuccess",
         "MyBankCardDetail",
         "SetDealPassword",
-        "TotalAccountDetail"
+        "TotalAccountDetail",
+        "SecurityCenter"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

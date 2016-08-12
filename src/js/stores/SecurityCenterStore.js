@@ -21,6 +21,26 @@ var SecurityCenterStore={
     },
     getAll(){
         return this._all;
+    },
+    clearAll(){
+        this._all={
+            mobileVerified: "no",
+            ispasswordSet: "no",
+            isDealPwdSet: "no",
+            idCardVerified: "no",
+            emailVerified: "no"
+        }
+    },
+    calculateSecurityScore(){
+        let mobileScore,loginPasswordScore,dealPasswordScore,idCardScore;
+        let userScore=0;
+        mobileScore=this._all.mobileVerified === "yes" ? 25 : 0;
+        loginPasswordScore=this._all.ispasswordSet === "yes" ? 25 : 0;
+        dealPasswordScore=this._all.isDealPwdSet === "yes" ? 25 : 0;
+        idCardScore=this._all.idCardVerified === "yes" ? 25 : 0;
+        userScore=mobileScore + loginPasswordScore + dealPasswordScore + idCardScore;
+
+        return userScore ;
     }
 };
 MicroEvent.mixin(SecurityCenterStore);
