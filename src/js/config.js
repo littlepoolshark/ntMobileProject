@@ -50,7 +50,10 @@ let config={
         DeleteCardApplySuccess:"提交成功",
         MyBankCardDetail:"银行卡详情",
         SecurityCenter:"安全中心",
-        TotalAccountDetail:"总资产明细"
+        TotalAccountDetail:"总资产明细",
+        "DailyEarnCenter":"灵活理财",
+        "DailyEarnRollOut":"天天赚转出",
+        "DailyEarnInvestmentRecord":"灵活理财明细"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -64,7 +67,10 @@ let config={
         "MyBankCardDetail",
         "SetDealPassword",
         "TotalAccountDetail",
-        "SecurityCenter"
+        "SecurityCenter",
+        "DailyEarnCenter",
+        "DailyEarnRollOutSuccess",
+        "DailyEarnInvestmentRecord"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

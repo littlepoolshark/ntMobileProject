@@ -51,9 +51,9 @@
         $background-active: scale-color($background, $lightness: -15%);
       }
 
-      background: $background-active;
+     /* background: $background-active;
       border-color: $background-active;
-      color: $color;
+      color: $color;*/
     }
   }
 }

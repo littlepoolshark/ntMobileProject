@@ -104,7 +104,7 @@ let UserHome=React.createClass({
                 <Group noPadded={true} className="investmentRecord-entry">
                     <Grid>
                         <Col cols={2} className="investmentRecord-entry-item">
-                            <Link to="dailyEarnRecord">
+                            <Link to="dailyEarnCenter">
                                 <Icon classPrefix="imgIcon" name="folder"/>
                                 <span className="title">活期投资</span>
                                 <span className="subtitle">{ishowData ? hqAmount : "****"}</span>

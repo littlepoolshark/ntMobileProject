@@ -35,4 +35,7 @@ export MyBankCardDetail from  "./MyBankCardDetail";
 export SecurityCenter from  "./SecurityCenter";
 export SetDealPassword from  "./SetDealPassword";
 export TotalAccountDetail from "./TotalAccountDetail";
-
+export DailyEarnCenter from "./DailyEarnCenter";
+export DailyEarnRollOut from "./DailyEarnRollOut";
+export DailyEarnRollOutSuccess from "./DailyEarnRollOutSuccess";
+export DailyEarnInvestmentRecord from "./DailyEarnInvestmentRecord";

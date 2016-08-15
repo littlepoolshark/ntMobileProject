@@ -1,0 +1,48 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#dailyEarnRollOut {
+  .subtitle {
+    @include color-and-fontSize($C4,$T10);
+  }
+  .dailyEarn-rollOut-dashboard {
+    margin-top:0;
+  }
+  .dailyEarn-holding-amount  {
+    padding-top:rem-calc(20);
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+
+    .amount {
+      @include color-and-fontSize($C1,$T2);
+      line-height:1;
+    }
+
+  }
+  .dailyEarn-rollOut-amount  {
+    margin-top:rem-calc(20);
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    padding-bottom:rem-calc(20);
+
+    .amount {
+      @include color-and-fontSize($C1,$T9);
+    }
+  }
+
+
+  .btns-wrapper {
+    margin-top:2rem;
+    padding:0 rem-calc(15);
+  }
+}
