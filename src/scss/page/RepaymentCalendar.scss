@@ -1,0 +1,47 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#repaymentCalendar {
+  .slider-control {
+    .icon-left-nav,
+    .icon-right-nav {
+      font-size:rem-calc(18);
+      color:#d4d4d4;
+    }
+  }
+  .calendar-item {
+    width:100%;
+    padding:rem-calc(20) 0;
+    background:#fff;
+
+    .title {
+      margin-bottom:rem-calc(20);
+      @include color-and-fontSize($C3,$T6);
+    }
+
+    .subtitle {
+      @include color-and-fontSize($C4,$T10);
+    }
+
+    .amount {
+      @include color-and-fontSize($C1,$T4);
+    }
+
+    .col-3 {
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;;
+    }
+  }
+
+  #repaymentDetailList {
+    margin-top:0;
+  }
+}

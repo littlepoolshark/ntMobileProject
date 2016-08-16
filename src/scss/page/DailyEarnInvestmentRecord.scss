@@ -7,10 +7,17 @@
 // Mixin
 @import "../helper/mixins";
 #dailyEarnInvestmentRecord {
+  .navbar {
+    width:100%;
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:101;
+  }
   .tabs {
     margin-top:0;
     margin-bottom:0;
-    padding-top:rem-calc(55);
+    padding-top:rem-calc(100);
     background-color:transparent;
 
     .tabs-body .tab-panel{
@@ -44,7 +51,7 @@
     }
   }
 
-  ul {
+  ul.detailList {
     padding:0;
     margin:0;
     list-style:none;
@@ -61,6 +68,17 @@
       &:last-child {
         border:none;
       }
+    }
+  }
+
+  #matchLoanModal {
+    background:#eee;
+    .popup-body {
+      padding:0;
+    }
+
+    .list {
+      margin-top:0;
     }
   }
 }

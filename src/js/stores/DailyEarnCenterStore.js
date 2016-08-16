@@ -31,7 +31,7 @@ var DailyEarnCenterStore={
     updateAll(source){
         Object.assign(this._all,source);
     },
-    updatektqMoney(){
+    updateKtqMoney(){
         this._all.ktqMoney=0;
     }
 };
@@ -58,7 +58,8 @@ appDispatcher.register(function(payload){
                     ciUrl:"/ttz/v2/getTtzInterest",
                     success(rs){
                         if(rs.code === 0){
-                            DailyEarnCenterStore.updatektqMoney();
+                            DailyEarnCenterStore.updateKtqMoney();
+                            DailyEarnCenterStore.trigger("change");
                             DailyEarnCenterStore.trigger("extractDailyEarnIncomeSuccess");
                         }else {
                             DailyEarnCenterStore.trigger("extractDailyEarnIncomeFailed",rs.description);

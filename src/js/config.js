@@ -53,7 +53,8 @@ let config={
         TotalAccountDetail:"总资产明细",
         "DailyEarnCenter":"灵活理财",
         "DailyEarnRollOut":"天天赚转出",
-        "DailyEarnInvestmentRecord":"灵活理财明细"
+        "DailyEarnInvestmentRecord":"灵活理财明细",
+        "RepaymentCalendar":"回款日历"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
