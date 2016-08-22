@@ -111,7 +111,7 @@ let UserHome=React.createClass({
                             </Link>
                         </Col>
                         <Col cols={2} className="investmentRecord-entry-item">
-                            <Link to="fixedLoanRecord">
+                            <Link to="fixedLoanCenter">
                                 <Icon classPrefix="imgIcon" name="money-package"/>
                                 <span className="title">定期投资</span>
                                 <span className="subtitle">{ishowData ? dqAmount : "****"}</span>

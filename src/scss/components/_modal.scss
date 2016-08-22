@@ -169,7 +169,7 @@
 
   // nested List
   .#{$list-prefix} {
-    margin: 0;
+    margin: 0 rem-calc(15);
   }
 }
 
@@ -180,7 +180,7 @@
 }
 
 .#{$modal-prefix}-actions-group {
-  margin: rem-calc(10);
+  margin: rem-calc(10) rem-calc(15);
 }
 
 .#{$modal-prefix}-actions-header {

@@ -1,0 +1,31 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+#fixedInvestmentRecord {
+  .navbar {
+    width:100%;
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:101;
+  }
+  .tabs {
+    padding-top:rem-calc(50);
+
+    .tabs-nav {
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
+    }
+  }
+}
+
+
+
+

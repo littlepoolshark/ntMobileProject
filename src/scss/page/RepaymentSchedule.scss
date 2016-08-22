@@ -1,0 +1,110 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+%flex-box {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#repaymentSchedule {
+  .title {
+    @include color-and-fontSize($C3,$T6);
+  }
+  .subtitle {
+    @include color-and-fontSize($C4,$T8);
+  }
+  .number {
+    @include color-and-fontSize($C3,$T8);
+  }
+  .loan-title-group {
+    position:relative;
+
+    .header {
+      display:flex;
+      align-items: center;
+
+      &>button {
+        margin:0;
+        margin-left:rem-calc(20);
+        padding:rem-calc(8) rem-calc(12);
+      }
+    }
+  }
+
+  .loan-detail-group {
+    .header {
+      padding-bottom:rem-calc(10);
+      border-bottom:1px solid $separation-line-color;
+    }
+    .row:first-child {
+      margin-top:rem-calc(10);
+    }
+    .label {
+      margin-right:rem-calc(40);
+    }
+  }
+
+  .repayment-schedule-group {
+    .header {
+      display:flex;
+      justify-content: space-between;
+      padding-bottom:rem-calc(10);
+      border-bottom:1px solid $separation-line-color;
+    }
+    ul {
+      padding:0;
+      margin:0;
+      list-style:none;
+
+      &>li {
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+        padding:rem-calc(15) 0;
+        border-bottom:1px solid $separation-line-color;
+
+        &:last-child {
+          border-bottom:none;
+        }
+
+        .section-left {
+          @extend %flex-box;
+          height:rem-calc(70);
+
+          .subtitle {
+            @include color-and-fontSize($C4,$T11);
+          }
+        }
+
+        .section-middle {
+          @extend %flex-box;
+
+          .label {
+            margin-bottom:rem-calc(2);
+
+            &:last-child {
+              margin-bottom:0;
+            }
+          }
+        }
+
+        .section-right {
+          @extend %flex-box;
+          &>img {
+            width:rem-calc(60);
+            height:auto;
+          }
+        }
+
+      }
+    }
+  }
+}

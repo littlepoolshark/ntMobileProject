@@ -1,0 +1,68 @@
+
+{
+  code: 0,
+  url:"",
+  data: {
+    loanInfo: {
+      title: 好采投151228-005,
+      repaymentMonth: 3,
+      apr: 0.105000,
+      rewardRate: 0.010000,
+      investMoney：100，
+      yjbx: 102.88,
+      dsbx: 0,
+      qsNum: 0/3
+    },
+    records: [
+      {
+        expectRepayTimeString: 2016-01-30,
+        interest: 0.88,
+        periodNo: 1,
+        principal: 0,
+        realRepayTimeString: 2016-01-30,
+        recoveryStatus: 已收,
+        status: paid
+      },
+      {
+        expectRepayTimeString: 2016-03-01,
+        interest: 0.88,
+        periodNo: 2,
+        principal: 0,
+        realRepayTimeString: 2016-03-01,
+        recoveryStatus: 已收,
+        status: paid
+      },
+      {
+        expectRepayTimeString: 2016-03-30,
+        interest: 0.88,
+        periodNo: 3,
+        principal: 100,
+        realRepayTimeString: 2016-03-30,
+        recoveryStatus: 已收,
+        status: paid
+      }
+    ]
+  },
+  description: 成功
+}
+参数名	类型	说明
+code	number	无
+- data	object	无
+- - loanInfo	object	无
+title	string	项目标题
+repaymentMonth	number	项目期限
+apr	number	年化利率
+rewardRate	number	奖励利率
+investMoney	number	投资金额
+yjbx	number	已结本息
+dsbx	number	待收本息
+qsNum	string	期数
+- - records	object	还款记录
+expectRepayTimeString	string	无
+interest	number	应收利息
+periodNo	number	期数
+principal	number	应收本金
+realRepayTimeString	string	实际还款时间
+recoveryStatus	string	查收状态
+status	string	还款状态
+description	string	无

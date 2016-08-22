@@ -1,0 +1,88 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+//animation
+@import "../helper/animation";
+
+.InvestmentRecord-card {
+
+
+  &:last-child {
+    margin-bottom:0;
+  }
+
+  .group-body {
+    padding-bottom:0;
+    position:relative;
+  }
+  .title {
+    @include color-and-fontSize($C3,$T6);
+    font-weight: normal;
+  }
+  .subtitle {
+    @include color-and-fontSize($C4,$T11);
+  }
+  .number {
+    @include color-and-fontSize($C3,$T6);
+
+    strong {
+      font-weight: normal;
+      color:$C1;
+    }
+  }
+
+  .tag-transfer,
+  .tag-transfered {
+    display:inline-block;
+    width:rem-calc(40);
+    height:rem-calc(40);
+    background-size: cover;
+    position:absolute;
+    top:-1px;
+    right:0;
+  }
+  .tag-transfer {
+    background-image: url("/src/img/icon_label_transfer.png");
+  }
+  .tag-transfered {
+    background-image: url("/src/img/icon_label_transfered.png");
+  }
+
+  .header {
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: normal;
+    margin-bottom:rem-calc(10);
+
+    .tag-icon {
+      display:inline-block;
+      width:auto;
+      height:rem-calc(20);
+      margin-left:rem-calc(5);
+      padding:rem-calc(2) rem-calc(5);
+      line-height:rem-calc(16);
+      @include color-and-fontSize($white,$T10);
+      background:#f9b704;
+      border-radius:0 7px 0 7px ;
+
+      &.transfer {
+        background:#0cc5a0;
+      }
+    }
+  }
+  .body {
+    margin-bottom:rem-calc(10);
+  }
+  .footer {
+    padding:rem-calc(5) 0;
+    @include color-and-fontSize($C4,$T10);
+    border-top:1px dashed $separation-line-color;
+  }
+}

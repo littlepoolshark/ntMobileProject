@@ -1,0 +1,47 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+#earnSetInvestmentRecord {
+
+  .navbar {
+    width:100%;
+    position:fixed;
+    left:0;
+    top:0;
+    z-index:101;
+  }
+
+
+  .tabs {
+    padding-top:rem-calc(95);
+
+    .tabs-nav {
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
+    }
+  }
+
+
+  #matchLoanModal {
+    background:#eee;
+    .popup-body {
+      padding:0;
+    }
+
+    .list {
+      margin-top:0;
+    }
+  }
+
+}
+
+
+
+

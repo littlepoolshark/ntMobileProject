@@ -4,17 +4,35 @@
 // Output
 // -----------------------------------------------------------------------------
 .#{$tabs-prefix} {
-  margin: $global-spacing 0;
-  background: $tabs-background;
+  margin-top:0;
+  margin-bottom:0;
+  background-color:transparent;
   @extend %card-nested-component;
 }
 
 .#{$tabs-prefix}-nav {
-  position:relative;
-  margin-bottom: 0;
+  margin-bottom:-1px;
+  padding:rem-calc(5) rem-calc(15);
+  border-top:1px solid $separation-line-color;
+  border-bottom:1px solid $separation-line-color;
+  background:#fff;
 
   .#{$button-prefix} {
     @extend %text-truncate;
+  }
+
+  .btn-sm {
+    @include color-and-fontSize($C3,$T5);
+  }
+
+  .btn-hollow.btn-primary {
+    border:none;
+    color:$C3;
+
+    &.active {
+      background:#fff;
+      color:$C1;
+    }
   }
 
   .slide-line {
@@ -41,7 +59,7 @@
   top: 0;
   z-index: 99;
   width: 100%;
-  padding: $global-spacing;
+  padding:0;
   visibility: hidden;
   transition: transform 0.4s;
   transform: translateX(-100%);

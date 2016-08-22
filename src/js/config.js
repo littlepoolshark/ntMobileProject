@@ -54,7 +54,11 @@ let config={
         "DailyEarnCenter":"灵活理财",
         "DailyEarnRollOut":"天天赚转出",
         "DailyEarnInvestmentRecord":"灵活理财明细",
-        "RepaymentCalendar":"回款日历"
+        "RepaymentCalendar":"回款日历",
+        "FixedLoanCenter":"定期投资",
+        "FixedLoanInvestmentRecord":"项目直投投资明细",
+        "CreditorLoanInvestmentRecord":"债权转让投资明细",
+        "RepaymentSchedule":"好采投详情"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -71,7 +75,8 @@ let config={
         "SecurityCenter",
         "DailyEarnCenter",
         "DailyEarnRollOutSuccess",
-        "DailyEarnInvestmentRecord"
+        "DailyEarnInvestmentRecord",
+        "EarnSetInvestmentRecord"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

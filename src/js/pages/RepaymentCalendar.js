@@ -29,7 +29,7 @@ let RepaymentDashBoard=React.createClass({
                 autoPlay={false}
                 onAction={this.props.handleSlideFinished}
                 loop={false}
-                interval={100000}
+                interval={3600000}
             >
                 {
                     this.props.repaymentDashboardList.map(function(item,index){

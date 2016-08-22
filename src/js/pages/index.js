@@ -40,3 +40,8 @@ export DailyEarnRollOut from "./DailyEarnRollOut";
 export DailyEarnRollOutSuccess from "./DailyEarnRollOutSuccess";
 export DailyEarnInvestmentRecord from "./DailyEarnInvestmentRecord";
 export RepaymentCalendar from "./RepaymentCalendar";
+export FixedLoanCenter from "./FixedLoanCenter";
+export EarnSetInvestmentRecord from "./EarnSetInvestmentRecord";
+export FixedLoanInvestmentRecord from "./FixedLoanInvestmentRecord";
+export CreditorLoanInvestmentRecord from "./CreditorLoanInvestmentRecord";
+export RepaymentSchedule from "./RepaymentSchedule";

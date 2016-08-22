@@ -64,7 +64,8 @@ const Loader = React.createClass({
   componentDidMount(){
     pubsub.bind("loader.loading",function(){
       this.setState({
-        loading:true
+        loading:true,
+        showHint:false
       })
     }.bind(this));
 
@@ -74,7 +75,7 @@ const Loader = React.createClass({
       })
     }.bind(this));
 
-    pubsub.bind("loader.toggleToNomoreDataHint",function(){
+    pubsub.bind("loader.toggleToNoMoreDataHint",function(){
       this.setState({
         loading:false,
         showHint:true
@@ -94,7 +95,7 @@ Loader.hide=function(){
 };
 
 Loader.toggle=function(){
-  pubsub.trigger("loader.toggleToNomoreDataHint");
+  pubsub.trigger("loader.toggleToNoMoreDataHint");
 }
 
 export default Loader;
