@@ -1,9 +1,13 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var RepaymentScheduleAction={
-    getRepaymentScheduleData(){
+    getRepaymentScheduleData(loanId,creditorId){
         appDispatcher.dispatch({
-            actionName:"getRepaymentScheduleData"
+            actionName:"getRepaymentScheduleData",
+            data:{
+                loanId:loanId,
+                creditorId:creditorId
+            }
         })
     }
 };

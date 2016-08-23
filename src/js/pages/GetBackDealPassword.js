@@ -37,7 +37,7 @@ let GetBackDealPassword=React.createClass({
                                 label="验证码"
                                 placeholder="请输入验证码"
                                 ref="newDealPassword"
-                                inputAfter={ <MobileVerificationCode phoneNo="13682330541" autoSend={true} type="1"/>}
+                                inputAfter={ <MobileVerificationCode phoneNo="13924601121" autoSend={true} type="1"/>}
                                 />
                         </List.Item>
                     </List>

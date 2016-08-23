@@ -50,7 +50,9 @@ let FixedLoanInvestmentRecord=React.createClass({
             pathname:"repaymentSchedule",
             query:{
                 loanId:props.id,
-                creditorId:props.creId
+                creditorId:props.creId,
+                productType:"loan_product",
+                status:props.status
             }
         })
     },
@@ -78,7 +80,7 @@ let FixedLoanInvestmentRecord=React.createClass({
 
         return (
             <Container scrollable={true}   id="fixedInvestmentRecord"  onScroll={this._loadMoreData}>
-                <Tabs defaultActiveKey={0} >
+                <Tabs defaultActiveKey={1} >
                     <Tabs.Item
                         title="加入中"
                         key={0}

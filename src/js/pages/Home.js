@@ -44,14 +44,23 @@ let Home=React.createClass({
             <Container scrollable={false} style={{overflow:"scroll"}} >
 
                 <Slider>
-                    {bannerList.map(function(item,index){
+                    {/*bannerList.map(function(item,index){
                         return (
                             <Slider.Item key={index + 1}>
                                 <img src={item.pic} />
                             </Slider.Item>
                         )
 
-                    })}
+                    })*/}
+                    <Slider.Item >
+                        <img src="/src/img/banner_01.jpg" />
+                    </Slider.Item>
+                    <Slider.Item >
+                        <img src="/src/img/banner_02.jpg" />
+                    </Slider.Item>
+                    <Slider.Item >
+                        <img src="/src/img/banner_04.jpg" />
+                    </Slider.Item>
                 </Slider>
 
                 <Group header=""  style={{marginTop:0}}>

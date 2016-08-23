@@ -5,7 +5,7 @@ import React from "react";
 //为了避免一定程度的浪费，react官方还在0.14版本中加入了无状态组件
 function NoDataHint(props){
     return (
-        <div className="noReward-hint" style={{marginTop:"5rem"}}>
+        <div className="noReward-hint" style={{marginTop:"5rem"}} {...props}>
             <div className="text-center" >
                 <img src="/src/img/reward_no.png" alt="" style={{width:"4rem",height:"4rem"}}/>
             </div>

@@ -26,9 +26,9 @@ function ajax(obj) {
     //有些接口需要用户登录后才能发送请求，所以一旦登录后，就将token附上
     if(cookie.getCookie("token")){
         initData.token=cookie.getCookie("token");
-    }else {
+    }/*else {
         alert("登录超时或者没有登录！");
-    }
+    }*/
 
 
     //基于兼容考虑，创建一个XMLHttpRequest对象

@@ -58,7 +58,8 @@ let config={
         "FixedLoanCenter":"定期投资",
         "FixedLoanInvestmentRecord":"项目直投投资明细",
         "CreditorLoanInvestmentRecord":"债权转让投资明细",
-        "RepaymentSchedule":"好采投详情"
+        "RepaymentSchedule":"好采投详情",
+        "AssignmentOfDebt":"债权转让"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -76,7 +77,8 @@ let config={
         "DailyEarnCenter",
         "DailyEarnRollOutSuccess",
         "DailyEarnInvestmentRecord",
-        "EarnSetInvestmentRecord"
+        "EarnSetInvestmentRecord",
+        "AssignmentDebtSuccess"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

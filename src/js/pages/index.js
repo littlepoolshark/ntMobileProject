@@ -45,3 +45,5 @@ export EarnSetInvestmentRecord from "./EarnSetInvestmentRecord";
 export FixedLoanInvestmentRecord from "./FixedLoanInvestmentRecord";
 export CreditorLoanInvestmentRecord from "./CreditorLoanInvestmentRecord";
 export RepaymentSchedule from "./RepaymentSchedule";
+export AssignmentOfDebt from "./AssignmentOfDebt";
+export AssignmentDebtSuccess from "./AssignmentDebtSuccess";
