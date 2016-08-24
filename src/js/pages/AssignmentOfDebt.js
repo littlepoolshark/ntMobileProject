@@ -86,7 +86,8 @@ let AssignmentOfDebt=React.createClass({
     },
     componentDidMount(){
         let {
-            creditorId
+            creditorId,
+            investMoney
             }=this.props.location.query;
         AssignmentOfDebtAction.getCreditorLoanData(creditorId);
 
@@ -98,7 +99,7 @@ let AssignmentOfDebt=React.createClass({
 
             this.context.router.push({
                 pathname:"assignmentDebtSuccess",
-                state:this.state
+                state:Object.assign(this.state,{investMoney:investMoney})
             })
         }.bind(this));
 

@@ -122,6 +122,25 @@ let RepaymentCalendar=React.createClass({
                     <NoDataHint />
                 }
 
+                <Group className="datePicker">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>日</th>
+                                <th>一</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
+                </Group>
+
             </Container>
         )
     },

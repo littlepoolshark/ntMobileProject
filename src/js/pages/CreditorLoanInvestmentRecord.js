@@ -27,7 +27,7 @@ let CreditorLoanInvestmentRecord=React.createClass({
         }
     },
    _getCurrListType(){
-        let currListType="applying";//默认打开的是“加入中”tab
+        let currListType="";
         let applyingList=document.getElementById("applyingList");
         let preRepayList=document.getElementById("preRepayList");
         let clearingList=document.getElementById("clearingList");

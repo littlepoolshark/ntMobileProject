@@ -57,7 +57,7 @@ let EarnSetInvestmentRecord=React.createClass({
         });
     },
    _getCurrListType(){
-        let currListType="repaying";//默认打开的是“待结算”tab
+        let currListType="";
         let preRepayList=document.getElementById("preRepayList");
         let clearingList=document.getElementById("clearingList");
         if(CSSCore.hasClass(preRepayList,"active")){
@@ -102,7 +102,6 @@ let EarnSetInvestmentRecord=React.createClass({
             clearingList,
             matchLoanDetailList
             }=this.state.data;
-
 
         return (
             <Container scrollable={true}   id="earnSetInvestmentRecord"  onScroll={this._loadMoreData}>
@@ -178,7 +177,7 @@ let EarnSetInvestmentRecord=React.createClass({
                                 />
                             )
                         }) :
-                        <NoDataHint/>
+                        <NoDataHint style={{background:"#eee",marginTop:"5rem"}} />
                     }
                 </Modal>
 
@@ -215,7 +214,8 @@ let EarnSetInvestmentRecord=React.createClass({
         EarnSetInvestmentRecordStore.bind("getMatchLoanListSuccess",function(){
             this.setState({
                 data:EarnSetInvestmentRecordStore.getAll(),
-                isMatchLoanModalOpen:true
+                isMatchLoanModalOpen:true,
+                noMatchLoanData:false
             })
         }.bind(this));
 
@@ -236,7 +236,8 @@ let EarnSetInvestmentRecord=React.createClass({
                 })
             }else if(currListType === "matchLoan"){
                 this.setState({
-                    noMatchLoanData:true
+                    noMatchLoanData:true,
+                    isMatchLoanModalOpen:true
                 })
             }
 

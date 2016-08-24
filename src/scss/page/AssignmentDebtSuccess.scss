@@ -33,4 +33,32 @@
   strong {
     color:$C1;
   }
+
+  .creditorLoan-summary {
+    margin-top:rem-calc(20);
+    margin-bottom:rem-calc(-15);
+    padding:0 rem-calc(15);
+
+    .row {
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      padding:rem-calc(5) 0;
+      border-bottom:1px dashed $separation-line-color;
+
+      &:last-child {
+        border:none;
+      }
+
+      .label {
+        margin:0;
+        @include color-and-fontSize($C3,$T6);
+      }
+
+      .number {
+        margin:0;
+        @include color-and-fontSize($C4,$T6);
+      }
+    }
+  }
 }

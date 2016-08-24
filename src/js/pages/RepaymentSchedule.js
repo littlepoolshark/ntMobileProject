@@ -17,14 +17,15 @@ let RepaymentSchedule=React.createClass({
     getInitialState(){
         return RepaymentScheduleStore.getAll();
     },
-    _handleAssignmentBtnClick(){
+    _handleAssignmentBtnClick(investMoney){
         let {
             creditorId
             }=this.props.location.query;
         this.context.router.push({
             pathname:"assignmentOfDebt",
             query:{
-                creditorId:creditorId
+                creditorId:creditorId,
+                investMoney:investMoney
             }
         });
     },
@@ -66,7 +67,7 @@ let RepaymentSchedule=React.createClass({
                         }
                         {
                             status === "holding" ?
-                            <Button amStyle="primary" radius onClick={this._handleAssignmentBtnClick}>转让</Button> :
+                            <Button amStyle="primary" radius onClick={this._handleAssignmentBtnClick.bind(null,investMoney)}>转让</Button> :
                             null
                         }
                     </div>
