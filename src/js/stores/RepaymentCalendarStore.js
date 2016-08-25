@@ -90,4 +90,48 @@ appDispatcher.register(function(payload){
     }
 });
 
+/*
+ {
+ code: 0,
+ data: {
+ list: [
+ {
+ amount: 1613.9899999999998,
+ date: 2016-04-27,
+ recordcount: 2,
+ status: paid
+ },
+ {
+ amount: 1210.8,
+ date: 2016-04-24,
+ recordcount: 1,
+ status: paid
+ },
+ {
+ amount: 201.78,
+ date: 2016-04-23,
+ recordcount: 2,
+ status: paid
+ },
+ {
+ amount: 2.75,
+ date: 2016-04-19,
+ recordcount: 1,
+ status: paid
+ },
+ {
+ amount: 0.96,
+ date: 2016-04-15,
+ recordcount: 1,
+ status: paid
+ }
+ ],
+ pageIndex: 3,
+ pageSize: 10,
+ recordCount: 27
+ },
+ description: 成功
+ }
+*/
+
 module.exports=RepaymentCalendarStore;

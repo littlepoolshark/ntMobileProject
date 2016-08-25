@@ -8,22 +8,23 @@
 @import "../helper/mixins";
 
 #repaymentCalendar {
-  .slider-control {
-    .icon-left-nav,
-    .icon-right-nav {
-      font-size:rem-calc(18);
-      color:#d4d4d4;
+  .monthPicker-card {
+    .col-2 {
+      height:rem-calc(50);
+      line-height: rem-calc(50);
+      text-align: center;
+      background:#fff;
+
+      &.active {
+        color:$C1;
+      }
     }
   }
-  .calendar-item {
-    width:100%;
-    padding:rem-calc(20) 0;
-    background:#fff;
 
-    .title {
-      margin-bottom:rem-calc(20);
-      @include color-and-fontSize($C3,$T6);
-    }
+
+  .repaymentDashBoard {
+    width:100%;
+    padding:rem-calc(10) 0;
 
     .subtitle {
       @include color-and-fontSize($C4,$T10);
@@ -41,7 +42,97 @@
     }
   }
 
-  #repaymentDetailList {
-    margin-top:0;
+
+  .datePicker-card {
+    width:100%;
+    padding:0 1%;
+
+    .cell {
+      width:14%;
+      text-align: center;
+      float:left;
+
+      & > span {
+        display:inline-block;
+        width:rem-calc(35);
+        height:rem-calc(35);
+        line-height:rem-calc(35);
+        text-align: center;
+        @include color-and-fontSize($C3,$T7);
+      }
+
+      .imgIcon-gold-coin {
+        display: inline-block;
+        width:rem-calc(12);
+        height:rem-calc(10);
+        position: absolute;
+        bottom: 1px;
+        left:50%;
+        /*transform:translateX(-50%);*/
+        margin-left:rem-calc(-5);
+      }
+
+      &.disabled > span {
+        @include color-and-fontSize($C4,$T8);
+      }
+      &.highLight > span {
+        color:$global-primary;
+      }
+      &.active > span {
+        background-color:$global-primary;
+        color:$white;
+        border-radius:50%;
+      }
+      &.mark > span {
+        line-height:rem-calc(30);
+        border:1px dashed #fca103;
+        border-radius:50%;
+        position:relative;
+      }
+      &.mark.active > span {
+        line-height:rem-calc(30);
+        border:none;
+        position:relative;
+      }
+    }
+  }
+  .datePicker-card-header {
+    margin-bottom:rem-calc(10);
+    @include color-and-fontSize($C4,$T8);
+  }
+
+  .datePicker-card-body {
+    .cell {
+      margin-top:rem-calc(10);
+    }
+  }
+
+
+  .todayTotalRepayment {
+     margin:0;
+
+    .wrapper {
+      display:flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding:rem-calc(10) rem-calc(15);
+      border-top:1px solid $separation-line-color;
+      @include color-and-fontSize($C3,$T8);
+
+      .red-point {
+        display:inline-block;
+        width:rem-calc(8);
+        height:rem-calc(8);
+        margin-right:rem-calc(5);
+        background-color: $C1;
+        border-radius: 50%;
+      }
+    }
+
+  }
+
+
+  .todayRepaymentDetail-list {
+    margin-bottom:rem-calc(30);
   }
 }
