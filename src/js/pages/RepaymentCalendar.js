@@ -18,50 +18,29 @@ import NoDataHint from "./utilities/NoDataHint";
 
 
 let MonthPickerCard=React.createClass({
-    _generateMonthList(){
-        function formatMonth(year,month){
-            if(month === 0){
-                year -=1;
-                month=12 - month;
-            }else if(month > 12){
-                year +=1;
-                month=month - 12;
-            }
-            return year + "年" + month + "月";
-        }
-        let currYear=(new Date()).getFullYear();
-        let currMonth=(new Date()).getMonth()+1;
-        let monthList=[];
-        for(let i=0;i<12;i++){
-            monthList.push({
-                left:i === 0 ? "" : formatMonth(currYear,currMonth+i-1),
-                middle:formatMonth(currYear,currMonth+i),
-                right:i === 11 ? "" : formatMonth(currYear,currMonth+i+1)
-            })
-        }
-        return monthList;
-
-    },
     render(){
-        let monthList=this._generateMonthList();
+        let {
+            monthPickerFrameList,
+            handleSliderFinished
+            }=this.props;
         return (
             <Slider
                 pager={false}
                 autoPlay={false}
-                onAction={this.props.handleSlideFinished}
+                onAction={handleSliderFinished}
                 loop={false}
                 controls={false}
                 interval={3600000}
                 className="monthPicker-card"
             >
                 {
-                    monthList.map(function(item,index){
+                    monthPickerFrameList.map(function(item,index){
                         return (
                             <Slider.Item key={index+1}>
                                 <Grid>
-                                    <Col cols={2}>{item.left}</Col>
-                                    <Col cols={2} className="active">{item.middle}</Col>
-                                    <Col cols={2}>{item.right}</Col>
+                                    <Col cols={2}>{item.left.text}</Col>
+                                    <Col cols={2} className="active">{item.middle.text}</Col>
+                                    <Col cols={2}>{item.right.text}</Col>
                                 </Grid>
                             </Slider.Item>
                         )
@@ -128,57 +107,8 @@ let DatePickerCardCell=React.createClass({
 let DatePickerCard=React.createClass({
     getInitialState(){
         return {
-            selectedDate:(new Date()).getDate()
+            selectedDate:this.props.currDate
         }
-    },
-    /*
-    * @desc 用于生成某年某月所对应的日期数组
-    *
-    * @param {number} year //某一年
-    * @param {number} month //某一月，
-    */
-    _generateDateArray(year,month){
-        function getDatesCountOfMonth(Year,Month)
-        {
-            var d = new Date(Year,Month,0);
-            return d.getDate();
-        }
-        let dateArray=[];
-        let datesOfCurrMonth=getDatesCountOfMonth(year,month);//该月有多少天
-        let datesOfLastMonth=month - 1 >= 1 ? getDatesCountOfMonth(year,month - 1) : getDatesCountOfMonth(year-1,12);
-        let dayOfFirstDay=(new Date(year,month-1,1)).getDay();//该月的第一天是星期几，该值决定了要取上一个月的倒数那些天数，以用来填充日期数组
-
-        //上个月日期序号
-        for(let i=dayOfFirstDay;i>0;i--){
-            dateArray.push({
-                dateNumber:datesOfLastMonth-(i-1),
-                isToday:false,
-                hasRepayment:false,
-                inCurrMonth:false
-            });
-        }
-        //当前月日期序号
-        let hasRepaymentArr=[1,2,4,5,6,7,15,16,17,20,21,23,30];
-        for(let j=1;j <= datesOfCurrMonth;j++){
-            dateArray.push({
-                dateNumber:j,
-                isToday:j === new Date().getDate() ?  true : false,
-                hasRepayment:hasRepaymentArr.indexOf(j) > -1 ? true : false,
-                inCurrMonth:true
-            });
-        }
-        //下个月日期序号
-        let daysCountOfNextMonth=35 - dateArray.length;
-        for(let k=1;k <= daysCountOfNextMonth;k++){
-            dateArray.push({
-                dateNumber:k,
-                isToday:false,
-                hasRepayment:false,
-                inCurrMonth:false
-            });
-        }
-
-        return dateArray;
     },
     _handleClick(selectedDate){
         this.setState({
@@ -187,7 +117,7 @@ let DatePickerCard=React.createClass({
     },
     render(){
         let selectedDate=this.state.selectedDate;
-        let dateList=this._generateDateArray(2016,9);
+        let dateList=this.props.datePickerCellList;
         return (
             <Group  style={{margin:0}}>
                 <div className="datePicker-card">
@@ -223,14 +153,16 @@ let DatePickerCard=React.createClass({
 
 
 let TodayRepaymentDetailList=React.createClass({
-    _renderItemTitle(item){
-        let itemTitle="";
-        if(item.status === "paid"){
-            itemTitle=item.date + " 已收本息 " + item.recordcount + "笔"
-        }else if(item.status === "unpaid"){
-            itemTitle=item.date + " 待收本息 " + item.recordcount + "笔"
+    _renderItemAfter(item){
+        let itemAfter="";
+        if(item.priciple !== 0 && item.interest !== 0){
+            itemAfter="本息" + (item.priciple+item.interest).toFixed(2) + "元";
+        }else if(item.priciple !== 0 && item.interest === 0){
+            itemAfter="本金" + (item.priciple).toFixed(2) + "元";
+        }else if(item.interest !== 0 &&  item.priciple === 0){
+            itemAfter="利息" + (item.interest).toFixed(2) + "元";
         }
-        return itemTitle;
+        return itemAfter;
     },
     render(){
         return (
@@ -240,8 +172,8 @@ let TodayRepaymentDetailList=React.createClass({
                         return (
                             <List.Item
                                 key={index+1}
-                                title="好采投201608-01"
-                                after="本金200.00元"
+                                title={item.productName}
+                                after={this._renderItemAfter(item)}
                             />
                         )
                     }.bind(this))
@@ -275,22 +207,29 @@ let RepaymentCalendar=React.createClass({
         };
     },
     _handleSlideFinished(index, direction){
-        let currTime=RepaymentCalendarStore.getCurrDashboardTime(index);
-        RepaymentCalendarAction.getRepaymentDetailList(currTime);
+        let currMonthTime=RepaymentCalendarStore.getCurrMonthTime(index);
+        RepaymentCalendarAction.getRepaymentDetailList(currMonthTime);
     },
     render(){
-        let testData=[{},{},{}];
         let {
-            repaymentDashboardList,
+            currDate,
+            monthPickerFrameList,
+            datePickerCellList,
             repaymentDetailList
             }=this.state.data;
         return (
             <Container scrollable={true}  id="repaymentCalendar" >
-                <MonthPickerCard />
-                <RepaymentDashBoard />
-                <DatePickerCard/>
+                <MonthPickerCard
+                    handleSliderFinished={this._handleSlideFinished}
+                    monthPickerFrameList={monthPickerFrameList}
+                />
+                <RepaymentDashBoard/>
+                <DatePickerCard
+                    currDate={currDate}
+                    datePickerCellList={datePickerCellList}
+                    />
                 <TodayTotalRepayment/>
-                <TodayRepaymentDetailList list={testData}/>
+                <TodayRepaymentDetailList list={repaymentDetailList}/>
             </Container>
         )
     },

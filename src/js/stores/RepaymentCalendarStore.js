@@ -5,20 +5,95 @@ var ajax=require("../lib/ajax.js");
 
 var RepaymentCalendarStore={
     _all:{
-        repaymentDashboardList:[],
+        currYear:(new Date()).getFullYear(),
+        currMonth:(new Date()).getMonth()+1,
+        currDate:(new Date()).getDate(),
+        monthPickerFrameList:this._generateMonthPickerFrameList(),
+        datePickerCellList:[],
         repaymentDetailList:[],
-        repaymentDashboardPageIndex:0,
-        repaymentDetailPageIndex:0
+        todayTotalRepaymentAmount:0
+    },
+    _generateMonthPickerFrameList(){
+        function formatMonth(year,month){
+            if(month === 0){
+                year -=1;
+                month=12 - month;
+            }else if(month > 12){
+                year +=1;
+                month=month - 12;
+            }
+            return {
+                text:year + "年" + month + "月",
+                value:year+"-" + (month < 10 ? "0"+month : month)
+            };
+        }
+        let currYear=(new Date()).getFullYear();
+        let currMonth=(new Date()).getMonth()+1;
+        let monthList=[];
+        for(let i=0;i<12;i++){
+            monthList.push({
+                left:i === 0 ? "" : formatMonth(currYear,currMonth+i-1),
+                middle:formatMonth(currYear,currMonth+i),
+                right:i === 11 ? "" : formatMonth(currYear,currMonth+i+1)
+            })
+        }
+        return monthList;
+
+    },
+    _generateDateArray(year,month,repaymentDateArr){
+        function getDatesCountOfMonth(Year,Month)
+        {
+            var d = new Date(Year,Month,0);
+            return d.getDate();
+        }
+        let dateArray=[];
+        let datesOfCurrMonth=getDatesCountOfMonth(year,month);//该月有多少天
+        let datesOfLastMonth=month - 1 >= 1 ? getDatesCountOfMonth(year,month - 1) : getDatesCountOfMonth(year-1,12);
+        let dayOfFirstDay=(new Date(year,month-1,1)).getDay();//该月的第一天是星期几，该值决定了要取上一个月的倒数那些天数，以用来填充日期数组
+
+        //上个月日期序号
+        for(let i=dayOfFirstDay;i>0;i--){
+            dateArray.push({
+                dateNumber:datesOfLastMonth-(i-1),
+                isToday:false,
+                hasRepayment:false,
+                inCurrMonth:false
+            });
+        }
+        //当前月日期序号
+        for(let j=1;j <= datesOfCurrMonth;j++){
+            dateArray.push({
+                dateNumber:j,
+                isToday:j === new Date().getDate() ?  true : false,
+                hasRepayment:repaymentDateArr.indexOf(j) > -1 ? true : false,
+                inCurrMonth:true
+            });
+        }
+        //下个月日期序号
+        let daysCountOfNextMonth=35 - dateArray.length;
+        for(let k=1;k <= daysCountOfNextMonth;k++){
+            dateArray.push({
+                dateNumber:k,
+                isToday:false,
+                hasRepayment:false,
+                inCurrMonth:false
+            });
+        }
+
+        return dateArray;
     },
     getAll(){
         return this._all;
     },
     clearAll(){
         this._all={
-            repaymentDashboardList:[],
+            currYear:(new Date()).getFullYear(),
+            currMonth:(new Date()).getMonth()+1,
+            currDate:(new Date()).getDate(),
+            monthPickerFrameList:[],
+            datePickerCellList:[],
             repaymentDetailList:[],
-            repaymentDashboardPageIndex:0,
-            repaymentDetailPageIndex:0
+            todayTotalRepaymentAmount:0
         };
     },
     getCurrPageIndex(type){
@@ -28,17 +103,29 @@ var RepaymentCalendarStore={
             return this._all.repaymentDetailPageIndex;
         }
     },
-    getCurrDashboardTime(index){
-        return this._all.repaymentDashboardList[index].date;
+    getCurrMonthTime(index){
+        return this._all.monthPickerFrameList[index].middle.value;
     },
-    updateListByType(type,source){
-        if(type === "dashboardList"){
-            this._all.repaymentDashboardList=this._all.repaymentDashboardList.concat(source.list);
-            this._all.repaymentDashboardPageIndex=source.pageIndex;
-        }else if(type === "detailList"){
-            this._all.repaymentDetailList=source.list;
-            this._all.repaymentDetailPageIndex=source.pageIndex;
+    extractRepaymentDate(list){
+        let repaymentDateArr=[];
+        for(let i=0;i<list.length;i++){
+            let date=new Date(list[i].date).getDate();
+            repaymentDateArr.push(date);
         }
+        return repaymentDateArr;
+    },
+    //updateListByType(type,source){
+    //    if(type === "dashboardList"){
+    //        this._all.repaymentDashboardList=this._all.repaymentDashboardList.concat(source.list);
+    //        this._all.repaymentDashboardPageIndex=source.pageIndex;
+    //    }else if(type === "detailList"){
+    //        this._all.repaymentDetailList=source.list;
+    //        this._all.repaymentDetailPageIndex=source.pageIndex;
+    //    }
+    //}
+    updateDatePickerCellList(repaymentDateArr){
+        let newDatePickerCellList=_generateDateArray(this._all.currYear,this._all.currMonth,repaymentDateArr);
+        this._all.datePickerCellList=newDatePickerCellList;
     }
 };
 MicroEvent.mixin(RepaymentCalendarStore);
@@ -72,15 +159,9 @@ appDispatcher.register(function(payload){
                 },
                 success(rs){
                     if(rs.code === 0){
-                        if(rs.data.list.length === 0){
-                            RepaymentCalendarStore.trigger("noDetailDataTemporally")
-                        }else {
-                            RepaymentCalendarStore.updateListByType("detailList",{
-                                list:rs.data.list,
-                                pageIndex:rs.data.pageIndex
-                            });
-                            RepaymentCalendarStore.trigger("change");
-                        }
+                        let repaymentDateArr=RepaymentCalendarStore.extractRepaymentDate(rs.data.list);
+                        RepaymentCalendarStore.updateDatePickerCellList(repaymentDateArr);
+                        RepaymentCalendarStore.trigger("change");
                     }
                 }
             });
