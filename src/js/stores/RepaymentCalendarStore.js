@@ -2,43 +2,45 @@ var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
 
+function generateMonthPickerFrameList(){
+    function formatMonth(year,month){
+        if(month === 0){
+            year -=1;
+            month=12 - month;
+        }else if(month > 12){
+            year +=1;
+            month=month - 12;
+        }
+        return {
+            text:year + "年" + month + "月",
+            value:year+"-" + (month < 10 ? "0"+month : month)
+        };
+    }
+    let currYear=(new Date()).getFullYear();
+    let currMonth=(new Date()).getMonth()+1;
+    let monthList=[];
+    for(let i=0;i<12;i++){
+        monthList.push({
+            left:i === 0 ? "" : formatMonth(currYear,currMonth+i-1),
+            middle:formatMonth(currYear,currMonth+i),
+            right:i === 11 ? "" : formatMonth(currYear,currMonth+i+1)
+        })
+    }
+    return monthList;
+}
 
 var RepaymentCalendarStore={
     _all:{
         currYear:(new Date()).getFullYear(),
         currMonth:(new Date()).getMonth()+1,
-        currDate:(new Date()).getDate(),
-        monthPickerFrameList:this._generateMonthPickerFrameList(),
+        currDate:0,
+        monthPickerFrameList:generateMonthPickerFrameList(),
         datePickerCellList:[],
         repaymentDetailList:[],
+        repaymentDashboardList:[],//每个月的回款统计列表
+        currMonth_zyjbx:0,//当月已结本息
+        currMonth_zdsbx:0,//当月待收本息
         todayTotalRepaymentAmount:0
-    },
-    _generateMonthPickerFrameList(){
-        function formatMonth(year,month){
-            if(month === 0){
-                year -=1;
-                month=12 - month;
-            }else if(month > 12){
-                year +=1;
-                month=month - 12;
-            }
-            return {
-                text:year + "年" + month + "月",
-                value:year+"-" + (month < 10 ? "0"+month : month)
-            };
-        }
-        let currYear=(new Date()).getFullYear();
-        let currMonth=(new Date()).getMonth()+1;
-        let monthList=[];
-        for(let i=0;i<12;i++){
-            monthList.push({
-                left:i === 0 ? "" : formatMonth(currYear,currMonth+i-1),
-                middle:formatMonth(currYear,currMonth+i),
-                right:i === 11 ? "" : formatMonth(currYear,currMonth+i+1)
-            })
-        }
-        return monthList;
-
     },
     _generateDateArray(year,month,repaymentDateArr){
         function getDatesCountOfMonth(Year,Month)
@@ -62,9 +64,13 @@ var RepaymentCalendarStore={
         }
         //当前月日期序号
         for(let j=1;j <= datesOfCurrMonth;j++){
+            let nowYear=new Date().getFullYear();
+            let nowMonth=new Date().getMonth()+1;
+            let nowDate=new Date().getDate();
+            let isToday= ( nowYear === year && nowMonth === month && j === nowDate) ? true : false;
             dateArray.push({
                 dateNumber:j,
-                isToday:j === new Date().getDate() ?  true : false,
+                isToday:isToday,
                 hasRepayment:repaymentDateArr.indexOf(j) > -1 ? true : false,
                 inCurrMonth:true
             });
@@ -85,47 +91,112 @@ var RepaymentCalendarStore={
     getAll(){
         return this._all;
     },
+    getCurrMonthTime(index){
+        return this._all.monthPickerFrameList[index].middle.value;
+    },
+    getCurrFullTime(){
+        let {
+            currYear,
+            currMonth,
+            currDate
+            }=this._all;
+        return currYear+"-"+(currMonth < 10 ? "0"+currMonth : currMonth)+"-"+(currDate < 10 ? "0"+currDate : currDate);
+    },
+    _extractRepaymentDateArr(list){
+        let repaymentDateArr=[];
+        for(let i=0;i<list.length;i++){
+            if(list[i].status === "unpaid"){
+                let date=new Date(list[i].date).getDate();
+                repaymentDateArr.push(date);
+            }
+        }
+        return repaymentDateArr;
+    },
+    _extractTotalRepaymentAmount(list){
+        let totalRepaymentAmount=0;
+        for(let i=0;i<list.length;i++){
+            if(list[i].status === "unpaid"){
+                totalRepaymentAmount +=list[i].interest + list[i].principle;
+            }
+        }
+        return totalRepaymentAmount.toFixed(2);
+    },
+    updateDatePickerCellList(list){
+        let repaymentDateArr=this._extractRepaymentDateArr(list);
+        let newDatePickerCellList=this._generateDateArray(this._all.currYear,this._all.currMonth,repaymentDateArr);
+        Object.assign(this._all,{
+            datePickerCellList:newDatePickerCellList
+        });
+    },
+    updateTodayTotalRepaymentAmount(list){
+        let totalRepaymentAmount=this._extractTotalRepaymentAmount(list);
+        Object.assign(this._all,{
+            todayTotalRepaymentAmount:totalRepaymentAmount
+        });
+    },
+    updateRepaymentDashboardList(list){
+        Object.assign(this._all,{
+            repaymentDashboardList:list
+        });
+    },
+    updateCurrDate(date){
+        Object.assign(this._all,{
+            currDate:date
+        });
+    },
+    updateCurrMonthRepaymentDashboard(){//更新当月已结本息和当月待收本息
+        let {
+            currYear,
+            currMonth,
+            repaymentDashboardList,
+            currMonth_zyjbx,
+            currMonth_zdsbx
+            }=this._all;
+        for(let i=0;i<repaymentDashboardList.length;i++){
+            let year=repaymentDashboardList[i].date.split("-")[0];
+            let month=repaymentDashboardList[i].date.split("-")[1];
+            if(currYear === parseInt(year) && currMonth === parseInt(month)){
+                currMonth_zyjbx=repaymentDashboardList[i].zyjbx;
+                currMonth_zdsbx=repaymentDashboardList[i].zdsbx;
+                break;
+            }
+        }
+
+        Object.assign(this._all,{
+            currMonth_zyjbx:currMonth_zyjbx,
+            currMonth_zdsbx:currMonth_zdsbx
+        });
+    },
+    updateCurrYearAndCurrMonth(monthTime){
+        let year=monthTime.split("-")[0];
+        let month=monthTime.split("-")[1];
+        Object.assign(this._all,{
+           currYear:parseInt(year),
+           currMonth:parseInt(month)
+        });
+    },
+    updateRepaymentDetailList(list){
+        Object.assign(this._all,{
+            repaymentDetailList:list
+        });
+    },
+    updateBeforeGetDatePickerCellList(source){
+        this.updateCurrDate(source.currDate);
+        this.updateCurrYearAndCurrMonth(source.monthTime);
+        this.updateCurrMonthRepaymentDashboard();
+        this._all.repaymentDetailList=[];
+        this._all.todayTotalRepaymentAmount=0;
+    },
     clearAll(){
         this._all={
             currYear:(new Date()).getFullYear(),
             currMonth:(new Date()).getMonth()+1,
-            currDate:(new Date()).getDate(),
+            currDate:0,
             monthPickerFrameList:[],
             datePickerCellList:[],
             repaymentDetailList:[],
             todayTotalRepaymentAmount:0
         };
-    },
-    getCurrPageIndex(type){
-        if(type === "dashboardList"){
-            return this._all.repaymentDashboardPageIndex;
-        }else {
-            return this._all.repaymentDetailPageIndex;
-        }
-    },
-    getCurrMonthTime(index){
-        return this._all.monthPickerFrameList[index].middle.value;
-    },
-    extractRepaymentDate(list){
-        let repaymentDateArr=[];
-        for(let i=0;i<list.length;i++){
-            let date=new Date(list[i].date).getDate();
-            repaymentDateArr.push(date);
-        }
-        return repaymentDateArr;
-    },
-    //updateListByType(type,source){
-    //    if(type === "dashboardList"){
-    //        this._all.repaymentDashboardList=this._all.repaymentDashboardList.concat(source.list);
-    //        this._all.repaymentDashboardPageIndex=source.pageIndex;
-    //    }else if(type === "detailList"){
-    //        this._all.repaymentDetailList=source.list;
-    //        this._all.repaymentDetailPageIndex=source.pageIndex;
-    //    }
-    //}
-    updateDatePickerCellList(repaymentDateArr){
-        let newDatePickerCellList=_generateDateArray(this._all.currYear,this._all.currMonth,repaymentDateArr);
-        this._all.datePickerCellList=newDatePickerCellList;
     }
 };
 MicroEvent.mixin(RepaymentCalendarStore);
@@ -133,7 +204,7 @@ MicroEvent.mixin(RepaymentCalendarStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "getInitialDashboardData_repaymentCalendar":
+        case "getRepaymentDashboardData_repaymentCalendar":
             ajax({
                 ciUrl:"/user/v2/financialReceivedPlansStat",
                 data:{
@@ -142,25 +213,43 @@ appDispatcher.register(function(payload){
                 },
                 success(rs){
                     if(rs.code === 0){
-                        RepaymentCalendarStore.updateListByType("dashboardList",{
-                            list:rs.data.list,
-                            pageIndex:rs.data.pageIndex
-                        });
-                        RepaymentCalendarStore.trigger("getInitialDashboardDataFinished");
+                        RepaymentCalendarStore.updateRepaymentDashboardList(rs.data.list);
+                        RepaymentCalendarStore.updateCurrMonthRepaymentDashboard();
+                        RepaymentCalendarStore.trigger("change");
                     }
                 }
             });
             break;
-        case "getRepaymentDetailList_repaymentCalendar":
+        case "getDatePickerCellList":
+            RepaymentCalendarStore.updateBeforeGetDatePickerCellList({
+                currDate:0,
+                monthTime:payload.data.monthTime
+            })
+            RepaymentCalendarStore.trigger("change");
             ajax({
                 ciUrl:"/user/v2/financialReceivedPlansList",
                 data:{
-                    date:payload.data.time
+                    date:payload.data.monthTime
                 },
                 success(rs){
                     if(rs.code === 0){
-                        let repaymentDateArr=RepaymentCalendarStore.extractRepaymentDate(rs.data.list);
-                        RepaymentCalendarStore.updateDatePickerCellList(repaymentDateArr);
+                        RepaymentCalendarStore.updateDatePickerCellList(rs.data.list);
+                        RepaymentCalendarStore.trigger("change");
+                    }
+                }
+            });
+            break;
+        case "selectDate_repaymentCalendar":
+            RepaymentCalendarStore.updateCurrDate(payload.data.date);
+            ajax({
+                ciUrl:"/user/v2/cal_to_day",
+                data:{
+                    date:RepaymentCalendarStore.getCurrFullTime()
+                },
+                success(rs){
+                    if(rs.code === 0){
+                        RepaymentCalendarStore.updateRepaymentDetailList(rs.data.list);
+                        RepaymentCalendarStore.updateTodayTotalRepaymentAmount(rs.data.list);
                         RepaymentCalendarStore.trigger("change");
                     }
                 }
@@ -171,48 +260,5 @@ appDispatcher.register(function(payload){
     }
 });
 
-/*
- {
- code: 0,
- data: {
- list: [
- {
- amount: 1613.9899999999998,
- date: 2016-04-27,
- recordcount: 2,
- status: paid
- },
- {
- amount: 1210.8,
- date: 2016-04-24,
- recordcount: 1,
- status: paid
- },
- {
- amount: 201.78,
- date: 2016-04-23,
- recordcount: 2,
- status: paid
- },
- {
- amount: 2.75,
- date: 2016-04-19,
- recordcount: 1,
- status: paid
- },
- {
- amount: 0.96,
- date: 2016-04-15,
- recordcount: 1,
- status: paid
- }
- ],
- pageIndex: 3,
- pageSize: 10,
- recordCount: 27
- },
- description: 成功
- }
-*/
 
 module.exports=RepaymentCalendarStore;

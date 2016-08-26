@@ -24,29 +24,31 @@ let MonthPickerCard=React.createClass({
             handleSliderFinished
             }=this.props;
         return (
-            <Slider
-                pager={false}
-                autoPlay={false}
-                onAction={handleSliderFinished}
-                loop={false}
-                controls={false}
-                interval={3600000}
-                className="monthPicker-card"
-            >
-                {
-                    monthPickerFrameList.map(function(item,index){
-                        return (
-                            <Slider.Item key={index+1}>
-                                <Grid>
-                                    <Col cols={2}>{item.left.text}</Col>
-                                    <Col cols={2} className="active">{item.middle.text}</Col>
-                                    <Col cols={2}>{item.right.text}</Col>
-                                </Grid>
-                            </Slider.Item>
-                        )
-                    }.bind(this))
-                }
-            </Slider>
+            <div className="monthPicker-card">
+                <Slider
+                    pager={false}
+                    autoPlay={false}
+                    onAction={handleSliderFinished}
+                    loop={false}
+                    controls={false}
+                    interval={3600000}
+                >
+                    {
+                        monthPickerFrameList.map(function(item,index){
+                            return (
+                                <Slider.Item key={index+1}>
+                                    <Grid>
+                                        <Col cols={2}>{item.left.text}</Col>
+                                        <Col cols={2} className="active">{item.middle.text}</Col>
+                                        <Col cols={2}>{item.right.text}</Col>
+                                    </Grid>
+                                </Slider.Item>
+                            )
+                        }.bind(this))
+                    }
+                </Slider>
+            </div>
+
         )
     }
 });
@@ -56,12 +58,12 @@ let RepaymentDashBoard=React.createClass({
         return (
             <Grid className="repaymentDashBoard">
                 <Col cols={3}>
-                    <span className="amount">1000.00</span>
+                    <span className="amount">{this.props.zdsbx}</span>
                     <span className="subtitle">当月预计待收本息(元)</span>
 
                 </Col>
                 <Col cols={3}>
-                    <span className="amount">1000.00</span>
+                    <span className="amount">{this.props.zyjbx}</span>
                     <span className="subtitle">当月已收本息(元)</span>
                 </Col>
             </Grid>
@@ -107,13 +109,14 @@ let DatePickerCardCell=React.createClass({
 let DatePickerCard=React.createClass({
     getInitialState(){
         return {
-            selectedDate:this.props.currDate
+            selectedDate:0
         }
     },
     _handleClick(selectedDate){
+        RepaymentCalendarAction.selectDate(selectedDate);
         this.setState({
             selectedDate:selectedDate
-        })
+        });
     },
     render(){
         let selectedDate=this.state.selectedDate;
@@ -147,6 +150,13 @@ let DatePickerCard=React.createClass({
                 </div>
             </Group>
         )
+    },
+    componentWillReceiveProps(nextProps){
+        if(nextProps.currDate === 0){
+            this.setState({
+                selectedDate:0
+            })
+        }
     }
 });
 
@@ -155,11 +165,11 @@ let DatePickerCard=React.createClass({
 let TodayRepaymentDetailList=React.createClass({
     _renderItemAfter(item){
         let itemAfter="";
-        if(item.priciple !== 0 && item.interest !== 0){
-            itemAfter="本息" + (item.priciple+item.interest).toFixed(2) + "元";
-        }else if(item.priciple !== 0 && item.interest === 0){
-            itemAfter="本金" + (item.priciple).toFixed(2) + "元";
-        }else if(item.interest !== 0 &&  item.priciple === 0){
+        if(item.principle !== 0 && item.interest !== 0){
+            itemAfter="本息" + (item.principle+item.interest).toFixed(2) + "元";
+        }else if(item.principle !== 0 && item.interest === 0){
+            itemAfter="本金" + (item.principle).toFixed(2) + "元";
+        }else if(item.interest !== 0 &&  item.principle === 0){
             itemAfter="利息" + (item.interest).toFixed(2) + "元";
         }
         return itemAfter;
@@ -187,14 +197,18 @@ let TodayRepaymentDetailList=React.createClass({
 
 let TodayTotalRepayment=React.createClass({
     render(){
-        return (
-            <Group className="todayTotalRepayment" noPadded>
-                <div className="wrapper">
-                   <span className="red-point"></span>
-                   <span className="title">今日回款总额：100元</span>
-                </div>
-            </Group>
-        )
+        if(!!parseFloat(this.props.todayTotalRepaymentAmount)){
+            return (
+                <Group className="todayTotalRepayment" noPadded>
+                    <div className="wrapper">
+                        <span className="red-point"></span>
+                        <span className="title">今日回款总额：{this.props.todayTotalRepaymentAmount}元</span>
+                    </div>
+                </Group>
+            )
+        }else {
+            return null;
+        }
     }
 });
 
@@ -208,14 +222,17 @@ let RepaymentCalendar=React.createClass({
     },
     _handleSlideFinished(index, direction){
         let currMonthTime=RepaymentCalendarStore.getCurrMonthTime(index);
-        RepaymentCalendarAction.getRepaymentDetailList(currMonthTime);
+        RepaymentCalendarAction.getDatePickerCellList(currMonthTime);
     },
     render(){
         let {
             currDate,
             monthPickerFrameList,
             datePickerCellList,
-            repaymentDetailList
+            repaymentDetailList,
+            currMonth_zyjbx,
+            currMonth_zdsbx,
+            todayTotalRepaymentAmount
             }=this.state.data;
         return (
             <Container scrollable={true}  id="repaymentCalendar" >
@@ -223,32 +240,30 @@ let RepaymentCalendar=React.createClass({
                     handleSliderFinished={this._handleSlideFinished}
                     monthPickerFrameList={monthPickerFrameList}
                 />
-                <RepaymentDashBoard/>
+                <RepaymentDashBoard
+                    zyjbx={currMonth_zyjbx}
+                    zdsbx={currMonth_zdsbx}
+                />
                 <DatePickerCard
                     currDate={currDate}
                     datePickerCellList={datePickerCellList}
                     />
-                <TodayTotalRepayment/>
-                <TodayRepaymentDetailList list={repaymentDetailList}/>
+                <TodayTotalRepayment
+                    todayTotalRepaymentAmount={todayTotalRepaymentAmount}
+                />
+                <TodayRepaymentDetailList
+                    list={repaymentDetailList}
+                />
             </Container>
         )
     },
     componentDidMount(){
-        RepaymentCalendarAction.getInitialDashboardData();
+        //获取某个月有的日历表格中的元素列表，默认获取当前月份的相关数据
+        let monthTime=RepaymentCalendarStore.getCurrMonthTime(0);
+        RepaymentCalendarAction.getDatePickerCellList(monthTime);
 
-        RepaymentCalendarStore.bind("getInitialDashboardDataFinished",function(){
-            this.setState({
-                data:RepaymentCalendarStore.getAll()
-            });
-            let currTime=RepaymentCalendarStore.getCurrDashboardTime(0);
-            RepaymentCalendarAction.getRepaymentDetailList(currTime);
-        }.bind(this));
-
-        RepaymentCalendarStore.bind("noDetailDataTemporally",function(){
-            this.setState({
-                hasDetailData:false
-            });
-        }.bind(this));
+        //获取某个月份的回款统计数据，默认获取当前月份的相关数据
+        RepaymentCalendarAction.getRepaymentDashboardData();
 
         RepaymentCalendarStore.bind("change",function(){
             this.setState({

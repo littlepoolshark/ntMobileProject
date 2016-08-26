@@ -120,7 +120,7 @@ let UserHome=React.createClass({
                         <Col cols={2} className="investmentRecord-entry-item">
                             <Link to="RepaymentCalendar">
                                 <Icon classPrefix="imgIcon" name="calendar"/>
-                                <span className="title">回款计划</span>
+                                <span className="title">回款日历</span>
                                 <span className="subtitle">本月<strong>{hcCount}</strong>笔</span>
                             </Link>
                         </Col>

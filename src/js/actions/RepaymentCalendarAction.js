@@ -1,16 +1,24 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var RepaymentCalendarAction={
-    getInitialDashboardData(){
+    getDatePickerCellList(monthTime){
         appDispatcher.dispatch({
-            actionName:"getInitialDashboardData_repaymentCalendar"
+            actionName:"getDatePickerCellList",
+            data:{
+                monthTime:monthTime
+            }
         })
     },
-    getRepaymentDetailList(time){
+    getRepaymentDashboardData(){
         appDispatcher.dispatch({
-            actionName:"getRepaymentDetailList_repaymentCalendar",
+            actionName:"getRepaymentDashboardData_repaymentCalendar",
+        })
+    },
+    selectDate(date){
+        appDispatcher.dispatch({
+            actionName:"selectDate_repaymentCalendar",
             data:{
-                time:time
+                date:date
             }
         })
     }
