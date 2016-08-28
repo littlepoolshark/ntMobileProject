@@ -10,6 +10,10 @@ import TransitionEvents from './utils/TransitionEvents';
 import Icon from './Icon';
 import Touchable from './Touchable';
 
+let microEvent=require("../lib/microevent");
+let pubsub={};
+microEvent.mixin(pubsub);
+
 const Slider = React.createClass({
   mixins: [ClassNameMixin],
 
@@ -76,6 +80,14 @@ const Slider = React.createClass({
 
   componentDidMount() {
     this.props.autoPlay && this.waitForNext();
+
+    pubsub.bind("slider.next",function(){
+      this.next();
+    }.bind(this));
+
+    pubsub.bind("slider.prev",function(){
+      this.prev();
+    }.bind(this));
   },
 
   componentWillUnmount() {
@@ -117,7 +129,6 @@ const Slider = React.createClass({
       }
       index = React.Children.count(this.props.children) - 1;
     }
-
     this.handleSelect(index, 'prev');
   },
 
@@ -316,6 +327,15 @@ const Slider = React.createClass({
     );
   }
 });
+
+
+Slider.next=function(){
+  pubsub.trigger("slider.next");
+};
+
+Slider.prev=function(){
+  pubsub.trigger("slider.prev");
+};
 
 Slider.Item = React.createClass({
   propTypes: {

@@ -18,6 +18,12 @@ import NoDataHint from "./utilities/NoDataHint";
 
 
 let MonthPickerCard=React.createClass({
+    _next(){
+        Slider.next();
+    },
+    _prev(){
+        Slider.prev();
+    },
     render(){
         let {
             monthPickerFrameList,
@@ -38,9 +44,9 @@ let MonthPickerCard=React.createClass({
                             return (
                                 <Slider.Item key={index+1}>
                                     <Grid>
-                                        <Col cols={2}>{item.left.text}</Col>
+                                        <Col cols={2} onClick={this._prev}>{item.left.text}</Col>
                                         <Col cols={2} className="active">{item.middle.text}</Col>
-                                        <Col cols={2}>{item.right.text}</Col>
+                                        <Col cols={2} onClick={this._next}>{item.right.text}</Col>
                                     </Grid>
                                 </Slider.Item>
                             )
