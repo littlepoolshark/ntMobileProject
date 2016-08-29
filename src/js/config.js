@@ -59,7 +59,8 @@ let config={
         "FixedLoanInvestmentRecord":"项目直投投资明细",
         "CreditorLoanInvestmentRecord":"债权转让投资明细",
         "RepaymentSchedule":"好采投详情",
-        "AssignmentOfDebt":"债权转让"
+        "AssignmentOfDebt":"债权转让",
+        "NewbieGuide":"新手任务"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",

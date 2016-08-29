@@ -47,3 +47,4 @@ export CreditorLoanInvestmentRecord from "./CreditorLoanInvestmentRecord";
 export RepaymentSchedule from "./RepaymentSchedule";
 export AssignmentOfDebt from "./AssignmentOfDebt";
 export AssignmentDebtSuccess from "./AssignmentDebtSuccess";
+export NewbieGuide from "./NewbieGuide";

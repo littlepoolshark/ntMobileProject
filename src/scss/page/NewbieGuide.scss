@@ -1,0 +1,67 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#newbieGuide {
+  background:#fff9e5;
+
+  .content-wrapper {
+    width:rem-calc(300);
+    margin:rem-calc(15) auto 0;
+    padding-bottom:rem-calc(30);
+  }
+
+  .task-item-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .text-section {
+      @include color-and-fontSize($C3,$T6);
+
+      strong {
+        @include color-and-fontSize($C1,$T4);
+      }
+    }
+    .img-section > img {
+      height:rem-calc(100);
+      width:auto;
+    }
+
+    .isFinish-flag {
+      width:rem-calc(85);
+      height:rem-calc(25);
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: rem-calc(15);
+
+      &.success {
+        @include color-and-fontSize(#2991bf,$T8);
+        border:1px solid #2991bf;
+      }
+      &.warning {
+        @include color-and-fontSize($C1,$T8);
+        border:1px solid $C1;
+      }
+
+      .imgIcon {
+        width:rem-calc(15);
+        height:rem-calc(15);
+        margin-right:rem-calc(2);
+      }
+    }
+  }
+
+
+  .guide-path {
+    display:block;
+    margin:0 auto;
+    padding:rem-calc(3) 0 rem-calc(10);
+  }
+}
