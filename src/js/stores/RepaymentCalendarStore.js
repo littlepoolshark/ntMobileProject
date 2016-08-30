@@ -77,6 +77,7 @@ var RepaymentCalendarStore={
         }
         //下个月日期序号
         let daysCountOfNextMonth=35 - dateArray.length;
+        daysCountOfNextMonth=daysCountOfNextMonth < 0 ? daysCountOfNextMonth + 7 : daysCountOfNextMonth;
         for(let k=1;k <= daysCountOfNextMonth;k++){
             dateArray.push({
                 dateNumber:k,

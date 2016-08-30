@@ -45,7 +45,7 @@ appDispatcher.register(function(payload){
                 success:function(rs){
                     if(rs.code === 0){
                         for(let i=0;i<rs.data.list.length;i++){
-                            rs.data.list[i].pic="http://192.168.1.90:9090"+rs.data.list[i].pic;
+                            rs.data.list[i].pic="http://192.168.1.9:9090"+rs.data.list[i].pic;
                         }
                         HomeStore.setAll({
                             bannerList:rs.data.list

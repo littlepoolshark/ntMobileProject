@@ -1,5 +1,6 @@
 require("../../scss/page/NewbieGuide.scss");
 import React from "react";
+import { Link } from "react-router";
 
 import Container from "../UIComponents/Container";
 import Icon from "../UIComponents/Icon";
@@ -40,8 +41,22 @@ let GuidePath=React.createClass({
 });
 
 let TaskItem=React.createClass({
-    _renderItemBody(taskIndex,isFinished,rewardScore){
+    _jumpToNextLocation(pathname){
+        let data={
+            pathname:pathname
+        };
+
+        if(pathname === "setDealPassword"){
+            data.query={
+                actionType:"setting"
+            }
+        }
+
+        this.context.router.push(data);
+    },
+    _renderItemBody(isFirstNotFinished,taskIndex,isFinished,rewardScore){
         let body=null;
+        let lockClasses=isFirstNotFinished ? "lock shake" : "lock";
         switch (taskIndex){
             case 1:
                 body=(
@@ -54,11 +69,16 @@ let TaskItem=React.createClass({
                                 <span>{isFinished ? "已认证" : "未认证"}</span>
                             </div>
                         </div>
-                        <div className="img-section">
+                        <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"realNameAuthentication") : null}>
                             {
                                 isFinished ?
-                                <img src="/src/img/badge_authentication.png" alt=""/> :
-                                <img src="/src/img/bg_lock.png" alt=""/>
+                                <img src="/src/img/badge_authentication.png" alt="" className="bg-img"/> :
+                                <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                            }
+                            {
+                                !isFinished ?
+                                    <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                    null
                             }
                         </div>
                     </div>
@@ -67,14 +87,19 @@ let TaskItem=React.createClass({
             case 2:
                 body=(
                     <div className="task-item-body">
-                        <div className="img-section">
+                        <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"setDealPassword") : null}>
                             {
                                 isFinished ?
-                                    <img src="/src/img/badge_set.png" alt=""/> :
-                                    <img src="/src/img/bg_lock.png" alt=""/>
+                                    <img src="/src/img/badge_set.png" alt="" className="bg-img"/> :
+                                    <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                            }
+                            {
+                                !isFinished ?
+                                    <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                    null
                             }
                         </div>
-                        <div className="text-section">
+                        <div className="text-section" >
                             <div>设置交易密码</div>
                             <div>理财更安全</div>
                             <div className={"isFinish-flag " + (isFinished ? "success" : "warning")}>
@@ -88,7 +113,7 @@ let TaskItem=React.createClass({
             case 3:
                 body=(
                     <div className="task-item-body">
-                        <div className="text-section">
+                        <div className="text-section" >
                             <div>绑定银行卡</div>
                             <div>获得<strong>{rewardScore}</strong>积分</div>
                             <div className={"isFinish-flag " + (isFinished ? "success" : "warning")}>
@@ -96,11 +121,16 @@ let TaskItem=React.createClass({
                                 <span>{isFinished ? "已绑定" : "未绑定"}</span>
                             </div>
                         </div>
-                        <div className="img-section">
+                        <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"bindBankCard") : null}>
                             {
                                 isFinished ?
-                                <img src="/src/img/badge_card.png" alt=""/> :
-                                <img src="/src/img/bg_lock.png" alt=""/>
+                                <img src="/src/img/badge_card.png" alt="" className="bg-img"/> :
+                                <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                            }
+                            {
+                                !isFinished ?
+                                    <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                    null
                             }
                         </div>
                     </div>
@@ -109,11 +139,16 @@ let TaskItem=React.createClass({
             case 4:
                 body=(
                     <div className="task-item-body">
-                        <div className="img-section">
+                        <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"productList"): null}>
                             {
                                 isFinished ?
-                                    <img src="/src/img/badge_new.png" alt=""/> :
-                                    <img src="/src/img/bg_lock.png" alt=""/>
+                                <img src="/src/img/badge_new.png" alt="" className="bg-img"/> :
+                                <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                            }
+                            {
+                                !isFinished ?
+                                <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                null
                             }
                         </div>
                         <div className="text-section">
@@ -131,18 +166,18 @@ let TaskItem=React.createClass({
             default:
                 break;
         }
-
         return body;
     },
     render(){
         let {
+            isFirstNotFinished,
             taskIndex,
             isFinished,
             rewardScore
             }=this.props;
         return (
             <div className="task-item">
-                {this._renderItemBody(taskIndex,isFinished,rewardScore)}
+                {this._renderItemBody(isFirstNotFinished,taskIndex,isFinished,rewardScore)}
                 {
                     taskIndex !== 4 ?
                     (
@@ -158,25 +193,33 @@ let TaskItem=React.createClass({
     }
 });
 
+TaskItem.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
+
 let NewbieGuide = React.createClass({
     render() {
         let testData=[
             {
+                isFirstNotFinished:false,
                 taskIndex:1,
                 isFinished:true,
                 rewardScore:50
             },
             {
+                isFirstNotFinished:false,
                 taskIndex:2,
                 isFinished:true,
                 rewardScore:50
             },
             {
+                isFirstNotFinished:false,
                 taskIndex:3,
                 isFinished:true,
                 rewardScore:50
             },
             {
+                isFirstNotFinished:true,
                 taskIndex:4,
                 isFinished:false,
                 rewardScore:50
@@ -184,7 +227,13 @@ let NewbieGuide = React.createClass({
         ]
         return (
                <Container scrollable={true} id="newbieGuide">
-                   <img src="/src/img/task_banner.png" alt=""/>
+                   <div className="banner-bar">
+                       <img src="/src/img/task_banner.png" alt=""/>
+                       <div className="dashboard">
+                           已解锁<strong>2</strong>关
+                           <Icon classPrefix="imgIcon" name="gold-coin2"/>
+                       </div>
+                   </div>
                    <div className="content-wrapper">
                        {
                            testData.map(function(item,index){

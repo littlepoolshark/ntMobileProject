@@ -1,7 +1,7 @@
 require("../../scss/page/FixedLoanIntroduction.scss");
 let FixedLoanIntroductionAction=require("../actions/FixedLoanIntroductionAction.js");
 let FixedLoanIntroductionStore=require("../stores/FixedLoanIntroductionStore.js");
-/*let InvestmentRecordAction=require("../actions/InvestmentRecordAction.js");*/
+
 import React from "react";
 import classNames from "classnames";
 import CSSCore from "../UIComponents/utils/CSSCore";

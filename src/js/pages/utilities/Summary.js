@@ -47,7 +47,8 @@ let Summary=React.createClass({
             repaymentTypeUnit,
             remainAmount,
             buyProgress,
-            totalAmount
+            totalAmount,
+            rewardRate
             }=this.props;
 
         let tagClass=classNames({
@@ -63,6 +64,11 @@ let Summary=React.createClass({
                             <div className="title">
                                 <span className="amount">{productApr}</span>
                                 <span className="unit">%</span>
+                                {
+                                    !!rewardRate ?
+                                    <span className="rewardRate">{"+" + (rewardRate * 100).toFixed(1)+ "%"}</span> :
+                                    null
+                                }
                             </div>
                             <div className="subtitle">年化利率</div>
                         </Col>

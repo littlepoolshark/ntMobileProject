@@ -24,7 +24,7 @@ import cookie from "../lib/cookie";
 
 
 //首页:Index component
-HomeAction.getDataFromServer();
+
 let Home=React.createClass({
     mixins:[mixin],
     _getAllDataFromStore(){
@@ -44,26 +44,19 @@ let Home=React.createClass({
             <Container scrollable={false} style={{overflow:"scroll"}} >
 
                 <Slider>
-                    {/*bannerList.map(function(item,index){
+                    {
+                        bannerList.map(function(item,index){
                         return (
                             <Slider.Item key={index + 1}>
                                 <img src={item.pic} />
                             </Slider.Item>
                         )
 
-                    })*/}
-                    <Slider.Item >
-                        <img src="/src/img/banner_01.jpg" />
-                    </Slider.Item>
-                    <Slider.Item >
-                        <img src="/src/img/banner_02.jpg" />
-                    </Slider.Item>
-                    <Slider.Item >
-                        <img src="/src/img/banner_04.jpg" />
-                    </Slider.Item>
+                    })
+                    }
                 </Slider>
 
-                <Group header=""  style={{marginTop:0}}>
+                <Group header=""  style={{margin:0}}>
                     <Grid collapse={true}>
                         <Col cols={3} className="home-introduction-item">
                             <div className="platform-icon"></div>
@@ -81,6 +74,10 @@ let Home=React.createClass({
                         </Col>
                     </Grid>
                 </Group>
+
+                <div className="newbieGuide-bar">
+                    <Link to="newbieGuide"> <img src="/src/img/banner_newbietask_enter.png" alt=""/></Link>
+                </div>
 
                 {
                     productList.map(function(item,index){
@@ -107,7 +104,8 @@ let Home=React.createClass({
         )
     },
     componentDidMount(){
-        console.log("token:",cookie.getCookie("token"));
+        HomeAction.getDataFromServer();
+
         HomeStore.bind("change",function(){
             this.setState(this._getAllDataFromStore())
         }.bind(this));

@@ -60,7 +60,12 @@ let config={
         "CreditorLoanInvestmentRecord":"债权转让投资明细",
         "RepaymentSchedule":"好采投详情",
         "AssignmentOfDebt":"债权转让",
-        "NewbieGuide":"新手任务"
+        "NewbieGuide":"新手任务",
+        "ServiceAgreement_ttz_product":"天天赚服务协议",
+        "ServiceAgreement_yyz_product":"月月赚服务协议",
+        "ServiceAgreement_jjz_product":"季季赚服务协议",
+        "ServiceAgreement_loan_product":"好采投服务协议",
+        "ServiceAgreement_creditor_product":"债权转让服务协议"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",

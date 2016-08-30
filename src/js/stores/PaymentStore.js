@@ -13,7 +13,8 @@ var PaymentStore={
         expectedReward:0.00,//预期收益，是一个计算属性
         remainAmount:0,//项目可购买金额
         userBalance:0,//用户账户余额
-        unUseCouponCount:0//未使用优惠券的数量
+        unUseCouponCount:0,//未使用优惠券的数量
+        rewardRate:0//标的的奖励利息
     },
     getAll(){
         return this._all;

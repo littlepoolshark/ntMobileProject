@@ -1,0 +1,85 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+.protocol {
+  &.container {
+    padding:rem-calc(15);
+  }
+  h2 {
+    font-weight: normal;
+    @include color-and-fontSize($C3,$T4);
+  }
+  h3 {
+    font-weight: normal;
+    @include color-and-fontSize($C3,$T6);
+  }
+  h4 {
+    font-weight: normal;
+    @include color-and-fontSize($C3,$T8);
+  }
+  h5 {
+    font-weight: normal;
+    @include color-and-fontSize($C3,$T9);
+  }
+  h6 {
+    font-weight: normal;
+    @include color-and-fontSize($C3,$T10);
+  }
+  p {
+    margin:rem-calc(5);
+    @include color-and-fontSize($C4,$T9);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  h1,h2,h3,h4,h5,h6{
+    margin: 5px 0;
+    color: #333;
+    font-weight: normal;
+  }
+  .nt-agreement-article{
+    color: #999;
+    font-size: 14px;
+  }
+  .nt-agreement-tit{
+    margin: 0 -10px;
+    padding-bottom: 5px;
+    color: #333;
+    font-size: 20px;
+    text-align: center;
+  }
+  .nt-agreement-code{
+    margin: 2px -10px 20px;
+    padding-right: 20px;
+    text-align: right;
+  }
+  .nt-agreement-paragraph{
+    text-indent: 2em;
+  }
+  .nt-agreement-list .nt-agreement-list{
+    margin-left: 10px;
+  }
+  .nt-agreement-cell{
+    margin: 5px 0;
+  }
+  .nt-agreement-tag1,.nt-agreement-tag2,.nt-agreement-tag3{
+    color: #333;
+  }
+  .nt-agreement-tag1{
+    font-size: 15px;
+  }
+  .nt-agreement-tag2{
+    font-size: 14px;
+  }
+  .nt-agreement-tag3{
+    font-size: 13px;
+  }
+}

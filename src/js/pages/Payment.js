@@ -118,7 +118,8 @@ let Payment=React.createClass({
             productName,
             productApr,
             remainAmount,
-            userBalance
+            userBalance,
+            rewardRate
             }=this.props.location.query;
         let {
             couponAmount,
@@ -131,7 +132,15 @@ let Payment=React.createClass({
                 <Group>
                     <h6 className="title">{productName}</h6>
                     <div className="subtitle">
-                        <span>年华利率：</span><strong>{productApr+"%"}</strong>
+                        <span>年华利率：</span>
+                        <strong>
+                            {productApr+"%"}
+                            {
+                                !!rewardRate ?
+                                    <span>{"+"+(parseFloat(rewardRate) * 100).toFixed(1)+"%"}</span> :
+                                    null
+                            }
+                        </strong>
                     </div>
                     <div className="subtitle">
                         <span>项目可投金额：</span><strong>{remainAmount}</strong>元
@@ -188,7 +197,8 @@ let Payment=React.createClass({
             productName,
             productApr,
             remainAmount,
-            userBalance
+            userBalance,
+            rewardRate
             }=this.props.location.query;
 
         //使用location的数据来初始化PaymentStore
@@ -198,7 +208,8 @@ let Payment=React.createClass({
             productName:productName,
             productApr:parseFloat((parseFloat(productApr)/100)),
             remainAmount:parseFloat(remainAmount),
-            userBalance:parseFloat(userBalance)
+            userBalance:parseFloat(userBalance),
+            rewardRate:parseFloat(rewardRate)
         });
 
         //请求优惠券可使用的张数

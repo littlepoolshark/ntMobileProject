@@ -27,6 +27,18 @@
     .slogan {
       margin-bottom:0;
     }
+
+    .title {
+      position: relative;
+
+      .rewardRate {
+        display:inline-block;
+        @include color-and-fontSize($C1,$T10);
+        position:absolute;
+        top:0;
+        right:rem-calc(-15);
+      }
+    }
   }
 
   .tabs {

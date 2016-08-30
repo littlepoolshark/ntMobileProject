@@ -38,7 +38,8 @@ let PurchaseButton=React.createClass({
             status,
             productName,
             remainAmount,
-            productApr
+            productApr,
+            rewardRate
             }=this.props;
 
         let _self=this;
@@ -49,7 +50,8 @@ let PurchaseButton=React.createClass({
             productId:id,
             productName:productName,
             remainAmount:remainAmount,
-            productApr:productApr
+            productApr:productApr,
+            rewardRate:rewardRate
         };
         if(productStatusText === "售罄"){
             Message.broadcast("该标的已经售罄！");

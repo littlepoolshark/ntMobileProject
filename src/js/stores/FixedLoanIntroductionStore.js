@@ -57,7 +57,8 @@ appDispatcher.register(function(payload){
                             productName:data.title,
                             status:data.status,
                             bidDays:data.bidDays,
-                            publishTime:data.publishTime
+                            publishTime:data.publishTime,
+                            rewardRate:data.rewardRate
                         };
                         FixedLoanIntroductionStore.setAll(FixedLoanIntroductionStore.processData(source));
                         FixedLoanIntroductionStore.trigger("change");

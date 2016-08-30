@@ -75,7 +75,8 @@ let ProductListCommonCard=React.createClass({
             repaymentTypeUnit,
             remainAmount,
             status,
-            isFirstChild
+            isFirstChild,
+            rewardRate
             }=this.props;
         let isSoldOut=this._getProductStatusText(type,status) === "售罄" ? true : false ;
         let pathName="";
@@ -100,7 +101,15 @@ let ProductListCommonCard=React.createClass({
                             <Grid collapse={true}>
                                 <Col cols={2}>
                                     <div className="subtitle text-left" >年化收益</div>
-                                    <div className="yearRate">{this._yearRateFormater(productApr)}<span className="unit">%</span></div>
+                                    <div className="yearRate">
+                                        {this._yearRateFormater(productApr)}
+                                        <span className="unit">%</span>
+                                        {
+                                            !!rewardRate ?
+                                            <span className="rewardRate">{"+"+(rewardRate * 100).toFixed(1) + "%"}</span> :
+                                            null
+                                        }
+                                    </div>
                                 </Col>
                                 <Col cols={4}>
                                     <div className="subtitle" >投资期限</div>

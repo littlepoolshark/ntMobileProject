@@ -20,6 +20,7 @@ import Message from "../UIComponents/Message";
 
 //utilities
 import cookie from "../lib/cookie";
+import RegisterServiceAgreement from "./ServiceAgreement_register";
 
  //登录组件
  let LoginView=React.createClass({
@@ -102,34 +103,13 @@ let RegisterView=React.createClass({
                     <Button amStyle="primary" block radius={true} onClick={this._getVerificationCode}>获取验证码</Button>
                 </div>
                 <Modal
-                    title="农泰金融服务协议"
+                    title="农泰金融注册服务协议"
                     ref="modal"
                     isOpen={false}
                     role="popup"
                     onDismiss={this._handleClose}
                 >
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
-                    <p>农泰金融服务协议</p>
+                    <RegisterServiceAgreement />
                 </Modal>
             </div>
         )

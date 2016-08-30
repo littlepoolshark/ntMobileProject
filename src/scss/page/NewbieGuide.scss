@@ -7,8 +7,72 @@
 // Mixin
 @import "../helper/mixins";
 
+@keyframes lock-shake {
+  0%, 100% {
+    transform: rotate(-45deg);
+  }
+  10% {
+    transform: rotate(40deg);
+  }
+  20% {
+    transform: rotate(-35deg);
+  }
+  30% {
+    transform:rotate(30deg);
+  }
+  40% {
+    transform: rotate(-25deg);
+  }
+  50% {
+    transform: rotate(25deg);
+  }
+  60% {
+    transform: rotate(-20deg);
+  }
+  70% {
+    transform: rotate(15deg);
+  }
+  80% {
+    transform: rotate(-10deg);
+  }
+  90% {
+    transform: rotate(0deg);
+  }
+}
 #newbieGuide {
   background:#fff9e5;
+
+  .banner-bar {
+    position:relative;
+
+    .dashboard {
+      width:rem-calc(145);
+      height:rem-calc(35);
+      @include color-and-fontSize($white,$T4);
+      background-color:#419cc9;
+      border-radius:rem-calc(18);
+      position: absolute;
+      left:50%;
+      margin-left:rem-calc(-72);
+      bottom:rem-calc(3);
+      display:flex;
+      justify-content: center;
+      align-items: center;
+
+      strong {
+        margin:0 rem-calc(5);
+        @include color-and-fontSize($white,$T1);
+      }
+
+      .imgIcon-gold-coin2 {
+        height:rem-calc(35);
+        width:rem-calc(35);
+        position:absolute;
+        left:rem-calc(-10);
+        top:0;
+      }
+    }
+  }
 
   .content-wrapper {
     width:rem-calc(300);
@@ -28,14 +92,33 @@
         @include color-and-fontSize($C1,$T4);
       }
     }
-    .img-section > img {
-      height:rem-calc(100);
-      width:auto;
+    .img-section {
+      position:relative;
+
+      .bg-img {
+        height:rem-calc(100);
+        width:auto;
+      }
+
+      .lock {
+        width:rem-calc(45);
+        height:auto;
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin-left:rem-calc(-22);
+        margin-top:rem-calc(-30);
+
+        &.shake {
+          animation:lock-shake 1.5s infinite;
+        }
+      }
     }
 
+
     .isFinish-flag {
-      width:rem-calc(85);
-      height:rem-calc(25);
+      width:rem-calc(80);
+      height:rem-calc(23);
       display:flex;
       justify-content: center;
       align-items: center;
