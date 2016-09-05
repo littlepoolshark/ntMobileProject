@@ -5,10 +5,13 @@ var ajax=require("../lib/ajax.js");
 var PaymentStore={
     _all:{
         productName:"--",//产品名称
+        productType:"",//产品类型，包括new_product,ttz_product,yyz_product,jjz_product,loan_product,creditor_product
+        productDeadline:1,//项目期限
         purchaseAmount:0,//用户购买金额
         couponType:"",//优惠券的类型，"interestRate"是加息券，"redPackage"是红包
         couponAmount:0,//优惠券的额度，如果优惠券为“加息券”的话，则单位是%；如果优惠券为“红包”的话，则单位是元。
         couponId:"",//优惠券的id
+        incomePeriod:0,//加息券的加息期限，单位是“月”
         productApr:0,//年化利率
         expectedReward:0.00,//预期收益，是一个计算属性
         remainAmount:0,//项目可购买金额
@@ -26,17 +29,85 @@ var PaymentStore={
     * @desc 计算预期收益
     */
     _setExpectedReward(){
+        function toFixedTwo(number){
+            let number_str=""+number;
+            let arr=[];
+            let index=number_str.indexOf(".");
+            if(index === -1){  //整数
+                return parseFloat(number_str+".00");
+            }else {
+                arr=number_str.split(".");
+                if(arr[1].length === 1){  //小数点后面有一位数字
+                    return parseFloat([arr[0],arr[1]+"0"].join("."));
+                }else if(arr[1].length === 2){ //小数点后面有两位数字
+                    return parseFloat([arr[0],arr[1]].join("."));
+                }else { //小数点后面大于两位数字
+                    return parseFloat([arr[0],arr[1].substring(0,2)].join("."));
+                }
+            }};
         let {
+            productType,
+            productDeadline,
             couponType,
             couponAmount,
             expectedReward,
             purchaseAmount,
-            productApr
+            productApr,
+            incomePeriod,
+            rewardRate,
+            mainMonth,//剩余未还息期限,计算债权转让预期收益专用
+            minNotRateTime,//最低未还息时间,计算债权转让预期收益专用
+            maxNotRateTime//最高未还息时间,计算债权转让预期收益专用
             }=this._all;
-        if(couponType === "interestRate" && couponAmount){//如果用户选择的是加息券
-            expectedReward=(purchaseAmount * (productApr+couponAmount) / 12).toFixed(2);
-        }else {//其他情况
-            expectedReward=(purchaseAmount * productApr / 12).toFixed(2);
+
+        let principal_reward= 0,//本金所产生的收益
+            rewardRate_reward= 0,//奖励利率所产生的收益
+            coupon_reward=0;//加息券所产生的收益
+
+
+        switch (productType){
+            case "new_product":
+                principal_reward=toFixedTwo((purchaseAmount * productApr / 360) * productDeadline);
+                expectedReward=principal_reward.toFixed(2);
+                break;
+            case "yyz_product":
+                principal_reward=toFixedTwo((purchaseAmount * productApr)/12);
+                if(!!couponAmount){
+                    coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12);
+                }
+                expectedReward=(principal_reward+ coupon_reward).toFixed(2);
+                break;
+            case "jjz_product":
+                principal_reward=toFixedTwo((purchaseAmount * productApr)/12) * 3;
+                if(!!couponAmount){
+                    coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12) * 3;
+                }
+                expectedReward=(principal_reward+ coupon_reward).toFixed(2);
+                break;
+            case "loan_product":
+                principal_reward=toFixedTwo((purchaseAmount * productApr)/12) * productDeadline;
+                if(!!couponAmount && couponType === "interestRate"){
+                    if(incomePeriod !== 0 && productDeadline > incomePeriod){
+                        coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12) * incomePeriod;
+                    }else {
+                        coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12) * productDeadline;
+                    }
+                }
+                if(!!rewardRate){
+                    rewardRate_reward=toFixedTwo((purchaseAmount * rewardRate)/12) * productDeadline;
+                }
+                expectedReward=(principal_reward + coupon_reward + rewardRate_reward).toFixed(2);
+                break;
+            case "creditor_product":
+                let monthRate=toFixedTwo((purchaseAmount * productApr)/12);
+                let dayRate=toFixedTwo((purchaseAmount * productApr)/360);
+                let minProfit=toFixedTwo(monthRate  *  mainMonth +  dayRate * minNotRateTime);
+                let maxProfit=toFixedTwo(monthRate  *  mainMonth +  dayRate * maxNotRateTime);
+
+                expectedReward=minProfit.toFixed(2) + " ~ " + maxProfit.toFixed(2);
+                break;
+            default:
+                break;
         }
         this._all.expectedReward=expectedReward;
     },
@@ -157,7 +228,8 @@ appDispatcher.register(function(payload){
                 couponId:payload.data.couponId,
                 couponAmount:payload.data.couponAmount,
                 couponType:payload.data.couponType,
-                couponMinimumLimit:payload.data.couponMinimumLimit
+                couponMinimumLimit:payload.data.couponMinimumLimit,
+                incomePeriod:payload.data.incomePeriod
             });
             PaymentStore.trigger("change");
             break;

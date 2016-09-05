@@ -21,7 +21,6 @@ let AppSetting=React.createClass({
         AppSettingAction.logout();
     },
     _refreshApp(){
-        console.log("asdfsad");
         window.location.reload(true);
     },
     render(){
@@ -44,11 +43,11 @@ let AppSetting=React.createClass({
 
                 <List>
                     <List.Item
-                        href="##"
+                        href="#/aboutUs"
                         title="关于我们"
                         media={<Icon classPrefix="imgIcon" name="love-heart"/>}
                         />
-                    <List.Item
+                    {/* <List.Item
                         href="##"
                         title="客服QQ"
                         media={<Icon classPrefix="imgIcon" name="qq-icon"/>}
@@ -57,27 +56,29 @@ let AppSetting=React.createClass({
                         href="##"
                         title="微信公众号"
                         media={<Icon classPrefix="imgIcon" name="weixin"/>}
-                        />
+                        />*/}
                 </List>
 
-                <Group>
-                    <div className="serverPhone-title">
+                <a href="tel:4006322688">
+                    <Group>
+                        <div className="serverPhone-title">
                         <span className="icon-wrapper">
                             <Icon classPrefix="imgIcon" name="phone-call"/>
                             <span>客服电话</span>
                         </span>
-                        <span className="serverPhoneNo">400-6322-688</span>
-                    </div>
-                    <div className="serverPhone-footer">客服时间：工作日9:00-18:00</div>
-                </Group>
+                            <span className="serverPhoneNo">400-6322-688</span>
+                        </div>
+                        <div className="serverPhone-footer">客服时间：工作日9:00-18:00</div>
+                    </Group>
+                </a>
 
-                <List onClick={this._refreshApp}>
+                {/* <List onClick={this._refreshApp}>
                     <List.Item
                         href="javascript:void(0)"
                         title="刷新应用"
                         media={<Icon  name="refresh" style={{fontSize:"1rem",color:"#df4b3c",fontWeight:"bold"}}/>}
                         />
-                </List>
+                </List>*/}
 
                 <div className="block-btn-wrapper">
                     <Button amStyle="primary" block radius onClick={this._handleLogout}>退出登录</Button>

@@ -27,15 +27,6 @@ appDispatcher.register(function(payload){
                     scope:payload.data.productType
                 },
                 success(rs){
-                    let test={
-                        id:1,
-                        type:"redPackage",
-                        couponAmount:200,
-                        investmentMinLimit:5000,
-                        useScope:"季季赚，好采投",
-                        source:"主动派送加息券",
-                        deadline:"2016-07-01"
-                    }
 
                     let couponList=rs.data.list[0],
                         newCouponList=[],
@@ -52,7 +43,8 @@ appDispatcher.register(function(payload){
                                 investmentMinLimit:0,
                                 useScope:interestList[i].useScope,
                                 source:interestList[i].activityName,
-                                deadline:interestList[i].endTimeDesc
+                                deadline:interestList[i].endTimeDesc,
+                                incomePeriod:interestList[i].incomePeriod//该加息券的加息期限，单位为“月”
                             })
                         }
                     }
@@ -67,7 +59,8 @@ appDispatcher.register(function(payload){
                                 investmentMinLimit:redPackageList[i].rpUseAmount,
                                 useScope:redPackageList[i].useScope,
                                 source:redPackageList[i].activityName,
-                                deadline:redPackageList[i].endTimeDesc
+                                deadline:redPackageList[i].endTimeDesc,
+                                incomePeriod:0
                             })
                         }
                     }

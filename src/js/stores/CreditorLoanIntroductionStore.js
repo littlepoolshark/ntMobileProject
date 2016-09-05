@@ -57,7 +57,10 @@ appDispatcher.register(function(payload){
                             productName:data.title,
                             status:data.status,
                             publishTime:data.createTime ,//这是一个时间戳
-                            bidDays:7//债权转让默认是7天后就"流标"
+                            bidDays:7,//债权转让默认是7天后就"流标"
+                            mainMonth:data.mainMonth,//剩余未还息期限
+                            minNotRateTime:data.minNotRateTime,//最低未还息时间
+                            maxNotRateTime:data.maxNotRateTime//最高未还息时间
                         };
                         CreditorLoanIntroductionStore.setAll(CreditorLoanIntroductionStore.processData(source));
                         CreditorLoanIntroductionStore.trigger("change");

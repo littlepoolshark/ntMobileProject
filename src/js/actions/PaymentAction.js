@@ -20,14 +20,15 @@ var PaymentAction={
             actionName:"useAllBalance",
         })
     },
-    finishedCouponSelection (id,amount,type,minimumLimit){
+    finishedCouponSelection (id,amount,type,minimumLimit,incomePeriod){
         appDispatcher.dispatch({
             actionName:"couponChange",
             data:{
                 couponId:id,
                 couponAmount:amount,
                 couponType:type,
-                couponMinimumLimit:minimumLimit
+                couponMinimumLimit:minimumLimit,
+                incomePeriod:incomePeriod
             }
         })
 

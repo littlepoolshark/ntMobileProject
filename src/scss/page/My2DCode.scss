@@ -59,4 +59,28 @@
 
 
   }
+
+  .mask {
+    width:100%;
+    height:100%;
+    background-color:rgba(51,51,51,0.5);
+    position:fixed;
+    left:100%;
+    top:0;
+    color:#fff;
+    transition:all 0.5s ease-in-out ;
+
+    &.active {
+      left:0;
+    }
+
+    .share-guide-img {
+      display:inline-block;
+      width:50%;
+      height:auto;
+      position:absolute;
+      top:rem-calc(10);
+      right:rem-calc(10);
+    }
+  }
 }

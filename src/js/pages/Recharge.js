@@ -35,7 +35,7 @@ let Recharge=React.createClass({
             <Container  {...this.props} scrollable={false} id="recharge">
                 <BankCard {...bankCardInfo}/>
                 <Group
-                    header="单笔限额5.0万元，单日限额20.0万元"
+                    header=""
                     noPadded
                 >
                     <List>

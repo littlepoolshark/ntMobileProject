@@ -21,6 +21,7 @@
   .serverPhone-title {
     display:flex;
     justify-content: space-between;
+    @include color-and-fontSize($C3,$T7);
 
     .serverPhoneNo {
       color:$C1;
@@ -39,6 +40,7 @@
 
   .serverPhone-footer {
     text-align: right;
+    @include color-and-fontSize($C3,$T8);
   }
 
   .block-btn-wrapper {

@@ -33,7 +33,9 @@ let InviteMyFriend=React.createClass({
             <Container id="inviteMyFriend"  scrollable={true}>
                 <img src="/src/img/invi_bg_pic.png" alt="" style={{width:"100%",height:"auto"}}/>
                 <Button className="inviteFriend-btn" block amStyle="primary" onClick={this._showShareTip}>立即邀请</Button>
-                <div className={maskClasses} onClick={this._closeShareTip}>这里面包含指向右上角的箭头</div>
+                <div className={maskClasses} onClick={this._closeShareTip}>
+                    <img src="/src/img/share-guide.png" alt="" className="share-guide-img"/>
+                </div>
             </Container>
         )
     },

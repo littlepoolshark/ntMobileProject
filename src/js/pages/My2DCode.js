@@ -11,9 +11,26 @@ import Button from "../UIComponents/Button";
 
 
 let My2DCode=React.createClass({
-
+    getInitialState(){
+        return {
+            isMaskShow:false
+        }
+    },
+    _showShareTip(){
+        this.setState({
+            isMaskShow:true
+        });
+    },
+    _closeShareTip(){
+        this.setState({
+            isMaskShow:false
+        });
+    },
     render(){
-
+        let maskClasses=classNames({
+            mask:true,
+            active:this.state.isMaskShow
+        });
         return (
             <Container id="my2DCode"  scrollable={false}>
                 <div className="my2DCodeImg-wrapper">
@@ -27,11 +44,13 @@ let My2DCode=React.createClass({
                 </div>
                 {
                     <div className="buts-wrapper">
-                        <Button amStyle="primary" block radius>分享给好友</Button>
+                        <Button amStyle="primary" block radius onClick={this._showShareTip}>分享给好友</Button>
                         <Button amStyle="warning" block radius>更多农泰金融成长历程</Button>
                     </div>
                 }
-
+                <div className={maskClasses} onClick={this._closeShareTip}>
+                    <img src="/src/img/share-guide.png" alt="" className="share-guide-img"/>
+                </div>
             </Container>
         )
     },

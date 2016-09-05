@@ -28,7 +28,6 @@ appDispatcher.register(function(payload){
                 success(rs){
                     if(rs.code === 0 ){
                         MyBankCardStore.updateAll(rs.data);
-                        console.log(MyBankCardStore.getAll());
                         MyBankCardStore.trigger("change");
                     }
                 }

@@ -65,7 +65,8 @@ let config={
         "ServiceAgreement_yyz_product":"月月赚服务协议",
         "ServiceAgreement_jjz_product":"季季赚服务协议",
         "ServiceAgreement_loan_product":"好采投服务协议",
-        "ServiceAgreement_creditor_product":"债权转让服务协议"
+        "ServiceAgreement_creditor_product":"债权转让服务协议",
+        "AboutUs":"关于我们"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",

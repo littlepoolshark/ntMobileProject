@@ -57,11 +57,15 @@ let Payment=React.createClass({
      * @return {reactElement} //react元素
      */
     _renderCouponBar(type,couponAmount,couponType,unUseCouponCount){
-
         if(CAN_USE_COUPON.indexOf(type) > -1){
-            couponAmount= couponType === "interestRate" ? couponAmount+"%" : couponAmount;
+            couponAmount= couponType === "interestRate" ? (couponAmount * 100).toFixed(1)+"%" : couponAmount;
             return (
-            <List.Item href="javascript:void(0)" after={couponType ? <span className="coupon-wrapper">{couponAmount}</span> : <span>{unUseCouponCount}张未使用</span>} title="优惠券" onClick={this._jumpToCouponList}/>
+            <List.Item
+                href="javascript:void(0)"
+                after={couponType ? <span className="coupon-wrapper">{couponAmount}</span> : <span>{unUseCouponCount}张未使用</span>}
+                title={type === "yyz_product" ? "加息券" : "优惠券"}
+                onClick={this._jumpToCouponList}
+            />
             )
         }else {
             return null;
@@ -96,7 +100,8 @@ let Payment=React.createClass({
 
     },
     _handlePurchaseAmountChange(event){
-        PaymentAction.changePurchaseAmount(parseFloat(event.target.value));
+        let purchaseAmount=event.target.value === "" ? 0 : parseFloat(event.target.value);
+        PaymentAction.changePurchaseAmount(purchaseAmount);
     },
     _UseAllBalance(){
         PaymentAction.useAllBalance();
@@ -127,18 +132,20 @@ let Payment=React.createClass({
             expectedReward,
             unUseCouponCount
             }=PaymentStore.getAll();
+
+        console.log("userBalance:",userBalance);
         return (
             <Container id="earnSetPayment">
                 <Group>
                     <h6 className="title">{productName}</h6>
                     <div className="subtitle">
-                        <span>年华利率：</span>
+                        <span>年化利率：</span>
                         <strong>
                             {productApr+"%"}
                             {
-                                !!rewardRate ?
-                                    <span>{"+"+(parseFloat(rewardRate) * 100).toFixed(1)+"%"}</span> :
-                                    null
+                                !!parseFloat(rewardRate) ?
+                                <span>{"+"+(parseFloat(rewardRate) * 100).toFixed(1)+"%"}</span> :
+                                null
                             }
                         </strong>
                     </div>
@@ -198,8 +205,13 @@ let Payment=React.createClass({
             productApr,
             remainAmount,
             userBalance,
-            rewardRate
+            rewardRate,
+            productDeadline,
+            mainMonth,
+            minNotRateTime,
+            maxNotRateTime
             }=this.props.location.query;
+
 
         //使用location的数据来初始化PaymentStore
         PaymentAction.storeInitialize({
@@ -209,7 +221,11 @@ let Payment=React.createClass({
             productApr:parseFloat((parseFloat(productApr)/100)),
             remainAmount:parseFloat(remainAmount),
             userBalance:parseFloat(userBalance),
-            rewardRate:parseFloat(rewardRate)
+            rewardRate:parseFloat(rewardRate),
+            productDeadline:productDeadline,
+            mainMonth:parseInt(mainMonth),
+            minNotRateTime:parseInt(minNotRateTime),
+            maxNotRateTime:parseInt(maxNotRateTime)
         });
 
         //请求优惠券可使用的张数

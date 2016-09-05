@@ -11,7 +11,7 @@ import Button from "../UIComponents/Button";
 import Container from "../UIComponents/Container";
 
 const CAN_USE_COUPON=["yyz_product","jjz_product","loan_product"];
-let couponList=[
+/*let couponList=[
     {
         id:1,
         type:"redPackage",
@@ -57,8 +57,11 @@ let couponList=[
         source:"主动派送加息券",
         deadline:"2016-07-01"
     }
-]
+]*/
 let CouponCard=React.createClass({
+    _handleCouponSelect(){
+       this.props.onSelect && this.props.onSelect();
+    },
     _renderCouponAmount(type,amount){
         if(type === "redPackage"){
             return (
@@ -70,7 +73,7 @@ let CouponCard=React.createClass({
         }else {
             return (
                 <div className="coupon-card-body-left fl">
-                    <span className="amount">{amount}</span>
+                    <span className="amount">{(amount * 100).toFixed(1)}</span>
                     <span className="unit">%</span>
                 </div>
             )
@@ -86,18 +89,17 @@ let CouponCard=React.createClass({
             productType,
             useScope,
             source,
-            deadline
+            deadline,
             }=this.props;
         //购买金额小于单笔投资最小金额或者当前的产品类型是月月赚的话，则不能使用红包
+        let isSelectable= !(type === "redPackage" && (purchaseAmount < investmentMinLimit || productType === "yyz_product"));
         let couponClass=classNames({
-            disabled:productType === "all" ? false : (type === "redPackage" && (purchaseAmount < investmentMinLimit || productType === "yyz_product")),
+            disabled:!isSelectable,
             "coupon-card":true
             });
 
         return (
-            <div
-                className={couponClass}
-            >
+            <div className={couponClass} onClick={isSelectable && productType !== "all" ? this._handleCouponSelect : null}>
                 <div className="coupon-card-body cf">
                     {this._renderCouponAmount(type,couponAmount)}
                     <div className="coupon-card-body-right fl">
@@ -128,14 +130,9 @@ let CouponList=React.createClass({
         PaymentAction.doNotUseCoupon();
         this.props.history.goBack();
     },
-    _handleSelectCoupon(event,id,amount,type,minimumLimit){
-        if(CSSCore.hasClass(event.target,"disabled")){
-            return false;
-        }else {
-            PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit);
-            this.context.router.goBack();
-        }
-
+    _handleSelectCoupon(id,amount,type,minimumLimit,incomePeriod){
+        PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit,incomePeriod);
+        this.context.router.goBack();
     },
     render(){
         let {
@@ -169,7 +166,7 @@ let CouponList=React.createClass({
                                     {...item}
                                     purchaseAmount={purchaseAmount}
                                     productType={productType}
-                                    onClick={this._handleSelectCoupon.bind(null,event,item.id,item.amount,item.type,item.minimumLimit)}
+                                    onSelect={this._handleSelectCoupon.bind(null,item.id,item.couponAmount,item.type,item.investmentMinLimit,item.incomePeriod)}
                                     />
                             )
                         }
@@ -189,23 +186,6 @@ let CouponList=React.createClass({
         let productType=this.props.location.query.productType;
         CouponListAction.getDataFromSever(productTypeMap[productType]);
 
-        //监听用户的选择，发送相关的action
-        //let cards=document.getElementsByClassName("coupon-card");
-        //let _self=this;
-        //Array.prototype.forEach.call(cards,function(item,index){
-        //    item.addEventListener("click",function(){
-        //        if(CSSCore.hasClass(this,"disabled")){
-        //            return false;
-        //        }else {
-        //            let id=this.getAttribute("data-id");
-        //            let amount=parseFloat(this.getAttribute("data-amount"));
-        //            let type=this.getAttribute("data-type");
-        //            let minimumLimit=parseFloat(this.getAttribute("data-minimumlimit"));
-        //            PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit);
-        //            _self.props.history.goBack();
-        //        }
-        //    })
-        //});
 
         CouponListStore.bind("change",function(){
             this.setState({

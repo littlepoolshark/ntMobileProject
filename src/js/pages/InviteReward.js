@@ -37,7 +37,6 @@ let InviteReward=React.createClass({
             currMonthReward,
             link
             }=this.state;
-        console.log("link:",link);
         return (
             <Container id="inviteReward"  scrollable={false}>
 
