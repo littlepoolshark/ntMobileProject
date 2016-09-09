@@ -47,7 +47,6 @@ let CreditorLoanIntroduction=React.createClass({
         this.refs.detailModal.close();
     },
     _handleModalopen(){
-        console.log("into _handleModalopen");
         this.refs.detailModal.open();
     },
     render(){

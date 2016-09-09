@@ -15,13 +15,13 @@ let FixedLoanCenterItem=React.createClass({
         let img=null;
         switch (type){
             case "earnSet":
-                img=<img src="/src/img/financial_plan_round.png" alt=""/>;
+                img=<img src={require("../../img/financial_plan_round.png")} alt=""/>;
                 break;
             case "fixedLoan":
-                img=<img src="/src/img/financial_project_round.png" alt=""/>;
+                img=<img src={require("../../img/financial_project_round.png")} alt=""/>;
                 break;
             case "creditorLoan":
-                img=<img src="/src/img/financial_transfer_round.png" alt=""/>;
+                img=<img src={require("../../img/financial_transfer_round.png")} alt=""/>;
                 break;
             default:
                 break;

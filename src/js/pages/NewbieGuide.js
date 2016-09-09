@@ -72,12 +72,12 @@ let TaskItem=React.createClass({
                         <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"realNameAuthentication") : null}>
                             {
                                 isFinished ?
-                                <img src="/src/img/badge_authentication.png" alt="" className="bg-img"/> :
-                                <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                                <img src={require("../../img/badge_authentication.png")} alt="" className="bg-img"/> :
+                                <img src={require("../../img/bg_lock.png")} alt="" className="bg-img"/>
                             }
                             {
                                 !isFinished ?
-                                    <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                    <img src={require("../../img/pc_lock.png")} alt="" className={lockClasses}/> :
                                     null
                             }
                         </div>
@@ -90,12 +90,12 @@ let TaskItem=React.createClass({
                         <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"setDealPassword") : null}>
                             {
                                 isFinished ?
-                                    <img src="/src/img/badge_set.png" alt="" className="bg-img"/> :
-                                    <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                                    <img src={require("../../img/badge_set.png")} alt="" className="bg-img"/> :
+                                    <img src={require("../../img/bg_lock.png")} alt="" className="bg-img"/>
                             }
                             {
                                 !isFinished ?
-                                    <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                    <img src={require("../../img/pc_lock.png")} alt="" className={lockClasses}/> :
                                     null
                             }
                         </div>
@@ -124,12 +124,12 @@ let TaskItem=React.createClass({
                         <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"bindBankCard") : null}>
                             {
                                 isFinished ?
-                                <img src="/src/img/badge_card.png" alt="" className="bg-img"/> :
-                                <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                                <img src={require("../../img/badge_card.png")} alt="" className="bg-img"/> :
+                                <img src={require("../../img/bg_lock.png")} alt="" className="bg-img"/>
                             }
                             {
                                 !isFinished ?
-                                    <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                    <img src={require("../../img/pc_lock.png")} alt="" className={lockClasses}/> :
                                     null
                             }
                         </div>
@@ -142,12 +142,12 @@ let TaskItem=React.createClass({
                         <div className="img-section" onClick={!isFinished && isFirstNotFinished ? this._jumpToNextLocation.bind(null,"productList"): null}>
                             {
                                 isFinished ?
-                                <img src="/src/img/badge_new.png" alt="" className="bg-img"/> :
-                                <img src="/src/img/bg_lock.png" alt="" className="bg-img"/>
+                                <img src={require("../../img/badge_new.png")} alt="" className="bg-img"/> :
+                                <img src={require("../../img/bg_lock.png")} alt="" className="bg-img"/>
                             }
                             {
                                 !isFinished ?
-                                <img src="/src/img/pc_lock.png" alt="" className={lockClasses}/> :
+                                <img src={require("../../img/pc_lock.png")} alt="" className={lockClasses}/> :
                                 null
                             }
                         </div>
@@ -228,7 +228,7 @@ let NewbieGuide = React.createClass({
         return (
                <Container scrollable={true} id="newbieGuide">
                    <div className="banner-bar">
-                       <img src="/src/img/task_banner.png" alt=""/>
+                       <img src={require("../../img/task_banner.png")} alt=""/>
                        <div className="dashboard">
                            已解锁<strong>2</strong>关
                            <Icon classPrefix="imgIcon" name="gold-coin2"/>

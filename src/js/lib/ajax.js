@@ -64,7 +64,7 @@ function ajax(obj) {
         if (xhr.status == 200) {  //判断http的交互是否成功，200表示成功
             obj.success(JSON.parse(xhr.responseText));//将返回的json字符串解析返回
         } else {
-            //alert('获取数据错误！错误代号：' + xhr.status + '，错误信息：' + xhr.statusText);
+            console.log('获取数据错误！错误代号：' + xhr.status + '，错误信息：' + xhr.statusText);
         }
     }
 
@@ -73,6 +73,7 @@ function ajax(obj) {
     //通过使用JS随机字符串解决IE浏览器第二次默认获取缓存的问题
     //开发环境下，向本地服务器http://192.168.1.90:9090/ci.jsp发送请求，考虑到移动端的联调，所以使用了ip地址
     obj.url = obj.url ? (CONSIDER_IE ? obj.url + '?rand=' + Math.random() : obj.url) : "http://192.168.1.90:9090/ci.jsp";
+    //obj.url = obj.url ? (CONSIDER_IE ? obj.url + '?rand=' + Math.random() : obj.url) : "/ci.jsp";
     obj.method = obj.method || "post";//因为实际开发环境中的接口大部分都是post请求，所以默认是post方法。
 
     //开发环境中，默认要发送BASIC_DATA数据到服务器，如果调用时传入了数据参数，则先合并，然后通过params()将名值对转换成字符串
@@ -81,9 +82,11 @@ function ajax(obj) {
     }else {
         initData.content=JSON.stringify(initData.content);
     }
-    //console.log("data send to sever:",initData);
     obj.data = params(initData);
-    obj.async = obj.async || true; //默认使用异步请求
+    if(!obj.async && obj.async !== false){
+        obj.async = true; //默认使用异步请求
+    }
+
 
     //若是GET请求，则将数据加到url后面
     if (obj.method === 'get') {

@@ -1,5 +1,5 @@
-let registerAction=require("../actions/registerAction.js");
-let registerStore=require("../stores/registerStore.js");
+let RegisterAction=require("../actions/RegisterAction.js");
+let RegisterStore=require("../stores/RegisterStore.js");
 
 import React from "react";
 import classNames from 'classnames';
@@ -44,7 +44,7 @@ let Register=React.createClass({
         if(data === ""){
             return false;
         }else {
-            registerAction.fillInviterCode(data);
+            RegisterAction.fillInviterCode(data);
             return true;
         }
     },
@@ -55,7 +55,7 @@ let Register=React.createClass({
         let phoneNo=this.props.location.query.phoneNo;
         let loginPassword=this.refs.password.getValue();
         let verificationCode=this.refs.verificationCode.getValue();
-        registerAction.register(phoneNo,loginPassword,verificationCode);
+        RegisterAction.register(phoneNo,loginPassword,verificationCode);
     },
     render (){
         let phoneNo=this.props.location.query.phoneNo;
@@ -95,7 +95,7 @@ let Register=React.createClass({
                                 label="验证码"
                                 placeholder="请输入验证码"
                                 ref="verificationCode"
-                                inputAfter={ <MobileVerificationCode phoneNo={phoneNo} autoSend={true} type="1"/>}
+                                inputAfter={ <MobileVerificationCode phoneNo={phoneNo} autoSend={false} countDownOnly={true} type="1"/>}
                             />
                         </List.Item>
                         <List.Item
@@ -116,13 +116,13 @@ let Register=React.createClass({
         )
     },
     componentDidMount(){
-        registerStore.bind("registerSuccess",function(){
+        RegisterStore.bind("registerSuccess",function(){
             this.context.router.push({
                 pathname:"/productList"
             })
         }.bind(this));
 
-        registerStore.bind("registerFailed",function(msg){
+        RegisterStore.bind("registerFailed",function(msg){
             Message.broadcast(msg);
         });
     }

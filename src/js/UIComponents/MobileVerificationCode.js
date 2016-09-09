@@ -10,28 +10,28 @@ const COUNT_DOWN__DURATION=60;//倒数多少秒
 let MobileVerificationCode=React.createClass({
     getDefaultProps(){
         return {
-            autoSend:false//是否自动发送验证码，进入倒计时
+            autoSend:false,//是否自动发送获取验证码请求，进入倒计时
+            countDownOnly:false//是否只进入倒计时状态，而不发送获取验证码请求
         }
     },
     getInitialState(){
         return {
-            active:true,
+            active:true,//active为true则表示可以请求获取验证码
             remainSeconds:COUNT_DOWN__DURATION
         }
     },
     _handleClick(){
-
         let {
             phoneNo,
             type
             }=this.props;
+        let _self=this;
         phoneNo=typeof phoneNo === "function" ? phoneNo() : phoneNo ;
         if(phoneNo === ""){
             Message.broadcast("手机号码不能为空，请填写！");
-        }else if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(phoneNo)){
+        }else if(!(/1\d{10}$/i).test(phoneNo)){
             Message.broadcast("手机号码格式不对，请检查！");
         } else if(this.state.active){
-            this._countDown();
             ajax({
                 ciUrl:"/platinfo/v2/getVerifyCode",
                  data:{
@@ -40,6 +40,7 @@ let MobileVerificationCode=React.createClass({
                  },
                  success:function(rs){
                      if(rs.code === 0){//发送验证码成功
+                         _self._countDown();
                          Message.broadcast("验证码发送成功！");
                          cookie.setCookie("tempUserId",rs.data.userId,59);//将临时userid设置到cookie中，供需要该字段的接口使用
                      }else {//发送验证码失败
@@ -81,6 +82,7 @@ let MobileVerificationCode=React.createClass({
     },
     componentDidMount(){
         this.props.autoSend && this._handleClick();
+        this.props.countDownOnly && this._countDown();
     }
 });
 

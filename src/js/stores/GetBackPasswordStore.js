@@ -31,6 +31,7 @@ MicroEvent.mixin(GetBackPasswordStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "submitVerificationCode":
+            console.log("into submitVerificationCode");
             let VerificationCodeCheck=GetBackPasswordStore.checkVerificationCode(payload.data.verificationCode,payload.data.idCardNo);
             if(VerificationCodeCheck.success){
                 ajax({

@@ -21,12 +21,12 @@ function ProductIntroduction(props){
     //天天赚item
     let item1= { title:"项目名称", content:props.productName };
     let item2= { title:"项目金额", content:props.productMoney };
-    let item3= { title:"购买规则", content:"100元起投，且为100的整数倍" };
-    let item4= { title:"起息时间", content:"当日起息"};
+    let item3= { title:"购买规则", content:"100元起投，且为100的整数倍,限额10万元" };
+    let item4= { title:"起息时间", content:"当日计息"};
     let item5= { title:"投资期限", content:props.repaymentLimit+props.repaymentTypeUnit };
     let item6= { title:"手续费率", content:"无手续费"};
     let item7= { title:"购买优惠", content:"暂不可以使用加息券，红包"};
-    let item8= { title:"退出规则", content:"随时退出，即时到账"};
+    let item8= { title:"退出规则", content:"当日可退！不包含正在购买的本金"};
 
     //月月赚多出来或者不同于天天赚的item
     let item9= { title:"起息时间", content:props.interestDate};

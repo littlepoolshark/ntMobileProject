@@ -7,7 +7,7 @@ function NoDataHint(props){
     return (
         <div className="noReward-hint" style={{marginTop:"5rem"}} {...props}>
             <div className="text-center" >
-                <img src="/src/img/reward_no.png" alt="" style={{width:"4rem",height:"4rem"}}/>
+                <img src={require("../../../img/reward_no.png")} alt="" style={{width:"4rem",height:"4rem"}}/>
             </div>
             <div className="text-center" style={{marginTop:"0.4rem",color:"#999",fontSize:"0.875rem"}}>
                 暂时没有相关数据！

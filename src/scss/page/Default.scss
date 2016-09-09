@@ -1,9 +1,11 @@
-
 // Functions
 @import "../helper/functions";
 
 // Variables
 @import "../variables";
+
+// Mixin
+@import "../helper/mixins";
 
 .default-container {
     width:100%;
@@ -19,6 +21,10 @@
     margin:0 auto;
     background-size:cover;
     background-image:url("../../img/login_logo.png");
+}
+.slogan-text {
+    margin-top:rem-calc(5);
+    @include color-and-fontSize($C1,$T10);
 }
 #login-form,#register-form {
     margin-top:rem-calc(40);
@@ -45,7 +51,7 @@
 .default-footer {
     width:100%;
     text-align: center;
-    margin-top:rem-calc(100);
+    margin-top:rem-calc(80);
     color:#626566;
 }
 

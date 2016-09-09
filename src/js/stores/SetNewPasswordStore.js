@@ -3,13 +3,34 @@ var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax");
 var cookie=require("../lib/cookie");
 
+import { trim } from "../lib/trims";
+
+
 var SetNewPasswordStore={
     confirmNewPassword (newPassword,confirmNewPassword){
       let confirmResult={
           success:true,
           msg:""
       };
-      if(newPassword !== confirmNewPassword){
+      newPassword=trim(newPassword);
+      confirmNewPassword =trim(confirmNewPassword);
+
+      if(newPassword === ""){
+          confirmResult={
+              success:false,
+              msg:"新登录密码不能为空，请输入！"
+          }
+      }else if(newPassword.length < 6 || newPassword.length > 16){
+          confirmResult={
+              success:false,
+              msg:"新登录密码长度不符合，请检查！"
+          }
+      }else if(confirmNewPassword === ""){
+          confirmResult={
+              success:false,
+              msg:"确认密码不能为空，请输入！"
+          }
+      }else if(newPassword !== confirmNewPassword){
           confirmResult={
               success:false,
               msg:"您两次的输入的密码不一致！"

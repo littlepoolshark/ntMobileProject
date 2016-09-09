@@ -73,9 +73,6 @@ const Tabs = React.createClass({
 
   renderNav() {
     let activeKey = this.state.activeKey;
-    let childLength=this.props.children.length;
-
-
 
     let navs = React.Children.map(this.props.children, (child, index) => {
       let {
@@ -106,7 +103,9 @@ const Tabs = React.createClass({
       );
     });
 
-    let slideLineWidth=(document.body.clientWidth - 2 *15) / childLength;
+    let childLength=React.Children.count(this.props.children);
+    let slideLineWidth=childLength > 1 ? (document.body.clientWidth - 2 *15) / childLength : 0;
+
     let slideLineLeft=slideLineWidth * activeKey + 15;
     return (
       <ButtonGroup

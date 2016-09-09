@@ -167,8 +167,8 @@ let RepaymentScheduleItem=React.createClass({
                 <div className="section-right">
                     {
                         status === "paid" ?
-                            <img src="/src/img/icon_seal_yishou.png" alt=""/> :
-                            <img src="/src/img/icon_seal_daishou.png" alt=""/>
+                            <img src={require("../../img/icon_seal_yishou.png")} alt=""/> :
+                            <img src={require("../../img/icon_seal_daishou.png")} alt=""/>
                     }
                 </div>
             </li>

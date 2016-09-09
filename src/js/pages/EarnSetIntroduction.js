@@ -81,32 +81,53 @@ let EarnSetIntroduction=React.createClass({
                     role="popup"
                     onDismiss={this._handleModalClose}
                     >
-                    <Tabs defaultActiveKey={0} >
-
-                        <Tabs.Item
-                            title="项目介绍"
-                            key={0}
-                            navStyle={null}
+                    {
+                        productionType === "new_product" || productionType === "ttz_product" ?
+                        <Tabs defaultActiveKey={0} >
+                            <Tabs.Item
+                                title="项目介绍"
+                                key={0}
+                                navStyle={null}
                             >
-                            <ProductIntroduction {...this.state}/>
-                            <ProductDescription {...this.state}/>
+                                <ProductIntroduction {...this.state}/>
+                                <ProductDescription {...this.state}/>
 
-                            <RepaymentDescription />
+                                <RepaymentDescription />
 
-                            <FundGuaranteeDescription />
+                                <FundGuaranteeDescription />
 
-                            <ServiceAgreement {...this.state}/>
+                                <ServiceAgreement {...this.state}/>
 
-                        </Tabs.Item>
-                        <Tabs.Item
-                            title="投资记录"
-                            key={1}
-                            navStyle={null}
-                            ref="investmentList"
+                            </Tabs.Item>
+                        </Tabs>   :
+                        <Tabs defaultActiveKey={0} >
+                            <Tabs.Item
+                                title="项目介绍"
+                                key={0}
+                                navStyle={null}
                             >
-                            <InvestmentRecord {...this.state} />
-                        </Tabs.Item>
-                    </Tabs>
+                                <ProductIntroduction {...this.state}/>
+                                <ProductDescription {...this.state}/>
+
+                                <RepaymentDescription />
+
+                                <FundGuaranteeDescription />
+
+                                <ServiceAgreement {...this.state}/>
+
+                            </Tabs.Item>
+
+                            <Tabs.Item
+                                title="投资记录"
+                                key={1}
+                                navStyle={null}
+                                ref="investmentList"
+                            >
+                                <InvestmentRecord {...this.state} />
+                            </Tabs.Item>
+                        </Tabs>
+                    }
+
                 </Modal>
             </Container>
         )

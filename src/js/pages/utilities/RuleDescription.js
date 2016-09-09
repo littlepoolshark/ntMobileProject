@@ -38,10 +38,11 @@ let RuleDescription=React.createClass({
             <Group className="rule-description">
                 <ul>
                     {
-                        this.props.type === "new_product" ?
-                            (
-                                <li><span className="icon-benefit"></span>加息5.5%，合计15%的年化收益</li>
-                            ) : null
+                      /*  this.props.type === "new_product" ?
+                        (
+                            <li><span className="icon-benefit"></span>加息5.5%，合计15%的年化收益</li>
+                        ) :
+                        null*/
                     }
                     {
                         this.props.type == "loan_product" || this.props.type == "creditor_product" ?

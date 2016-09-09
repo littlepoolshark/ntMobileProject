@@ -72,6 +72,7 @@ let config={
         "/",
         "Home",
         "UserHome",
+        /*"ProductList",*/
         "Register",
         "PurchaseSuccess",
         "AppointmentSuccess",

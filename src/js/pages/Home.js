@@ -41,7 +41,7 @@ let Home=React.createClass({
             totalAmountOfInvestment
             }=this.state;
         return (
-            <Container scrollable={false} style={{overflow:"scroll"}} >
+            <Container scrollable={true}  >
 
                 <Slider>
                     {
@@ -76,7 +76,7 @@ let Home=React.createClass({
                 </Group>
 
                 <div className="newbieGuide-bar">
-                    <Link to="newbieGuide"> <img src="/src/img/banner_newbietask_enter.png" alt=""/></Link>
+                    <Link to="newbieGuide"> <img src={require("../../img/banner_newbietask_enter.png")} alt=""/></Link>
                 </div>
 
                 {

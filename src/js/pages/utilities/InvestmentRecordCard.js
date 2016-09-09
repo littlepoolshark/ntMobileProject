@@ -60,7 +60,7 @@ let InvestmentRecordCard=React.createClass({
                     </Col>
                     <Col cols={2}  />
                     <Col cols={2} className="text-right">
-                        <img src="/src/img/daifankuan.png" alt=""/>
+                        <img src={require("../../../img/daifankuan.png")} alt=""/>
                     </Col>
                 </Grid>
             )

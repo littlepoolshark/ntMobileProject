@@ -9,6 +9,11 @@ var FixedLoanIntroductionAction={
             }
         })
 
+    },
+    getModalData(){
+        appDispatcher.dispatch({
+            actionName:"fixedLoanIntroduction_getModalData"
+        })
     }
 };
 

@@ -42,7 +42,7 @@ let InviteReward=React.createClass({
 
                 <div className="rewardDetail" onClick={this._jumpToRewardDetailList}>
                     <div className="title">奖励明细</div>
-                    <img src="/src/img/invi_pic_investment.png" alt=""/>
+                    <img src={require("../../img/invi_pic_investment.png")} alt=""/>
                     <div className="dashboard">
                         <div className="dashboard-item">
                             <span className="subtitle">本月已获取奖励(元)</span>
@@ -56,13 +56,13 @@ let InviteReward=React.createClass({
                 </div>
 
                 <div className="inviteFriend" onClick={this._jumpToInviteMyFriend}>
-                    <img src="/src/img/invi_pic_friend.png" alt=""/>
+                    <img src={require("../../img/invi_pic_friend.png")} alt=""/>
                     <div className="title">邀请好友一起来赚钱</div>
                     <div className="subtitle">分享邀请链接给好友</div>
                 </div>
 
                 <div className="my2DCode" onClick={this._jumpToMy2DCode.bind(null,link)}>
-                    <img src="/src/img/invi_pic_qr.png" alt=""/>
+                    <img src={require("../../img/invi_pic_qr.png")} alt=""/>
                     <div className="title">我的二维码</div>
                     <div className="subtitle">给推荐的好友扫一扫</div>
                 </div>

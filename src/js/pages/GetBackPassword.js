@@ -1,3 +1,4 @@
+require("../../scss/page/GetBackPassword.scss");
 let GetBackPasswordAction=require("../actions/GetBackPasswordAction.js");
 let GetBackPasswordStore=require("../stores/GetBackPasswordStore.js");
 
@@ -19,6 +20,11 @@ import MobileVerificationCode from "../UIComponents/MobileVerificationCode";
 
 //找回密码页面
 let GetBackPassword=React.createClass({
+    getInitialState(){
+        return {
+            phoneNo:""
+        }
+    },
     _getPhoneNo(){
         return this.refs.phoneNo.getValue();
     },
@@ -28,9 +34,16 @@ let GetBackPassword=React.createClass({
         let phoneNo=this.refs.phoneNo.getValue();
         GetBackPasswordAction.submitVerificationCode(verificationCode,idCardNo,phoneNo);
     },
+    _handlePhoneNoChange(){
+        let phoneNo=parseInt(this.refs.phoneNo.getValue());
+        phoneNo=isNaN(phoneNo) ? "" : phoneNo ;
+        this.setState({
+            phoneNo:phoneNo
+        });
+    },
     render (){
         return (
-            <Container  {...this.props} scrollable={false}>
+            <Container  {...this.props} scrollable={false} id="getBackPassword">
                 <Group
                     header=""
                     noPadded
@@ -39,7 +52,14 @@ let GetBackPassword=React.createClass({
                         <List.Item
                             nested="input"
                         >
-                            <Field type="number" label="手机号码" placeholder="请输入手机号码" ref="phoneNo"></Field>
+                            <Field
+                                type="text"
+                                label="手机号码"
+                                placeholder="请输入手机号码"
+                                ref="phoneNo"
+                                value={this.state.phoneNo}
+                                onChange={this._handlePhoneNoChange}
+                            />
                         </List.Item>
                         <List.Item
                             nested="input"
@@ -61,6 +81,7 @@ let GetBackPassword=React.createClass({
                 <Group
                     header=""
                     noPadded
+                    style={{marginBottom:0}}
                 >
                     <List>
                         <List.Item
@@ -70,6 +91,10 @@ let GetBackPassword=React.createClass({
                         </List.Item>
                     </List>
                 </Group>
+                <div className="warm-hint">
+                    <Icon classPrefix="imgIcon" name="attention"/>
+                    如果您还没有实名认证，请输入8888!
+                </div>
                 <div className="" style={{padding:"0 0.9375rem"}}>
                     <Button amStyle="primary" block radius={true} onClick={this._submitVerificationCode}>提交</Button>
                 </div>
@@ -89,6 +114,10 @@ let GetBackPassword=React.createClass({
         GetBackPasswordStore.bind("VerificationCodeCheckFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
+
+        GetBackPasswordStore.bind("submitFailed",function(msg){
+            Message.broadcast(msg);
+        })
     }
 });
 

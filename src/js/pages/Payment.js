@@ -43,9 +43,15 @@ let Payment=React.createClass({
         if(type === "ttz_product"){
             return (
                 <div className="subtitle">
-                    <span>个人投资限额：</span><strong>10000</strong>元
+                    <span>个人投资限额：</span><strong>100000</strong>元
                 </div>
             )
+        }else if(type === "new_product"){
+            return (
+                <div className="subtitle">
+                    <span>个人投资限额：</span><strong>20000.00</strong>元
+                </div>
+                )
         }else {
             return null;
         }
@@ -100,7 +106,8 @@ let Payment=React.createClass({
 
     },
     _handlePurchaseAmountChange(event){
-        let purchaseAmount=event.target.value === "" ? 0 : parseFloat(event.target.value);
+        let purchaseAmount=parseInt(event.target.value);
+        purchaseAmount=isNaN(purchaseAmount) ? 0 : purchaseAmount ;
         PaymentAction.changePurchaseAmount(purchaseAmount);
     },
     _UseAllBalance(){
@@ -133,13 +140,12 @@ let Payment=React.createClass({
             unUseCouponCount
             }=PaymentStore.getAll();
 
-        console.log("userBalance:",userBalance);
         return (
             <Container id="earnSetPayment">
                 <Group>
                     <h6 className="title">{productName}</h6>
                     <div className="subtitle">
-                        <span>年化利率：</span>
+                        <span>预期年化：</span>
                         <strong>
                             {productApr+"%"}
                             {
@@ -165,9 +171,9 @@ let Payment=React.createClass({
                             nested="input"
                             >
                             <Field
-                                type="number"
+                                type="text"
                                 label="投资金额"
-                                placeholder="100元起投"
+                                placeholder="请输入100的整数倍"
                                 ref="purchaseAmount"
                                 inputAfter={(<span className="useALL-btn" onClick={this._UseAllBalance}>全余额</span>)}
                                 onChange={this._handlePurchaseAmountChange}
@@ -241,6 +247,10 @@ let Payment=React.createClass({
             })
         }.bind(this));
 
+        PaymentStore.bind("userBalanceIsNotEnough",function(msg){
+            Message.broadcast(msg);
+        });
+
         //购买验证不通过
         PaymentStore.bind("paymentCheckFailed",function(msg){
             if(msg.indexOf("充值") > -1){
@@ -268,6 +278,9 @@ let Payment=React.createClass({
             })
         }.bind(this));
 
+    },
+    componentWillUnmount(){
+        PaymentStore.clearAll();
     }
 });
 

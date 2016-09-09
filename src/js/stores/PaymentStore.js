@@ -127,7 +127,8 @@ var PaymentStore={
         this._all.couponType=couponType;
     },
     getUserBalance(){
-        return this._all.userBalance - (this._all.userBalance % 100) ;
+        let userBalance=this._all.userBalance - (this._all.userBalance % 100);
+        return userBalance > this._all.remainAmount ? this._all.remainAmount : userBalance;
     },
     paymentCheck(){
         let {
@@ -177,6 +178,9 @@ var PaymentStore={
         this._setExpectedReward();
         this._setCoupon();
 
+    },
+    clearAll(){
+        this._all.purchaseAmount=0;
     }
 
 };
@@ -188,10 +192,15 @@ appDispatcher.register(function(payload){
             PaymentStore.updateAll(payload.data);
             break;
         case "useAllBalance":
-            PaymentStore.updateAll({
-                purchaseAmount:PaymentStore.getUserBalance()
-            });
-            PaymentStore.trigger("change");
+            let userBalance=PaymentStore.getUserBalance();
+            if(userBalance !== 0){
+                PaymentStore.updateAll({
+                    purchaseAmount:PaymentStore.getUserBalance()
+                });
+                PaymentStore.trigger("change");
+            }else {
+                PaymentStore.trigger("userBalanceIsNotEnough","账户余额不足100元，请及时充足！");
+            }
             break;
         case "getUnUseCouponCount" :
             ajax({

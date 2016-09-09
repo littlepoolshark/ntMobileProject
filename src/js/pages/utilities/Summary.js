@@ -52,7 +52,7 @@ let Summary=React.createClass({
             }=this.props;
 
         let tagClass=classNames({
-            "dailyEarn-tag":type === "ttz_product",
+            /*"dailyEarn-tag":type === "ttz_product",*/
             "newbieLoan-tag":type === "new_product",
             "tag":true
         });
@@ -70,7 +70,7 @@ let Summary=React.createClass({
                                     null
                                 }
                             </div>
-                            <div className="subtitle">年化利率</div>
+                            <div className="subtitle">预期年化</div>
                         </Col>
                         <Col cols={2}>
                             <div className="title">

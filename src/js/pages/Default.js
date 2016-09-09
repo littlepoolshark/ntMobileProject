@@ -30,17 +30,27 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
          }
      },
      _handleLogin(){
-         let account=this.refs.account.getValue();
-         let password=this.refs.password.getValue();
-         DefaultAction.login(account,password);
-
+         DefaultAction.login();
      },
      _toggleOpenEye(){
          this.setState({
              showPassword:!this.state.showPassword
          })
      },
+     _handleAccountChange(){
+         let phoneNo=parseInt(this.refs.account.getValue());//过滤非法字符
+         phoneNo=isNaN(phoneNo) ? "" : phoneNo ;
+         DefaultAction.changeLoginAccount(phoneNo);
+     },
+     _handlePasswordChange(){
+         let password=this.refs.password.getValue();
+         DefaultAction.changePassword(password);
+     },
      render(){
+         let {
+             loginPhoneNo,
+             loginPassword,
+             }=this.props;
          let imgIconClass=this.state.showPassword ? "eye-on" : "eye-off";
          let passwordInputType=this.state.showPassword ? "text" : "password";
          return (
@@ -50,14 +60,33 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
                          media={<Icon name="phone" classPrefix="imgIcon" style={{marginTop:"-4px"}}/>}
                          nested="input"
                      >
-                         <Field type="number" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
+                         <Field
+                             type="text"
+                             label={null}
+                             placeholder="请输入您的手机号码"
+                             ref="account"
+                             value={loginPhoneNo}
+                             onChange={this._handleAccountChange}
+                         />
                      </List.Item>
                      <List.Item
                          media={<Icon name="password" classPrefix="imgIcon" style={{marginTop:"-4px"}}/>}
                          nested="input"
                      >
-                         <Field type={passwordInputType} label={null} placeholder="请输入您的登录密码" ref="password"></Field>
-                         <Icon name={imgIconClass} classPrefix="imgIcon" style={{marginTop:"px"}} onClick={this._toggleOpenEye}/>
+                         <Field
+                             type={passwordInputType}
+                             label={null}
+                             placeholder="请输入您的登录密码"
+                             value={loginPassword}
+                             ref="password"
+                             onChange={this._handlePasswordChange}
+                         />
+                         <Icon
+                             name={imgIconClass}
+                             classPrefix="imgIcon"
+                             style={{marginTop:"px"}}
+                             onClick={this._toggleOpenEye}
+                         />
                      </List.Item>
                  </List>
                  <div className="cf">
@@ -79,11 +108,18 @@ let RegisterView=React.createClass({
     _handleClose(){
         this.refs.modal.close();
     },
+    _handleRegisterAccountChange(){
+        let phoneNo=parseInt(this.refs.registerAccount.getValue());//过滤非法字符
+        phoneNo=isNaN(phoneNo) ? "" : phoneNo ;
+        DefaultAction.changeRegisterAccount(phoneNo);
+    },
     _getVerificationCode(){
-        let phoneNo=this.refs.account.getValue();
-        DefaultAction.getVerificationCode(phoneNo);
+        DefaultAction.getVerificationCode();
     },
     render(){
+        let {
+            registerPhoneNo
+            }=this.props;
         return (
             <div>
                 <List id="register-form">
@@ -91,7 +127,14 @@ let RegisterView=React.createClass({
                         media={<Icon name="phone" classPrefix="imgIcon" style={{marginTop:"-4px"}}/>}
                         nested="input"
                     >
-                        <Field type="number" label={null} placeholder="请输入您的手机号码" ref="account"></Field>
+                        <Field
+                            type="text"
+                            label={null}
+                            placeholder="请输入您的手机号码"
+                            ref="registerAccount"
+                            value={registerPhoneNo}
+                            onChange={this._handleRegisterAccountChange}
+                        />
                     </List.Item>
                 </List>
                 <div>
@@ -121,6 +164,7 @@ let RegisterView=React.createClass({
  let Default=React.createClass({
     getInitialState(){
         return {
+            data:DefaultStore.getAll(),
             loginView:true
         }
     },
@@ -133,15 +177,31 @@ let RegisterView=React.createClass({
         return (
                 <Container className="default-container" {...this.props}>
                     <div className="text-center ntLogo-wrapper"></div>
-                    {this.state.loginView ? <LoginView handleLogin={this._handleLogin}/> : <RegisterView history={this.props.history}/> }
+                    <div className="text-center slogan-text">上市公司战略投资理财平台，注册即送180红包</div>
+                    {
+                        this.state.loginView ?
+                        <LoginView handleLogin={this._handleLogin} {...this.state.data} /> :
+                        <RegisterView history={this.props.history} {...this.state.data} />
+                    }
                     <div className="default-footer">
-                        {this.state.loginView? "没有账号？" : "已有账号？"}
-                        <a href="javascript:void(0)" onClick={this._toggleView}>{this.state.loginView  ? "立即注册" : "立即登录"}</a>
+                        {
+                            this.state.loginView?
+                            "没有账号？" :
+                            "已有账号？"
+                        }
+                        <a href="javascript:void(0)" onClick={this._toggleView}>{this.state.loginView  ? "注册领红包" : "立即登录"}</a>
                     </div>
                 </Container>
         )
     },
     componentDidMount(){
+
+        DefaultStore.bind("change",function(){
+            this.setState({
+                data:DefaultStore.getAll()
+            })
+        }.bind(this));
+
         DefaultStore.bind("loginFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
@@ -153,6 +213,7 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckSuccess",function(phoneNo){
+            console.log("into getVerificationCodeCheckSuccess");
             this.context.router.push({
                 pathname:"/register",
                 query:{

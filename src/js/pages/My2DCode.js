@@ -35,11 +35,11 @@ let My2DCode=React.createClass({
             <Container id="my2DCode"  scrollable={false}>
                 <div className="my2DCodeImg-wrapper">
                     <div className="header">
-                        <img src="/src/img/qr_bg_titlecolor.png" alt=""/>
+                        <img src={require("../../img/qr_bg_titlecolor.png")} alt=""/>
                     </div>
                     <div className="body">
                         <div className="text-center" className="code-img-wrapper" id="codeImgWrapper" ></div>
-                        <img src="/src/img/qr_gold.png" alt="" className="bg-img"/>
+                        <img src={require("../../img/qr_gold.png")} alt="" className="bg-img"/>
                     </div>
                 </div>
                 {
@@ -49,7 +49,7 @@ let My2DCode=React.createClass({
                     </div>
                 }
                 <div className={maskClasses} onClick={this._closeShareTip}>
-                    <img src="/src/img/share-guide.png" alt="" className="share-guide-img"/>
+                    <img src={require("../../img/share-guide.png")} alt="" className="share-guide-img"/>
                 </div>
             </Container>
         )

@@ -24,7 +24,10 @@ var DailyEarnAppointmentStore={
             investMaximum
             }=this._all;
         investMaximum=purchaseMaximum - userInTotal - purchaseAmount ;
-        this._all.investMaximum=investMaximum <= 0 ? 0 : investMaximum;
+        if(purchaseAmount >= 100){
+            this._all.investMaximum=investMaximum <= 0 ? 0 : investMaximum;
+        }
+
     },
     appointmentCheck(){
         let {
@@ -37,17 +40,17 @@ var DailyEarnAppointmentStore={
         if(purchaseAmount === 0){
             validationResult={
                 success:false,
-                msg:"投资金额不能空，请输入！"
+                msg:"预约金额不能空，请输入！"
             }
         }else if(purchaseAmount < 100 ){
             validationResult={
                 success:false,
-                msg:"投资金额不能小于100，100元起投！"
+                msg:"预约金额不能小于100，100元起投！"
             }
         }else if(purchaseAmount % 100){
             validationResult={
                 success:false,
-                msg:"投资金额要求是100的整数倍！"
+                msg:"预约金额要求是100的整数倍！"
             }
         }else {
             validationResult={

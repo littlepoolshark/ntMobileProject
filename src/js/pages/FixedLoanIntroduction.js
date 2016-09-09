@@ -49,6 +49,20 @@ let FixedLoanIntroduction=React.createClass({
         this.refs.detailModal.open();
     },
     render(){
+        let {
+            realName,
+            marriedDescr,
+            genderDescr,
+            age,
+            loanDescr,
+            repaymentSource,
+            licenseList,
+            licenseType,
+            companyName,
+            corporation,
+            guaranteeLicenseList,
+            guaranteeLabelList
+            }=this.state;
         let productionType=this.props.location.query.type;
         let modalTitle=config.productNameMap[productionType];
         return (
@@ -79,33 +93,50 @@ let FixedLoanIntroduction=React.createClass({
                             <Group noPadded={false} >
                                 <h6>借款人资料</h6>
                                 <div className="content">
-                                    <Grid>
-                                        <Col cols={3}>姓名：刘**</Col>
-                                        <Col cols={3}>性别：男</Col>
-                                    </Grid>
-                                    <Grid>
-                                        <Col cols={3}>年龄：26</Col>
-                                        <Col cols={3}>婚姻状况：已婚</Col>
-                                    </Grid>
+                                    {
+                                        licenseType === "person" ?
+                                        (
+                                            <Grid collapse={true} wrap="wrap">
+                                                <Col cols={3}>姓名：{realName}</Col>
+                                                <Col cols={3}>性别：{genderDescr}</Col>
+                                                <Col cols={3}>年龄：{age}</Col>
+                                                <Col cols={3}>婚姻状况：{marriedDescr}</Col>
+                                            </Grid>
+                                        )  :
+                                        null
+                                    }
+                                    {
+                                        licenseType === "enterprise" ?
+                                            (
+                                                <Grid collapse={true} wrap="wrap">
+                                                    <Col cols={6}>公司名称：{companyName}</Col>
+                                                    <Col cols={6}>企业法人：{corporation}</Col>
+                                                </Grid>
+                                            )  :
+                                            null
+                                    }
                                 </div>
                             </Group>
                             <Group noPadded={false} >
                                 <h6>资质信息</h6>
                                 <div className="content">
-                                    <Grid>
-                                        <Col cols={3}>借款人及担保人身份证</Col>
-                                        <Col cols={3}>结婚证</Col>
-                                    </Grid>
-                                    <Grid>
-                                        <Col cols={3}>户口本</Col>
-                                        <Col cols={3}>相关担保机构</Col>
+                                    <Grid collapse={true} wrap="wrap">
+                                        {
+                                            !licenseList ||  (!!licenseList && licenseList.length === 0) ?
+                                            ( <Col cols={3} >暂无资质信息</Col>) :
+                                            licenseList.map(function(item,index){
+                                                return (
+                                                    <Col cols={3} key={key+1}>{item}</Col>
+                                                )
+                                            })
+                                        }
                                     </Grid>
                                 </div>
                             </Group>
                             <Group noPadded={false} >
                                 <h6>项目介绍</h6>
                                 <div className="content">
-                                    项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍项目介绍
+                                    {!!loanDescr ? loanDescr : "暂无项目介绍"}
                                 </div>
                             </Group>
                             <Group noPadded={false} >
@@ -117,7 +148,7 @@ let FixedLoanIntroduction=React.createClass({
                             <Group noPadded={false} >
                                 <h6>还款来源</h6>
                                 <div className="content">
-                                    经营回款
+                                    {!!repaymentSource ? repaymentSource : "经营回款"}
                                 </div>
                             </Group>
                             <ServiceAgreement {...this.state}/>
@@ -130,30 +161,31 @@ let FixedLoanIntroduction=React.createClass({
                             <Group noPadded={false} >
                                 <h6>担保人资质</h6>
                                 <div className="content">
-                                    <Grid>
-                                        <Col cols={3}>担保人身份证</Col>
-                                        <Col cols={3}>担保人营业执照</Col>
+                                    <Grid wrap="wrap" collapse={true}>
+                                    {
+                                        !guaranteeLicenseList || (!!guaranteeLicenseList && guaranteeLicenseList.length === 0) ?
+                                        "暂无担保人资质信息" :
+                                        guaranteeLicenseList.map(function(item,index){
+                                            return (
+                                                <Col cols={3} key={index+1}>{item}</Col>
+                                            )
+                                        })
+                                    }
                                     </Grid>
                                 </div>
                             </Group>
-                            <Group noPadded={false} >
-                                <h6>担保情况</h6>
-                                <div className="content">
-                                    担保情况担保情况担保情况担保情况担保情况担保情况担保情况担保情况担保情况
-                                </div>
-                            </Group>
-                            <Group noPadded={false} >
-                                <h6>风险控制综述</h6>
-                                <div className="content">
-                                    风险控制综述风险控制综述风险控制综述风险控制综述风险控制综述风险控制综述风险控制综述
-                                </div>
-                            </Group>
-                            <Group noPadded={false} >
-                                <h6>担保措施</h6>
-                                <div className="content">
-                                    担保措施担保措施担保措施担保措施担保措施担保措施担保措施担保措施担保措施
-                                </div>
-                            </Group>
+                            {
+                                !!guaranteeLabelList && guaranteeLabelList.map(function(item,index){
+                                    return (
+                                        <Group noPadded={false} >
+                                            <h6>{item.label}</h6>
+                                            <div className="content">
+                                                {item.value}
+                                            </div>
+                                        </Group>
+                                    )
+                                })
+                            }
                             <RepaymentDescription />
                             <FundGuaranteeDescription />
                         </Tabs.Item>
@@ -184,7 +216,7 @@ let FixedLoanIntroduction=React.createClass({
         let container=document.getElementById("fixedLoanIntroduction");
         if(container.scrollHeight <= container.offsetHeight){
             let paddingBottom=(container.scrollHeight  + 44) - (productIntroduction.offsetTop  + productIntroduction.offsetHeight + checkMoreDetail.offsetHeight + 15);
-            checkMoreDetail.style.paddingBottom=paddingBottom + 30 + "px";//通过填过30px，撑开容器的垂直高度，使之出现滚动条
+            checkMoreDetail.style.paddingBottom=paddingBottom + 30 + "px";//通过填充30px，撑开容器的垂直高度，使之出现滚动条
         }
     }
 });

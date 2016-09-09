@@ -25,8 +25,8 @@ let DailyEarnAppointment=React.createClass({
         }
     },
     _handlePurchaseAmountChange(event){
-        var purchaseAmount=this.refs.purchaseAmount.getValue();
-        purchaseAmount=purchaseAmount ? parseFloat(purchaseAmount) : 0;
+        var purchaseAmount=parseInt(this.refs.purchaseAmount.getValue());
+        purchaseAmount=isNaN(purchaseAmount) ? 0 : purchaseAmount;
         DailyEarnAppointmentAction.changePurchaseAmount(purchaseAmount);
     },
     _confirmAppointment(){
@@ -48,7 +48,7 @@ let DailyEarnAppointment=React.createClass({
                 <List>
                     <List.Item nested="input">
                         <Field
-                            type="number"
+                            type="text"
                             label="预约金额"
                             placeholder="请输入100的整数倍"
                             ref="purchaseAmount"

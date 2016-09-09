@@ -21,7 +21,7 @@ let PurchaseSuccess=React.createClass({
             loan_product:"好采投",
             creditor_product:"债权转让"
         };
-        if(productType === "dailyEarn"){
+       /* if(productType === "ttz_product"){
             return (
                 <Group id="dailyEarn">
                     <div className="stage-one">
@@ -33,35 +33,46 @@ let PurchaseSuccess=React.createClass({
 
                     <div className="stage-two">
                         <div><span className="icon-start"></span></div>
-                        <div className="subtitle">{lixiTime}</div>
+                        <div className="subtitle">今天</div>
                         <div className="title">开始计息</div>
                     </div>
                 </Group>
             )
         }else {
-            return (
-                <Group>
-                    <div className="title">
-                        <span className="icon-success"></span>
-                        成功购买{productTypeMap[productType]}{investMoney}元
-                        <div className="subtitle">今天</div>
+
+        }*/
+        return (
+            <Group>
+                <div className="title">
+                    <span className="icon-success"></span>
+                    成功购买{productTypeMap[productType]}{investMoney}元
+                    <div className="subtitle">今天</div>
+                </div>
+                <div className="placeholder first-stage"></div>
+                <div className="title">
+                    <span className="icon-start"></span>
+                    开始计息
+                    <div className="subtitle">
+                        { productType === "ttz_product" ? "今天" : lixiTime}
                     </div>
-                    <div className="placeholder first-stage"></div>
+                </div>
+                <div className="placeholder second-stage"></div>
+                {
+                    productType === "ttz_product" ?
                     <div className="title">
-                        <span className="icon-start"></span>
-                        开始计息
-                        <div className="subtitle">{lixiTime}</div>
-                    </div>
-                    <div className="placeholder second-stage"></div>
+                        <span className="icon-end"></span>
+                        随时可退出
+                    </div> :
                     <div className="title">
                         <span className="icon-end"></span>
                         项目到期预计收益{expectedReward}元
                         <div className="subtitle">{endTime}</div>
                     </div>
-                </Group>
-            )
+                }
 
-        }
+            </Group>
+        )
+
     },
     _handleNavDone(){
         this.context.router.push({
