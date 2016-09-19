@@ -1,3 +1,4 @@
+require("../../scss/page/BindBankCard.scss");
 var BindBankCardAction=require("../actions/BindBankCardAction.js");
 var BindBankCardStore=require("../stores/BindBankCardStore.js");
 
@@ -63,7 +64,7 @@ let BindBankCard=React.createClass({
             userName
             }=this.state.bankCardInfo;
         return (
-            <Container srcollable={true}>
+            <Container srcollable={true} id="bindBankCard">
                 <Group
                     header="添加银行卡信息"
                     noPadded
@@ -77,6 +78,7 @@ let BindBankCard=React.createClass({
                                 placeholder="请输入开户名"
                                 inputAfter={(<Icon name="questionMark" classPrefix="imgIcon" onClick={this._handleQuestionMarkClick}/>)}
                                 value={userName}
+                                readOnly
                             />
                         </List.Item>
                         <List.Item
@@ -104,6 +106,10 @@ let BindBankCard=React.createClass({
                         </List.Item>
                     </List>
                 </Group>
+                <div className="warm-hint">
+                    <Icon classPrefix="imgIcon" name="attention"/>
+                    <span>银行卡一经绑定，将不可随意修改</span>
+                </div>
                 <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>
                     <Button amStyle="primary" block radius={true} onClick={this._submitBankCardForm}>完成绑定</Button>
                 </div>
@@ -132,20 +138,22 @@ let BindBankCard=React.createClass({
         }.bind(this));
 
         BindBankCardStore.bind("bindBankCardSuccess",function(){
-            Message.broadcast("绑卡成功！");
-        });
+            this.context.router.push({
+                pathname:"myBankCard"
+            });
+        }.bind(this));
 
         BindBankCardStore.bind("bindBankCardFailed",function(msg){
             Message.broadcast(msg);
         });
 
-        BindBankCardStore.bind("idCardVerifiedCheckFailed",function(){
+        /*BindBankCardStore.bind("idCardVerifiedCheckFailed",function(){
             this.setState({
                  isModalOpen:true,
                  modalRole:"confirm",
                  modalContextText:"您还没实名认证，去认证？"
             });
-        }.bind(this));
+        }.bind(this));*/
     }
 });
 

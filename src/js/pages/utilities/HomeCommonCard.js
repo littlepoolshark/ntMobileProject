@@ -60,7 +60,7 @@ let  HomeCommonCard=React.createClass({
                     <Grid collapse={true}>
                         <Col cols={3} className="home-earnSet-card-item">
                             <div className="text-center yearRate">{this._yearRateFormater(productApr)}<span className="unit">%</span></div>
-                            <div className="text-center subtitle" >年化收益</div>
+                            <div className="text-center subtitle" >预期年化</div>
                         </Col>
                         <Col cols={3} className="home-earnSet-card-item">
                             <div className="subtitle">

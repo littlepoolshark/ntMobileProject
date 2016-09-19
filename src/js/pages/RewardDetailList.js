@@ -90,7 +90,7 @@ let RewardDetailList=React.createClass({
                     animated
                     onDismiss={this._closeNotification}
                     >
-                    亲，每月一号发放要邀请奖励，请知悉。
+                    亲，每月一号发放邀请奖励，请知悉。
                 </Notification>
                 <Loader amStyle="primary" rounded/>
             </Container>

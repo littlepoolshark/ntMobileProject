@@ -17,8 +17,36 @@ import Icon from "../UIComponents/Icon"
 
 //设置或者修改交易密码页面/组件
 let SetDealPassword=React.createClass({
+    getInitialState(){
+        return {
+            showOriginDealPasswordField:false,
+            showDealPasswordField:false,
+            showConfirmDealPasswordField:false
+        }
+    },
     _handleNavBack(){
         this.context.router.goBack();
+    },
+    _toggleEyeOfField(fieldName){
+        switch (fieldName){
+            case "originDealPassword":
+                this.setState({
+                    showOriginDealPasswordField:!this.state.showOriginDealPasswordField
+                });
+                break;
+            case "dealPassword":
+                this.setState({
+                    showDealPasswordField:!this.state.showDealPasswordField
+                });
+                break;
+            case "confirmDealPassword":
+                this.setState({
+                    showConfirmDealPasswordField:!this.state.showConfirmDealPasswordField
+                });
+                break;
+            default:
+                break;
+        }
     },
     _submitDealPassword(actionType){
         let dealPassword=this.refs.dealPassword.getValue();
@@ -27,7 +55,7 @@ let SetDealPassword=React.createClass({
             SetDealPasswordAction.submitDealPasswordForSetting(dealPassword,confirmDealPassword);
         }else if(actionType === "modify"){
             let originDealPassword=this.refs.originDealPassword.getValue();
-            SetDealPasswordAction.submitDealPasswordForSetting(originDealPassword,dealPassword,confirmDealPassword);
+            SetDealPasswordAction.submitDealPasswordForModify(originDealPassword,dealPassword,confirmDealPassword);
         }
     },
     render (){
@@ -39,6 +67,11 @@ let SetDealPassword=React.createClass({
             icon: 'left-nav',
             title: '返回'
         };
+        let {
+            showOriginDealPasswordField,
+            showDealPasswordField,
+            showConfirmDealPasswordField
+            }=this.state;
         return (
             <Container  {...this.props} scrollable={false}>
                 <NavBar
@@ -58,10 +91,15 @@ let SetDealPassword=React.createClass({
                             (
                                 <List.Item nested="input">
                                     <Field
-                                        type="password"
+                                        type={showOriginDealPasswordField ? "text" : "password"}
                                         label="原始密码"
                                         placeholder="6~20位字母，字符，符号"
                                         ref="originDealPassword"
+                                    />
+                                    <Icon
+                                        name={showOriginDealPasswordField ? "eye-on" : "eye-off"}
+                                        classPrefix="imgIcon"
+                                        onClick={this._toggleEyeOfField.bind(null,"originDealPassword")}
                                     />
                                 </List.Item>
                             ) :
@@ -70,19 +108,29 @@ let SetDealPassword=React.createClass({
 
                         <List.Item nested="input">
                             <Field
-                                type="password"
+                                type={showDealPasswordField ? "text" : "password"}
                                 label="新密码"
                                 placeholder="6~20位字母，字符，符号"
                                 ref="dealPassword"
+                            />
+                            <Icon
+                                name={showDealPasswordField ? "eye-on" : "eye-off"}
+                                classPrefix="imgIcon"
+                                onClick={this._toggleEyeOfField.bind(null,"dealPassword")}
                             />
                         </List.Item>
 
                         <List.Item nested="input">
                             <Field
-                                type="password"
+                                type={showConfirmDealPasswordField ? "text" : "password"}
                                 label="确认密码"
-                                placeholder="请再输入一次"
+                                placeholder="6~20位字母，字符，符号"
                                 ref="confirmDealPassword"
+                            />
+                            <Icon
+                                name={showConfirmDealPasswordField ? "eye-on" : "eye-off"}
+                                classPrefix="imgIcon"
+                                onClick={this._toggleEyeOfField.bind(null,"confirmDealPassword")}
                             />
                         </List.Item>
                     </List>

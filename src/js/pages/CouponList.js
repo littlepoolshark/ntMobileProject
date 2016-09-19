@@ -126,12 +126,12 @@ let CouponList=React.createClass({
             couponList:CouponListStore.getAll()
         }
     },
-    _doNotUseCoupon(){
-        PaymentAction.doNotUseCoupon();
+    _doNotUseCoupon(purchaseAmount){
+        PaymentAction.doNotUseCoupon(purchaseAmount);
         this.props.history.goBack();
     },
-    _handleSelectCoupon(id,amount,type,minimumLimit,incomePeriod){
-        PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit,incomePeriod);
+    _handleSelectCoupon(id,amount,type,minimumLimit,incomePeriod,purchaseAmount){
+        PaymentAction.finishedCouponSelection(id,amount,type,minimumLimit,incomePeriod,purchaseAmount);
         this.context.router.goBack();
     },
     render(){
@@ -146,7 +146,7 @@ let CouponList=React.createClass({
                     productType === "all" ?
                     null :
                     (
-                        <Button block radius onClick={this._doNotUseCoupon}>不使用加息券</Button>
+                        <Button block radius onClick={this._doNotUseCoupon.bind(null,purchaseAmount)}>不使用优惠券</Button>
                     )
                 }
 
@@ -166,7 +166,7 @@ let CouponList=React.createClass({
                                     {...item}
                                     purchaseAmount={purchaseAmount}
                                     productType={productType}
-                                    onSelect={this._handleSelectCoupon.bind(null,item.id,item.couponAmount,item.type,item.investmentMinLimit,item.incomePeriod)}
+                                    onSelect={this._handleSelectCoupon.bind(null,item.id,item.couponAmount,item.type,item.investmentMinLimit,item.incomePeriod,purchaseAmount)}
                                     />
                             )
                         }

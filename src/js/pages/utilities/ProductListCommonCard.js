@@ -100,7 +100,7 @@ let ProductListCommonCard=React.createClass({
                         <Col cols={4}>
                             <Grid collapse={true}>
                                 <Col cols={2}>
-                                    <div className="subtitle text-left" >年化收益</div>
+                                    <div className="subtitle text-left" >预期年化</div>
                                     <div className="yearRate">
                                         {this._yearRateFormater(productApr)}
                                         <span className="unit">%</span>

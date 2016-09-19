@@ -39,6 +39,14 @@ var DefaultAction={
         appDispatcher.dispatch({
             actionName:"getVerificationCode"
         })
+    },
+    toggleAgreement(isAgreement){
+        appDispatcher.dispatch({
+            actionName:"toggleAgreementOfProtocol",
+            data:{
+                isAgreement:isAgreement
+            }
+        })
     }
 };
 

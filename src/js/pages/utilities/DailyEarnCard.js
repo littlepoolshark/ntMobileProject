@@ -37,12 +37,12 @@ let DailyEarnCard=React.createClass({
                     <h6 className="title">
                         <span className="icon-day"></span>
                         <span>{productName}</span>
-                        <span className="dailyEarn-label">银行活期的26倍</span>
+                        {/*<span className="dailyEarn-label">银行活期的26倍</span>*/}
                     </h6>
                     <Grid collapse={true}>
                         <Col cols={3} className="dailyEarn-card-item">
                             <div className="text-center yearRate">{(productApr * 100).toFixed(1)}<span className="unit">%</span></div>
-                            <div className="text-center subtitle" >年化收益</div>
+                            <div className="text-center subtitle" >预期年化</div>
                         </Col>
                         <Col cols={3} className={dailyEarnCardItemClasses}>
                             <div className="subtitle">

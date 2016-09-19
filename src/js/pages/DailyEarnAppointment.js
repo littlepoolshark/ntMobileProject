@@ -25,18 +25,22 @@ let DailyEarnAppointment=React.createClass({
         }
     },
     _handlePurchaseAmountChange(event){
-        var purchaseAmount=parseInt(this.refs.purchaseAmount.getValue());
+        var purchaseAmount=parseInt(this.refs.appointmentAmount.getValue());
         purchaseAmount=isNaN(purchaseAmount) ? 0 : purchaseAmount;
-        DailyEarnAppointmentAction.changePurchaseAmount(purchaseAmount);
+        DailyEarnAppointmentAction.changeAppointmentAmount(purchaseAmount);
     },
     _confirmAppointment(){
         DailyEarnAppointmentAction.makeAnAppointment();
+    },
+    _useAllBalance(event){
+        DailyEarnAppointmentAction.useAllBalance()
     },
     render(){
         let {
             userInTotal,
             purchaseMaximum,
-            investMaximum
+            investMaximum,
+            userBalance
             }=DailyEarnAppointmentStore.getAll();
         return (
             <Container id="dailyEarnAppointment" >
@@ -45,18 +49,23 @@ let DailyEarnAppointment=React.createClass({
                     <div className="subtitle">个人投资限额：<strong>{investMaximum}</strong> 元(个人总限额：{purchaseMaximum}元)</div>
                 </Group>
 
-                <List>
-                    <List.Item nested="input">
-                        <Field
-                            type="text"
-                            label="预约金额"
-                            placeholder="请输入100的整数倍"
-                            ref="purchaseAmount"
-                            onChange={this._handlePurchaseAmountChange}
-                            value={this.state.purchaseAmount ? this.state.purchaseAmount : ""}
-                        />
-                    </List.Item>
-                </List>
+                <Group noPadded >
+                    <div className="subtitle usableAmount"><span>账户余额：</span>{userBalance}元</div>
+                    <List>
+                        <List.Item nested="input">
+                            <Field
+                                type="text"
+                                label="预约金额"
+                                placeholder="请输入100的整数倍"
+                                inputAfter={(<span className="useAll-btn" onClick={this._useAllBalance}>全余额</span>)}
+                                ref="appointmentAmount"
+                                onChange={this._handlePurchaseAmountChange}
+                                value={this.state.purchaseAmount ? this.state.purchaseAmount : ""}
+                            />
+                        </List.Item>
+                    </List>
+                </Group>
+
 
                 <div className="block-btn-wrapper">
                     <Button amStyle="primary" block radius onClick={this._confirmAppointment}>确认预约</Button>
@@ -73,11 +82,13 @@ let DailyEarnAppointment=React.createClass({
         //主要是获取用户的天天赚已购买金额
         let {
             productId,
-            type
+            type,
+            userBalance
             }=this.props.location.query;
         DailyEarnAppointmentAction.initializeStore({
             productId:productId,
-            productType:type
+            productType:type,
+            userBalance:userBalance
         });
 
         DailyEarnAppointmentStore.bind("change",function(){
@@ -87,6 +98,9 @@ let DailyEarnAppointment=React.createClass({
         })
         }.bind(this));
 
+        DailyEarnAppointmentStore.bind("userBalanceIsNotEnough",function(msg){
+            Message.broadcast(msg);
+        });
 
         DailyEarnAppointmentStore.bind("appointmentSuccess",function(data){
            this.context.router.push({
@@ -98,6 +112,9 @@ let DailyEarnAppointment=React.createClass({
         DailyEarnAppointmentStore.bind("appointmentFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
+    },
+    componentWillUnmount(){
+        DailyEarnAppointmentStore.clearAll();
     }
 });
 

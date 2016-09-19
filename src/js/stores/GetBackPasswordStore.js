@@ -4,12 +4,17 @@ var ajax=require("../lib/ajax");
 var cookie=require("../lib/cookie");
 
 var GetBackPasswordStore={
-    checkVerificationCode(verificationCode,idCardNo){
+    checkVerificationCode(phoneNo,verificationCode,idCardNo){
        let validationResult={
            success:true,
            msg:""
        };
-       if(verificationCode === ""){
+       if(phoneNo === ""){
+           validationResult={
+               success:false,
+               msg:"手机号码不能为空，请输入！"
+           }
+       } else if(verificationCode === ""){
            validationResult={
                success:false,
                msg:"验证码不能为空，请输入！"
@@ -31,8 +36,7 @@ MicroEvent.mixin(GetBackPasswordStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "submitVerificationCode":
-            console.log("into submitVerificationCode");
-            let VerificationCodeCheck=GetBackPasswordStore.checkVerificationCode(payload.data.verificationCode,payload.data.idCardNo);
+            let VerificationCodeCheck=GetBackPasswordStore.checkVerificationCode(payload.data.phoneNo,payload.data.verificationCode,payload.data.idCardNo);
             if(VerificationCodeCheck.success){
                 ajax({
                     ciUrl:"/platinfo/v2/getPwdBackCheck",

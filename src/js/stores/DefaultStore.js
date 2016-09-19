@@ -7,7 +7,8 @@ var DefaultStore={
     _all:{
         loginPhoneNo:"",//登录时的手机号码
         loginPassword:"",//登录时的登录密码
-        registerPhoneNo:""//注册时的手机号码
+        registerPhoneNo:"",//注册时的手机号码
+        isAgreement:true//是否同意注册协议
     },
     loginCheck(account,password){
         let validationResult={
@@ -32,6 +33,7 @@ var DefaultStore={
     },
     getVerificationCodeCheck(){
         let phoneNo=this._all.registerPhoneNo;
+        let isAgreement=this._all.isAgreement;
         let validationResult={
             success:true,
             msg:""
@@ -45,6 +47,11 @@ var DefaultStore={
             validationResult={
                 success:false,
                 msg:"手机号码格式不正确，请检查"
+            }
+        }else if(!isAgreement){
+            validationResult={
+                success:false,
+                msg:"请同意注册服务协议"
             }
         }
         return validationResult;
@@ -135,9 +142,7 @@ appDispatcher.register(function(payload){
                         type:1//验证码类型：1: 注册，2：找回登录密码 3:找回交易密码 4:绑定银行卡 5：删除银行卡
                     },
                     success:function(rs){
-                        console.log("rs.code:",rs.code);
                         if(rs.code === 0){//发送验证码成功
-                            console.log("into if");
                             DefaultStore.trigger("getVerificationCodeCheckSuccess",registerPhoneNo);
                             cookie.setCookie("tempUserId",rs.data.userId,59);//将临时userid设置到cookie中，供需要该字段的接口使用
                         }else {//发送验证码失败
@@ -148,6 +153,11 @@ appDispatcher.register(function(payload){
             }else {
                 DefaultStore.trigger("getVerificationCodeCheckFailed",getVerificationCodeCheckResult.msg);
             }
+            break;
+        case "toggleAgreementOfProtocol":
+            DefaultStore.updateAll({
+                isAgreement:payload.data.isAgreement
+            });
             break;
         default:
         //no op

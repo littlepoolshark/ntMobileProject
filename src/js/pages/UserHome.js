@@ -27,7 +27,8 @@ let UserHome=React.createClass({
             nextLocation:""
         }
     },
-    _toggleShowData(){
+    _toggleShowData(event){
+          event.stopPropagation();
           this.setState({
               ishowData:!this.state.ishowData
           });
@@ -46,6 +47,11 @@ let UserHome=React.createClass({
             this._handleModalClose();
         }
 
+    },
+    _jumpToTotalAccount(){
+        this.context.router.push({
+           pathname:"totalAccountDetail"
+        });
     },
     _handleModalClose(){
         this.setState({
@@ -79,14 +85,16 @@ let UserHome=React.createClass({
                         <Button  hollow radius onClick={this._handleRecharge}>充值</Button>
                         <Button  hollow radius onClick={this._handleWithdraw}>提现</Button>
                     </div>
-                    <div className="text-center subtitle" style={{marginTop:"20px"}}>
-                        <span className="data-eye-wrapper">
-                            总资产(元)
-                            <Icon classPrefix="imgIcon" name={ishowData ? "white-eye-on" : "white-eye-off"} onClick={this._toggleShowData}/>
-                        </span>
-                    </div>
-                    <div className="text-center" style={{lineHeight:1}}>
-                        <strong className="amount">{ishowData ? total : "****"}</strong>
+                    <div onClick={this._jumpToTotalAccount}>
+                        <div className="text-center subtitle" style={{marginTop:"20px"}}>
+                            <span className="data-eye-wrapper">
+                                总资产(元)
+                                <Icon classPrefix="imgIcon" name={ishowData ? "white-eye-on" : "white-eye-off"} onClick={this._toggleShowData}/>
+                            </span>
+                        </div>
+                        <div className="text-center" style={{lineHeight:1}}>
+                            <strong className="amount">{ishowData ? total : "****"}</strong>
+                        </div>
                     </div>
                     <Grid  className="sub-dashboard" style={{marginTop:"20px"}} >
                         <Col cols={3}>
@@ -94,10 +102,8 @@ let UserHome=React.createClass({
                             <div className="amount text-center">{ishowData ? totalProfit : "****"}</div>
                         </Col>
                         <Col cols={3}>
-                            <Link to="totalAccountDetail">
-                                <div className="subtitle text-center">可用余额(元) <Icon name="right-nav" style={{fontSize:"14px"}}/></div>
-                                <div className="amount text-center">{ishowData ? available : "****"}</div>
-                            </Link>
+                            <div className="subtitle text-center">可用余额(元)</div>
+                            <div className="amount text-center">{ishowData ? available : "****"}</div>
                         </Col>
                     </Grid>
                 </div>
@@ -106,14 +112,14 @@ let UserHome=React.createClass({
                         <Col cols={2} className="investmentRecord-entry-item">
                             <Link to="dailyEarnCenter">
                                 <Icon classPrefix="imgIcon" name="folder"/>
-                                <span className="title">活期投资</span>
+                                <span className="title">灵活理财</span>
                                 <span className="subtitle">{ishowData ? hqAmount : "****"}</span>
                             </Link>
                         </Col>
                         <Col cols={2} className="investmentRecord-entry-item">
                             <Link to="fixedLoanCenter">
                                 <Icon classPrefix="imgIcon" name="money-package"/>
-                                <span className="title">定期投资</span>
+                                <span className="title">定期理财</span>
                                 <span className="subtitle">{ishowData ? dqAmount : "****"}</span>
                             </Link>
                         </Col>

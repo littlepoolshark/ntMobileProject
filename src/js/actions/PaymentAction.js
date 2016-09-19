@@ -20,7 +20,7 @@ var PaymentAction={
             actionName:"useAllBalance",
         })
     },
-    finishedCouponSelection (id,amount,type,minimumLimit,incomePeriod){
+    finishedCouponSelection (id,amount,type,minimumLimit,incomePeriod,purchaseAmount){
         appDispatcher.dispatch({
             actionName:"couponChange",
             data:{
@@ -28,7 +28,8 @@ var PaymentAction={
                 couponAmount:amount,
                 couponType:type,
                 couponMinimumLimit:minimumLimit,
-                incomePeriod:incomePeriod
+                incomePeriod:incomePeriod,
+                purchaseAmount:purchaseAmount
             }
         })
 
@@ -41,13 +42,16 @@ var PaymentAction={
             }
         })
     },
-    doNotUseCoupon(){
+    doNotUseCoupon(purchaseAmount){
         appDispatcher.dispatch({
             actionName:"couponChange",
             data:{
                 couponId:"",
                 couponAmount:0,
-                couponType:""
+                couponType:"",
+                couponMinimumLimit:0,
+                incomePeriod:0,
+                purchaseAmount:purchaseAmount
             }
         })
     },

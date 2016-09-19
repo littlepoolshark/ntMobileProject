@@ -3,6 +3,7 @@
 
 import React from "react";
 import classNames from 'classnames';
+import cookie from "../lib/cookie";
 
 import Container from "../UIComponents/Container";
 import Button from "../UIComponents/Button";
@@ -14,14 +15,18 @@ import Message from "../UIComponents/Message";
 import MobileVerificationCode from "../UIComponents/MobileVerificationCode";
 
 
+
 //找回交易密码页面／组件
 let GetBackDealPassword=React.createClass({
+    _formatPhoneNo(phoneNo){
+        return phoneNo.slice(0,4) + "****" + phoneNo.slice(7);
+    },
     render (){
-
+        let phoneNo=cookie.getCookie("phoneNo");
         return (
             <Container  {...this.props} scrollable={false}>
                 <div style={{marginTop:"10px",fontSize:"14px",textAlign:"center",color:"#666"}}>本次交易短信验证码已经发送到您的手机</div>
-                <div style={{margin:"10px 0",fontSize:"20px",textAlign:"center"}}>136****0541</div>
+                <div style={{margin:"10px 0",fontSize:"20px",textAlign:"center"}}>{this._formatPhoneNo(phoneNo)}</div>
 
                 <Group
                     header=""
@@ -37,7 +42,7 @@ let GetBackDealPassword=React.createClass({
                                 label="验证码"
                                 placeholder="请输入验证码"
                                 ref="newDealPassword"
-                                inputAfter={ <MobileVerificationCode phoneNo="13924601121" autoSend={true} type="1"/>}
+                                inputAfter={ <MobileVerificationCode phoneNo={phoneNo} autoSend={true} type="3"/>}
                                 />
                         </List.Item>
                     </List>
@@ -77,6 +82,7 @@ let GetBackDealPassword=React.createClass({
         )
     },
     componentDidMount(){
+
     }
 });
 

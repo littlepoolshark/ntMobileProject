@@ -110,7 +110,7 @@ let Payment=React.createClass({
         purchaseAmount=isNaN(purchaseAmount) ? 0 : purchaseAmount ;
         PaymentAction.changePurchaseAmount(purchaseAmount);
     },
-    _UseAllBalance(){
+    _UseAllBalance(event){
         PaymentAction.useAllBalance();
     },
     _jumpToNextLocation(confirm){
@@ -139,6 +139,8 @@ let Payment=React.createClass({
             expectedReward,
             unUseCouponCount
             }=PaymentStore.getAll();
+
+
 
         return (
             <Container id="earnSetPayment">

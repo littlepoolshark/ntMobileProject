@@ -72,14 +72,14 @@ var PaymentStore={
                 break;
             case "yyz_product":
                 principal_reward=toFixedTwo((purchaseAmount * productApr)/12);
-                if(!!couponAmount){
+                if(!!couponAmount && couponType === "interestRate"){
                     coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12);
                 }
                 expectedReward=(principal_reward+ coupon_reward).toFixed(2);
                 break;
             case "jjz_product":
                 principal_reward=toFixedTwo((purchaseAmount * productApr)/12) * 3;
-                if(!!couponAmount){
+                if(!!couponAmount && couponType === "interestRate"){
                     coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12) * 3;
                 }
                 expectedReward=(principal_reward+ coupon_reward).toFixed(2);
@@ -143,7 +143,7 @@ var PaymentStore={
         if(purchaseAmount === 0){
             validationResult={
                 success:false,
-                msg:"投资金额不能空，请输入！"
+                msg:"投资金额不能为空，请输入！"
             }
         }else if(purchaseAmount < 100 ){
             validationResult={
@@ -176,11 +176,14 @@ var PaymentStore={
     updateAll(data){
         this._setAll(data);
         this._setExpectedReward();
-        this._setCoupon();
+        //this._setCoupon();
 
     },
     clearAll(){
         this._all.purchaseAmount=0;
+        this._all.expectedReward=0.00;
+        this._all.couponAmount=0;
+        this._all.couponType="";
     }
 
 };
@@ -199,7 +202,7 @@ appDispatcher.register(function(payload){
                 });
                 PaymentStore.trigger("change");
             }else {
-                PaymentStore.trigger("userBalanceIsNotEnough","账户余额不足100元，请及时充足！");
+                PaymentStore.trigger("userBalanceIsNotEnough","账户余额不足100元，请及时充值！");
             }
             break;
         case "getUnUseCouponCount" :
@@ -228,18 +231,22 @@ appDispatcher.register(function(payload){
             break;
         case "purchaseAmountChange"://用户填入投资金额
             PaymentStore.updateAll({
-                purchaseAmount:payload.data.purchaseAmount
+                purchaseAmount:payload.data.purchaseAmount,
+                couponAmount:0,
+                couponType:""
             });
             PaymentStore.trigger("change");
             break;
         case "couponChange"://用户选择优惠券
             PaymentStore.updateAll({
-                couponId:payload.data.couponId,
-                couponAmount:payload.data.couponAmount,
-                couponType:payload.data.couponType,
-                couponMinimumLimit:payload.data.couponMinimumLimit,
-                incomePeriod:payload.data.incomePeriod
-            });
+            couponId:payload.data.couponId,
+            couponAmount:payload.data.couponAmount,
+            couponType:payload.data.couponType,
+            couponMinimumLimit:payload.data.couponMinimumLimit,
+            incomePeriod:payload.data.incomePeriod,
+            purchaseAmount:payload.data.purchaseAmount
+        });
+
             PaymentStore.trigger("change");
             break;
         case "payment_earnSet"://赚系列的支付

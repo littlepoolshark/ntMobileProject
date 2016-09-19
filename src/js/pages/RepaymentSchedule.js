@@ -79,7 +79,7 @@ let RepaymentSchedule=React.createClass({
                     </div>
                     <div className="body">
                         <div className="row">
-                            <span className="subtitle label">年化收益</span>
+                            <span className="subtitle label">预期年化</span>
                             <span className="number">{yearRate}</span>
                         </div>
                         <div className="row">

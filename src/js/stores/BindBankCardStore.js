@@ -1,7 +1,6 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
-var UserHomeStore=require("./UserHomeStore");
 
 var BindBankCardStore={
     _all:{
@@ -11,6 +10,36 @@ var BindBankCardStore={
        cardNo:"",
        region:"",//开户城市id
        branch:""//开户支行名称
+    },
+    checkForBindCardForm(){
+        let validationResult={
+            success:true,
+            msg:""
+        };
+
+        let {
+            bankName,
+            cardNo
+            }=this._all;
+        console.log("cardNo:",cardNo);
+        if(bankName === ""){
+            validationResult={
+                success:false,
+                msg:"开户行不能为空，请选择"
+            };
+        }else if(cardNo === ""){
+            validationResult={
+                success:false,
+                msg:"银行卡号不能为空，请输入"
+            };
+        }else if(!(/^\d+$/g.test(cardNo))){
+            validationResult={
+                success:false,
+                msg:"银行卡号格式有误，请检查"
+            };
+        }
+
+        return validationResult;
     },
     getAll(){
         return this._all;
@@ -38,16 +67,17 @@ appDispatcher.register(function(payload){
             BindBankCardStore.trigger("bankCardSelectionFinished");
             break;
         case "submitBankCardForm":
-            appDispatcher.waitFor([UserHomeStore.dispatchToken]);
-            if(UserHomeStore.checkIdCardVerifiedSet()){
-                BindBankCardStore.updateAll({
-                    cardno:payload.data.cardNo
-                });
+            BindBankCardStore.updateAll({
+                cardNo:payload.data.cardNo
+            });
+
+            let validationResult=BindBankCardStore.checkForBindCardForm();
+            if(validationResult.success){
                 ajax({
                     ciUrl:"/user/v2/bindBankCard",
                     data:{
                         bankId:BindBankCardStore.getAll().bankId,
-                        cardno:BindBankCardStore.getAll().cardno
+                        cardno:BindBankCardStore.getAll().cardNo
                     },
                     success(rs){
                         if(rs.code === 0){
@@ -58,7 +88,7 @@ appDispatcher.register(function(payload){
                     }
                 });
             }else {
-                BindBankCardStore.trigger("idCardVerifiedCheckFailed");
+                BindBankCardStore.trigger("bindBankCardFailed",validationResult.msg);
             }
 
             break;

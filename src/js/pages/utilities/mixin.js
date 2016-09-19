@@ -63,11 +63,11 @@ let mixin={
         return (amount / 10000).toFixed(2);
     },
     /*
-     * @desc 将小数类型的年化利率格式化为以百分号为单位的字符串
+     * @desc 将小数类型的预期年化格式化为以百分号为单位的字符串
      *
-     * @param yearRate {number} //未格式化的年化利率
+     * @param yearRate {number} //未格式化的预期年化
      * @param outputUnit {boolean} //是否返回单位"%"。true：返回，false：不返回。默认不返回
-     * @return  {string} //格式化后的年化利率
+     * @return  {string} //格式化后的预期年化
      *
      * @author sam liu
      * @date 2016-07-05

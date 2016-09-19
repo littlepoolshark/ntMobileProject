@@ -46,8 +46,8 @@ let MyBankCardDetail=React.createClass({
         }
     },
     _submitBankCardForm(){
-        let branch=this.refs.branch.getValue();
-        MyBankCardDetailAction.submitBankCardForm(branch);
+        /*let branch=this.refs.branch.getValue();*/
+        MyBankCardDetailAction.submitBankCardForm();
     },
     _onProvinceSelect(value,text){
         this.setState({
@@ -122,17 +122,22 @@ let MyBankCardDetail=React.createClass({
                             onClick={this._selectCity}
                             />
                     </List.Item>
-                    <List.Item
+                    {/*<List.Item
                         nested="input"
                         >
                         <Field
-                            label="开户城市"
+                            label="开户支行"
                             placeholder="可以通过电话或者网上查询"
-                            value={branch}
+                            defaultValue={branch}
                             ref="branch"
                             />
-                    </List.Item>
+                    </List.Item>*/}
                 </List>
+
+                <div className="warm-hint">
+                    <Icon classPrefix="imgIcon" name="attention"/>
+                    <span>应银行要求，需要完善银行卡的省市信息才能成功打款，请认真填写。</span>
+                </div>
 
                 <div className="block-btn-wrapper" style={{margin:"20px 15px"}}>
                     <Button amStyle="primary" block radius onClick={this._submitBankCardForm}>保存</Button>

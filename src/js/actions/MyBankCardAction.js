@@ -5,6 +5,16 @@ var MyBanKCardAction={
         appDispatcher.dispatch({
             actionName:"getMyBankCardDetail_myBankCard"
         })
+    },
+    getUserAccountInfo(){
+        appDispatcher.dispatch({
+            actionName:"getUserAccountInfo_myBankCard"
+        })
+    },
+    addBankCard(){
+        appDispatcher.dispatch({
+            actionName:"addBankCard_myBankCard"
+        })
     }
 };
 

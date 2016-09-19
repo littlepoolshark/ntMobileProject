@@ -7,15 +7,12 @@
 // Mixin
 @import "../helper/mixins";
 
-#myBankCardDetail {
-  .icon-right-nav {
-    color:#ddd;
-  }
+#bindBankCard {
   .warm-hint {
     display:flex;
     justify-content: flex-start;
-    align-items: flex-start;
-    margin-top:rem-calc(-20);
+    align-items: center;
+    margin-top:rem-calc(-10);
     padding:0 rem-calc(15);
     @include color-and-fontSize($C4,$T10);
 
@@ -26,7 +23,6 @@
     .imgIcon-attention {
       width:rem-calc(20);
       height:rem-calc(20);
-      margin-right:rem-calc(3);
     }
   }
 }

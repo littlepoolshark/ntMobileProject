@@ -19,8 +19,16 @@ let BankCardList=React.createClass({
     _handleSelectBankCard(bankId,bankName){
         BindBankCardAction.selectBankCard(bankId,bankName);
     },
+    _generateEverydayLimitText(everydayLimit){
+        let everydayLimitText="";
+        if(parseInt(everydayLimit) > 0 ){
+            everydayLimitText="单日最高限额" + everydayLimit + "元";
+        }else {
+            everydayLimitText="单日无限额";
+        }
+        return everydayLimitText;
+    },
     render(){
-
         return (
             <Container id="bankCardList"  scrollable={true}>
                 <Group
@@ -33,7 +41,7 @@ let BankCardList=React.createClass({
                                 return (
                                     <List.Item
                                         title={item.name}
-                                        subTitle={"单笔限额"+item.singleLimit+"元，单日最高限额"+item.everydayLimit+"元"}
+                                        subTitle={"单笔限额"+item.singleLimit+"元，" + this._generateEverydayLimitText(item.everydayLimit)}
                                         media={<img src={item.shortIcon} className="bankCard-logo" alt=""/>}
                                         href="javascript:void(0)"
                                         key={item.id}

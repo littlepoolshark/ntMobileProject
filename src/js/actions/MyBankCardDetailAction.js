@@ -34,12 +34,9 @@ var MyBanKCardDetailAction={
             }
         })
     },
-    submitBankCardForm(branch){
+    submitBankCardForm(){
         appDispatcher.dispatch({
-            actionName:"submitBankCardForm_myBanKCardDetail",
-            data:{
-                branch:branch
-            }
+            actionName:"submitBankCardForm_myBanKCardDetail"
         })
     }
 };

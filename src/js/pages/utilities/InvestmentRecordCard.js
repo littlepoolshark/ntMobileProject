@@ -90,7 +90,7 @@ let InvestmentRecordCard=React.createClass({
             title,//标的名称
             interestRate,//加息券的年化lilv
             redPackageAmount,//红包金额
-            yearRate,//标的的年化利率
+            yearRate,//标的的预期年化
             deadline,//标的的期限,或者表示还款期数目，形如 “3/6”,表示剩余期数 / 总期数
             clickHandler,
             status

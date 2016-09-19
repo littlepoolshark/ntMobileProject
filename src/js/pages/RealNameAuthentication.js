@@ -1,3 +1,4 @@
+require("../../scss/page/RealNameAuthentication.scss");
 let RealNameAuthenticationAction=require("../actions/RealNameAuthenticationAction.js");
 let RealNameAuthenticationStore=require("../stores/RealNameAuthenticationStore.js");
 
@@ -11,6 +12,7 @@ import List from "../UIComponents/List";
 import Group from "../UIComponents/Group";
 import Modal from "../UIComponents/modal/Modal";
 import Message from "../UIComponents/Message";
+import Icon from "../UIComponents/Icon";
 
 
 //设置新的登录密码页面
@@ -40,10 +42,11 @@ let RealNameAuthentication=React.createClass({
             realName
             }=this.props.location.query;
         return (
-            <Container  {...this.props} scrollable={false}>
+            <Container  {...this.props} scrollable={false} id="realNameAuthentication">
                 <Group
                     header=""
                     noPadded
+                    style={{marginBottom:0}}
                 >
                     <List>
 
@@ -63,7 +66,7 @@ let RealNameAuthentication=React.createClass({
                             <Field
                                 type="text"
                                 label="身份证"
-                                placeholder="请输入身份证号码"
+                                placeholder="请输入二代身份证号码"
                                 ref="idCardNo"
                                 defaultValue={idcard ? idcard : ""}
                                 readOnly={idcard ? true : false}
@@ -71,6 +74,17 @@ let RealNameAuthentication=React.createClass({
                         </List.Item>
                     </List>
                 </Group>
+                {
+                    !!this.props.location.query.idcard ?
+                    null   :
+                    (
+                        <div className="warm-hint" >
+                            <Icon classPrefix="imgIcon" name="attention"/>
+                            <span>一经实名认证，便不可修改！</span>
+                        </div>
+                    )
+                }
+
                 {
                     !!this.props.location.query.idcard ?
                     null   :

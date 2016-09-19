@@ -6,9 +6,11 @@ var cookie=require("../lib/cookie.js");
 var DailyEarnAppointmentStore={
     _all:{
         purchaseMaximum:100000,//天天赚个人持有中总限额
-        userInTotal:0,//用户已购买的天天赚的总额
+        userInTotal:0,//用户已（转入）购买的天天赚的总额
         purchaseAmount:0,//用户输入购买的金额
-        investMaximum:0//个人投资限额
+        investMaximum:0,//个人投资限额
+        orderAmount:0,//预约中的金额
+        userBalance:0//账户余额
     },
     _setAll(source){
         Object.assign(this._all,source);
@@ -19,28 +21,33 @@ var DailyEarnAppointmentStore={
     _updateInvestMaximum(){
         let {
             userInTotal,
-            purchaseAmount,
             purchaseMaximum,
-            investMaximum
+            investMaximum,
+            orderAmount
             }=this._all;
-        investMaximum=purchaseMaximum - userInTotal - purchaseAmount ;
-        if(purchaseAmount >= 100){
-            this._all.investMaximum=investMaximum <= 0 ? 0 : investMaximum;
-        }
-
+        investMaximum=purchaseMaximum - userInTotal - orderAmount ;
+        this._all.investMaximum=investMaximum;
+    },
+    figureOutUsableAmount(){
+        let {
+            investMaximum,
+            userBalance
+            }=this._all;
+        userBalance=userBalance - (userBalance % 100);
+        return userBalance > investMaximum ? investMaximum : userBalance;
     },
     appointmentCheck(){
         let {
             purchaseAmount
             }=this._all;
         let validationResult={
-            success:false,
+            success:true,
             msg:""
         };
         if(purchaseAmount === 0){
             validationResult={
                 success:false,
-                msg:"预约金额不能空，请输入！"
+                msg:"预约金额不能为空，请输入！"
             }
         }else if(purchaseAmount < 100 ){
             validationResult={
@@ -52,17 +59,16 @@ var DailyEarnAppointmentStore={
                 success:false,
                 msg:"预约金额要求是100的整数倍！"
             }
-        }else {
-            validationResult={
-                success:true,
-                msg:""
-            }
         }
+
         return validationResult;
     },
     updateAll(source){
         this._setAll(source);
         this._updateInvestMaximum();
+    },
+    clearAll(){
+        this._all.purchaseAmount=0;
     }
 
 };
@@ -71,7 +77,7 @@ MicroEvent.mixin(DailyEarnAppointmentStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "purchaseAmountChange":
+        case "changeAppointmentAmount":
             DailyEarnAppointmentStore.updateAll({
                 purchaseAmount:payload.data.purchaseAmount
             });
@@ -83,6 +89,7 @@ appDispatcher.register(function(payload){
                 success(rs){
                     if(rs.code === 0){
                         payload.data.userInTotal=rs.data.ttzUseraccountTotal.userInTotal;
+                        payload.data.orderAmount=rs.data.orderAmount;
                         DailyEarnAppointmentStore.updateAll(payload.data);
                         DailyEarnAppointmentStore.trigger("change");
                     }else {
@@ -118,7 +125,17 @@ appDispatcher.register(function(payload){
             }else {
                 DailyEarnAppointmentStore.trigger("appointmentFailed",appointmentCheckResult.msg);
             }
-
+            break;
+        case "useAllBalance_dailyEarnAppointment":
+            let userBalance=DailyEarnAppointmentStore.figureOutUsableAmount();
+            if(userBalance !== 0){
+                DailyEarnAppointmentStore.updateAll({
+                    purchaseAmount:userBalance
+                });
+                DailyEarnAppointmentStore.trigger("change");
+            }else {
+                DailyEarnAppointmentStore.trigger("userBalanceIsNotEnough","账户余额不足100元，请及时充值！");
+            }
             break;
         default:
         //no op

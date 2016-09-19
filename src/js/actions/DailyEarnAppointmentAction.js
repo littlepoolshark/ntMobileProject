@@ -1,9 +1,9 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var DailyEarnAppointmentAction={
-    changePurchaseAmount(purchaseAmount){
+    changeAppointmentAmount(purchaseAmount){
         appDispatcher.dispatch({
-            actionName:"purchaseAmountChange",
+            actionName:"changeAppointmentAmount",
             data:{
                 purchaseAmount:purchaseAmount
             }
@@ -18,6 +18,11 @@ var DailyEarnAppointmentAction={
     makeAnAppointment(){
         appDispatcher.dispatch({
             actionName:"cofirmTomakeAnAppointment"
+        })
+    },
+    useAllBalance(){
+        appDispatcher.dispatch({
+            actionName:"useAllBalance_dailyEarnAppointment"
         })
     }
 };

@@ -3,6 +3,7 @@ let SetNewPasswordStore=require("../stores/SetNewPasswordStore.js");
 
 import React from "react";
 import classNames from 'classnames';
+import { Link } from "react-router";
 
 import Container from "../UIComponents/Container";
 import Button from "../UIComponents/Button";
@@ -12,49 +13,154 @@ import Icon from "../UIComponents/Icon";
 import Group from "../UIComponents/Group";
 import Modal from "../UIComponents/modal/Modal";
 import Message from "../UIComponents/Message";
+import NavBar from "../UIComponents/NavBar";
 
 
 //设置新的登录密码页面
 let SetNewPassword=React.createClass({
-    _submitNewPassword(){
-        let newPassword=this.refs.newPassword.getValue();
-        let confirmNewPassword=this.refs.confirmNewPassword.getValue();
+    getInitialState(){
+        return {
+            showOriginLoginPasswordField:false,
+            showLoginPasswordField:false,
+            showConfirmLoginPasswordField:false
+        }
+    },
+    _submitNewPassword(actionType){
+        let newLoginPassword=this.refs.newPassword.getValue();
+        let confirmLoginPassword=this.refs.confirmNewPassword.getValue();
         let verificationCode=this.props.location.query.verificationCode;
-        SetNewPasswordAction.submitNewPassword(newPassword,confirmNewPassword,verificationCode);
+
+        if(actionType === "setting"){
+            SetNewPasswordAction.submitLoginPasswordForSetting(newLoginPassword,confirmLoginPassword,verificationCode);
+        }else if(actionType === "modify"){
+            let originLoginPassword=this.refs.originLoginPassword.getValue();
+            SetNewPasswordAction.submitLoginPasswordForModify(originLoginPassword,newLoginPassword,confirmLoginPassword);
+        }
     },
     _handleCloseModal(){
         this.context.router.push({
             pathname:"/"
         })
     },
+    _handleNavBack(){
+        this.context.router.goBack();
+    },
+    _toggleEyeOfField(fieldName){
+        switch (fieldName){
+            case "loginPassword":
+                this.setState({
+                    showLoginPasswordField:!this.state.showLoginPasswordField
+                });
+                break;
+            case "confirmLoginPassword":
+                this.setState({
+                    showConfirmLoginPasswordField:!this.state.showConfirmLoginPasswordField
+                });
+                break;
+            case "originLoginPassword":
+                this.setState({
+                    showOriginLoginPasswordField:!this.state.showOriginLoginPasswordField
+                });
+                break;
+            default:
+                break;
+        }
+    },
     render (){
+        let {
+            showOriginLoginPasswordField,
+            showLoginPasswordField,
+            showConfirmLoginPasswordField
+            }=this.state;
+
+        let backNav = {
+            component:"a",
+            icon: 'left-nav',
+            title: '返回'
+        };
+
+        let actionType=this.props.location.query.actionType;
+
         return (
             <Container  {...this.props} scrollable={false}>
+                <NavBar
+                    title={actionType === "modify" ? "修改登录密码" : "设置登录密码" }
+                    leftNav={[backNav]}
+                    amStyle="primary"
+                    onAction={this._handleNavBack}
+                />
                 <Group
                     header=""
                     noPadded
                 >
                     <List>
 
+                        {
+                            actionType === "modify" ?
+                                (
+                                    <List.Item nested="input">
+                                        <Field
+                                            type={showOriginLoginPasswordField ? "text" : "password"}
+                                            label="原始密码"
+                                            placeholder="6~20位字母，字符，符号"
+                                            ref="originLoginPassword"
+                                        />
+                                        <Icon
+                                            name={showOriginLoginPasswordField ? "eye-on" : "eye-off"}
+                                            classPrefix="imgIcon"
+                                            onClick={this._toggleEyeOfField.bind(null,"originLoginPassword")}
+                                        />
+                                    </List.Item>
+                                ) :
+                                null
+                        }
+
                         <List.Item nested="input">
-                            <Field type="password" label="新登录密码" placeholder="6~16位字母，字符" ref="newPassword" ></Field>
+                            <Field
+                                type={showLoginPasswordField ? "text" : "password"}
+                                label="新登录密码"
+                                placeholder="6~20位字母，字符，符号"
+                                ref="newPassword"
+                            />
+                            <Icon
+                                name={showLoginPasswordField ? "eye-on" : "eye-off"}
+                                classPrefix="imgIcon"
+                                onClick={this._toggleEyeOfField.bind(null,"loginPassword")}
+                            />
                         </List.Item>
 
                         <List.Item nested="input">
                             <Field
-                                type="password"
-                                label="确认登录密码"
-                                placeholder="再输入一次"
+                                type={showConfirmLoginPasswordField ? "text" : "password"}
+                                label="确认密码"
+                                placeholder="6~20位字母，字符，符号"
                                 ref="confirmNewPassword"
-                            >
-
-                            </Field>
-
+                            />
+                            <Icon
+                                name={showConfirmLoginPasswordField ? "eye-on" : "eye-off"}
+                                classPrefix="imgIcon"
+                                onClick={this._toggleEyeOfField.bind(null,"confirmLoginPassword")}
+                            />
                         </List.Item>
                     </List>
                 </Group>
+                {
+                    actionType === "modify" ?
+                        (
+                            <div className="cf">
+                                <Link
+                                    to="getBackPassword"
+                                    className="fr"
+                                    style={{margin:"-0.625rem 0.975rem 2rem auto"}}
+                                >
+                                    忘记原始密码?
+                                </Link>
+                            </div>
+                        ) :
+                        null
+                }
                 <div className="" style={{padding:"0 0.9375rem"}}>
-                    <Button amStyle="primary" block radius={true} onClick={this._submitNewPassword}>提交</Button>
+                    <Button amStyle="primary" block radius={true} onClick={this._submitNewPassword.bind(null,actionType)}>提交</Button>
                 </div>
                 <Modal
                     ref="modal"
@@ -62,7 +168,7 @@ let SetNewPassword=React.createClass({
                     role="alert"
                     onAction={this._handleCloseModal}
                 >
-                    重置登录密码成功！！
+                    {actionType === "modify" ? "修改"  : "重置"}登录密码成功！！
                 </Modal>
             </Container>
         )
@@ -74,6 +180,14 @@ let SetNewPassword=React.createClass({
         }.bind(this));
 
         SetNewPasswordStore.bind("setNewPasswordSuccess",function(){
+            modal.open();
+        }.bind(this));
+
+        SetNewPasswordStore.bind("modifyLoginPasswordFailed",function(msg){
+            Message.broadcast(msg);
+        }.bind(this));
+
+        SetNewPasswordStore.bind("modifyLoginPasswordSuccess",function(){
             modal.open();
         }.bind(this));
 

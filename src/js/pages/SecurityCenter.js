@@ -132,7 +132,7 @@ let SecurityCenter=React.createClass({
                         after={isDealPwdSet === "yes" ?  "修改" : "设置"}
                     />
                     <List.Item
-                        href="##"
+                        href={"#/setNewPassword/?actionType=modify"}
                         title="登录密码"
                         media={this.renderMedia(ispasswordSet)}
                         after="修改"

@@ -7,30 +7,36 @@ import { trim } from "../lib/trims";
 
 
 var SetNewPasswordStore={
-    confirmNewPassword (newPassword,confirmNewPassword){
+    confirmNewPassword (newLoginPassword,confirmLoginPassword,originLoginPassword){
       let confirmResult={
           success:true,
           msg:""
       };
-      newPassword=trim(newPassword);
-      confirmNewPassword =trim(confirmNewPassword);
+      newLoginPassword=trim(newLoginPassword);
+      confirmLoginPassword =trim(confirmLoginPassword);
+      originLoginPassword =trim(originLoginPassword);
 
-      if(newPassword === ""){
+      if(originLoginPassword === ""){
+          confirmResult={
+              success:false,
+              msg:"原始密码不能为空，请输入！"
+          }
+      }else if(newLoginPassword === ""){
           confirmResult={
               success:false,
               msg:"新登录密码不能为空，请输入！"
           }
-      }else if(newPassword.length < 6 || newPassword.length > 16){
+      }else if(newLoginPassword.length < 6 || newLoginPassword.length > 20){
           confirmResult={
               success:false,
               msg:"新登录密码长度不符合，请检查！"
           }
-      }else if(confirmNewPassword === ""){
+      }else if(confirmLoginPassword === ""){
           confirmResult={
               success:false,
               msg:"确认密码不能为空，请输入！"
           }
-      }else if(newPassword !== confirmNewPassword){
+      }else if(newLoginPassword !== confirmLoginPassword){
           confirmResult={
               success:false,
               msg:"您两次的输入的密码不一致！"
@@ -46,14 +52,14 @@ MicroEvent.mixin(SetNewPasswordStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "submitNewPassword":
-            let confirmResult=SetNewPasswordStore.confirmNewPassword(payload.data.newPassword,payload.data.confirmNewPassword);
+        case "submitLoginPassword_setting":
+            let confirmResult=SetNewPasswordStore.confirmNewPassword(payload.data.newLoginPassword,payload.data.confirmLoginPassword);
             if(confirmResult.success){
                 ajax({
                     ciUrl:"/platinfo/v2/getLoginPwdBack",
                     data:{
                         userId:cookie.getCookie("tempUserId"),
-                        newPwd:payload.data.newPassword,
+                        newPwd:payload.data.newLoginPassword,
                         verifyCode:payload.data.verificationCode
                     },
                     success:function(rs){
@@ -68,6 +74,32 @@ appDispatcher.register(function(payload){
                 SetNewPasswordStore.trigger("setNewPasswordFailed",confirmResult.msg);
             }
 
+            break;
+        case "submitLoginPassword_modify":
+            let {
+                newLoginPassword,
+                confirmLoginPassword,
+                originLoginPassword
+                }=payload.data;
+            let confirmResult_modify=SetNewPasswordStore.confirmNewPassword(newLoginPassword,confirmLoginPassword,originLoginPassword);
+            if(confirmResult_modify.success){
+                ajax({
+                    ciUrl:"/user/v2/modifyLoginPwd",
+                    data:{
+                        newPwd:newLoginPassword,
+                        oldPwd:originLoginPassword
+                    },
+                    success:function(rs){
+                        if(rs.code === 0){
+                            SetNewPasswordStore.trigger("modifyLoginPasswordSuccess");
+                        }else {
+                            SetNewPasswordStore.trigger("modifyLoginPasswordFailed",rs.description);
+                        }
+                    }
+                })
+            }else {
+                SetNewPasswordStore.trigger("modifyLoginPasswordFailed",confirmResult_modify.msg);
+            }
             break;
         default:
         //no op

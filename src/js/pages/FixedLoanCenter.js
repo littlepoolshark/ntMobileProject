@@ -87,10 +87,10 @@ let FixedLoanCenterItem=React.createClass({
                             <span className="subtitle">投资金额</span>
                             <span className="amount">￥{investMoney}</span>
                         </div>
-                        <div>
+                        {/* <div>
                             <span className="subtitle">待收本息</span>
                             <span className="amount">￥{backTotal}</span>
-                        </div>
+                        </div>*/}
                         <div>
                             <span className="subtitle">累计收益</span>
                             <span className="amount"><strong>￥{interestTotal}</strong></span>

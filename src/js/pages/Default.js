@@ -4,6 +4,7 @@ var DefaultStore=require("../stores/DefaultStore.js");
 
 
 import React from "react";
+import classNames from "classnames";
 import {
     Link
 } from 'react-router';
@@ -108,6 +109,9 @@ let RegisterView=React.createClass({
     _handleClose(){
         this.refs.modal.close();
     },
+    _handleToggleCheck(event){
+        DefaultAction.toggleAgreement(event.target.checked);
+    },
     _handleRegisterAccountChange(){
         let phoneNo=parseInt(this.refs.registerAccount.getValue());//过滤非法字符
         phoneNo=isNaN(phoneNo) ? "" : phoneNo ;
@@ -138,7 +142,7 @@ let RegisterView=React.createClass({
                     </List.Item>
                 </List>
                 <div>
-                    <input type="checkbox" defaultChecked />
+                    <input type="checkbox" defaultChecked onChange={this._handleToggleCheck} />
                     同意
                     <a href="javascript:void(0);" onClick={this._showPopupWindow}>《农泰金融注册服务协议》</a>
                 </div>
@@ -165,31 +169,36 @@ let RegisterView=React.createClass({
     getInitialState(){
         return {
             data:DefaultStore.getAll(),
-            loginView:true
+            isLoginView:true
         }
     },
     _toggleView(){
         this.setState({
-            loginView:!this.state.loginView
+            isLoginView:!this.state.isLoginView
         })
     } ,
     render (){
+        let sloganClasses=classNames({
+            fade:this.state.isLoginView,
+            "text-center":true,
+            "slogan-text":true
+        });
         return (
                 <Container className="default-container" {...this.props}>
                     <div className="text-center ntLogo-wrapper"></div>
-                    <div className="text-center slogan-text">上市公司战略投资理财平台，注册即送180红包</div>
+                    <div className={sloganClasses}>上市公司战略投资理财平台，注册即送180红包</div>
                     {
-                        this.state.loginView ?
+                        this.state.isLoginView ?
                         <LoginView handleLogin={this._handleLogin} {...this.state.data} /> :
                         <RegisterView history={this.props.history} {...this.state.data} />
                     }
                     <div className="default-footer">
                         {
-                            this.state.loginView?
+                            this.state.isLoginView?
                             "没有账号？" :
                             "已有账号？"
                         }
-                        <a href="javascript:void(0)" onClick={this._toggleView}>{this.state.loginView  ? "注册领红包" : "立即登录"}</a>
+                        <a href="javascript:void(0)" onClick={this._toggleView}>{this.state.isLoginView  ? "注册领红包" : "立即登录"}</a>
                     </div>
                 </Container>
         )

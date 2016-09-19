@@ -29,6 +29,11 @@ function getParamObjFromUrl(){
 
 //找回密码页面
 let Register=React.createClass({
+    getInitialState(){
+        return {
+            showLoginPasswordField:false
+        }
+    },
     _formatPhoneNo(phoneNo){
         return phoneNo.slice(0,3) + "****" + phoneNo.slice(7);
     },
@@ -50,6 +55,11 @@ let Register=React.createClass({
     },
     _handleOnDismiss(event){
         this.refs.modal.close();
+    },
+    _toggleEyeOfField(){
+        this.setState({
+            showLoginPasswordField:!this.state.showLoginPasswordField
+        });
     },
     _register(){
         let phoneNo=this.props.location.query.phoneNo;
@@ -101,7 +111,17 @@ let Register=React.createClass({
                         <List.Item
                             nested="input"
                         >
-                            <Field type="text" label="登录密码" placeholder="6~20位字符或者数字" ref="password"></Field>
+                            <Field
+                                type={this.state.showLoginPasswordField ? "text" : "password"}
+                                label="登录密码"
+                                placeholder="6~20位字母，字符，符号"
+                                ref="password" 
+                            />
+                            <Icon
+                                name={this.state.showLoginPasswordField ? "eye-on" : "eye-off"}
+                                classPrefix="imgIcon"
+                                onClick={this._toggleEyeOfField}
+                            />
                         </List.Item>
                     </List>
                 </Group>

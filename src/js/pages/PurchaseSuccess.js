@@ -102,7 +102,10 @@ let PurchaseSuccess=React.createClass({
                 />
                 {this._renderStageBar(productType,investMoney,lixiTime,endTime,expectedReward)}
                 <List>
-                    <List.Item href="#/earnSetInvestmentRecord" title="投资记录" />
+                    <List.Item
+                        href={productType === "ttz_product" ? "#/dailyEarnInvestmentRecord" : "#/earnSetInvestmentRecord"}
+                        title="投资记录"
+                    />
                 </List>
             </Container>
         )

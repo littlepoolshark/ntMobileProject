@@ -30,6 +30,16 @@ let Home=React.createClass({
     _getAllDataFromStore(){
         return HomeStore.getAll();
     },
+    _jumpToAboutUs(){
+        this.context.router.push({
+            pathname:"aboutUs"
+        });
+    },
+    _jumpToInviteMyFriend(){
+        this.context.router.push({
+            pathname:"inviteMyFriend"
+        });
+    },
     getInitialState(){
         return this._getAllDataFromStore();
     },
@@ -58,14 +68,14 @@ let Home=React.createClass({
 
                 <Group header=""  style={{margin:0}}>
                     <Grid collapse={true}>
-                        <Col cols={3} className="home-introduction-item">
+                        <Col cols={3} className="home-introduction-item" onClick={this._jumpToAboutUs}>
                             <div className="platform-icon"></div>
                             <div>
                                 <div className="title">平台介绍</div>
                                 <div className="subtitle">上市公司战略投资</div>
                             </div>
                         </Col>
-                        <Col cols={3} className="home-introduction-item">
+                        <Col cols={3} className="home-introduction-item" onClick={this._jumpToInviteMyFriend}>
                             <div className="invite-icon"></div>
                             <div>
                                 <div className="title">邀请有礼</div>
@@ -75,9 +85,11 @@ let Home=React.createClass({
                     </Grid>
                 </Group>
 
-                <div className="newbieGuide-bar">
-                    <Link to="newbieGuide"> <img src={require("../../img/banner_newbietask_enter.png")} alt=""/></Link>
-                </div>
+                {
+                    /* <div className="newbieGuide-bar">
+                     <Link to="newbieGuide"> <img src={require("../../img/banner_newbietask_enter.png")} alt=""/></Link>
+                     </div>*/
+                }
 
                 {
                     productList.map(function(item,index){
@@ -111,5 +123,9 @@ let Home=React.createClass({
         }.bind(this));
     }
 });
+
+Home.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 module.exports=Home;

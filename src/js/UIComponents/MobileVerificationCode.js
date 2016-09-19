@@ -75,7 +75,7 @@ let MobileVerificationCode=React.createClass({
             "disabled":!this.state.active,
             "getVerificationcode-btn":true
         });
-        let btnText=this.state.active ? "发送验证码" : (<span>{this.state.remainSeconds}秒后重发</span>)  ;
+        let btnText=this.state.active ? (this.timer !== undefined ? "重新获取" : "发送验证码") : (<span>{this.state.remainSeconds}秒后重发</span>)  ;
         return (
             <a href="javascript:void(0)" className={classes} onClick={this._handleClick}>{btnText}</a>
         )
@@ -83,6 +83,7 @@ let MobileVerificationCode=React.createClass({
     componentDidMount(){
         this.props.autoSend && this._handleClick();
         this.props.countDownOnly && this._countDown();
+        this.isFirst
     }
 });
 

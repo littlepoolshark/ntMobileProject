@@ -5,8 +5,8 @@ var SetDealPasswordAction={
         appDispatcher.dispatch({
             actionName:"submitDealPassword_setting",
             data:{
-                dealPassword:dealPassword,
-                confirmDealPassword:confirmDealPassword,
+                dealPassword_setting:dealPassword,
+                confirmDealPassword_setting:confirmDealPassword,
             }
         })
     },
@@ -14,9 +14,9 @@ var SetDealPasswordAction={
         appDispatcher.dispatch({
             actionName:"submitDealPassword_modify",
             data:{
-                originDealPassword:originDealPassword,
-                dealPassword:dealPassword,
-                confirmDealPassword:confirmDealPassword,
+                originDealPassword_modify:originDealPassword,
+                dealPassword_modify:dealPassword,
+                confirmDealPassword_modify:confirmDealPassword,
             }
         })
     }

@@ -21,6 +21,11 @@ let My2DCode=React.createClass({
             isMaskShow:true
         });
     },
+    _jumpToNextLocation(){
+        this.context.router.push({
+            pathname:"aboutUs"
+        });
+    },
     _closeShareTip(){
         this.setState({
             isMaskShow:false
@@ -45,7 +50,7 @@ let My2DCode=React.createClass({
                 {
                     <div className="buts-wrapper">
                         <Button amStyle="primary" block radius onClick={this._showShareTip}>分享给好友</Button>
-                        <Button amStyle="warning" block radius>更多农泰金融成长历程</Button>
+                        <Button amStyle="warning" block radius onClick={this._jumpToNextLocation}>更多农泰金融成长历程</Button>
                     </div>
                 }
                 <div className={maskClasses} onClick={this._closeShareTip}>

@@ -117,11 +117,11 @@ appDispatcher.register(function(payload){
             MyBankCardDetailStore.trigger("change_bankCardInfo");
             break;
         case "submitBankCardForm_myBanKCardDetail":
-            MyBankCardDetailStore.updateAll({
+            /*MyBankCardDetailStore.updateAll({
                 bankCardInfo:Object.assign(MyBankCardDetailStore.getAll().bankCardInfo,{
                     branch:payload.data.branch,
                 })
-            });
+            });*/
             let {
                 id,
                 bankId,

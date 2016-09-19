@@ -94,7 +94,7 @@ let Summary=React.createClass({
         }else {
             return (
                 <Group className="earnSet summary">
-                    <div className="subtitle">年化利率</div>
+                    <div className="subtitle">预期年化</div>
                     <div className="yearRate">
                         <span className="amount">{productApr}</span>
                         <span className="unit">%</span>

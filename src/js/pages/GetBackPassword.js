@@ -106,7 +106,8 @@ let GetBackPassword=React.createClass({
             this.context.router.push({
                 pathname:"/setNewPassword",
                 query:{
-                    verificationCode:verificationCode
+                    verificationCode:verificationCode,
+                    actionType:"setting"
                 }
             })
         }.bind(this));
