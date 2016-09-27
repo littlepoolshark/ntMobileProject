@@ -30,7 +30,7 @@ const App = React.createClass({
         let pathname=location.pathname;
         let currPageName;
         if(pathname !== "/"){
-            pathname=pathname.indexOf("/") > -1 ? pathname.slice(1) : pathname;
+            pathname=pathname.indexOf("/") > -1 ? pathname.replace(/\//g,"") : pathname;//把pathname里面的“/”去掉
             currPageName=pathname.charAt(0).toUpperCase() + pathname.slice(1);
         }else {
             currPageName=pathname;

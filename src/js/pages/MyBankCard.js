@@ -10,6 +10,7 @@ import Group from "../UIComponents/Group";
 import Icon from "../UIComponents/Icon";
 import Button from "../UIComponents/Button";
 import Modal from "../UIComponents/modal/Modal";
+import NavBar from "../UIComponents/NavBar";
 
 let NoBankCard=React.createClass({
     _addBankCard(){
@@ -62,6 +63,7 @@ let HasBankCard=React.createClass({
             "hasBankCard-wrapper":true,
             disabled:status === "pending" ? true : false
         });
+
         return (
             <div>
                 {
@@ -73,7 +75,7 @@ let HasBankCard=React.createClass({
                 }
                 <div className={classes} onClick={this._jumpToBankCardDetail.bind(null,status)}>
                     <div className="header">
-                        <img src={shortIcon} alt=""/>
+                        <img src={shortIcon} alt="" style={{width:"40px",height:"auto"}}/>
                         <span className="title">{bankName}</span>
                         <Icon  name="right-nav"/>
                     </div>
@@ -114,9 +116,25 @@ let MyBankCard = React.createClass({
             isModalOpen:false
         });
     },
+    _handleNavClick(obj){
+        this.context.router.push({
+            pathname:"userHome"
+        });
+    },
     render() {
+        let leftNav= {
+            component:"a",
+            icon: 'left-nav',
+            title: '返回'
+        };
         return (
             <Container id="myBankCard">
+                <NavBar
+                    title="我的银行卡"
+                    leftNav={[leftNav]}
+                    amStyle="primary"
+                    onAction={this._handleNavClick}
+                />
                 {
                     (this.state.bankCardInfo === null || !!!this.state.bankCardInfo.id) ?
                     <NoBankCard /> :
@@ -159,6 +177,9 @@ let MyBankCard = React.createClass({
                 isModalOpen:true
             })
         }.bind(this));
+    },
+    componentWillUnmount(){
+        MyBankCardStore.clearAll();
     }
 });
 

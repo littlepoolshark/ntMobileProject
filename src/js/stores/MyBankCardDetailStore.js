@@ -99,11 +99,17 @@ appDispatcher.register(function(payload){
             }
             break;
         case "selectProvinceFinish":
+            let originParentAreaId=MyBankCardDetailStore.getAll().bankCardInfo.parentAreaId;
+            let newData={
+                parentAreaId:payload.data.value,
+                parentAreaStr:payload.data.text
+            };
+            if(newData.parentAreaId !== originParentAreaId ){
+                newData.region="";
+                newData.regionStr="";
+            }
             MyBankCardDetailStore.updateAll({
-                bankCardInfo:Object.assign(MyBankCardDetailStore.getAll().bankCardInfo,{
-                    parentAreaId:payload.data.value,
-                    parentAreaStr:payload.data.text
-                })
+                bankCardInfo:Object.assign(MyBankCardDetailStore.getAll().bankCardInfo,newData)
             });
             MyBankCardDetailStore.trigger("change_bankCardInfo");
             break;
@@ -131,12 +137,12 @@ appDispatcher.register(function(payload){
                 }=MyBankCardDetailStore.getAll().bankCardInfo;
             ajax({
                 ciUrl:"/user/v2/updateBankCard",
-                data:{//这里嫌麻烦，采取了es6的对象key-value同名的写法
-                    id,
-                    bankId,
-                    region,
-                    branch,
-                    fullCardNo
+                data:{
+                    id:id,
+                    bankId:bankId,
+                    region:region,
+                    branch:branch,
+                    cardno:fullCardNo
                 },
                 success(rs){
                     if(rs.code === 0){

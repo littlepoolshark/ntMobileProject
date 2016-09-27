@@ -82,8 +82,8 @@ let UserHome=React.createClass({
                         <Link className="message-icon-wrapper" to="messageList" >
                             <Icon  classPrefix="imgIcon" name="message"  />
                         </Link>
-                        <Button  hollow radius onClick={this._handleRecharge}>充值</Button>
                         <Button  hollow radius onClick={this._handleWithdraw}>提现</Button>
+                        <Button  hollow radius onClick={this._handleRecharge}>充值</Button>
                     </div>
                     <div onClick={this._jumpToTotalAccount}>
                         <div className="text-center subtitle" style={{marginTop:"20px"}}>

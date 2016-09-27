@@ -234,6 +234,14 @@ let RegisterView=React.createClass({
         DefaultStore.bind("getVerificationCodeCheckFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
+
+        this.setState({
+            data:{
+                loginPhoneNo:"",
+                loginPassword:""
+            }
+        })
+
     }
 });
 

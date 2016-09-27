@@ -18,12 +18,17 @@ var BindBankCardAction={
             }
         })
     },
-    submitBankCardForm(cardNo){
+    changeCardNo(cardNo){
         appDispatcher.dispatch({
-            actionName:"submitBankCardForm",
+            actionName:"changeCardNo_bindBankCard",
             data:{
                 cardNo:cardNo
             }
+        })
+    },
+    submitBankCardForm(){
+        appDispatcher.dispatch({
+            actionName:"submitBankCardForm"
         })
     }
 };

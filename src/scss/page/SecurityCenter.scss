@@ -112,13 +112,13 @@
   .dashboard-wrapper {
     width:100%;
     background:red;
-    padding-bottom:rem-calc(40);
+    padding-bottom:rem-calc(30);
 
     .dashboard {
       width:rem-calc(236);
       height:rem-calc(159);
       margin:rem-calc(20) auto 0;
-      background-image:url("/src/img/security-bg.png");
+      background-image:url("../../img/security-bg.png");
       background-size:cover;
       position:relative;
       display:flex;
@@ -195,6 +195,11 @@
         transform:rotate(380deg);
       }
     }
+  }
+
+  .warm-hint {
+    margin-top:rem-calc(10);
+    @include color-and-fontSize($white,$T8);
   }
 
   .list {

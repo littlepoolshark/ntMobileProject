@@ -404,6 +404,14 @@ const rootRoute = {
                 }
             },
             {
+                path: 'serviceAgreement_new_product',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"ServiceAgreement_new_product"));
+                    })
+                }
+            },
+            {
                 path: 'serviceAgreement_ttz_product',
                 getComponent(nextState, cb) {
                     require.ensure([], (require) => {

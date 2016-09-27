@@ -27,12 +27,12 @@ var DailyEarnRollOutStore={
         }else if(rollOutAmount < 100 ){
             validationResult={
                 success:false,
-                msg:"转出金额不能小于100，100元起投！"
+                msg:"转出金额不能小于100元！"
             }
         }else if(rollOutAmount % 100){
             validationResult={
                 success:false,
-                msg:"转出金额要求是100的整数倍！"
+                msg:"转出金额要求是100元的整数倍！"
             }
         }else if(rollOutAmount > totoalIn){
             validationResult={

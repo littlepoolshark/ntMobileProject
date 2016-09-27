@@ -110,7 +110,7 @@ let TotalAccountDetail=React.createClass({
             withdraw
          }=this.state;
         return (
-            <Container scrollable={false} id="totalAccountDetail">
+            <Container scrollable={true} id="totalAccountDetail">
                 <NavBar
                     title="总资产明细"
                     rightNav={[rightNav]}

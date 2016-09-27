@@ -20,6 +20,16 @@ var MyBankCardStore={
     },
     updateAll(source){
         this._all=Object.assign(this._all,source);
+    },
+    clearAll(){
+        this._all={
+            bankName: "",
+            cardno: "",
+            shortIcon:"",
+            status:"",
+            realName:"",
+            idCardVerified:"no"
+        }
     }
 };
 MicroEvent.mixin(MyBankCardStore);
@@ -43,6 +53,7 @@ appDispatcher.register(function(payload){
                 ciUrl:"/user/v2/userInfoDetail",
                 success(rs){
                     if(rs.code === 0){
+
                         MyBankCardStore.updateAll({
                             idCardVerified:rs.data.sercuInfo.idCardVerified,
                             realName:rs.data.personInfo.realName

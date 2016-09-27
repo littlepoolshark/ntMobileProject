@@ -215,7 +215,7 @@ appDispatcher.register(function(payload){
                                 list:rs.data.list,
                                 pageIndex:rs.data.pageIndex
                             });
-                            EarnSetInvestmentRecordStore.trigger("change");
+                            EarnSetInvestmentRecordStore.trigger("queryProductListSuccess");
                         }else {
                             EarnSetInvestmentRecordStore.trigger("noDataTemporarily",currListType);
                         }

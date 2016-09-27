@@ -28,7 +28,7 @@ var SetDealPasswordStore={
         }else if(newDealPassword !== confirmDealPassword){
             confirmResult={
                 success:false,
-                msg:"您两次输入的交易不一致，请重新输入"
+                msg:"您两次输入的交易密码不一致，请重新输入"
             }
         }
 

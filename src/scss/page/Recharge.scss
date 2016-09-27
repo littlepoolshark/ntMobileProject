@@ -1,5 +1,39 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
 #recharge {
   .item-input .field-label {
     width:16%;
+  }
+
+  .rechargeAmount-selectionBar {
+    margin:rem-calc(15) 0 rem-calc(25);
+    padding:0 rem-calc(15);
+
+    &>span {
+      display:inline-block;
+      width:16%;
+      height:rem-calc(30);
+      line-height:rem-calc(32);
+      text-align: center;
+      margin-right:5%;
+      @include color-and-fontSize($C3,$T8);
+      background-color:$white;
+    }
+
+    &>span:last-child {
+      margin-right:0;
+    }
+
+    &>span.active {
+      background:$C1;
+      color:$white;
+    }
   }
 }

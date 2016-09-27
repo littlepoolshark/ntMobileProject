@@ -58,11 +58,16 @@ var RealNameAuthenticationStore={
         let validationResult={
             success:true,
             msg:""
-        }
+        };
         if(realName === ""){
             validationResult={
                 success:false,
                 msg:"姓名不能为空，请输入"
+            }
+        }else if(decodeURI(realName).length > 30){
+            validationResult={
+                success:false,
+                msg:"姓名包含字符的个数不能超过30，请检查"
             }
         }else if(idCardNo === ""){
             validationResult={

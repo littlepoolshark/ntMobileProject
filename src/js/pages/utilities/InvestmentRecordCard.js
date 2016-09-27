@@ -93,7 +93,8 @@ let InvestmentRecordCard=React.createClass({
             yearRate,//标的的预期年化
             deadline,//标的的期限,或者表示还款期数目，形如 “3/6”,表示剩余期数 / 总期数
             clickHandler,
-            status
+            status,
+            rewardRate
             }=this.props;
 
 
@@ -112,11 +113,11 @@ let InvestmentRecordCard=React.createClass({
                     </h6>
                     {this._renderCardBody(this.props)}
                     <Grid collapse={true} className="footer">
-                        <Col cols={2} className="text-left">{yearRate}</Col>
+                        <Col cols={2} className="text-left">{yearRate}{!!rewardRate ? "+" + rewardRate : null}</Col>
                         <Col cols={2} className="text-center">{deadline}</Col>
                         <Col cols={2} className="text-right">
                             {
-                                productType === "yyz_product" ?
+                                productType === "yyz_product" || productType === "new_product" ?
                                 "一次性还本付息" :
                                 "按月结息,到期还本"
                             }

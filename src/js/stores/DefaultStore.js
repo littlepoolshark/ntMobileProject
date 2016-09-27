@@ -102,7 +102,7 @@ appDispatcher.register(function(payload){
                     },
                     success:function(rs){
                         if(rs.code === 0){
-                            cookie.setCookie("token",rs.data.token,59);//用户的登录状态设置为59分钟
+                            cookie.setCookie("token",rs.data.token,59);//用户的登录状态有效时长设置为59分钟
                             cookie.setCookie("phoneNo",loginPhoneNo);//将用户的手机号码设置到cookie,以备将来使用
                             DefaultStore.trigger("loginSuccess");
                         }else {

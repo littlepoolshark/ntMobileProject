@@ -70,6 +70,17 @@ let SecurityCenter=React.createClass({
         }
         return securityText;
     },
+    _renderWarmHintText(score){
+        let warmHintText="";
+        if(score <= 50){
+            warmHintText="您的账户信息不完整，仍有安全风险，请立即完善！";
+        }else if(score <=75){
+            warmHintText="还剩一步，即可拥有完整的安全保障体系！";
+        }else {
+            warmHintText="您的账户已经被完美保障，请继续保持！";
+        }
+        return warmHintText;
+    },
     _jumpToRealNameAuthentication(){
         let {
             idCardVerified,
@@ -115,6 +126,8 @@ let SecurityCenter=React.createClass({
                         <span className="subtitle">{this._renderSecurityText(score)}</span>
                         <div className="rotate-needle" id="rotateNeedle"><span className="needle-header"></span></div>
                     </div>
+
+                    <div className="warm-hint text-center">{this._renderWarmHintText(score)}</div>
                 </div>
 
                 <List >

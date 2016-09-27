@@ -21,7 +21,7 @@ let DailyEarnRollOut=React.createClass({
     },
     _handleRollOutAmountChange(){
         let rollOutAmount=this.refs.rollOutAmount.getValue();
-        DailyEarnRollOutAction.changeRollOutAmount(rollOutAmount === "" ? 0 : parseFloat(rollOutAmount));
+        DailyEarnRollOutAction.changeRollOutAmount(rollOutAmount.replace(/\D/g,""));
     },
     render(){
         let {
@@ -48,7 +48,7 @@ let DailyEarnRollOut=React.createClass({
                 <List>
                     <List.Item nested="input" >
                         <Field
-                            type="number"
+                            type="text"
                             label="转出金额"
                             placeholder="请输入100的整数倍"
                             ref="rollOutAmount"

@@ -57,5 +57,13 @@ module.exports={
     watch: true,
     devServer:{
         contentBase:'./'
+        /*proxy: {
+            '*': {
+                changeOrigin:true,
+                target: 'http://192.168.1.90:9090',
+                host:"http://192.168.1.90:9090",
+                secure: false
+            }
+        }*/
     }
 }

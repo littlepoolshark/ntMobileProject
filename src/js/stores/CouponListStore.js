@@ -11,6 +11,9 @@ var CouponListStore={
     },
     updateAll(couponList){
         this._all.couponList=couponList
+    },
+    clearAll(){
+        this._all.couponList=[];
     }
 
 };
@@ -19,12 +22,19 @@ MicroEvent.mixin(CouponListStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "couponList_getDataFromSever":
+            //根据当前的产品类型获取优惠券列表
+            let productTypeMap={
+                yyz_product:"yyz",
+                jjz_product:"jjz",
+                loan_product:"sanbiao"
+            };
             ajax({
                 ciUrl:"/user/v2/getRedPackageAndInterestTks",
                 data:{
                     reqPageNum:1,
                     maxResults:1000,
-                    scope:payload.data.productType
+                    scope:productTypeMap[payload.data.productType],
+                    investMoney:payload.data.purchaseAmount
                 },
                 success(rs){
 
@@ -40,7 +50,7 @@ appDispatcher.register(function(payload){
                                 id:interestList[i].interestId,
                                 type:"interestRate",
                                 couponAmount:interestList[i].interestRate,
-                                investmentMinLimit:0,
+                                investmentMinLimit:interestList[i].inUseAmount,
                                 useScope:interestList[i].useScope,
                                 source:interestList[i].activityName,
                                 deadline:interestList[i].endTimeDesc,

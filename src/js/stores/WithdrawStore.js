@@ -19,7 +19,8 @@ var WithdrawStore={
     checkForm(){
         let {
             withdrawAmount,
-            dealPassword
+            dealPassword,
+            available
             }=this._all;
         let validationResult={
             success:true,
@@ -29,6 +30,11 @@ var WithdrawStore={
             validationResult={
                 success:false,
                 msg:"提现金额不能低于2.00元"
+            };
+        }else if(withdrawAmount > 2000000){
+            validationResult={
+                success:false,
+                msg:"提现金额不能大于2000000元"
             };
         }else if(dealPassword === ""){
             validationResult={
@@ -44,6 +50,9 @@ var WithdrawStore={
     updateAll(source){
        this._all=Object.assign(this._all,source);
        this._figOutAcctAccount();
+    },
+    clearAll(){
+        this._all.withdrawAmount=0;
     }
 };
 MicroEvent.mixin(WithdrawStore);
@@ -95,8 +104,16 @@ appDispatcher.register(function(payload){
             }
             break;
         case "confirmToSubmitWithdrawForm":
+            let {
+                withdrawAmount,
+                dealPassword
+                }=WithdrawStore.getAll();
             ajax({
                 ciUrl:"/user/v2/capitalWithdrawCash",
+                data:{
+                    amount:withdrawAmount,
+                    dealPwd:dealPassword
+                },
                  success(rs){
                      if(rs.code === 0){
                         WithdrawStore.trigger("withdrawSuccess");

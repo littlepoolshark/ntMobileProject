@@ -113,6 +113,7 @@ let MessageList=React.createClass({
     },
     componentWillUnmount(){
         MessageListStore.unbind("change");
+        MessageListStore.clearAll();
     }
 });
 

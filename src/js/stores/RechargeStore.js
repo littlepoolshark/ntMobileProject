@@ -32,6 +32,9 @@ var RechargeStore={
         }
 
         return validationResult;
+    },
+    clearAll(){
+        this._all.rechargeAmount=0;
     }
 };
 MicroEvent.mixin(RechargeStore);

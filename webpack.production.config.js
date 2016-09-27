@@ -54,7 +54,7 @@ module.exports={
             },
             {
                 test:/\.(png|jpg|woff|svg|ttf)$/,
-                loader:"url?limit=25000"
+                loader:"url?limit=25000&name=images/[name].[ext]"
             }
         ],
         noParse:[pathToReact,pathToReactDOM]//每当webpack尝试去解析那个压缩后的文件，我们阻止它，因为这不必要
@@ -63,11 +63,11 @@ module.exports={
     plugins:[
         new ExtractTextPlugin("[name].[chunkhash:8].css"),
         new webpack.optimize.CommonsChunkPlugin("vendor","vendor.[chunkhash:8].bundle.js"),
-        new webpack.optimize.UglifyJsPlugin({//压缩
+       /* new webpack.optimize.UglifyJsPlugin({//压缩
             compress:{
                 warnings:false
             }
-        }),
+        }),*/
         new HtmlWebpackPlugin({
             filename:"index.html",
             template:path.resolve(__dirname,"index_production.html"),

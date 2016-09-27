@@ -17,7 +17,10 @@ var PaymentStore={
         remainAmount:0,//项目可购买金额
         userBalance:0,//用户账户余额
         unUseCouponCount:0,//未使用优惠券的数量
-        rewardRate:0//标的的奖励利息
+        rewardRate:0,//标的的奖励利息
+        investLimitAmount_ttz:100000,//天天赚最高(初始)投资限额
+        userInTotal_ttz:0,//天天赚已购买（已转入）金额
+        orderAmount_ttz:0,//天天赚预约中金额
     },
     getAll(){
         return this._all;
@@ -126,18 +129,37 @@ var PaymentStore={
         this._all.couponAmount=couponAmount;
         this._all.couponType=couponType;
     },
+    _setTTZInvestLimitAmount(){
+        let {
+            investLimitAmount_ttz,
+            userInTotal_ttz,
+            orderAmount_ttz
+            }=this._all;
+        investLimitAmount_ttz=100000 -  parseFloat(userInTotal_ttz) - parseFloat(orderAmount_ttz);
+        this._all.investLimitAmount_ttz=investLimitAmount_ttz < 0 ? 0 : investLimitAmount_ttz;
+    },
     getUserBalance(){
         let userBalance=this._all.userBalance - (this._all.userBalance % 100);
-        return userBalance > this._all.remainAmount ? this._all.remainAmount : userBalance;
+        let maxPurchaseAmount;
+       /* if(this._all.productType === "ttz_product"){
+         maxPurchaseAmount=this._all.remainAmount < this._all.investLimitAmount_ttz ? this._all.remainAmount : this._all.investLimitAmount_ttz;
+         }else {
+         maxPurchaseAmount=this._all.remainAmount;
+         }*/
+        maxPurchaseAmount=this._all.remainAmount;
+        return userBalance > maxPurchaseAmount ? maxPurchaseAmount : userBalance;
     },
     paymentCheck(){
         let {
             remainAmount,
             userBalance,
-            purchaseAmount
+            purchaseAmount,
+            productType,
+            investLimitAmount_ttz,
+            hadBindBankCard
             }=this._all;
         let validationResult={
-            success:false,
+            success:true,
             msg:""
         };
         if(purchaseAmount === 0){
@@ -160,22 +182,27 @@ var PaymentStore={
                 success:false,
                 msg:"投资金额不能大于项目可投金额！"
             }
-        }else if(purchaseAmount >  userBalance){
+        }/*else if(productType === "ttz_product" && purchaseAmount > investLimitAmount_ttz){
+            validationResult={
+                success:false,
+                msg:"投资金额不能大于个人投资限额！"
+            }
+        }*/ else if(purchaseAmount >  userBalance){
             validationResult={
                 success:false,
                 msg:"余额不足，前去充值"+ (purchaseAmount - userBalance) + "元？"
             }
-        }else {
-            validationResult={
-                success:true,
-                msg:""
-            }
         }
+
         return validationResult;
+    },
+    isBindBankCardCheck(){
+        return this._all.hadBindBankCard === false ? false : true;
     },
     updateAll(data){
         this._setAll(data);
         this._setExpectedReward();
+        this._setTTZInvestLimitAmount();
         //this._setCoupon();
 
     },
@@ -192,10 +219,45 @@ MicroEvent.mixin(PaymentStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "payment_storeInitialization" ://将从url传递的参数存入store
+            //向后台取回“天天赚持有中金额”和“天天赚预约中金额”两个字段的值,用于天天赚的支付
+            if(payload.data.productType === "ttz_product"){
+                ajax({
+                    ciUrl:"/ttz/v2/account",
+                    success(rs){
+                        if(rs.code === 0){
+                            PaymentStore.updateAll({
+                                userInTotal_ttz:rs.data.ttzUseraccountTotal.userInTotal,
+                                orderAmount_ttz:rs.data.orderAmount.replace(/\,/g,"")
+                            });
+                            PaymentStore.trigger("change");
+                        }
+                    }
+                })
+            };
+
+            //获取银行卡信息，以此来判断用户是否已经绑卡
+            ajax({
+                ciUrl:"/user/v2/myBankCardInfo",
+                success(rs){
+                    if(rs.code === 0){
+                        let hadBindBankCard;
+                        if(rs.data === null){
+                            hadBindBankCard=false;
+                        }else{
+                            hadBindBankCard=true;
+                        }
+                        PaymentStore.updateAll({
+                            hadBindBankCard:hadBindBankCard
+                        });
+                    }
+                }
+            });
             PaymentStore.updateAll(payload.data);
+            PaymentStore.trigger("change");
             break;
         case "useAllBalance":
             let userBalance=PaymentStore.getUserBalance();
+
             if(userBalance !== 0){
                 PaymentStore.updateAll({
                     purchaseAmount:PaymentStore.getUserBalance()
@@ -250,107 +312,120 @@ appDispatcher.register(function(payload){
             PaymentStore.trigger("change");
             break;
         case "payment_earnSet"://赚系列的支付
-            let paymentCheckResult_earnSet=PaymentStore.paymentCheck();
-            if(paymentCheckResult_earnSet.success){
-                let {
-                    productType,
-                    productId,
-                    purchaseAmount,
-                    couponType,
-                    couponAmount,
-                    couponId
-                    }=PaymentStore.getAll();
-                let postData={
-                    regularId:productId,
-                    amount:purchaseAmount,
-                    type:productType,
-                    operType:"buy"
-                };
-                if(couponType && couponAmount){
-                    if(couponType === "interestRate"){
-                        postData.interestId=couponId;
-                    }else if(couponType === "redPackage"){
-                        postData.redId=couponId;
+            if(PaymentStore.isBindBankCardCheck()){
+                let paymentCheckResult_earnSet=PaymentStore.paymentCheck();
+                if(paymentCheckResult_earnSet.success){
+                    let {
+                        productType,
+                        productId,
+                        purchaseAmount,
+                        couponType,
+                        couponAmount,
+                        couponId
+                        }=PaymentStore.getAll();
+                    let postData={
+                        regularId:productId,
+                        amount:purchaseAmount,
+                        type:productType,
+                        operType:"buy"
+                    };
+                    if(couponType && couponAmount){
+                        if(couponType === "interestRate"){
+                            postData.interestId=couponId;
+                        }else if(couponType === "redPackage"){
+                            postData.redId=couponId;
+                        }
                     }
+                    ajax({
+                        ciUrl:"/invest/v2/earnProductInvest",
+                        data:postData,
+                        success(rs){
+                            if(rs.code === 0){
+                                PaymentStore.trigger("purchaseSuccess",rs.data)
+                            }else {
+                                PaymentStore.trigger("purchaseFailed",rs.description);
+                            }
+                        }
+                    })
+                }else {
+                    PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_earnSet.msg)
                 }
-                ajax({
-                    ciUrl:"/invest/v2/earnProductInvest",
-                    data:postData,
-                    success(rs){
-                       if(rs.code === 0){
-                           PaymentStore.trigger("purchaseSuccess",rs.data)
-                       }else {
-                           PaymentStore.trigger("purchaseFailed",rs.description);
-                       }
-                    }
-                })
             }else {
-                PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_earnSet.msg)
+                PaymentStore.trigger("hadNotBindBankCard");
             }
+
             break;
         case "payment_fixedLoan"://好采投的支付
-            let paymentCheckResult_fixedLoan=PaymentStore.paymentCheck();
-            if(paymentCheckResult_fixedLoan.success){
-                let {
-                    productId,
-                    purchaseAmount,
-                    couponType,
-                    couponAmount,
-                    couponId
-                    }=PaymentStore.getAll();
-                let postData={
-                    investId:productId,
-                    amount:purchaseAmount
-                };
-                if(couponType && couponAmount){
-                    if(couponType === "interestRate"){
-                        postData.interestId=couponId;
-                    }else if(couponType === "redPackage"){
-                        postData.redpackageId=couponId;
-                    }
-                }
-                ajax({
-                    ciUrl:"/invest/v2/loanForBuy",
-                    data:postData,
-                    success(rs){
-                        if(rs.code === 0){
-                            PaymentStore.trigger("purchaseSuccess",rs.data)
-                        }else {
-                            PaymentStore.trigger("purchaseFailed",rs.description);
+            if(PaymentStore.isBindBankCardCheck()){
+                let paymentCheckResult_fixedLoan=PaymentStore.paymentCheck();
+                if(paymentCheckResult_fixedLoan.success){
+                    let {
+                        productId,
+                        purchaseAmount,
+                        couponType,
+                        couponAmount,
+                        couponId
+                        }=PaymentStore.getAll();
+                    let postData={
+                        investId:productId,
+                        amount:purchaseAmount
+                    };
+                    if(couponType && couponAmount){
+                        if(couponType === "interestRate"){
+                            postData.interestId=couponId;
+                        }else if(couponType === "redPackage"){
+                            postData.redpackageId=couponId;
                         }
                     }
-                })
-            }else {
-                PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_fixedLoan.msg)
+                    ajax({
+                        ciUrl:"/invest/v2/loanForBuy",
+                        data:postData,
+                        success(rs){
+                            if(rs.code === 0){
+                                PaymentStore.trigger("purchaseSuccess",rs.data)
+                            }else {
+                                PaymentStore.trigger("purchaseFailed",rs.description);
+                            }
+                        }
+                    })
+                }else {
+                    PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_fixedLoan.msg)
+                }
+            }else{
+                PaymentStore.trigger("hadNotBindBankCard");
             }
+
             break;
         case "payment_creditorLoan":
-            let paymentCheckResult_creditorLoan=PaymentStore.paymentCheck();
-            if(paymentCheckResult_creditorLoan.success){
-                let {
-                    productId,
-                    purchaseAmount,
-                    }=PaymentStore.getAll();
-                let postData={
-                    investId:productId,
-                    amount:purchaseAmount
-                };
-                ajax({
-                    ciUrl:"/invest/v2/creditorForBuy",
-                    data:postData,
-                    success(rs){
-                        if(rs.code === 0){
-                            PaymentStore.trigger("purchaseSuccess",rs.data)
-                        }else {
-                            PaymentStore.trigger("purchaseFailed",rs.description);
+            if(PaymentStore.isBindBankCardCheck()){
+                let paymentCheckResult_creditorLoan=PaymentStore.paymentCheck();
+                if(paymentCheckResult_creditorLoan.success){
+                    let {
+                        productId,
+                        purchaseAmount,
+                        }=PaymentStore.getAll();
+                    let postData={
+                        investId:productId,
+                        amount:purchaseAmount
+                    };
+                    ajax({
+                        ciUrl:"/invest/v2/creditorForBuy",
+                        data:postData,
+                        success(rs){
+                            if(rs.code === 0){
+                                PaymentStore.trigger("purchaseSuccess",rs.data)
+                            }else {
+                                PaymentStore.trigger("purchaseFailed",rs.description);
+                            }
                         }
-                    }
-                })
+                    })
+                }else {
+                    PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_creditorLoan.msg)
+                }
             }else {
-                PaymentStore.trigger("paymentCheckFailed",paymentCheckResult_creditorLoan.msg)
+                PaymentStore.trigger("hadNotBindBankCard");
             }
             break;
-
         default:
         //no op
     }

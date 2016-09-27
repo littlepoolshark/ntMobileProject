@@ -210,6 +210,16 @@ let EarnSetInvestmentRecord=React.createClass({
             })
         }.bind(this));
 
+
+        EarnSetInvestmentRecordStore.bind("queryProductListSuccess",function(){
+            this.setState({
+                data:EarnSetInvestmentRecordStore.getAll(),
+                noRepayingData:false,
+                noClearingData:false,
+                isActionModalOpen:false
+            })
+        }.bind(this));
+
         //打开配标详情列表modal窗口，展示配标详情列表
         EarnSetInvestmentRecordStore.bind("getMatchLoanListSuccess",function(){
             this.setState({

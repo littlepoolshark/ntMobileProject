@@ -31,7 +31,8 @@ function getParamObjFromUrl(){
 let Register=React.createClass({
     getInitialState(){
         return {
-            showLoginPasswordField:false
+            showLoginPasswordField:false,
+            inviterCode:RegisterStore.getInviterCode()
         }
     },
     _formatPhoneNo(phoneNo){
@@ -45,13 +46,17 @@ let Register=React.createClass({
             this.refs.modal.open();
         }
     },
-    _handleOnAction(data){
-        if(data === ""){
-            return false;
-        }else {
-            RegisterAction.fillInviterCode(data);
+    _handleOnAction(data,event){
+        let btnTxt=event.target.innerText;
+        if(btnTxt === "取消"){
+            RegisterAction.clearInviterCode();
             return true;
+        }else if(btnTxt === "确定" && data !== ""){
+            return true;
+        }else {
+            return false;
         }
+
     },
     _handleOnDismiss(event){
         this.refs.modal.close();
@@ -66,6 +71,11 @@ let Register=React.createClass({
         let loginPassword=this.refs.password.getValue();
         let verificationCode=this.refs.verificationCode.getValue();
         RegisterAction.register(phoneNo,loginPassword,verificationCode);
+    },
+    _handleInviterCodeChange(){
+        let inviterCode=this.refs.inviterPhoneNo.getValue();
+        inviterCode=inviterCode.replace(/\D/g,"");
+        RegisterAction.changeInviterCode(inviterCode);
     },
     render (){
         let phoneNo=this.props.location.query.phoneNo;
@@ -128,9 +138,21 @@ let Register=React.createClass({
                 <div className="" style={{padding:"0 0.9375rem"}}>
                     <Button amStyle="primary" block radius={true} onClick={this._register}>注册</Button>
                 </div>
-                <Modal role="prompt" title=""  ref="modal" onAction={this._handleOnAction} onDismiss={this._handleOnDismiss}>
+                <Modal
+                    role="prompt"
+                    title=""
+                    ref="modal"
+                    onAction={this._handleOnAction}
+                    onDismiss={this._handleOnDismiss}
+                >
                     请输入邀请人手机号码或者邀请码
-                    <Field type="text"  placeholder="" ref="inviterPhoneNo" />
+                    <Field
+                        type="text"
+                        placeholder=""
+                        ref="inviterPhoneNo"
+                        value={this.state.inviterCode}
+                        onChange={this._handleInviterCodeChange}
+                    />
                 </Modal>
             </Container>
         )
@@ -145,6 +167,15 @@ let Register=React.createClass({
         RegisterStore.bind("registerFailed",function(msg){
             Message.broadcast(msg);
         });
+
+        RegisterStore.bind("inviterCodeChange",function(){
+            this.setState({
+                inviterCode:RegisterStore.getInviterCode()
+            });
+        }.bind(this));
+    },
+    componentWillUnmount(){
+        RegisterStore.clearAll();
     }
 });
 

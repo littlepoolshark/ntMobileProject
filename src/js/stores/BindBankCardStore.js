@@ -21,7 +21,7 @@ var BindBankCardStore={
             bankName,
             cardNo
             }=this._all;
-        console.log("cardNo:",cardNo);
+        cardNo=cardNo+"";//确保cardNo是字符串
         if(bankName === ""){
             validationResult={
                 success:false,
@@ -31,6 +31,11 @@ var BindBankCardStore={
             validationResult={
                 success:false,
                 msg:"银行卡号不能为空，请输入"
+            };
+        }else if(cardNo.length > 20 || cardNo.length < 13){
+            validationResult={
+                success:false,
+                msg:"银行卡号长度有误，请检查"
             };
         }else if(!(/^\d+$/g.test(cardNo))){
             validationResult={
@@ -66,10 +71,13 @@ appDispatcher.register(function(payload){
             });
             BindBankCardStore.trigger("bankCardSelectionFinished");
             break;
-        case "submitBankCardForm":
+        case "changeCardNo_bindBankCard":
             BindBankCardStore.updateAll({
                 cardNo:payload.data.cardNo
             });
+            BindBankCardStore.trigger("change");
+            break;
+        case "submitBankCardForm":
 
             let validationResult=BindBankCardStore.checkForBindCardForm();
             if(validationResult.success){

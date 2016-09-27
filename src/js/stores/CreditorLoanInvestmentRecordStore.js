@@ -26,7 +26,7 @@ var CreditorLoanInvestmentRecordStore={
         };
     },
     getListStatusByListType(listType){
-        return listType === "applying" ? "orderring" : (listType === "repaying" ? "holding" : "success");
+        return listType === "applying" ? "orderring" : (listType === "repaying" ? "holdding" : "success");
     },
     getCurrPageIndex(listType){
         if(listType === "applying"){

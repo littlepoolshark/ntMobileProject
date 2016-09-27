@@ -1,11 +1,12 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var CouponListAction={
-    getDataFromSever(type){
+    getDataFromSever(productType,purchaseAmount){
         appDispatcher.dispatch({
             actionName:"couponList_getDataFromSever",
             data:{
-                productType:type
+                productType:productType,
+                purchaseAmount:purchaseAmount
             }
         })
     }

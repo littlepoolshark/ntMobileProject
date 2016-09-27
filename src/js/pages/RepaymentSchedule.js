@@ -43,7 +43,8 @@ let RepaymentSchedule=React.createClass({
 
         let {
             productType,
-            status
+            status,
+            investAmount
             }=this.props.location.query;
 
         let yearRate=(apr * 100).toFixed(1) + "%"+ (rewardRate ? "+" + (rewardRate * 100).toFixed(1) + "%" : "");
@@ -88,15 +89,15 @@ let RepaymentSchedule=React.createClass({
                         </div>
                         <div className="row">
                             <span className="subtitle label">投资金额</span>
-                            <span className="number">￥{investMoney}</span>
+                            <span className="number">￥{investAmount}</span>
                         </div>
                         <div className="row">
                             <span className="subtitle label">已结本息</span>
-                            <span className="number">￥{yjbx}</span>
+                            <span className="number">￥{!!yjbx ? yjbx.toFixed(2) : yjbx}</span>
                         </div>
                         <div className="row">
                             <span className="subtitle label">待收本息</span>
-                            <span className="number">￥{dsbx}</span>
+                            <span className="number">￥{!!dsbx ? dsbx.toFixed(2) : dsbx}</span>
                         </div>
                     </div>
                 </Group>

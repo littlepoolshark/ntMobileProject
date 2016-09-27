@@ -19,6 +19,22 @@ var RegisterAction={
                 inviterCode:inviterCode
             }
         })
+    },
+    changeInviterCode(inviterCode){
+        appDispatcher.dispatch({
+            actionName:"changeInviterCode",
+            data:{
+                inviterCode:inviterCode
+            }
+        })
+    },
+    clearInviterCode(){
+        appDispatcher.dispatch({
+            actionName:"changeInviterCode",
+            data:{
+                inviterCode:""
+            }
+        })
     }
 };
 

@@ -53,16 +53,16 @@
       right: 0;
 
       &.holding {
-        background-image: url("/src/img/icon_label_have.png");
+        background-image: url("../../img/icon_label_have.png");
       }
       &.applying {
-        background-image: url("/src/img/icon_label_investmenting.png");
+        background-image: url("../../img/icon_label_investmenting.png");
       }
       &.clearing {
-        background-image: url("/src/img/icon_label_reimbursement.png");
+        background-image: url("../../img/icon_label_reimbursement.png");
       }
       &.transfered {
-        background-image: url("/src/img/icon_label_transfered.png");
+        background-image: url("../../img/icon_label_transfered.png");
       }
     }
   }

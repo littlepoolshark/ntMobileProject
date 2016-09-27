@@ -79,6 +79,28 @@ let PurchaseSuccess=React.createClass({
             pathname:"/productList"
         });
     },
+    _getNextLocation(productType){
+        let nextLocation="";
+        switch (productType){
+            case "ttz_product":
+                nextLocation="#/dailyEarnInvestmentRecord";
+                break;
+            case "new_product":
+            case "yyz_product":
+            case "jjz_product":
+                nextLocation="#/earnSetInvestmentRecord";
+                break;
+            case "loan_product":
+                nextLocation="#/fixedLoanInvestmentRecord";
+                break;
+            case "creditor_product":
+                nextLocation="#/creditorLoanInvestmentRecord";
+                break;
+            default:
+                break;
+        }
+        return nextLocation;
+    },
     render(){
         let {
             productType,//产品类型
@@ -103,7 +125,7 @@ let PurchaseSuccess=React.createClass({
                 {this._renderStageBar(productType,investMoney,lixiTime,endTime,expectedReward)}
                 <List>
                     <List.Item
-                        href={productType === "ttz_product" ? "#/dailyEarnInvestmentRecord" : "#/earnSetInvestmentRecord"}
+                        href={this._getNextLocation(productType)}
                         title="投资记录"
                     />
                 </List>

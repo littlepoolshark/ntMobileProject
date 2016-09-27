@@ -10,6 +10,7 @@ import List from "../UIComponents/List";
 import Field from "../UIComponents/Field";
 import Button from "../UIComponents/Button";
 import Message from "../UIComponents/Message";
+import Modal from "../UIComponents/modal/Modal"
 
 /*
  * @desc 天天赚预约页面
@@ -21,7 +22,8 @@ let DailyEarnAppointment=React.createClass({
     getInitialState(){
         return {
             userInTotal:0,
-            purchaseAmount:0
+            purchaseAmount:0,
+            isModalOpen:false
         }
     },
     _handlePurchaseAmountChange(event){
@@ -34,6 +36,18 @@ let DailyEarnAppointment=React.createClass({
     },
     _useAllBalance(event){
         DailyEarnAppointmentAction.useAllBalance()
+    },
+    _jumpToNextLocation(confirm){
+
+        if(confirm){//用户点击了“确定”按钮
+            this.context.router.push({
+                pathname:"myBankCard"
+            });
+        }else {//用户点击了“取消”按钮
+            this.setState({
+                isModalOpen:false
+            });
+        }
     },
     render(){
         let {
@@ -75,6 +89,16 @@ let DailyEarnAppointment=React.createClass({
                     <span className="label">温馨提示：</span>
                     若您的预约资金在两日内未能成功排队购买天天赚，预约资金将返还至您的账户中。
                 </p>
+
+                <Modal
+                    title=""
+                    ref="modal"
+                    isOpen={this.state.isModalOpen}
+                    role="confirm"
+                    onAction={this._jumpToNextLocation}
+                >
+                    您还未绑定银行卡，暂时不能预约。去绑卡？
+                </Modal>
             </Container>
         )
     },
@@ -111,6 +135,12 @@ let DailyEarnAppointment=React.createClass({
 
         DailyEarnAppointmentStore.bind("appointmentFailed",function(msg){
             Message.broadcast(msg);
+        }.bind(this));
+
+        DailyEarnAppointmentStore.bind("hadNotBindBankCard",function(){
+            this.setState({
+                isModalOpen:true
+            })
         }.bind(this));
     },
     componentWillUnmount(){

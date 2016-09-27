@@ -82,6 +82,7 @@ let JournalAccount=React.createClass({
     },
     componentDidMount(){
         JournalAccountAction.getNextPage();
+
         JournalAccountStore.bind("change",function(){
             this.setState({
                 journalAccountList:JournalAccountStore.getJournalAccountList()
@@ -95,6 +96,9 @@ let JournalAccount=React.createClass({
             });
             Loader.hide();
         }.bind(this));
+    },
+    componentWillUnmount(){
+        JournalAccountStore.clearAll();
     }
 });
 

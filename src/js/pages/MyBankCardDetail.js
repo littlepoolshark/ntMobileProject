@@ -40,7 +40,9 @@ let MyBankCardDetail=React.createClass({
     },
     _handleNavClick(obj){
         if(obj.title === "返回"){
-            this.context.router.goBack();
+            this.context.router.push({
+                pathname:"myBankCard"
+            });
         }else if(obj.title === "删除银行卡"){
             this._jumpToDeleteBankCard();
         }

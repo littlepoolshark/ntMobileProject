@@ -11,53 +11,7 @@ import Button from "../UIComponents/Button";
 import Container from "../UIComponents/Container";
 
 const CAN_USE_COUPON=["yyz_product","jjz_product","loan_product"];
-/*let couponList=[
-    {
-        id:1,
-        type:"redPackage",
-        couponAmount:200,
-        investmentMinLimit:5000,
-        useScope:"季季赚，好采投",
-        source:"主动派送加息券",
-        deadline:"2016-07-01"
-    },
-    {
-        id:2,
-        type:"interestRate",
-        couponAmount:0.5,
-        investmentMinLimit:5000,
-        useScope:"月月赚，季季赚，好采投",
-        source:"主动派送加息券",
-        deadline:"2016-07-01"
-    },
-    {
-        id:3,
-        type:"interestRate",
-        couponAmount:0.5,
-        investmentMinLimit:5000,
-        useScope:"月月赚，季季赚，好采投",
-        source:"主动派送加息券",
-        deadline:"2016-07-01"
-    },
-    {
-        id:4,
-        type:"interestRate",
-        couponAmount:0.5,
-        investmentMinLimit:5000,
-        useScope:"月月赚，季季赚，好采投",
-        source:"主动派送加息券",
-        deadline:"2016-07-01"
-    },
-    {
-        id:5,
-        type:"interestRate",
-        couponAmount:0.5,
-        investmentMinLimit:5000,
-        useScope:"月月赚，季季赚，好采投",
-        source:"主动派送加息券",
-        deadline:"2016-07-01"
-    }
-]*/
+
 let CouponCard=React.createClass({
     _handleCouponSelect(){
        this.props.onSelect && this.props.onSelect();
@@ -92,7 +46,7 @@ let CouponCard=React.createClass({
             deadline,
             }=this.props;
         //购买金额小于单笔投资最小金额或者当前的产品类型是月月赚的话，则不能使用红包
-        let isSelectable= !(type === "redPackage" && (purchaseAmount < investmentMinLimit || productType === "yyz_product"));
+        let isSelectable= !((type === "redPackage"  && productType === "yyz_product") || purchaseAmount === 0 || purchaseAmount < investmentMinLimit);
         let couponClass=classNames({
             disabled:!isSelectable,
             "coupon-card":true
@@ -177,14 +131,12 @@ let CouponList=React.createClass({
         )
     },
     componentDidMount(){
-        //根据当前的产品类型获取优惠券列表
-        let productTypeMap={
-            yyz_product:"yyz",
-            jjz_product:"jjz",
-            loan_product:"sanbiao"
-        }
-        let productType=this.props.location.query.productType;
-        CouponListAction.getDataFromSever(productTypeMap[productType]);
+
+        let {
+            productType,
+            purchaseAmount
+            }=this.props.location.query;
+        CouponListAction.getDataFromSever(productType,purchaseAmount);
 
 
         CouponListStore.bind("change",function(){
@@ -192,6 +144,9 @@ let CouponList=React.createClass({
                 couponList:CouponListStore.getAll()
             })
         }.bind(this))
+    },
+    componentWillUnmount(){
+        CouponListStore.clearAll();
     }
 });
 

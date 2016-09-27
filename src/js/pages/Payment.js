@@ -30,7 +30,8 @@ let Payment=React.createClass({
             purchaseAmount:PaymentStore.getAll().purchaseAmount,
             couponAmount:PaymentStore.getAll().couponAmount,
             isModalOpen:false,
-            modalInnerText:""
+            modalInnerText:"",
+            modalType:"rechargeModal"
         }
     },
     /*
@@ -39,11 +40,11 @@ let Payment=React.createClass({
     * @pram {string} //产品的类型
     * @return {reactElement} //react元素
     */
-    _renderInvestmentLimit(type){
+    _renderInvestmentLimit(type,investLimitAmount_ttz){
         if(type === "ttz_product"){
             return (
                 <div className="subtitle">
-                    <span>个人投资限额：</span><strong>100000</strong>元
+                    <span>个人投资限额：</span><strong>{investLimitAmount_ttz}</strong>元
                 </div>
             )
         }else if(type === "new_product"){
@@ -114,10 +115,25 @@ let Payment=React.createClass({
         PaymentAction.useAllBalance();
     },
     _jumpToNextLocation(confirm){
+        let {
+            purchaseAmount,
+            userBalance
+            }=PaymentStore.getAll();
+        let rechargeAmount=purchaseAmount - userBalance ;
         if(confirm){//用户点击了“确定”按钮
-            this.context.router.push({
-                pathname:"/recharge"
-            });
+            if(this.state.modalType === "rechargeModal"){
+                this.context.router.push({
+                    pathname:"/recharge",
+                    query:{
+                        rechargeAmount:rechargeAmount
+                    }
+                });
+            }else if(this.state.modalType === "bindBankCardModal"){
+                this.context.router.push({
+                    pathname:"myBankCard"
+                });
+            }
+
         }else {//用户点击了“取消”按钮
             this.setState({
                 isModalOpen:false
@@ -137,7 +153,8 @@ let Payment=React.createClass({
             couponAmount,
             couponType,
             expectedReward,
-            unUseCouponCount
+            unUseCouponCount,
+            investLimitAmount_ttz
             }=PaymentStore.getAll();
 
 
@@ -160,7 +177,7 @@ let Payment=React.createClass({
                     <div className="subtitle">
                         <span>项目可投金额：</span><strong>{remainAmount}</strong>元
                     </div>
-                    {this._renderInvestmentLimit(type)}
+                    {this._renderInvestmentLimit(type,investLimitAmount_ttz)}
                 </Group>
 
                 <Group
@@ -258,11 +275,20 @@ let Payment=React.createClass({
             if(msg.indexOf("充值") > -1){
                 this.setState({
                     isModalOpen:true,
-                    modalInnerText:msg
+                    modalInnerText:msg,
+                    modalType:"rechargeModal"
                 })
             }else {
                 Message.broadcast(msg);
             }
+        }.bind(this));
+
+        PaymentStore.bind("hadNotBindBankCard",function(){
+            this.setState({
+                isModalOpen:true,
+                modalInnerText:"您还未绑定银行卡，暂时不能购买。去绑卡？",
+                modalType:"bindBankCardModal"
+            })
         }.bind(this));
 
         //购买失败

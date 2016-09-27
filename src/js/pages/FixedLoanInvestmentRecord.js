@@ -52,6 +52,7 @@ let FixedLoanInvestmentRecord=React.createClass({
                 loanId:props.id,
                 creditorId:props.creId,
                 productType:"loan_product",
+                investAmount:props.investAmount,
                 status:props.status
             }
         })

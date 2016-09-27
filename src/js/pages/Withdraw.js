@@ -25,7 +25,8 @@ let Withdraw=React.createClass({
         return {
             showSlogan:true,
             data:WithdrawStore.getAll(),
-            isModalOpen:false
+            isModalOpen:false,
+            showDealPasswordField:false
         }
     },
     _submitWithdrawForm(){
@@ -33,8 +34,14 @@ let Withdraw=React.createClass({
         WithdrawAction.submitWithdrawForm(dealPassword);
     },
     _handleWithdrawAmountChange(){
-        let withdrawAmount=this.refs.withdrawAmount.getValue();
-        withdrawAmount=withdrawAmount === "" ? 0 : parseFloat(withdrawAmount);
+        let reg=/[^\d\.]/g;//过滤除了数组和点号的字符
+        let withdrawAmount=(this.refs.withdrawAmount.getValue()).replace(reg,"");
+        if(withdrawAmount.indexOf(".") > -1 ){//如果是小数点后的位数大于两位的小数
+            if(!!withdrawAmount.split(".")[1] && withdrawAmount.split(".")[1].length > 2){
+                withdrawAmount=withdrawAmount.split(".")[0] + "." + withdrawAmount.split(".")[1].slice(0,2);
+            }
+        }
+        withdrawAmount=withdrawAmount === "" ? 0 : withdrawAmount;
         WithdrawAction.changeWithdrawAmount(withdrawAmount);
     },
     _jumpToNextLocation(confirm){
@@ -44,6 +51,17 @@ let Withdraw=React.createClass({
         this.setState({
             isModalOpen:false
         });
+    },
+    _toggleEyeOfField(fieldName){
+        switch (fieldName){
+            case "dealPassword":
+                this.setState({
+                    showDealPasswordField:!this.state.showDealPasswordField
+                });
+                break;
+            default:
+                break;
+        }
     },
     render (){
         let {
@@ -66,22 +84,33 @@ let Withdraw=React.createClass({
                             nested="input"
                             >
                             <Field
-                                type="number"
+                                type="text"
                                 label="提现金额"
                                 placeholder="提现金额不能少于2.00元"
                                 ref="withdrawAmount"
+                                value={withdrawAmount === 0 ? "" : withdrawAmount}
                                 onChange={this._handleWithdrawAmountChange}
                                 />
+                            <Icon
+                                name="eye-on"
+                                classPrefix="imgIcon"
+                                style={{visibility:"hidden"}}
+                            />
                         </List.Item>
                         <List.Item
                             nested="input"
                             >
                             <Field
-                                type="text"
+                                type={this.state.showDealPasswordField ? "text" : "password"}
                                 label="交易密码"
                                 placeholder="请输入交易密码"
                                 ref="dealPassword"
                                 />
+                            <Icon
+                                name={this.state.showDealPasswordField ? "eye-on" : "eye-off"}
+                                classPrefix="imgIcon"
+                                onClick={this._toggleEyeOfField.bind(null,"dealPassword")}
+                            />
                         </List.Item>
                     </List>
 
@@ -140,7 +169,10 @@ let Withdraw=React.createClass({
 
         WithdrawStore.bind("withdrawSuccess",function(){
             Message.broadcast("提现成功！");
-        });
+            this.context.router.push({
+                pathname:"userHome"
+            });
+        }.bind(this));
 
         WithdrawStore.bind("change",function(){
             this.setState({
@@ -152,6 +184,8 @@ let Withdraw=React.createClass({
     componentWillUnmount(){
         WithdrawStore.unbind("formCheckSuccess");
         WithdrawStore.unbind("formCheckFailed");
+
+        WithdrawStore.clearAll();
     }
 });
 

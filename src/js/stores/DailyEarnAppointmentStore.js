@@ -25,8 +25,11 @@ var DailyEarnAppointmentStore={
             investMaximum,
             orderAmount
             }=this._all;
-        investMaximum=purchaseMaximum - userInTotal - orderAmount ;
-        this._all.investMaximum=investMaximum;
+        if(orderAmount.indexOf(",") > -1){//把格式化后的数字中的“,”去掉
+            orderAmount=orderAmount.replace(/\,/g,"");
+        }
+        investMaximum=purchaseMaximum - parseFloat(userInTotal) - parseFloat(orderAmount) ;
+        this._all.investMaximum=investMaximum < 0 ? 0 : investMaximum;//对于白名单即vip用户，投资限额有可能为负数。若为负数则显示为0；
     },
     figureOutUsableAmount(){
         let {
@@ -34,7 +37,8 @@ var DailyEarnAppointmentStore={
             userBalance
             }=this._all;
         userBalance=userBalance - (userBalance % 100);
-        return userBalance > investMaximum ? investMaximum : userBalance;
+        //return userBalance > investMaximum ? investMaximum : userBalance;//全面放宽预约，即是不验证预约金额是否超过个人投资限额
+        return userBalance;
     },
     appointmentCheck(){
         let {
@@ -62,6 +66,9 @@ var DailyEarnAppointmentStore={
         }
 
         return validationResult;
+    },
+    isBindBankCardCheck(){
+        return this._all.hadBindBankCard === false ? false : true;
     },
     updateAll(source){
         this._setAll(source);
@@ -96,35 +103,59 @@ appDispatcher.register(function(payload){
                         alert("获取数据失败！")
                     }
                 }
-            })
+            });
+
+            //获取银行卡信息，以此来判断用户是否已经绑卡
+            ajax({
+                ciUrl:"/user/v2/myBankCardInfo",
+                success(rs){
+                    if(rs.code === 0){
+                        let hadBindBankCard;
+                        if(rs.data === null){
+                            hadBindBankCard=false;
+                        }else{
+                            hadBindBankCard=true;
+                        }
+                        DailyEarnAppointmentStore.updateAll({
+                            hadBindBankCard:hadBindBankCard
+                        });
+                    }
+                }
+            });
+
             break;
         case "cofirmTomakeAnAppointment":
-            let {
-                productId,
-                purchaseAmount,
-                productType
-                }=DailyEarnAppointmentStore.getAll();
-            let appointmentCheckResult=DailyEarnAppointmentStore.appointmentCheck();
-            if(appointmentCheckResult.success){
-                ajax({
-                    ciUrl:"/invest/v2/earnProductInvest",
-                    data:{
-                        regularId:productId,
-                        amount:purchaseAmount,
-                        type:productType,
-                        operType:"order"
-                    },
-                    success(rs){
-                        if(rs.code === 0){
-                            DailyEarnAppointmentStore.trigger("appointmentSuccess",rs.data);
-                        }else {
-                            DailyEarnAppointmentStore.trigger("appointmentFailed",rs.description);
+            if(DailyEarnAppointmentStore.isBindBankCardCheck()){
+                let {
+                    productId,
+                    purchaseAmount,
+                    productType
+                    }=DailyEarnAppointmentStore.getAll();
+                let appointmentCheckResult=DailyEarnAppointmentStore.appointmentCheck();
+                if(appointmentCheckResult.success){
+                    ajax({
+                        ciUrl:"/invest/v2/earnProductInvest",
+                        data:{
+                            regularId:productId,
+                            amount:purchaseAmount,
+                            type:productType,
+                            operType:"order"
+                        },
+                        success(rs){
+                            if(rs.code === 0){
+                                DailyEarnAppointmentStore.trigger("appointmentSuccess",rs.data);
+                            }else {
+                                DailyEarnAppointmentStore.trigger("appointmentFailed",rs.description);
+                            }
                         }
-                    }
-                })
+                    })
+                }else {
+                    DailyEarnAppointmentStore.trigger("appointmentFailed",appointmentCheckResult.msg);
+                }
             }else {
-                DailyEarnAppointmentStore.trigger("appointmentFailed",appointmentCheckResult.msg);
+                DailyEarnAppointmentStore.trigger("hadNotBindBankCard");
             }
+
             break;
         case "useAllBalance_dailyEarnAppointment":
             let userBalance=DailyEarnAppointmentStore.figureOutUsableAmount();

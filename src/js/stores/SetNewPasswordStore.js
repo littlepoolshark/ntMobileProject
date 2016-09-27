@@ -12,9 +12,9 @@ var SetNewPasswordStore={
           success:true,
           msg:""
       };
-      newLoginPassword=trim(newLoginPassword);
+     /* newLoginPassword=trim(newLoginPassword);
       confirmLoginPassword =trim(confirmLoginPassword);
-      originLoginPassword =trim(originLoginPassword);
+      originLoginPassword = !!originLoginPassword && trim(originLoginPassword);*/
 
       if(originLoginPassword === ""){
           confirmResult={

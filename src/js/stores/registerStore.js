@@ -4,7 +4,9 @@ var ajax=require("../lib/ajax.js");
 var cookie=require("../lib/cookie.js");
 
 var RegisterStore={
-    _all:{},
+    _all:{
+        inviterCode:""
+    },
     registerCheck(data){
         let {
             password,
@@ -38,6 +40,9 @@ var RegisterStore={
     },
     getInviterCode(){
         return this._all.inviterCode;
+    },
+    clearAll(){
+        this._all.inviterCode="";
     }
 
 };
@@ -81,6 +86,10 @@ appDispatcher.register(function(payload){
             break;
         case "fillInviterCodeFinished":
             RegisterStore.setInviterCode(payload.data.inviterCode);
+            break;
+        case "changeInviterCode":
+            RegisterStore.setInviterCode(payload.data.inviterCode);
+            RegisterStore.trigger("inviterCodeChange");
             break;
         default:
         //no op

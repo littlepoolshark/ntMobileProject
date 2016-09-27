@@ -7,7 +7,9 @@ import Container from "../UIComponents/Container";
 let AboutUs = React.createClass({
     render() {
         return (
-            <iframe src="https://www.ntjrchina.com/appWeb/introduce.jsp" frameborder="0"></iframe>
+            <div className="frame-wrapper">
+                <iframe src="https://www.ntjrchina.com/appWeb/introduce.jsp" frameborder="0"></iframe>
+            </div>
         );
     }
 });

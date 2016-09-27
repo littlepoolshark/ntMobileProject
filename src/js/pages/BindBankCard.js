@@ -17,6 +17,7 @@ import Modal from "../UIComponents/modal/Modal";
 import Group from "../UIComponents/Group";
 import Message from "../UIComponents/Message";
 
+
 //银行卡绑定页面:BindBankCard component
 let BindBankCard=React.createClass({
     getInitialState(){
@@ -42,8 +43,7 @@ let BindBankCard=React.createClass({
         });
     },
     _submitBankCardForm(){
-        let cardNo=this.refs.cardNo.getValue();
-        BindBankCardAction.submitBankCardForm(cardNo);
+        BindBankCardAction.submitBankCardForm();
     },
     _handleQuestionMarkClick(){
         this.setState({
@@ -51,6 +51,11 @@ let BindBankCard=React.createClass({
             modalRole:"alert",
             modalContextText:"为了资金安全，只允许绑定实名认证用户名下的银行卡!"
         });
+    },
+    _handleCardNoChange(){
+        let cardNo=this.refs.cardNo.getValue();
+        cardNo=cardNo.replace(/\D/g,"");
+        BindBankCardAction.changeCardNo(cardNo);
     },
     _jumpToSelectBankCard(){
         this.context.router.push({
@@ -61,7 +66,8 @@ let BindBankCard=React.createClass({
 
         let {
             bankName,
-            userName
+            userName,
+            cardNo
             }=this.state.bankCardInfo;
         return (
             <Container srcollable={true} id="bindBankCard">
@@ -102,6 +108,8 @@ let BindBankCard=React.createClass({
                                 label="银行卡号"
                                 placeholder="请输入开户银行卡号"
                                 ref="cardNo"
+                                value={cardNo}
+                                onChange={this._handleCardNoChange}
                             />
                         </List.Item>
                     </List>

@@ -1,8 +1,8 @@
 let cookie=require("./cookie");
+import Message from "../UIComponents/Message";
 /* @desc 自己封装的ajax，目前主要支持工作中常用的post，get请求。调用方式几乎等同于jquery的ajax封装，略有出入。
 *
-*  @param obj.url {string} //请求的url
-*  @param obj.ciUrl {string} // 用于中转的url
+*  @param obj.ciUrl {string} // 请求的url
 *  @param obj.method {string}//请求的方法
 *  @param obj.data {obj} //需要发送的数据（json对象）
 *  @param obj.async {boolean}//true:异步请求，false:同步请求
@@ -11,9 +11,10 @@ let cookie=require("./cookie");
 *  @author sam liu
 *  @date 2016-07-06
 * */
+
 function ajax(obj) {
     const CONSIDER_IE=false;//因为这是移动端的项目，所以不考虑ie浏览器
-    let initData={
+   /* let initData={
         ciUrl:"/ci"+obj.ciUrl,
         content:{
             "imei":"23ffgffffffffffffffff",
@@ -21,13 +22,21 @@ function ajax(obj) {
             "terminal":"wx",
             "version":"2.0"
         },
-    };
+    };*/
 
-    //有些接口需要用户登录后才能发送请求，所以一旦登录后，就将token附上
-    if(cookie.getCookie("token")){
-        initData.token=cookie.getCookie("token");
-    }/*else {
-        alert("登录超时或者没有登录！");
+     let initData={
+         "imei":"23ffgffffffffffffffff",
+         "opSource":"wx",
+         "terminal":"wx",
+         "version":"2.0"
+     };
+
+
+    //没有登录或者登录超时的提醒
+    /*if(!cookie.getCookie("token")){
+        Message.broadcast("您没有登录或者登录超时，请重新登录");
+        window.location.href="#/";
+        return ;
     }*/
 
 
@@ -62,7 +71,14 @@ function ajax(obj) {
 
     function callback() {
         if (xhr.status == 200) {  //判断http的交互是否成功，200表示成功
-            obj.success(JSON.parse(xhr.responseText));//将返回的json字符串解析返回
+            let resultObj=JSON.parse(xhr.responseText);//将返回的json字符串解析返回
+            if(resultObj.code === 14){//需要用户登录，而用户未登录或者登录超时
+                Message.broadcast("您没有登录或者登录超时，请重新登录");
+                window.location.href="#/";
+            }else {
+                obj.success(resultObj);
+            }
+
         } else {
             console.log('获取数据错误！错误代号：' + xhr.status + '，错误信息：' + xhr.statusText);
         }
@@ -72,17 +88,26 @@ function ajax(obj) {
 
     //通过使用JS随机字符串解决IE浏览器第二次默认获取缓存的问题
     //开发环境下，向本地服务器http://192.168.1.90:9090/ci.jsp发送请求，考虑到移动端的联调，所以使用了ip地址
-    obj.url = obj.url ? (CONSIDER_IE ? obj.url + '?rand=' + Math.random() : obj.url) : "http://192.168.1.90:9090/ci.jsp";
+    //obj.url = obj.url ? (CONSIDER_IE ? obj.url + '?rand=' + Math.random() : obj.url) : "http://192.168.1.90:9090/ci.jsp";
     //obj.url = obj.url ? (CONSIDER_IE ? obj.url + '?rand=' + Math.random() : obj.url) : "/ci.jsp";
+    obj.url = "http://192.168.1.90:9090/ci" + obj.ciUrl + "?t="+Math.random() ;
+    //obj.url = "/ci" + obj.ciUrl + "?t="+Math.random() ;
     obj.method = obj.method || "post";//因为实际开发环境中的接口大部分都是post请求，所以默认是post方法。
 
     //开发环境中，默认要发送BASIC_DATA数据到服务器，如果调用时传入了数据参数，则先合并，然后通过params()将名值对转换成字符串
-    if(obj.data){
+   /* if(obj.data){
         initData.content=JSON.stringify(Object.assign(initData.content,obj.data));
     }else {
         initData.content=JSON.stringify(initData.content);
+    }*/
+    if(obj.data){
+        initData=JSON.stringify(Object.assign(initData,obj.data));
+    }else {
+        initData=JSON.stringify(initData);
     }
-    obj.data = params(initData);
+    obj.data=initData;
+
+
     if(!obj.async && obj.async !== false){
         obj.async = true; //默认使用异步请求
     }
@@ -90,6 +115,7 @@ function ajax(obj) {
 
     //若是GET请求，则将数据加到url后面
     if (obj.method === 'get') {
+        obj.data = params(initData);
         obj.url += '&' + obj.data;
     }
     //true表示异步，false表示同步
@@ -108,7 +134,18 @@ function ajax(obj) {
     if (obj.method === 'post') {
         //post方式需要自己设置http的请求头，来模仿表单提交。
         //放在open方法之后，send方法之前。
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+       xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+        xhr.setRequestHeader("wxauth","ntwx");
+        xhr.setRequestHeader("x-requested-with","XMLHttpRequest");
+       /* xhr.setRequestHeader("Access-Control-Allow-Origin","*");*/
+
+        //将token设置到请求头中
+        if(cookie.getCookie("token")){
+            xhr.setRequestHeader("Authorization",cookie.getCookie("token"));
+        }else {
+            xhr.setRequestHeader("Authorization","");
+        }
+
         //xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
         xhr.send(obj.data);		//post方式将数据放在send()方法里
     } else {
