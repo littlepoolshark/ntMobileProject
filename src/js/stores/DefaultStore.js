@@ -61,6 +61,10 @@ var DefaultStore={
     },
     updateAll(source){
         Object.assign(this._all,source);
+    },
+    clearAll(){
+        //当组件卸载的时候，清除密码变量的值，以此来防止浏览器记住密码
+        this._all.loginPassword="";
     }
 
 };

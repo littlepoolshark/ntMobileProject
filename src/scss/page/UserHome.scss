@@ -8,6 +8,7 @@
 @import "../helper/mixins";
 
 #userHome {
+  padding-bottom:rem-calc(55);
   .dashboard {
     padding-top:rem-calc(15);
     background-color:$C1;

@@ -39,12 +39,6 @@ let ProductList=React.createClass({
         let checkMoreClass=this.state.productList.length > 0 ? "show" : "hide"
         return (
             <Container scrollable={scrollable}   id="productList" >
-                {/*<NavBar
-                    title="理财"
-                    leftNav={[leftNav]}
-                    amStyle="primary"
-                    onAction={this._handleNavClick}
-                />*/}
                 {
                     this.state.productList.map(function(item,index){
                         if(item.type === "ttz_product"){

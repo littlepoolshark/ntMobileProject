@@ -33,15 +33,7 @@ let InviteMyFriend=React.createClass({
         });
     },
     _handleNavClick(){
-        let hasFlag=document.location.hash.indexOf("flag") > -1;
-        let loginToken=cookie.getCookie("token");
-        if(hasFlag && !loginToken){//如果用户是直接打开该页面的话，则跳转到登录注册页面
-            this.context.router.push({
-                pathname:"/"
-            })
-        }else {
-            this.context.router.goBack();
-        }
+        this.context.router.goBack();
     },
     render(){
         let maskClasses=classNames({
@@ -70,7 +62,17 @@ let InviteMyFriend=React.createClass({
         )
     },
     componentDidMount(){
-
+        let hasFlag=document.location.hash.indexOf("flag") > -1;
+        let loginToken=cookie.getCookie("token");
+        //如果用户是直接打开朋友直接分享的链接或者是没有登录token遗留在cookie中，则视为邀请注册的情况，界面跳转至注册组件
+        if(hasFlag || !loginToken){
+            this.context.router.push({
+                pathname:"/",
+                query:{
+                    view:"register"
+                }
+            })
+        }
     }
 });
 

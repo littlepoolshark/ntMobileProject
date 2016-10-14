@@ -15,17 +15,7 @@ import NavBar from "../UIComponents/NavBar";
 import Message from "../UIComponents/Message";
 import MobileVerificationCode from "../UIComponents/MobileVerificationCode";
 
-function getParamObjFromUrl(){
-    let hashStr=location.hash;
-    let paramArr=hashStr.slice(hashStr.indexOf("?")+1).split("&");
-    let paramObj={};
-    for(let i=0;i<paramArr.length;i++){
-        let paramObj_key=paramArr[i].split("=")[0];
-        let paramObj_value=paramArr[i].split("=")[1];
-        paramObj[paramObj_key]=paramObj_value;
-    }
-    return paramObj;
-}
+
 
 //找回密码页面
 let Register=React.createClass({

@@ -66,7 +66,9 @@ appDispatcher.register(function(payload){
                     verifyCode:verificationCode
                 };
                 let inviterCode=RegisterStore.getInviterCode();
+                let ntjrSource=sessionStorage.getItem("ntjrSource");
                 inviterCode && (postData.inventCode=inviterCode);//如果用户填写了邀请人手机号码，则提交该字段
+                ntjrSource && (postData.ntjrSource=ntjrSource);//如果访问来自于第三方，则提交“ntjrSource”字段
                 ajax({
                     ciUrl:"/user/v2/userRegister",
                     data:postData,

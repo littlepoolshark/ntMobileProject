@@ -28,7 +28,7 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
      getInitialState(){
          return {
              showPassword:false,
-             showPasswordFieldToggleEye:false
+             showPasswordFieldToggleEye:true
          }
      },
      _handleLogin(){
@@ -108,8 +108,7 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
          )
      },
      componentDidMount(){
-         //针对部分微信浏览器退出后返回该组件时，登录密码会被记住
-         //document.getElementById("loginPassword").value="";
+
      }
 });
 
@@ -254,6 +253,9 @@ let RegisterView=React.createClass({
             Message.broadcast(msg);
         }.bind(this));
 
+    },
+    componentWillUnmount(){
+        DefaultStore.clearAll();
     }
 });
 

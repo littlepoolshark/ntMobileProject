@@ -7,6 +7,10 @@
 // Mixin
 @import "../helper/mixins";
 
+
+#home {
+  padding-bottom:rem-calc(55);
+}
 /*平台介绍 && 邀请有礼*/
 .home-introduction-item {
   display:flex;

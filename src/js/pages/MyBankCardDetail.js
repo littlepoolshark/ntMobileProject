@@ -183,7 +183,9 @@ let MyBankCardDetail=React.createClass({
         });
 
         MyBankCardDetailStore.bind("bankCardSubmitSuccess",function(){
-            this.context.router.goBack();
+            this.context.router.push({
+                pathname:"userHome"
+            });
         }.bind(this));
 
         MyBankCardDetailStore.bind("bankCardSubmitFailed",function(msg){

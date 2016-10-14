@@ -34,16 +34,10 @@ let RuleDescription=React.createClass({
         )
     },
     render(){
+        let isSupportAdvanceRepayment=this.props.isSupportAdvanceRepayment;//好采投是否有可能提前还款，针对优质标的而言
         return (
             <Group className="rule-description">
                 <ul>
-                    {
-                      /*  this.props.type === "new_product" ?
-                        (
-                            <li><span className="icon-benefit"></span>加息5.5%，合计15%的预期年化</li>
-                        ) :
-                        null*/
-                    }
                     {
                         this.props.type == "loan_product" || this.props.type == "creditor_product" ?
                             null :
@@ -52,6 +46,13 @@ let RuleDescription=React.createClass({
                             )
                     }
                     {this._renderCouponRule()}
+                    {
+                        isSupportAdvanceRepayment ?
+                            (
+                                <li><span className="icon-advanceLoan"></span>优质标的，可能提前还款</li>
+                            ) :
+                            null
+                    }
                 </ul>
             </Group>
         )

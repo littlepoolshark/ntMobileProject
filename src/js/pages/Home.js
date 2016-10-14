@@ -51,7 +51,7 @@ let Home=React.createClass({
             totalAmountOfInvestment
             }=this.state;
         return (
-            <Container scrollable={true}  >
+            <Container scrollable={true}  id="home">
 
                 <Slider>
                     {

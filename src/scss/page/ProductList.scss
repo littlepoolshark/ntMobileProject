@@ -7,6 +7,8 @@
 // Mixin
 @import "../helper/mixins";
 #productList {
+  padding-bottom:rem-calc(55);
+
   ::-webkit-scrollbar {
     width:0;
   }

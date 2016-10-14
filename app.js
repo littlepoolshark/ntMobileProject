@@ -20,6 +20,8 @@ import View from "./src/js/UIComponents/View";
 
 import * as Pages from './src/js/pages/index';
 import config from "./src/js/config";
+import geParamObjFromUrl from "./src/js/lib/getParamObjFromUrl";
+
 
 // 解构赋值
 let {
@@ -89,10 +91,12 @@ const App = React.createClass({
         );
     },
     componentDidMount(){
-        //这段代码，通过粗暴地禁用滑动事件来防止页面在微信浏览器下面的过度滑动（overscroll）
-       /* document.querySelector("body").addEventListener("touchmove",function(event){
-            event.preventDefault();
-        });*/
+
+        //从url获取标志第三方来源的参数，放置于sessionStorage里面，以便注册的时候提取和提交给后台
+        let paramObj=geParamObjFromUrl();
+        if(paramObj.ntjrSource && paramObj.ntjrSource !== ""){
+            sessionStorage.setItem("ntjrSource",paramObj.ntjrSource);
+        }
     }
 });
 
@@ -126,7 +130,7 @@ const Page = React.createClass({
         });
 
         return (
-            <View>
+            <View >
                 <NavBar
                     title={config.pageNameMap[key]}
                     leftNav={[backNav]}

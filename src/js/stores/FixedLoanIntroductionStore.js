@@ -83,7 +83,8 @@ appDispatcher.register(function(payload){
                             bidDays:data.bidDays,
                             publishTime:data.publishTime,
                             rewardRate:data.rewardRate,
-                            useDesc:data.useDesc
+                            useDesc:data.useDesc,
+                            isSupportAdvanceRepayment:data.isSupportAdvanceRepayment === "yes" ? true : false
                         };
                         FixedLoanIntroductionStore.setAll(FixedLoanIntroductionStore.processData(source));
                         FixedLoanIntroductionStore.trigger("change");
