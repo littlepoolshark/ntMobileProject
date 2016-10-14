@@ -64,6 +64,11 @@ let UserHome=React.createClass({
     _handleWithdraw(){
         UserHomeAction.withdraw();
     },
+    _jumpToAppSetting(){
+        this.context.router.push({
+            pathname:"appSetting"
+        });
+    },
     render(){
         let {
             total,
@@ -76,14 +81,15 @@ let UserHome=React.createClass({
             }=this.state.data;
         let ishowData=this.state.ishowData;
         return (
-            <Container scrollable={false} id="userHome">
+            <Container scrollable={true} id="userHome">
                 <div className="dashboard">
-                    <div className="header">
-                        <Link className="message-icon-wrapper" to="messageList" >
+                    <div className="header cf">
+                        <Link className="message-icon-wrapper fl" to="messageList" >
                             <Icon  classPrefix="imgIcon" name="message"  />
                         </Link>
-                        <Button  hollow radius onClick={this._handleWithdraw}>提现</Button>
-                        <Button  hollow radius onClick={this._handleRecharge}>充值</Button>
+
+                        <Button  hollow radius onClick={this._handleRecharge} className="fr">充值</Button>
+                        <Button  hollow radius onClick={this._handleWithdraw} className="fr">提现</Button>
                     </div>
                     <div onClick={this._jumpToTotalAccount}>
                         <div className="text-center subtitle" style={{marginTop:"20px"}}>
@@ -139,8 +145,10 @@ let UserHome=React.createClass({
                 </List>
 
                 <List>
-                    <List.Item  href="#/appSetting" title="设置"/>
+                    <List.Item  href="javascript:void(0)"  onClick={this._jumpToAppSetting} title="设置"/>
                 </List>
+
+
 
                 <Modal
                     title="提示"

@@ -80,6 +80,7 @@ function ajax(obj) {
             }
 
         } else {
+            obj.error && obj.error();
             console.log('获取数据错误！错误代号：' + xhr.status + '，错误信息：' + xhr.statusText);
         }
     }
@@ -90,6 +91,7 @@ function ajax(obj) {
     //开发环境下，向本地服务器http://192.168.1.90:9090/ci.jsp发送请求，考虑到移动端的联调，所以使用了ip地址
     //obj.url = obj.url ? (CONSIDER_IE ? obj.url + '?rand=' + Math.random() : obj.url) : "http://192.168.1.90:9090/ci.jsp";
     //obj.url = obj.url ? (CONSIDER_IE ? obj.url + '?rand=' + Math.random() : obj.url) : "/ci.jsp";
+
     obj.url = "http://192.168.1.90:9090/ci" + obj.ciUrl + "?t="+Math.random() ;
     //obj.url = "/ci" + obj.ciUrl + "?t="+Math.random() ;
     obj.method = obj.method || "post";//因为实际开发环境中的接口大部分都是post请求，所以默认是post方法。
@@ -134,7 +136,7 @@ function ajax(obj) {
     if (obj.method === 'post') {
         //post方式需要自己设置http的请求头，来模仿表单提交。
         //放在open方法之后，send方法之前。
-       xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
         xhr.setRequestHeader("wxauth","ntwx");
         xhr.setRequestHeader("x-requested-with","XMLHttpRequest");
        /* xhr.setRequestHeader("Access-Control-Allow-Origin","*");*/

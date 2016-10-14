@@ -82,7 +82,8 @@ appDispatcher.register(function(payload){
                             status:data.status,
                             bidDays:data.bidDays,
                             publishTime:data.publishTime,
-                            rewardRate:data.rewardRate
+                            rewardRate:data.rewardRate,
+                            useDesc:data.useDesc
                         };
                         FixedLoanIntroductionStore.setAll(FixedLoanIntroductionStore.processData(source));
                         FixedLoanIntroductionStore.trigger("change");
@@ -91,7 +92,7 @@ appDispatcher.register(function(payload){
                         ajax({
                             ciUrl:"/invest/v2/loanExtAttatchmentInfo",
                             data:{
-                                bidId:payload.data.productId,
+                                loanId:payload.data.productId,
                                 status:data.status
                             },
                             success:function(rs){
@@ -133,8 +134,10 @@ appDispatcher.register(function(payload){
                             FixedLoanIntroductionStore.setAll({
                                 licenseType:"enterprise",
                                 companyName:rs.data.enterprise.companyName,
-                                corporation:rs.data.enterprise.corporation
-                            });
+                                corporation:rs.data.enterprise.corporation,
+                                loanDescr:rs.data.loanDescr,
+                                repaymentSource:rs.data.remark
+                        });
                         }else {
                             FixedLoanIntroductionStore.setAll({
                                 licenseType:"person",

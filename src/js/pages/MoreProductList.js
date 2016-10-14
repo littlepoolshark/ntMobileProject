@@ -20,7 +20,13 @@ let MoreProductList=React.createClass({
     getInitialState(){
         return MoreProductListStore.getAll();
     },
-    _loadMoreData(){
+    _loadMoreData(event){
+        //通过userAgent的探测来判断客户端是IOS还是Android,以便让步解决在IOS手机下面fixed特性所产生的诡异现象
+        /*if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+            document.querySelector(".tabs").style.paddingTop=0;
+            document.querySelector(".tabs-nav").style.position="relative";
+        }*/
+
         let moreProductList=document.getElementById("moreProductList");
         let offsetHeight=moreProductList.offsetHeight;//元素出现在视口中区域的高度
         let scrollTop=moreProductList.scrollTop;//元素已经滚动的距离
@@ -28,14 +34,19 @@ let MoreProductList=React.createClass({
 
         let currTab=document.getElementById("fixedLoanTab");
         let currListType=CSSCore.hasClass(currTab,"active") ? "fixedLoan" : "creditorLoan";
-        if(scrollHeight - offsetHeight - scrollTop <= 0){
+
+        if(scrollHeight - offsetHeight - scrollTop <= 3){
             MoreProductListAction.getNextPage(currListType);
             Loader.show();
         }
     },
     render(){
         return (
-            <Container scrollable={true}   id="moreProductList" onScroll={this._loadMoreData} >
+            <Container
+                scrollable={true}
+                id="moreProductList"
+                onScroll={this._loadMoreData}
+            >
                 <Tabs defaultActiveKey={0} >
 
                     <Tabs.Item
@@ -62,7 +73,7 @@ let MoreProductList=React.createClass({
                         }
                     </Tabs.Item>
                 </Tabs>
-                <Loader amStyle="success" rounded={true}/>
+                <Loader amStyle="primary" rounded={true}/>
             </Container>
         )
     },
@@ -72,6 +83,8 @@ let MoreProductList=React.createClass({
         MoreProductListStore.bind("change",function(){
             this.setState(MoreProductListStore.getAll())
         }.bind(this));
+
+        //通过userAgent的探测来判断客户端是IOS还是Android,以便解决在IOS手机下面fixed特性所产生的诡异现象
     },
     componentDidUpdate(){
         Loader.hide();

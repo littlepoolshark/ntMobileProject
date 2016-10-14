@@ -27,7 +27,8 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
  let LoginView=React.createClass({
      getInitialState(){
          return {
-             showPassword:false
+             showPassword:false,
+             showPasswordFieldToggleEye:false
          }
      },
      _handleLogin(){
@@ -62,6 +63,7 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
                          nested="input"
                      >
                          <Field
+                             id="loginPhoneNo"
                              type="text"
                              label={null}
                              placeholder="请输入您的手机号码"
@@ -75,6 +77,7 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
                          nested="input"
                      >
                          <Field
+                             id="loginPassword"
                              type={passwordInputType}
                              label={null}
                              placeholder="请输入您的登录密码"
@@ -82,12 +85,17 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
                              ref="password"
                              onChange={this._handlePasswordChange}
                          />
-                         <Icon
-                             name={imgIconClass}
-                             classPrefix="imgIcon"
-                             style={{marginTop:"px"}}
-                             onClick={this._toggleOpenEye}
-                         />
+                         {
+                            this.state.showPasswordFieldToggleEye ?
+                            <Icon
+                                name={imgIconClass}
+                                classPrefix="imgIcon"
+                                style={{marginTop:"px"}}
+                                onClick={this._toggleOpenEye}
+                            /> :
+                            null
+                         }
+
                      </List.Item>
                  </List>
                  <div className="cf">
@@ -98,8 +106,12 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
                  </div>
              </div>
          )
+     },
+     componentDidMount(){
+         //针对部分微信浏览器退出后返回该组件时，登录密码会被记住
+         //document.getElementById("loginPassword").value="";
      }
- });
+});
 
 //注册组件
 let RegisterView=React.createClass({
@@ -167,9 +179,10 @@ let RegisterView=React.createClass({
 //默认页面(包含登录和注册):Default component
  let Default=React.createClass({
     getInitialState(){
+        let initViewName=this.props.location.query.view;
         return {
             data:DefaultStore.getAll(),
-            isLoginView:true
+            isLoginView:initViewName && initViewName === "register" ? false : true
         }
     },
     _toggleView(){
@@ -183,6 +196,7 @@ let RegisterView=React.createClass({
             "text-center":true,
             "slogan-text":true
         });
+
         return (
                 <Container className="default-container" {...this.props}>
                     <div className="text-center ntLogo-wrapper"></div>
@@ -221,26 +235,24 @@ let RegisterView=React.createClass({
             });
         }.bind(this));
 
+
         DefaultStore.bind("getVerificationCodeCheckSuccess",function(phoneNo){
-            console.log("into getVerificationCodeCheckSuccess");
+            let queryObj={
+                phoneNo:phoneNo
+            };
+            let inviteCode=this.props.location.query.inviteCode;
+            if(!!inviteCode){
+                queryObj.inviteCode=inviteCode;
+            }
             this.context.router.push({
                 pathname:"/register",
-                query:{
-                    phoneNo:phoneNo
-                }
+                query:queryObj
             });
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckFailed",function(msg){
             Message.broadcast(msg);
         }.bind(this));
-
-        this.setState({
-            data:{
-                loginPhoneNo:"",
-                loginPassword:""
-            }
-        })
 
     }
 });

@@ -18,13 +18,13 @@ let NoBankCard=React.createClass({
     },
     render(){
         return (
-            <div className="noBankCard-wrapper" onClick={this._addBankCard}>
+            <div className="noBankCard-wrapper" >
                 <Icon classPrefix="imgIcon" name="money-bag" />
                 <span className="subtitle">绑定银行卡，开启财富升值之旅</span>
-                <Button amStyle="default" block radius>
+                <div className="addBankCard-btn" onClick={this._addBankCard}>
                     <Icon classPrefix="imgIcon" name="plus-icon" />
                     <span className="title">添加银行卡</span>
-                </Button>
+                </div>
             </div>
         )
     }

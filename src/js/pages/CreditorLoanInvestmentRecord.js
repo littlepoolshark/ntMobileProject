@@ -89,7 +89,7 @@ let CreditorLoanInvestmentRecord=React.createClass({
                                     return (
                                         <InvestmentRecordCard
                                             {...item}
-                                            key={(applyingListPageIndex-1)*10 + index +1}
+                                            key={item.creId}
                                             clickHandler={this._handleCardClick}
                                         />
                                     )
@@ -110,7 +110,7 @@ let CreditorLoanInvestmentRecord=React.createClass({
                                 return (
                                     <InvestmentRecordCard
                                         {...item}
-                                        key={(preRepayListPageIndex-1)*10 + index +1}
+                                        key={item.creId}
                                         clickHandler={this._handleCardClick}
                                     />
                                 )
@@ -130,7 +130,7 @@ let CreditorLoanInvestmentRecord=React.createClass({
                                 return (
                                     <InvestmentRecordCard
                                         {...item}
-                                        key={(clearingListPageIndex-1)*10 + index +1}
+                                        key={item.creId}
                                         clickHandler={this._handleCardClick}
                                     />
                                 )

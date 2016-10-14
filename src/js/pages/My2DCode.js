@@ -62,6 +62,7 @@ let My2DCode=React.createClass({
     componentDidMount(){
         //使用qrcode.js原生插件来生成二维码
          let codeUrl=this.props.location.query.codeUrl;
+         //let codeUrl="http://192.168.1.90:1024/#/?view=register&inviteCode=123456";
          new QRCode(document.getElementById("codeImgWrapper"), {
             text: codeUrl,
             width: 170,

@@ -94,7 +94,8 @@ let InvestmentRecordCard=React.createClass({
             deadline,//标的的期限,或者表示还款期数目，形如 “3/6”,表示剩余期数 / 总期数
             clickHandler,
             status,
-            rewardRate
+            rewardRate,
+            creId
             }=this.props;
 
 

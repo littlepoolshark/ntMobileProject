@@ -69,25 +69,34 @@ var PaymentStore={
 
 
         switch (productType){
-            case "new_product":
+            case "new_product"://新手标
                 principal_reward=toFixedTwo((purchaseAmount * productApr / 360) * productDeadline);
-                expectedReward=principal_reward.toFixed(2);
+                if(!!rewardRate){
+                    rewardRate_reward=toFixedTwo((purchaseAmount * rewardRate / 360) * productDeadline);
+                }
+                expectedReward=(principal_reward + rewardRate_reward).toFixed(2);
                 break;
-            case "yyz_product":
+            case "yyz_product"://月月赚
                 principal_reward=toFixedTwo((purchaseAmount * productApr)/12);
                 if(!!couponAmount && couponType === "interestRate"){
                     coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12);
                 }
-                expectedReward=(principal_reward+ coupon_reward).toFixed(2);
+                if(!!rewardRate){
+                    rewardRate_reward=toFixedTwo((purchaseAmount * rewardRate)/12);
+                }
+                expectedReward=(principal_reward + coupon_reward + rewardRate_reward).toFixed(2);
                 break;
-            case "jjz_product":
+            case "jjz_product"://季季赚
                 principal_reward=toFixedTwo((purchaseAmount * productApr)/12) * 3;
                 if(!!couponAmount && couponType === "interestRate"){
                     coupon_reward=toFixedTwo((purchaseAmount * couponAmount)/12) * 3;
                 }
-                expectedReward=(principal_reward+ coupon_reward).toFixed(2);
+                if(!!rewardRate){
+                    rewardRate_reward=toFixedTwo((purchaseAmount * rewardRate)/12) * 3;
+                }
+                expectedReward=(principal_reward + coupon_reward + rewardRate_reward).toFixed(2);
                 break;
-            case "loan_product":
+            case "loan_product"://好采投
                 principal_reward=toFixedTwo((purchaseAmount * productApr)/12) * productDeadline;
                 if(!!couponAmount && couponType === "interestRate"){
                     if(incomePeriod !== 0 && productDeadline > incomePeriod){
@@ -101,7 +110,7 @@ var PaymentStore={
                 }
                 expectedReward=(principal_reward + coupon_reward + rewardRate_reward).toFixed(2);
                 break;
-            case "creditor_product":
+            case "creditor_product"://债权转让
                 let monthRate=toFixedTwo((purchaseAmount * productApr)/12);
                 let dayRate=toFixedTwo((purchaseAmount * productApr)/360);
                 let minProfit=toFixedTwo(monthRate  *  mainMonth +  dayRate * minNotRateTime);
@@ -190,7 +199,7 @@ var PaymentStore={
         }*/ else if(purchaseAmount >  userBalance){
             validationResult={
                 success:false,
-                msg:"余额不足，前去充值"+ (purchaseAmount - userBalance) + "元？"
+                msg:"余额不足，前去充值"+ (purchaseAmount - userBalance).toFixed(2) + "元？"
             }
         }
 
@@ -336,15 +345,20 @@ appDispatcher.register(function(payload){
                             postData.redId=couponId;
                         }
                     }
+                    PaymentStore.trigger("paymentRequestIsStart");
                     ajax({
                         ciUrl:"/invest/v2/earnProductInvest",
                         data:postData,
                         success(rs){
+                            PaymentStore.trigger("paymentRequestIsEnd");
                             if(rs.code === 0){
                                 PaymentStore.trigger("purchaseSuccess",rs.data)
                             }else {
                                 PaymentStore.trigger("purchaseFailed",rs.description);
                             }
+                        },
+                        error(){
+                            PaymentStore.trigger("paymentRequestIsEnd");
                         }
                     })
                 }else {
@@ -377,15 +391,20 @@ appDispatcher.register(function(payload){
                             postData.redpackageId=couponId;
                         }
                     }
+                    PaymentStore.trigger("paymentRequestIsStart");
                     ajax({
                         ciUrl:"/invest/v2/loanForBuy",
                         data:postData,
                         success(rs){
+                            PaymentStore.trigger("paymentRequestIsEnd");
                             if(rs.code === 0){
                                 PaymentStore.trigger("purchaseSuccess",rs.data)
                             }else {
                                 PaymentStore.trigger("purchaseFailed",rs.description);
                             }
+                        },
+                        error(){
+                            PaymentStore.trigger("paymentRequestIsEnd");
                         }
                     })
                 }else {
@@ -396,7 +415,7 @@ appDispatcher.register(function(payload){
             }
 
             break;
-        case "payment_creditorLoan":
+        case "payment_creditorLoan"://债权转让的支付
             if(PaymentStore.isBindBankCardCheck()){
                 let paymentCheckResult_creditorLoan=PaymentStore.paymentCheck();
                 if(paymentCheckResult_creditorLoan.success){
@@ -408,15 +427,20 @@ appDispatcher.register(function(payload){
                         investId:productId,
                         amount:purchaseAmount
                     };
+                    PaymentStore.trigger("paymentRequestIsStart");
                     ajax({
                         ciUrl:"/invest/v2/creditorForBuy",
                         data:postData,
                         success(rs){
+                            PaymentStore.trigger("paymentRequestIsEnd");
                             if(rs.code === 0){
                                 PaymentStore.trigger("purchaseSuccess",rs.data)
                             }else {
                                 PaymentStore.trigger("purchaseFailed",rs.description);
                             }
+                        },
+                        error(){
+                            PaymentStore.trigger("paymentRequestIsEnd");
                         }
                     })
                 }else {

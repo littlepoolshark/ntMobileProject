@@ -10,7 +10,8 @@ var RechargeStore={
         bankName:"----",
         cardno:"**** **** **** ****",
         shortIcon:"",
-        rechargeAmount:0
+        rechargeAmount:0,
+        currRechargeType:"shortcut"//充值的类型：shortcut->网银充值，wechat->微信充值。默认是网银充值
     },
     getAll(){
         return this._all;
@@ -24,10 +25,10 @@ var RechargeStore={
             msg:""
         };
 
-        if(this._all.rechargeAmount <= 10){
+        if(this._all.rechargeAmount < 10){
             validationResult={
                 success:false,
-                msg:"充值金额必须大于10元"
+                msg:"充值金额最低为10元"
             }
         }
 
@@ -52,32 +53,76 @@ appDispatcher.register(function(payload){
                     }
                 }
             });
+
+            //获取用户的全名和完整的身份证号码
+            ajax({
+                ciUrl:"/user/v2/securityCenter",
+                success(rs){
+                    if(rs.code === 0){
+                        RechargeStore.updateAll({
+                            idcardFull:rs.data.idCardVerifyInfo.idcardFull,
+                            realNameFull:rs.data.idCardVerifyInfo.realNameFull
+                        });
+                        RechargeStore.trigger("change");
+                    }
+                }
+            });
             break;
         case "submitRechargeAmount":
             let  rechargeAmountCheckResult=RechargeStore.checkRechargeAmount();
             if(rechargeAmountCheckResult.success){
-                ajax({
-                    ciUrl:"/user/v2/capitalRecharge",
-                    data:{
-                        amount:RechargeStore.getAll().rechargeAmount,
-                        paymentName:"LIANLIAN_MOBILE",//手机端的连连支付
-                        bankCardId:RechargeStore.getAll().id
-                    },
-                    success(rs){
-                        if(rs.code === 0){
-                            RechargeStore.updateAll(rs.data);
-                            RechargeStore.trigger("rechargeSuccess");
-                        }else {
-                            RechargeStore.trigger("rechargeFailed",rs.description);
-                        }
+                let {
+                    currRechargeType,
+                    rechargeAmount
+                    }=RechargeStore.getAll();
+                let ua = window.navigator.userAgent.toLowerCase();
+
+                if(currRechargeType === "wechat"){//微信充值
+                    if(ua.match(/MicroMessenger/i) == 'micromessenger'){//判断用户是否在微信应用中打开
+                         ajax({
+                                ciUrl:"/user/wechatPay.do",
+                                data:{
+                                     "rechargeAmount":rechargeAmount
+                                },
+                                success(data){
+                                     if(data.flag){
+                                         WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                                             "appId":data.payInfo.appId,//公众号名称，由商户传入
+                                             "timeStamp":data.payInfo.timeStamp,//时间戳，自1970年以来的秒数
+                                             "nonceStr":data.payInfo.nonceStr, //随机串
+                                             "package":data.payInfo.package,
+                                             "signType":data.payInfo.signType,//微信签名方式：
+                                             "paySign":data.payInfo.paySign//微信签名
+                                         },function(res){
+                                             if(res.err_msg == "get_brand_wcpay_request:ok" ) {// 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                                                 window.location.href = "/#/userHome";
+                                             } else {
+                                                 alert("已取消");
+                                             }
+
+                                         });
+                                     }else{
+                                        alert(data.msg);
+                                     }
+                                }
+                         });
+                    }else {
+                        alert("请在微信里面打开");
                     }
-                });
+                }else if(currRechargeType === "shortcut"){//网银充值
+                    RechargeStore.trigger("submitShortcutForm");
+                }
+
             }else {
                 RechargeStore.trigger("rechargeAmountCheckFailed",rechargeAmountCheckResult.msg);
             }
             break;
         case "rechargeAmountChange":
             RechargeStore.updateAll({rechargeAmount:payload.data.rechargeAmount});
+            RechargeStore.trigger("change");
+            break;
+        case "rechargeTypeChange":
+            RechargeStore.updateAll({currRechargeType:payload.data.rechargeType});
             RechargeStore.trigger("change");
             break;
         default:

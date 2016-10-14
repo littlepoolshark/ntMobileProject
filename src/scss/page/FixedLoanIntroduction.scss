@@ -112,6 +112,7 @@
   }
 
   .popup {
+    padding-bottom:rem-calc(45);
     background:#f8f8f8;
   }
   .popup-header {
@@ -122,5 +123,9 @@
   }
 
   @import "./CheckMoreDetailBar";
+
+  .icon-check {
+    @include color-and-fontSize($global-success,$T8);
+  }
 
 }

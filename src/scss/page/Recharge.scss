@@ -36,4 +36,26 @@
       color:$white;
     }
   }
+
+  .group.active {
+    .group-body {
+      /*border:1px solid $C1;*/
+    }
+  }
+  .shortcut-pay-wrapper {
+    line-height:rem-calc(30);
+    @include color-and-fontSize($C4,$T8);
+
+    span:last-child {
+      margin-right:rem-calc(20);
+    }
+  }
+  .recharge-card-bg {
+      height:rem-calc(30);
+  }
+
+  .showLimitDetail-btn {
+    margin-left:rem-calc(10);
+    text-decoration: underline;
+  }
 }

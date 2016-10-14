@@ -134,7 +134,8 @@ let PurchaseButton=React.createClass({
                 width:"100%",
                 position:"fixed",
                 left:0,
-                bottom:0
+                bottom:0,
+                zIndex:1020
             }}>
                 <Button
                     block={true}

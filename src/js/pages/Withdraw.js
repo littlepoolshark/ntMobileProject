@@ -36,7 +36,7 @@ let Withdraw=React.createClass({
     _handleWithdrawAmountChange(){
         let reg=/[^\d\.]/g;//过滤除了数组和点号的字符
         let withdrawAmount=(this.refs.withdrawAmount.getValue()).replace(reg,"");
-        if(withdrawAmount.indexOf(".") > -1 ){//如果是小数点后的位数大于两位的小数
+        if(withdrawAmount.indexOf(".") > -1 ){//如果是小数点后的位数大于两位的小数,则将其截断为小数点后两位
             if(!!withdrawAmount.split(".")[1] && withdrawAmount.split(".")[1].length > 2){
                 withdrawAmount=withdrawAmount.split(".")[0] + "." + withdrawAmount.split(".")[1].slice(0,2);
             }
@@ -135,7 +135,7 @@ let Withdraw=React.createClass({
                 >
                     <div>提现金额：{withdrawAmount}元</div>
                     <div>手续费：{handlingCharge}元</div>
-                    <div>实际到账：{acctAccount}元</div>
+                    <div>实际到账：{acctAccount.toFixed(2)}元</div>
                 </Modal>
             </Container>
         )

@@ -8,11 +8,13 @@
 @import "../helper/mixins";
 
 #repaymentCalendar {
+  overflow-y: scroll;
+
   .monthPicker-card {
     width:100%;
     position:fixed;
     left:0;
-    top:rem-calc(44);
+    top:rem-calc(43);
     z-index:1;
     border-bottom:1px solid $separation-line-color;
 
@@ -27,7 +29,6 @@
       }
     }
   }
-
 
   .repaymentDashBoard {
     width:100%;
@@ -46,7 +47,11 @@
       display:flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;;
+      align-items: center;
+
+      &>span {
+        display:block;
+      }
     }
   }
 
@@ -142,5 +147,22 @@
 
   .todayRepaymentDetail-list {
     margin-bottom:rem-calc(30);
+  }
+
+  /*
+   * 笨拙地兼容iphone手机下的dom元素fixed问题
+   */
+  .isIOS & {
+
+    .monthPicker-card {
+      position:relative;
+      left:0;
+      top:0;
+    }
+
+    .repaymentDashBoard {
+      margin-top:0;
+    }
+
   }
 }

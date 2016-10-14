@@ -13,6 +13,7 @@ import Group from "../UIComponents/Group";
 import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
 import Modal from "../UIComponents/modal/Modal";
+import Icon from "../UIComponents/Icon";
 
 //utilities component
 import Summary from "./utilities/Summary.js";
@@ -38,7 +39,7 @@ let FixedLoanIntroduction=React.createClass({
         let offsetHeight=container.offsetHeight;
         let scrollHeight=container.scrollHeight;
         let scrollTop=container.scrollTop;
-        if(scrollTop > scrollHeight-offsetHeight-1){
+        if(scrollTop > scrollHeight-offsetHeight-3){
             this.refs.detailModal.open();
         }
     },
@@ -61,7 +62,8 @@ let FixedLoanIntroduction=React.createClass({
             companyName,
             corporation,
             guaranteeLicenseList,
-            guaranteeLabelList
+            guaranteeLabelList,
+            useDesc
             }=this.state;
         let productionType=this.props.location.query.type;
         let modalTitle=config.productNameMap[productionType];
@@ -126,11 +128,12 @@ let FixedLoanIntroduction=React.createClass({
                                             ( <Col cols={3} >暂无资质信息</Col>) :
                                             licenseList.map(function(item,index){
                                                 return (
-                                                    <Col cols={3} key={key+1}>{item}</Col>
+                                                    <Col cols={3} key={index+1}>{item}</Col>
                                                 )
                                             })
                                         }
                                     </Grid>
+                                    <div>*可以登录农泰金融pc端官网查看资质详情</div>
                                 </div>
                             </Group>
                             <Group noPadded={false} >
@@ -142,13 +145,13 @@ let FixedLoanIntroduction=React.createClass({
                             <Group noPadded={false} >
                                 <h6>借款用途</h6>
                                 <div className="content">
-                                   采购农资
+                                    {useDesc}
                                 </div>
                             </Group>
                             <Group noPadded={false} >
                                 <h6>还款来源</h6>
                                 <div className="content">
-                                    {!!repaymentSource ? repaymentSource : "经营回款"}
+                                    {repaymentSource}
                                 </div>
                             </Group>
                             <ServiceAgreement {...this.state}/>
@@ -162,16 +165,24 @@ let FixedLoanIntroduction=React.createClass({
                                 <h6>担保人资质</h6>
                                 <div className="content">
                                     <Grid wrap="wrap" collapse={true}>
-                                    {
-                                        !guaranteeLicenseList || (!!guaranteeLicenseList && guaranteeLicenseList.length === 0) ?
-                                        "暂无担保人资质信息" :
-                                        guaranteeLicenseList.map(function(item,index){
-                                            return (
-                                                <Col cols={3} key={index+1}>{item}</Col>
-                                            )
-                                        })
-                                    }
+                                        <Col cols={3} >
+                                            担保人身份证
+                                            {
+                                                !!guaranteeLicenseList && guaranteeLicenseList.indexOf("担保人身份证") > -1 ?
+                                                <Icon name="check"/> :
+                                                null
+                                            }
+                                        </Col>
+                                        <Col cols={3} >
+                                            担保人营业执照
+                                            {
+                                                !!guaranteeLicenseList && guaranteeLicenseList.indexOf("担保人营业执照") > -1 ?
+                                                    <Icon name="check"/> :
+                                                    null
+                                            }
+                                        </Col>
                                     </Grid>
+                                    <div>*可以登录农泰金融pc端官网查看详情</div>
                                 </div>
                             </Group>
                             {

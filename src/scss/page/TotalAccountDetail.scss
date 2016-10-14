@@ -36,6 +36,10 @@
         @include color-and-fontSize($C4,$T8);
       }
 
+      &>span {
+        display:block;
+      }
+
     }
   }
 
@@ -79,8 +83,11 @@
   .buttons-wrapper {
     display:flex;
     justify-content: space-between;
+    padding:0 rem-calc(30)  rem-calc(30);
+    margin-top:rem-calc(15);
 
     & > button {
+      display:block;
       width:rem-calc(120);
       margin:0;
     }

@@ -31,7 +31,8 @@ let Payment=React.createClass({
             couponAmount:PaymentStore.getAll().couponAmount,
             isModalOpen:false,
             modalInnerText:"",
-            modalType:"rechargeModal"
+            modalType:"rechargeModal",
+            isPaymentModalOpen:false
         }
     },
     /*
@@ -119,7 +120,7 @@ let Payment=React.createClass({
             purchaseAmount,
             userBalance
             }=PaymentStore.getAll();
-        let rechargeAmount=purchaseAmount - userBalance ;
+        let rechargeAmount=(purchaseAmount - userBalance).toFixed(2) ;
         if(confirm){//用户点击了“确定”按钮
             if(this.state.modalType === "rechargeModal"){
                 this.context.router.push({
@@ -219,6 +220,14 @@ let Payment=React.createClass({
                 >
                     {this.state.modalInnerText}
                 </Modal>
+                <Modal
+                    title=""
+                    ref="paymentModal"
+                    isOpen={this.state.isPaymentModalOpen}
+                    role="loading"
+                >
+                    处理中，请稍后...
+                </Modal>
             </Container>
         )
     },
@@ -288,6 +297,20 @@ let Payment=React.createClass({
                 isModalOpen:true,
                 modalInnerText:"您还未绑定银行卡，暂时不能购买。去绑卡？",
                 modalType:"bindBankCardModal"
+            })
+        }.bind(this));
+
+        //购买请求开始
+        PaymentStore.bind("paymentRequestIsStart",function(){
+            this.setState({
+                isPaymentModalOpen:true
+            })
+        }.bind(this));
+
+        //购买请求结束
+        PaymentStore.bind("paymentRequestIsEnd",function(){
+            this.setState({
+                isPaymentModalOpen:false
             })
         }.bind(this));
 

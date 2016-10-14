@@ -10,6 +10,7 @@ import NavBar from "../UIComponents/NavBar";
 import Loader from "../UIComponents/Loader";
 import Modal from "../UIComponents/modal/Modal";
 import List from "../UIComponents/List";
+import View from "../UIComponents/View";
 import InvestmentRecordCard from "./utilities/InvestmentRecordCard";
 import NoDataHint from "./utilities/NoDataHint";
 
@@ -104,99 +105,99 @@ let EarnSetInvestmentRecord=React.createClass({
             }=this.state.data;
 
         return (
-            <Container scrollable={true}   id="earnSetInvestmentRecord"  onScroll={this._loadMoreData}>
-                <NavBar
-                    title="理财计划投资明细"
-                    leftNav={[leftNav]}
-                    rightNav={[rightNav]}
-                    amStyle="primary"
-                    onAction={this._handleNavClick}
-                />
-                <Tabs defaultActiveKey={0} >
-                    <Tabs.Item
-                        title="待结算"
-                        key={0}
-                        navStyle={null}
-                        id="preRepayList"
+                <View id="earnSetInvestmentRecordView">
+                    <NavBar
+                        title="理财计划投资明细"
+                        leftNav={[leftNav]}
+                        rightNav={[rightNav]}
+                        amStyle="primary"
+                        onAction={this._handleNavClick}
+                    />
+                    <Container scrollable={true}   id="earnSetInvestmentRecord"  onScroll={this._loadMoreData}>
+                        <Tabs defaultActiveKey={0} >
+                            <Tabs.Item
+                                title="待结算"
+                                key={0}
+                                navStyle={null}
+                                id="preRepayList"
+                            >
+                                {
+                                    !this.state.noRepayingData ?
+                                        preRepayList.map(function(item,index){
+                                            return (
+                                                <InvestmentRecordCard
+                                                    {...item}
+                                                    key={item.id}
+                                                    clickHandler={this._handleCardClick}
+                                                />
+                                            )
+                                        }.bind(this)) :
+                                        <NoDataHint/>
+                                }
+                            </Tabs.Item>
+                            <Tabs.Item
+                                title="已结清"
+                                key={1}
+                                navStyle={null}
+                                id="clearingList"
+                            >
+                                {
+                                    !this.state.noClearingData ?
+                                        clearingList.map(function(item,index){
+                                            return (
+                                                <InvestmentRecordCard
+                                                    {...item}
+                                                    key={item.id}
+                                                    clickHandler={this._handleCardClick}
+                                                />
+                                            )
+                                        }.bind(this)):
+                                        <NoDataHint/>
+                                }
+                            </Tabs.Item>
+                        </Tabs>
+
+                        <Loader amStyle="primary" rounded={true}/>
+                    </Container>
+                    <Modal
+                        title="配标详情"
+                        ref="matchLoanModal"
+                        isOpen={this.state.isMatchLoanModalOpen}
+                        role="popup"
+                        onDismiss={this._handleMatchLoanModalClose}
+                        id="matchLoanModal"
                     >
                         {
-                            !this.state.noRepayingData ?
-                            preRepayList.map(function(item,index){
-                                return (
-                                    <InvestmentRecordCard
-                                        {...item}
-                                        key={item.id}
-                                        clickHandler={this._handleCardClick}
-                                    />
-                                )
-                            }.bind(this)) :
-                            <NoDataHint/>
+                            !this.state.noMatchLoanData ?
+                                matchLoanDetailList.map(function(item,index){
+                                    return (
+                                        <List.Item
+                                            href={"#/fixedLoanIntroduction?productId="+item.loanId+"&type=loan_product"}
+                                            title={item.title}
+                                            after={"￥"+item.amount}
+                                            key={index}
+                                        />
+                                    )
+                                }) :
+                                <NoDataHint style={{background:"#eee",marginTop:"5rem"}} />
                         }
-                    </Tabs.Item>
-                    <Tabs.Item
-                        title="已结清"
-                        key={1}
-                        navStyle={null}
-                        id="clearingList"
+                    </Modal>
+                    <Modal
+                        title=""
+                        ref="actionModal"
+                        isOpen={this.state.isActionModalOpen}
+                        role="actions"
+                        onDismiss={this._handleActionModalClose}
+                        btnStyle="primary"
+                        id="actionModal"
                     >
-                        {
-                            !this.state.noClearingData ?
-                            clearingList.map(function(item,index){
-                                return (
-                                    <InvestmentRecordCard
-                                        {...item}
-                                        key={item.id}
-                                        clickHandler={this._handleCardClick}
-                                    />
-                                )
-                            }.bind(this)):
-                            <NoDataHint/>
-                        }
-                    </Tabs.Item>
-                </Tabs>
-
-                <Loader amStyle="primary" rounded={true}/>
-
-                <Modal
-                    title="配标详情"
-                    ref="matchLoanModal"
-                    isOpen={this.state.isMatchLoanModalOpen}
-                    role="popup"
-                    onDismiss={this._handleMatchLoanModalClose}
-                    id="matchLoanModal"
-                >
-                    {
-                        !this.state.noMatchLoanData ?
-                        matchLoanDetailList.map(function(item,index){
-                            return (
-                                <List.Item
-                                    href={"#/fixedLoanIntroduction?productId="+item.loanId+"&type=loan_product"}
-                                    title={item.title}
-                                    after={"￥"+item.amount}
-                                    key={index}
-                                />
-                            )
-                        }) :
-                        <NoDataHint style={{background:"#eee",marginTop:"5rem"}} />
-                    }
-                </Modal>
-
-                <Modal
-                    title=""
-                    ref="actionModal"
-                    isOpen={this.state.isActionModalOpen}
-                    role="actions"
-                    onDismiss={this._handleActionModalClose}
-                    btnStyle="primary"
-                    id="actionModal"
-                >
-                    <List>
-                        <List.Item onClick={this._handleQueryProductList.bind(null,"yyz_product")}>月月赚</List.Item>
-                        <List.Item onClick={this._handleQueryProductList.bind(null,"jjz_product")}>季季赚</List.Item>
-                        <List.Item className="modal-actions-alert" onClick={this._handleQueryProductList.bind(null,"all")}>所有</List.Item>
-                    </List>
-                </Modal>
-            </Container>
+                        <List>
+                            <List.Item onClick={this._handleQueryProductList.bind(null,"yyz_product")}>月月赚</List.Item>
+                            <List.Item onClick={this._handleQueryProductList.bind(null,"jjz_product")}>季季赚</List.Item>
+                            <List.Item className="modal-actions-alert" onClick={this._handleQueryProductList.bind(null,"all")}>所有</List.Item>
+                        </List>
+                    </Modal>
+                </View>
         )
     },
     componentDidMount(){

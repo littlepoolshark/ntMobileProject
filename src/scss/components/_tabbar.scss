@@ -104,6 +104,13 @@ $tabbar-styles: map_merge($am-colors, (dark: $dark-alt)) !default;
 
 //针对 ntmobile项目具体定制的样式
 .tabbar-white {
+  /*
+  * 使用绝对定位兼容解决了tabbar在iphone5c,iphone6等下面的tabbar不见的bug
+  */
+  position:absolute;
+  left:0;
+  bottom:0;
+  z-index:9999;
   height:rem-calc(55);
   padding:0;
   background-color:#fff;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head lang="en">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,5 +26,20 @@
   加载中.......
   <script src="/src/js/lib/qrcode.min.js"></script>
   <script src="/app.bundle.js"></script>
+  <!--<script src="/src/js/lib/iscroll.js"></script>-->
+  <!--<script src="/src/js/lib/debug.min.js"></script>-->
+  <script>
+    //使用客户端代理探测方案，如果是uc浏览器，则为html标签挂上"ua-stupid-uc"样式类
+    var ua = navigator.userAgent;
+    if(/android/i.test(ua) || ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
+      document.documentElement.className += ' ua-stupid-uc';
+    }
+
+    //笨拙地兼容iphone手机下的dom元素fixed问题
+    if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+      document.documentElement.className += ' isIOS';
+    }
+
+  </script>
 </body>
 </html>

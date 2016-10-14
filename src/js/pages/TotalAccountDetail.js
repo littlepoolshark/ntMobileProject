@@ -150,7 +150,7 @@ let TotalAccountDetail=React.createClass({
                     />
                 </List>
 
-                <div className="buttons-wrapper" style={{padding:"0 0.9375rem",marginTop:"1rem"}}>
+                <div className="buttons-wrapper" >
                     <Button amStyle="primary"  radius={true} className="recharge-btn" onClick={this._handleRechargeClick}>充值</Button>
                     <Button amStyle="warning"  radius={true} className="withdraw-btn" onClick={this._handleWithdrawClick}>提现</Button>
                 </div>

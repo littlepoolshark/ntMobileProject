@@ -35,12 +35,21 @@
       .desc {
         @include color-and-fontSize($C3,$T6);
       }
+
+      &>span {
+        display:block;
+      }
+
     }
     .subtitle {
       display:flex;
       justify-content: space-between;
       align-items: center;
       @include color-and-fontSize($C4,$T10);
+
+      &>span {
+        display:block;
+      }
     }
   }
 

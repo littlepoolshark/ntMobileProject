@@ -52,6 +52,10 @@
         &:first-child {
           margin-right:rem-calc(50);
         }
+
+        &>span {
+          display:block;
+        }
       }
     }
     img {

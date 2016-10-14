@@ -36,7 +36,7 @@ let TabBar = React.createClass({
     return (
       <Component
         {...props}
-        className={classNames(classSet, className)}
+          className={classNames(classSet, className)}
       >
         {React.Children.map(children, (child, index) => {
           let {

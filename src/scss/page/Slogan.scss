@@ -17,7 +17,7 @@
   @include color-and-fontSize($C4,$T10);
 
   .icon-insurance {
-    display:inline-block;
+    display:block;
     width:rem-calc(15);
     height:rem-calc(15);
     background-image: url("../../img/home_icon_insurance.png");

@@ -158,6 +158,7 @@ let Register=React.createClass({
         )
     },
     componentDidMount(){
+
         RegisterStore.bind("registerSuccess",function(){
             this.context.router.push({
                 pathname:"/productList"
@@ -173,6 +174,12 @@ let Register=React.createClass({
                 inviterCode:RegisterStore.getInviterCode()
             });
         }.bind(this));
+
+        //下面这段代码必须写在对“inviterCodeChange”事件进行handler绑定之后，否则，无法进入该handler里面
+        let inviteCode=this.props.location.query.inviteCode;
+        if(!!inviteCode){
+            RegisterAction.changeInviterCode(inviteCode);
+        }
     },
     componentWillUnmount(){
         RegisterStore.clearAll();

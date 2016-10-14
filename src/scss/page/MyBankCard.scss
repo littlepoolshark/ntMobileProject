@@ -29,19 +29,26 @@
       @include color-and-fontSize($C4,$T8);
     }
 
-    .btn {
+    .addBankCard-btn {
       display:flex;
       justify-content:center;
       align-items:center;
+      width:100%;
+      height:rem-calc(90);
       margin-top:rem-calc(23);
       padding:rem-calc(30) 0;
+      border:1px solid #eee;
+      border-radius:5px;
       background-color:$white;
 
       .imgIcon-plus-icon {
-        display:inline-block;
         width:rem-calc(27);
         height:rem-calc(27);
         margin-right:rem-calc(15);
+      }
+
+      &>span {
+        display:block;
       }
     }
   }
@@ -78,12 +85,21 @@
       .icon-right-nav {
         color:#ddd;
       }
+
+      &>span,
+      &>img {
+        display:block;
+      }
     }
 
     .body {
       display:flex;
       justify-content: space-between;
       margin-top:rem-calc(15);
+
+      &>span {
+        display:block;
+      }
     }
 
     &.disabled {

@@ -23,7 +23,7 @@
       border-top:1px solid $separation-line-color;
       border-bottom:1px solid $separation-line-color;
       background:#fff;
-      position:absolute;
+      position:fixed;
       top:40px;
       left:0;
       z-index:999;
@@ -69,6 +69,19 @@
         @include color-and-fontSize($C4,$T8);
         text-align: justify;
       }
+    }
+  }
+
+  /*
+  * 让步解决ios手机下面fixed的兼容问题
+  */
+  .isIOS & .tabs {
+    padding-top:0;
+
+    .tabs-nav {
+      position:relative;
+      left:0;
+      top:0;
     }
   }
 }

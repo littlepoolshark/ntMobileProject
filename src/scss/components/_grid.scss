@@ -11,7 +11,7 @@
     flex: 0 0 $percent;
     // max-width prevents columns from wrapping early in IE10/11
     max-width: $percent;
-
+    width:$percent;
     // fuck android uc
     @include flex-basis-fallback($percent)
   } @else if ($size == shrink) {

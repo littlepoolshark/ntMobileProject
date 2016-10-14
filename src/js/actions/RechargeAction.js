@@ -18,6 +18,14 @@ var RechargeAction={
                 rechargeAmount:amount
             }
         })
+    },
+    changeRechargeType(type){
+        appDispatcher.dispatch({
+            actionName:"rechargeTypeChange",
+            data:{
+                rechargeType:type
+            }
+        })
     }
 };
 

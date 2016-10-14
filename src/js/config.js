@@ -89,7 +89,8 @@ let config={
         "DailyEarnRollOutSuccess",
         "DailyEarnInvestmentRecord",
         "EarnSetInvestmentRecord",
-        "AssignmentDebtSuccess"
+        "AssignmentDebtSuccess",
+        "InviteMyFriend"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

@@ -30,7 +30,7 @@ let MonthPickerCard=React.createClass({
             handleSliderFinished
             }=this.props;
         return (
-            <div className="monthPicker-card">
+            <div className="monthPicker-card" id="monthPickerCard">
                 <Slider
                     pager={false}
                     autoPlay={false}
@@ -241,26 +241,26 @@ let RepaymentCalendar=React.createClass({
             todayTotalRepaymentAmount
             }=this.state.data;
         return (
-            <Container scrollable={true}  id="repaymentCalendar" >
-                <MonthPickerCard
-                    handleSliderFinished={this._handleSlideFinished}
-                    monthPickerFrameList={monthPickerFrameList}
-                />
-                <RepaymentDashBoard
-                    zyjbx={currMonth_zyjbx}
-                    zdsbx={currMonth_zdsbx}
-                />
-                <DatePickerCard
-                    currDate={currDate}
-                    datePickerCellList={datePickerCellList}
+            <div  id="repaymentCalendar" >
+                    <MonthPickerCard
+                        handleSliderFinished={this._handleSlideFinished}
+                        monthPickerFrameList={monthPickerFrameList}
                     />
-                <TodayTotalRepayment
-                    todayTotalRepaymentAmount={todayTotalRepaymentAmount}
-                />
-                <TodayRepaymentDetailList
-                    list={repaymentDetailList}
-                />
-            </Container>
+                    <RepaymentDashBoard
+                        zyjbx={currMonth_zyjbx}
+                        zdsbx={currMonth_zdsbx}
+                    />
+                    <DatePickerCard
+                        currDate={currDate}
+                        datePickerCellList={datePickerCellList}
+                    />
+                    <TodayTotalRepayment
+                        todayTotalRepaymentAmount={todayTotalRepaymentAmount}
+                    />
+                    <TodayRepaymentDetailList
+                        list={repaymentDetailList}
+                    />
+            </div>
         )
     },
     componentDidMount(){
@@ -277,6 +277,7 @@ let RepaymentCalendar=React.createClass({
                 hasDetailData:true
             });
         }.bind(this));
+
     }
 });
 

@@ -103,7 +103,7 @@ let RepaymentSchedule=React.createClass({
                 </Group>
                 <Group className="repayment-schedule-group">
                     <div className="header">
-                        <span className="title">还款进度</span>
+                        <span className="title">回款进度</span>
                         <span className="title">{qsNum}期</span>
                     </div>
                     <div className="body">
@@ -136,6 +136,8 @@ let RepaymentSchedule=React.createClass({
         RepaymentScheduleStore.bind("change",function(){
             this.setState(RepaymentScheduleStore.getAll());
         }.bind(this));
+
+
     },
     componentWillUnmount(){
         RepaymentScheduleStore.clearAll();

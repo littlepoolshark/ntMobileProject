@@ -37,6 +37,31 @@ var MyBankCardDetailStore={
         }
         return newList;
     },
+    checkForm(){
+        let validationResult={
+            success:true,
+            msg:""
+        };
+
+        let {
+            parentAreaStr,
+            regionStr
+            }=this._all.bankCardInfo;
+
+        if(!parentAreaStr){
+            validationResult={
+                success:false,
+                msg:"请选择开户省份"
+            };
+        }else if(!regionStr){
+            validationResult={
+                success:false,
+                msg:"请选择开户城市"
+            };
+        }
+
+        return validationResult;
+    },
     updateAll(source){
         this._all=Object.assign(this._all,source);
     },
@@ -128,30 +153,36 @@ appDispatcher.register(function(payload){
                     branch:payload.data.branch,
                 })
             });*/
-            let {
-                id,
-                bankId,
-                region,
-                branch,
-                fullCardNo
-                }=MyBankCardDetailStore.getAll().bankCardInfo;
-            ajax({
-                ciUrl:"/user/v2/updateBankCard",
-                data:{
-                    id:id,
-                    bankId:bankId,
-                    region:region,
-                    branch:branch,
-                    cardno:fullCardNo
-                },
-                success(rs){
-                    if(rs.code === 0){
-                        MyBankCardDetailStore.trigger("bankCardSubmitSuccess");
-                    }else {
-                        MyBankCardDetailStore.trigger("bankCardSubmitFailed",rs.description);
+            let validationResult=MyBankCardDetailStore.checkForm();
+            if(validationResult.success){
+                let {
+                    id,
+                    bankId,
+                    region,
+                    branch,
+                    fullCardNo
+                    }=MyBankCardDetailStore.getAll().bankCardInfo;
+                ajax({
+                    ciUrl:"/user/v2/updateBankCard",
+                    data:{
+                        id:id,
+                        bankId:bankId,
+                        region:region,
+                        branch:branch,
+                        cardno:fullCardNo
+                    },
+                    success(rs){
+                        if(rs.code === 0){
+                            MyBankCardDetailStore.trigger("bankCardSubmitSuccess");
+                        }else {
+                            MyBankCardDetailStore.trigger("bankCardSubmitFailed",rs.description);
+                        }
                     }
-                }
-            })
+                });
+            }else {
+                MyBankCardDetailStore.trigger("bankCardSubmitFailed",validationResult.msg);
+            }
+
             break;
         default:
         //no op

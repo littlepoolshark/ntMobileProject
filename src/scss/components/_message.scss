@@ -23,6 +23,10 @@
   opacity:0.5;
   border-radius:rem-calc(25);
 }
+/*
+ * 将z-index设置为负数，从而解决了因为Message组件遮挡其z轴下方的元素，从而导致的点击失效的现象
+ */
 .msg-hide {
   opacity:0;
+  z-index:-999;
 }

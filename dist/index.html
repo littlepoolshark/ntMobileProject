@@ -13,10 +13,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <script src="./qrcode.min.js"></script>
-<link href="app.2535f194.css" rel="stylesheet"></head>
+<link href="app.2fa0a820.css" rel="stylesheet"></head>
+<script>
+    //使用客户端代理探测方案，如果是uc浏览器，则为html标签挂上"ua-stupid-uc"样式类
+    var ua = navigator.userAgent;
+    if(/android/i.test(ua) || ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
+        document.documentElement.className += ' ua-stupid-uc';
+    }
+
+    //笨拙地兼容iphone手机下的dom元素fixed问题
+    if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+        document.documentElement.className += ' isIOS';
+    }
+
+</script>
 <body >
 <div id="app-root" style="height: 100%; width: 100%; overflow: hidden;">
 </div>
  加载中.......
-<script type="text/javascript" src="vendor.bcc2080a.bundle.js"></script><script type="text/javascript" src="app.2535f194.bundle.js"></script></body>
+<script type="text/javascript" src="vendor.bcc2080a.bundle.js"></script><script type="text/javascript" src="app.2fa0a820.bundle.js"></script></body>
 </html>

@@ -13,14 +13,21 @@
     background-color:$C1;
 
     .header {
+      /*在uc浏览器上遭遇兼容问题，采取回退方案，即：浮动布局
       display:flex;
       align-items: center;
-      justify-content:flex-start;
+      justify-content:flex-start;*/
+      height:rem-calc(32);
+      line-height: rem-calc(30);
       padding-left:rem-calc(15);
 
-      .message-icon-wrapper {
+      /*.message-icon-wrapper {
         margin-right:auto;
-      }
+      }*/
+      /*&>a,
+      &>button {
+        display:block;
+      }*/
 
       .btn-hollow {
         margin-bottom:0;
@@ -32,6 +39,8 @@
           background-color:transparent;
         }
       }
+
+
     }
     .subtitle {
       @include color-and-fontSize($C9,$T10);
@@ -101,6 +110,10 @@
         strong {
           color:$C1;
         }
+      }
+
+      &>a>span {
+        display: block;
       }
     }
   }

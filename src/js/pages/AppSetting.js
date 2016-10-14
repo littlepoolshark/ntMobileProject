@@ -91,7 +91,10 @@ let AppSetting=React.createClass({
     componentDidMount(){
         AppSettingStore.bind("logoutSuccess",function(){
             this.context.router.push({
-                pathname:"/"
+                pathname:"/",
+                query:{
+                    t:Math.random()
+                }
             })
         }.bind(this));
     }

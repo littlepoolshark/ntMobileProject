@@ -25,5 +25,9 @@
     .amount {
       color:$C1;
     }
+
+    &>span {
+      display:block;
+    }
   }
 }

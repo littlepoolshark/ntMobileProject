@@ -41,6 +41,10 @@
       line-height:1;
     }
 
+    &>span {
+      display:block;
+    }
+
   }
   .dailyEarn-appointment-amount  {
     margin-top:rem-calc(20);
@@ -51,6 +55,10 @@
 
     .amount {
       @include color-and-fontSize($C1,$T9);
+    }
+
+    &>span {
+      display:block;
     }
   }
   .dailyEarn-dashboard-footer {
@@ -66,6 +74,10 @@
 
       &:first-child {
         border-right:1px solid $separation-line-color;
+      }
+
+      &>span {
+        display:block;
       }
     }
   }
