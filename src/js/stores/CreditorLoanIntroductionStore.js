@@ -15,7 +15,7 @@ let  CreditorLoanIntroductionStore={
         totalAmount:0,
         productName:"",
         bidDays:0,
-        publishTime:new Date()
+        publishTime:0//这个值应该是数字类型的时间戳
     },
     setAll(source){
         Object.assign(this._all,source);

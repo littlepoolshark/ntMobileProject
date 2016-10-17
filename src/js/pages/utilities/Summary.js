@@ -50,12 +50,13 @@ let Summary=React.createClass({
             totalAmount,
             rewardRate
             }=this.props;
-
+        console.log("type:",type)
         let tagClass=classNames({
             /*"dailyEarn-tag":type === "ttz_product",*/
             "newbieLoan-tag":type === "new_product",
             "tag":true
         });
+        console.log("tagClass：",tagClass);
         if(type === "loan_product" || type === "creditor_product"){
             return (
                 <Group className="fixedLoan summary">

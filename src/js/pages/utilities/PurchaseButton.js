@@ -28,6 +28,7 @@ let PurchaseButton=React.createClass({
         }
     },
     _renderButtonText(){
+        console.log("purchaseButton component type: ",this.props.type);
         let buttonText=this._getProductStatusText(this.props.type,this.props.status);
         return buttonText;
     },
@@ -47,6 +48,7 @@ let PurchaseButton=React.createClass({
             }=this.props;
 
         let _self=this;
+
         let productStatusText=this._getProductStatusText(type,status);
         let isLogin=!!cookie.getCookie("token");
         let locationQuery={

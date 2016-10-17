@@ -14,9 +14,8 @@ function ProductIntroduction(props){
     let productStatusText=mixin._getProductStatusText(props.type,props.status);
     //用于倒数的开始时间戳(毫秒数)，结束时间戳(毫秒数)，倒数的时间段（秒数）
     let startTimeStamp=(new Date()).getTime();
-    let endTimeStamp=(new Date(props.publishTime)).getTime() + (props.bidDays * 24 * 60 * 60 * 1000);
+    let endTimeStamp=props.publishTime + (props.bidDays * 24 * 60 * 60 * 1000);
     let countDownDuration=parseInt((endTimeStamp-startTimeStamp > 0 ? endTimeStamp-startTimeStamp : 0) / 1000);
-
 
     //天天赚item
     let item1= { title:"项目名称", content:props.productName };

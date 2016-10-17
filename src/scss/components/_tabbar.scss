@@ -110,7 +110,7 @@ $tabbar-styles: map_merge($am-colors, (dark: $dark-alt)) !default;
   position:absolute;
   left:0;
   bottom:0;
-  z-index:9999;
+  z-index:999;
   height:rem-calc(55);
   padding:0;
   background-color:#fff;

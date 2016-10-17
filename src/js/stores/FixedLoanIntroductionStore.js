@@ -15,7 +15,7 @@ let  FixedLoanIntroductionStore={
         totalAmount:0,
         productName:"",
         bidDays:0,
-        publishTime:new Date(),
+        publishTime:0,//这个值应该是数字类型的时间戳
         status:""
     },
     setAll(source){
@@ -81,7 +81,7 @@ appDispatcher.register(function(payload){
                             productName:data.title,
                             status:data.status,
                             bidDays:data.bidDays,
-                            publishTime:data.publishTime,
+                            publishTime:data.publishTimeL,
                             rewardRate:data.rewardRate,
                             useDesc:data.useDesc,
                             isSupportAdvanceRepayment:data.isSupportAdvanceRepayment === "yes" ? true : false

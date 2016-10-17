@@ -63,8 +63,10 @@ let EarnSetIntroduction=React.createClass({
         this.refs.detailModal.open();
     },
     render(){
+        console.log("earnSetIntroduction state",this.state);
         let productionType=this.props.location.query.type;
         let modalTitle=config.productNameMap[productionType];
+        console.log("earnSetIntroduction productionType",productionType);
         return (
             <Container scrollable={false} style={{overflow:"scroll"}} id="earnSetIntroduction"  onScroll={this._handleOnScroll} ref="earnSetIntroduction">
                 <Summary  {...this.state}/>

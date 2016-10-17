@@ -29,12 +29,17 @@ appDispatcher.register(function(payload){
                     success:function(rs){
                         if(rs.code === 0){
                             let source={},list=[];
+                            //鉴于从该接口返回的天天赚数据有时候有type这个字段，有时候没有这个字段，先前端自动加上
+                            if(!rs.data.hq.type){
+                                rs.data.hq.type="ttz_product";
+                            }
                             rs.data.lcjh[0].isFirstChild=true;
                             rs.data.xmzt.list[0].isFirstChild=true;
                             list=list.concat(rs.data.hq,rs.data.lcjh,rs.data.xmzt.list);
                             source={
                                 list:list
                             };
+                            console.log("productListStore source:",source);
                             ProductListStore.updateAll(source);
                             ProductListStore.trigger("change");
                         }

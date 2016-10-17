@@ -118,7 +118,6 @@ function ajax(obj) {
     if (obj.async === true) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {   //判断对象的状态是否交互完成
-                console.log("one request done!");
                 callback();		 //回调
             }
         };
@@ -142,9 +141,9 @@ function ajax(obj) {
     //    };
     //}
 
-    xhr.onerror=function(e){
-        console.log(e);
-    }
+    //xhr.onerror=function(e){
+    //    console.log(e);
+    //}
 
 
     if (obj.method === 'post') {

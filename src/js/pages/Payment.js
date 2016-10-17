@@ -158,7 +158,7 @@ let Payment=React.createClass({
             investLimitAmount_ttz
             }=PaymentStore.getAll();
 
-
+        let purchaseAmount=parseInt(this.state.purchaseAmount);
 
         return (
             <Container id="earnSetPayment">
@@ -197,11 +197,8 @@ let Payment=React.createClass({
                                 ref="purchaseAmount"
                                 inputAfter={(<span className="useALL-btn" onClick={this._UseAllBalance}>全余额</span>)}
                                 onChange={this._handlePurchaseAmountChange}
-                                value={this.state.purchaseAmount ? this.state.purchaseAmount : ""}
-                                >
-
-                            </Field>
-
+                                value={purchaseAmount ? purchaseAmount : ""}
+                            />
                         </List.Item>
                         {this._renderCouponBar(type,couponAmount,couponType,unUseCouponCount)}
                     </List>

@@ -37,10 +37,12 @@ let ProductList=React.createClass({
         let scrollable=this.state.productList.length > 0 ? true : false;
         let isModalOpen=this.state.productList.length > 0 ? false : true;
         let checkMoreClass=this.state.productList.length > 0 ? "show" : "hide"
+        console.log("this.state.productList:",this.state.productList);
         return (
             <Container scrollable={scrollable}   id="productList" >
                 {
                     this.state.productList.map(function(item,index){
+                        console.log("productList component->item.type:",item.type);
                         if(item.type === "ttz_product"){
                             return (
                                 <DailyEarnCard key={item.type+item.id} {...item}/>
