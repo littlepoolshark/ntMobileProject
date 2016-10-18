@@ -39,11 +39,6 @@ let EarnSetIntroduction=React.createClass({
     /*在这里无法取到this.props的值,why?*/
     },
     getInitialState(){
-        let {
-            productId,
-            type
-            }=this.props.location.query;
-        EarnSetIntroductionAction.getDataFromServer(type,productId);
         return this._getAllDataFromStore()
     },
     _handleOnScroll(event){
@@ -63,10 +58,8 @@ let EarnSetIntroduction=React.createClass({
         this.refs.detailModal.open();
     },
     render(){
-        console.log("earnSetIntroduction state",this.state);
         let productionType=this.props.location.query.type;
         let modalTitle=config.productNameMap[productionType];
-        console.log("earnSetIntroduction productionType",productionType);
         return (
             <Container scrollable={false} style={{overflow:"scroll"}} id="earnSetIntroduction"  onScroll={this._handleOnScroll} ref="earnSetIntroduction">
                 <Summary  {...this.state}/>
@@ -135,6 +128,12 @@ let EarnSetIntroduction=React.createClass({
         )
     },
     componentDidMount(){
+
+        let {
+            productId,
+            type
+            }=this.props.location.query;
+        EarnSetIntroductionAction.getDataFromServer(type,productId);
 
         EarnSetIntroductionStore.bind("change",function(){
             this.setState(this._getAllDataFromStore())

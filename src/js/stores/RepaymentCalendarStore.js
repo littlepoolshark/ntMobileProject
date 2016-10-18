@@ -48,6 +48,27 @@ var RepaymentCalendarStore={
             var d = new Date(Year,Month,0);
             return d.getDate();
         }
+
+        function isHasRepayment(date,repaymentArr){
+            for(let i=0;i<repaymentArr.length;i++){
+                if(date == repaymentArr[i].date){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function getDateStatus(date,repaymentArr){
+            let status="";
+            for(let i=0;i<repaymentArr.length;i++){
+                if(date == repaymentArr[i].date){
+                    status=repaymentArr[i].status;
+                    break;
+                }
+            }
+            return status;
+        }
+
         let dateArray=[];
         let datesOfCurrMonth=getDatesCountOfMonth(year,month);//该月有多少天
         let datesOfLastMonth=month - 1 >= 1 ? getDatesCountOfMonth(year,month - 1) : getDatesCountOfMonth(year-1,12);
@@ -59,6 +80,7 @@ var RepaymentCalendarStore={
                 dateNumber:datesOfLastMonth-(i-1),
                 isToday:false,
                 hasRepayment:false,
+                status:"",
                 inCurrMonth:false
             });
         }
@@ -68,10 +90,12 @@ var RepaymentCalendarStore={
             let nowMonth=new Date().getMonth()+1;
             let nowDate=new Date().getDate();
             let isToday= ( nowYear === year && nowMonth === month && j === nowDate) ? true : false;
+            let isHasRayment=isHasRepayment(j,repaymentDateArr);
             dateArray.push({
                 dateNumber:j,
                 isToday:isToday,
-                hasRepayment:repaymentDateArr.indexOf(j) > -1 ? true : false,
+                hasRepayment:isHasRayment,
+                status:isHasRayment ? getDateStatus(j,repaymentDateArr) : "",
                 inCurrMonth:true
             });
         }
@@ -83,6 +107,7 @@ var RepaymentCalendarStore={
                 dateNumber:k,
                 isToday:false,
                 hasRepayment:false,
+                status:"",
                 inCurrMonth:false
             });
         }
@@ -106,25 +131,25 @@ var RepaymentCalendarStore={
     _extractRepaymentDateArr(list){
         let repaymentDateArr=[];
         for(let i=0;i<list.length;i++){
-            if(list[i].status === "unpaid"){
-                let date=new Date(list[i].date).getDate();
-                repaymentDateArr.push(date);
-            }
+            let date=new Date(list[i].date).getDate();
+            repaymentDateArr.push({
+                date:date,
+                status:list[i].status
+            });
         }
         return repaymentDateArr;
     },
     _extractTotalRepaymentAmount(list){
         let totalRepaymentAmount=0;
         for(let i=0;i<list.length;i++){
-            if(list[i].status === "unpaid"){
                 totalRepaymentAmount +=list[i].interest + list[i].principle;
-            }
         }
         return totalRepaymentAmount.toFixed(2);
     },
     updateDatePickerCellList(list){
         let repaymentDateArr=this._extractRepaymentDateArr(list);
         let newDatePickerCellList=this._generateDateArray(this._all.currYear,this._all.currMonth,repaymentDateArr);
+        console.log("newDatePickerCellList:",newDatePickerCellList);
         Object.assign(this._all,{
             datePickerCellList:newDatePickerCellList
         });

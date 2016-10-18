@@ -32,6 +32,7 @@ appDispatcher.register(function(payload){
                 },
                 success:function(rs){
                     if(rs.code === 0){
+                        //用于测试：delete rs.data.type;
                         EarnSetIntroductionStore.setAll(EarnSetIntroductionStore.processData(rs.data));
                         EarnSetIntroductionStore.trigger("change");
                     }else {

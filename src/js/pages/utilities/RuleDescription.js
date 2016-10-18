@@ -34,7 +34,6 @@ let RuleDescription=React.createClass({
         )
     },
     render(){
-        console.log("this.props.type",this.props.type);
         let isSupportAdvanceRepayment=this.props.isSupportAdvanceRepayment;//好采投是否有可能提前还款，针对优质标的而言
         return (
             <Group className="rule-description">

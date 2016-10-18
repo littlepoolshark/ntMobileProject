@@ -82,10 +82,26 @@ let DatePickerCardCell=React.createClass({
     _handleClick(selectedDate){
         this.props.onAction && this.props.onAction(selectedDate);
     },
+  /*  _renderPayOrUnpaidIcon(hasRepayment,inCurrMonth,status){
+        if(hasRepayment && inCurrMonth){
+            if(status === "paid"){
+                return (
+                    <Icon classPrefix="imgIcon" name="grey-gold-coin"/>
+                )
+            }else if(status === "unpaid"){
+                return (
+                    <Icon classPrefix="imgIcon" name="gold-coin"/>
+                )
+            }
+        }else {
+            return null;
+        }
+    },*/
     render(){
         let {
             isToday,
             hasRepayment,
+            status,
             inCurrMonth,
             dateNumber,
             selectedDate
@@ -94,6 +110,8 @@ let DatePickerCardCell=React.createClass({
             cell:true,
             highLight:isToday ? true : false,
             mark:hasRepayment ? true : false,
+            paid:status === "paid" ? true : false,
+            unpaid:status === "unpaid" ? true : false,
             disabled:!inCurrMonth ? true : false,
             active:selectedDate === dateNumber && inCurrMonth ? true : false
         });
@@ -103,7 +121,7 @@ let DatePickerCardCell=React.createClass({
                     {dateNumber < 10 ? "0"+dateNumber : dateNumber}
                     {
                         hasRepayment && inCurrMonth ?
-                        <Icon classPrefix="imgIcon" name="gold-coin"/>  :
+                        <Icon classPrefix="imgIcon" name={status === "paid" ? "grey-gold-coin" : "gold-coin"}/>  :
                         null
                     }
                 </span>

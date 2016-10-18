@@ -74,12 +74,14 @@ var RealNameAuthenticationStore={
                 success:false,
                 msg:"身份证不能为空，请输入"
             }
-        }else if(!identityCodeValid(idCardNo)){
+        }
+        //可能用于身份证校验的函数缺乏准备性（测试号码：340111196910104539），所以将这个前端验证放开，交由后台来检验
+        /*else if(!identityCodeValid(idCardNo)){
             validationResult={
                 success:false,
                 msg:"身份证有误，请检查"
             }
-        }
+        }*/
         return validationResult;
     },
     getAll(){

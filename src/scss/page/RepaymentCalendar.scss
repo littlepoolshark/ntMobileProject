@@ -74,7 +74,8 @@
         @include color-and-fontSize($C3,$T7);
       }
 
-      .imgIcon-gold-coin {
+      .imgIcon-gold-coin,
+      .imgIcon-grey-gold-coin {
         display: inline-block;
         width:rem-calc(12);
         height:rem-calc(10);
@@ -96,9 +97,15 @@
         color:$white;
         border-radius:50%;
       }
-      &.mark > span {
+      &.mark.unpaid > span {
         line-height:rem-calc(30);
         border:1px dashed #fca103;
+        border-radius:50%;
+        position:relative;
+      }
+      &.mark.paid > span {
+        line-height:rem-calc(30);
+        border:1px dashed #ddd;
         border-radius:50%;
         position:relative;
       }
@@ -106,6 +113,7 @@
         line-height:rem-calc(30);
         border:none;
         position:relative;
+        border:none;
       }
     }
   }

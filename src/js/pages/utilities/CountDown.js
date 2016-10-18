@@ -48,6 +48,12 @@ let CountDown=React.createClass({
     componentDidMount(){
         this._tick();
     },
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            countDownDuration:nextProps.countDownDuration
+        });
+
+    },
     componentWillUnmount(){
         this._clearTimer();
     }

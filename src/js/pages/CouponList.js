@@ -140,9 +140,9 @@ let CouponList=React.createClass({
 
         //如果是从支付组件跳转至优惠券组件，则先把"返回"按钮隐藏，以免用户点击返回按钮回到支付页面，
         //之前的数据（购买金额和所选的优惠券信息）会被清除掉。后期可以考虑优化。
-        if(productType !== "all"){
+        /*if(productType !== "all"){
             document.getElementsByClassName("navbar-left")[0].style.display="none";
-        }
+        }*/
 
 
         CouponListStore.bind("change",function(){

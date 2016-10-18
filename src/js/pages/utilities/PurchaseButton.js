@@ -28,7 +28,6 @@ let PurchaseButton=React.createClass({
         }
     },
     _renderButtonText(){
-        console.log("purchaseButton component type: ",this.props.type);
         let buttonText=this._getProductStatusText(this.props.type,this.props.status);
         return buttonText;
     },

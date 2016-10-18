@@ -39,7 +39,6 @@ appDispatcher.register(function(payload){
                             source={
                                 list:list
                             };
-                            console.log("productListStore source:",source);
                             ProductListStore.updateAll(source);
                             ProductListStore.trigger("change");
                         }

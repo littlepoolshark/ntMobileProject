@@ -22,8 +22,11 @@
 }
 
 @mixin navbar {
+  display:-webkit-flex;
   display: flex;
+  -webkit-flex:0 0 auto;
   flex: 0 0 auto;
+  -webkit-align-items: center;
   align-items: center;
   justify-content: flex-start;
   overflow: visible;
@@ -93,7 +96,9 @@
 
 // Order: left | center | right
 .#{$navbar-class-left} {
+  -webkit-order:1;//不知道为何，在生产环境中，这条样式规则没有生成
   order: 1;
+  -webkit-flex:0 0 $navbar-side-width;//不知道为何，在生产环境中，这条样式规则没有生成
   flex: 0 0 $navbar-side-width;
   @include flex-basis-fallback($navbar-side-width);
 
@@ -103,11 +108,14 @@
 }
 
 .#{$navbar-class-center} {
+  -webkit-order:2;//不知道为何，在生产环境中，这条样式规则没有生成
   order: 2;
+  -webkit-flex:0 0 $navbar-center-width;//不知道为何，在生产环境中，这条样式规则没有生成
   flex: 0 0 $navbar-center-width;
   text-align: center;
   @include flex-basis-fallback($navbar-center-width);
 }
+
 
 .#{$navbar-class-right} {
   order: 3;
