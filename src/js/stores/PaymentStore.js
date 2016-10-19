@@ -320,6 +320,13 @@ appDispatcher.register(function(payload){
 
             PaymentStore.trigger("change");
             break;
+        case "recharge_payment":
+            if(PaymentStore.isBindBankCardCheck()){
+                PaymentStore.trigger("BindBankCardCheckSuccess");
+            }else {
+                PaymentStore.trigger("hadNotBindBankCard");
+            }
+            break;
         case "payment_earnSet"://赚系列的支付
             if(PaymentStore.isBindBankCardCheck()){
                 let paymentCheckResult_earnSet=PaymentStore.paymentCheck();

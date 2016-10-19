@@ -103,4 +103,26 @@
     right:rem-calc(15);
   }
 
+  .prePublish-hint {
+    display:flex;
+    align-items: center;
+    margin-top:rem-calc(5);
+    @include color-and-fontSize($C4,$T8);
+
+    strong {
+      font-weight: normal;
+      color:#f9b704;
+    }
+
+    &>span {
+      display:block;
+    }
+
+    .imgIcon-clock {
+      width:rem-calc(16);
+      height:rem-calc(16);
+      margin-right:rem-calc(2);
+    }
+  }
+
 }

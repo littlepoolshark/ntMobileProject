@@ -39,9 +39,16 @@ let CountDown=React.createClass({
                 <span>{day ? day + "天" : ""}{hour}小时{minute}分钟{second}秒</span>
             )
         }else {
-            return (
-                <span>已满标</span>
-            )
+            if(!!this.props.textAfterFinish){
+                return (
+                    <span>{this.props.textAfterFinish}</span>
+                )
+            }else {
+                return (
+                    <span>已满标</span>
+                )
+            }
+
         }
 
     },

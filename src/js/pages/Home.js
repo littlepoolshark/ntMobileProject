@@ -40,6 +40,16 @@ let Home=React.createClass({
             pathname:"inviteMyFriend"
         });
     },
+    _handleBannerClick(iframeSource){
+        if(!!iframeSource){
+            this.context.router.push({
+                pathname:"BannerPageWrapper",
+                query:{
+                    iframeSource:iframeSource
+                }
+            });
+        }
+    },
     getInitialState(){
         return this._getAllDataFromStore();
     },
@@ -56,13 +66,12 @@ let Home=React.createClass({
                 <Slider>
                     {
                         bannerList.map(function(item,index){
-                        return (
-                            <Slider.Item key={index + 1}>
-                                <img src={item.pic} />
-                            </Slider.Item>
-                        )
-
-                    })
+                            return (
+                                <Slider.Item key={index + 1}>
+                                    <a href="javascript:void(0);" onClick={this._handleBannerClick.bind(null,item.link)}><img src={item.pic} /></a>
+                                </Slider.Item>
+                            )
+                        }.bind(this))
                     }
                 </Slider>
 

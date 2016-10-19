@@ -55,3 +55,4 @@ export ServiceAgreement_loan_product from "./ServiceAgreement_loan_product";
 export ServiceAgreement_creditor_product from "./ServiceAgreement_creditor_product";
 export ServiceAgreement_new_product from "./ServiceAgreement_new_product";
 export AboutUs from "./AboutUs";
+export BannerPageWrapper from "./BannerPageWrapper";

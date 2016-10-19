@@ -82,6 +82,7 @@ appDispatcher.register(function(payload){
                             status:data.status,
                             bidDays:data.bidDays,
                             publishTime:data.publishTimeL,
+                            sysCurrentTime:data.sysCurrentTime,
                             rewardRate:data.rewardRate,
                             useDesc:data.useDesc,
                             isSupportAdvanceRepayment:data.isSupportAdvanceRepayment === "yes" ? true : false

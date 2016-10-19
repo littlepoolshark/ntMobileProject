@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import Group from "../../UIComponents/Group";
 import Grid from "../../UIComponents/Grid";
 import Col from "../../UIComponents/Col";
+import Icon from "../../UIComponents/Icon";
 
 //utilities component
 import mixin from "./mixin";
@@ -65,6 +66,14 @@ let ProductListCommonCard=React.createClass({
             isSoldOut:true
         }
     },
+    _formatTimeStamp(timeStamp){
+        let timeStr="";
+        let date=new Date(timeStamp);
+        let hours=date.getHours();
+        let minutes=date.getMinutes();
+        timeStr=(hours < 10 ? "0"+hours : hours) + ":" + (minutes < 10 ? "0"+minutes : minutes);
+        return timeStr;
+    },
     render(){
         let {
             id,
@@ -76,7 +85,8 @@ let ProductListCommonCard=React.createClass({
             remainAmount,
             status,
             isFirstChild,
-            rewardRate
+            rewardRate,
+            publishtimeL//预发布的时间戳
             }=this.props;
         let isSoldOut=this._getProductStatusText(type,status) === "售罄" ? true : false ;
         let pathName="";
@@ -122,6 +132,14 @@ let ProductListCommonCard=React.createClass({
                             <div className="remainAmount">{this._amountFormater(remainAmount)}<span className="unit">万</span></div>
                         </Col>
                     </Grid>
+                    {
+                        this._getProductStatusText(type,status) === "预发布" ?
+                        <div className="prePublish-hint">
+                            <Icon classPrefix="imgIcon" name="clock"/>
+                            <span>今天<strong>{this._formatTimeStamp(publishtimeL)}</strong>开售</span>
+                        </div>   :
+                        null
+                    }
                     <div className={isSoldOut ? "stamp" : "stamp hide"}></div>
                 </Group>
             </Link>

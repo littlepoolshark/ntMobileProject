@@ -460,6 +460,14 @@ const rootRoute = {
                 }
             },
             {
+                path: 'bannerPageWrapper',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"BannerPageWrapper"));
+                    })
+                }
+            },
+            {
                 path:"*",
                 getComponent(nextState, cb) {
                     require.ensure([], (require) => {

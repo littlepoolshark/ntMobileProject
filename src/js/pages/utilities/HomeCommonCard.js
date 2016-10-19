@@ -7,6 +7,7 @@ import {
 import Group from "../../UIComponents/Group";
 import Grid from "../../UIComponents/Grid";
 import Col from "../../UIComponents/Col";
+import Icon from "../../UIComponents/Icon";
 
 //utilites component
 import mixin from "./mixin";
@@ -32,6 +33,14 @@ let  HomeCommonCard=React.createClass({
             )
         }
     },
+    _formatTimeStamp(timeStamp){
+        let timeStr="";
+        let date=new Date(timeStamp);
+        let hours=date.getHours();
+        let minutes=date.getMinutes();
+        timeStr=(hours < 10 ? "0"+hours : hours) + ":" + (minutes < 10 ? "0"+minutes : minutes);
+        return timeStr;
+    },
     render(){
         let {
             id,
@@ -41,7 +50,8 @@ let  HomeCommonCard=React.createClass({
             repaymentLimit,
             repaymentTypeUnit,
             remainAmount,
-            status
+            status,
+            publishtimeL
             }=this.props;
         //如果是赚系列的标的就跳转到赚系列共用的详情页，否则跳转到好采投和债转的详情页
         let pathName=type === "loan_product" ? "fixLoanIntroduction" : "earnSetIntroduction";
@@ -82,6 +92,14 @@ let  HomeCommonCard=React.createClass({
                             </div>
                         </Col>
                     </Grid>
+                    {
+                        this._getProductStatusText(type,status) === "预发布" ?
+                            <div className="prePublish-hint">
+                                <Icon classPrefix="imgIcon" name="clock"/>
+                                <span>今天<strong>{this._formatTimeStamp(publishtimeL)}</strong>开售</span>
+                            </div>   :
+                            null
+                    }
                     {
                         type === "new_product" ?
                             (<div className="newbieLoan-label"></div>)  :

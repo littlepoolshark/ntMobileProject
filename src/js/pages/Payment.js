@@ -141,6 +141,9 @@ let Payment=React.createClass({
             });
         }
     },
+    _handleRechargeBtnClick(){
+        PaymentAction.recharge();
+    },
     render(){
         let {
             type,
@@ -185,7 +188,10 @@ let Payment=React.createClass({
                     header=""
                     id="purchaseZone"
                     >
-                    <div className="subtitle usableAmount"><span>账户余额：</span>{userBalance}元</div>
+                    <div className="subtitle usableAmount cf">
+                        <span>账户余额：</span>{userBalance}元
+                        <a href="javascript:void(0);" className="fr recharge-btn" onClick={this._handleRechargeBtnClick}>充 值</a>
+                    </div>
                     <List>
                         <List.Item
                             nested="input"
@@ -292,9 +298,15 @@ let Payment=React.createClass({
         PaymentStore.bind("hadNotBindBankCard",function(){
             this.setState({
                 isModalOpen:true,
-                modalInnerText:"您还未绑定银行卡，暂时不能购买。去绑卡？",
+                modalInnerText:"您还未绑定银行卡，暂时不能购买或者充值。去绑卡？",
                 modalType:"bindBankCardModal"
             })
+        }.bind(this));
+
+        PaymentStore.bind("BindBankCardCheckSuccess",function(){
+            this.context.router.push({
+                pathname:"/recharge"
+            });
         }.bind(this));
 
         //购买请求开始

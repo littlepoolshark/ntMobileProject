@@ -67,7 +67,8 @@ let config={
         "ServiceAgreement_jjz_product":"季季赚服务协议",
         "ServiceAgreement_loan_product":"好采投服务协议",
         "ServiceAgreement_creditor_product":"债权转让服务协议",
-        "AboutUs":"关于我们"
+        "AboutUs":"关于我们",
+        "BannerPageWrapper":"农泰金融"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",

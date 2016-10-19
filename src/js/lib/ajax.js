@@ -32,13 +32,6 @@ function ajax(obj) {
      };
 
 
-    //没有登录或者登录超时的提醒
-    /*if(!cookie.getCookie("token")){
-        Message.broadcast("您没有登录或者登录超时，请重新登录");
-        window.location.href="#/";
-        return ;
-    }*/
-
 
     //基于兼容考虑，创建一个XMLHttpRequest对象
     function createXHR() {
@@ -81,7 +74,7 @@ function ajax(obj) {
 
         } else {
             obj.error && obj.error();
-            console.log('获取数据错误！错误代号：' + xhr.status + '，错误信息：' + xhr.statusText);
+            Message.broadcast("数据加载失败，请稍后再试");
         }
     }
 
@@ -121,30 +114,34 @@ function ajax(obj) {
                 callback();		 //回调
             }
         };
+
+        //请求超时（超时设置为10秒）
+        //如果浏览器xmlHttpRequest对象不支持timeout属性,则使用setTimeout来模仿原生timeout事件
+        //note:设置timeout的代码不能暴露在全局，只能在确定是异步请求才能设置timeout，否则会报以下错误：
+        // xmlhttprequest timeoutFailed to set the 'timeout' property on 'XMLHttpRequest': Timeouts cannot be set for synchronous requests made from a document
+        /*if(xhr.timeout === undefined){
+            setTimeout(function(){
+                if(xhr.readState !== 4){
+                    Message.broadcast("请求超时，请稍后再试");
+                }
+            },10000)
+        }else {
+            xhr.timeout=10000;
+            xhr.ontimeout=function(){
+                Message.broadcast("请求超时，请稍后再试");
+            };
+        }*/
     }
 
     //在使用XHR对象时，必须先调用open()方法，
     //它接受三个参数：请求类型(get、post)、请求的URL和表示是否异步。
     xhr.open(obj.method, obj.url, obj.async);
 
-    //兼容检测xhr对象请求超时，并做响应的处理
-    //if(xhr.timeout === undefined){
-    //    setTimeout(function(){
-    //        if(xhr.readState !== 4){
-    //            alert("into ontimeout handler");
-    //        }
-    //    },10000)
-    //}else {
-    //    xhr.timeout=10000;
-    //    xhr.ontimeout=function(){
-    //        alert("into ontimeout handler");
-    //    };
-    //}
 
-    //xhr.onerror=function(e){
-    //    console.log(e);
-    //}
-
+    //请求发生错误
+    xhr.onerror=function(e){
+        Message.broadcast("网络异常，请检查您的网络");
+    };
 
     if (obj.method === 'post') {
         //post方式需要自己设置http的请求头。

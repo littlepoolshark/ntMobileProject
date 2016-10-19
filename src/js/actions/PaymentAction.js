@@ -55,6 +55,11 @@ var PaymentAction={
             }
         })
     },
+    recharge(){
+        appDispatcher.dispatch({
+            actionName:"recharge_payment"
+        })
+    },
     pay(productType){
         switch (productType){
             case "new_product":

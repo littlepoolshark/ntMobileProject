@@ -18,6 +18,8 @@ let mixin={
             case "jjz_product":
                 if(productStatus === "already_publish"){
                     statusText="立即抢购";
+                }else if(productStatus === "prepublish"){
+                    statusText="预发布";
                 }else {
                     statusText="售罄";
                 }

@@ -6,6 +6,9 @@ import Button from "../../UIComponents/Button";
 import Message from "../../UIComponents/Message";
 import Modal from "../../UIComponents/modal/Modal";
 
+//lib
+import CountDown from "./CountDown";
+
 //utilites component
 import mixin from "./mixin";
 let cookie=require("../../lib/cookie");
@@ -27,8 +30,32 @@ let PurchaseButton=React.createClass({
             type:1
         }
     },
+    _formatTimeStamp(timeStamp){
+        let timeStr="";
+        let date=new Date(timeStamp);
+        let hours=date.getHours();
+        let minutes=date.getMinutes();
+        timeStr=(hours < 10 ? "0"+hours : hours) + ":" + (minutes < 10 ? "0"+minutes : minutes);
+        return timeStr;
+    },
     _renderButtonText(){
-        let buttonText=this._getProductStatusText(this.props.type,this.props.status);
+        let {
+            type,
+            status,
+            publishTime,
+            sysCurrentTime
+            }=this.props;
+        let buttonText=this._getProductStatusText(type,status);
+        //预发布状态下，如果服务器现在的时间距离标的发布的时间大于1分钟(等于60000毫秒)话，就显示形如"12:00开抢"
+        //如果小于1分钟，则进入倒计时状态
+        //note：这里存在一个问题，就是服务器现在时间还没到发布时间，后台返回的status字段的值早就变成"bidding"，也就是抢购中的状态
+        if(status && status === "prepublish" && publishTime){
+            if(publishTime - sysCurrentTime < 60000){
+                buttonText=<CountDown countDownDuration={60} textAfterFinish="立即抢购"/>;
+            }else {
+                buttonText=this._formatTimeStamp(this.props.publishTime)+"开抢";
+            }
+        }
         return buttonText;
     },
     _handleOnClick(){
@@ -64,7 +91,9 @@ let PurchaseButton=React.createClass({
         };
         if(productStatusText === "售罄"){
             Message.broadcast("该标的已经售罄！");
-        } else if(!isLogin){
+        } else if(productStatusText === "预发布"){
+            Message.broadcast("该标的预发布中，目前还不能购买");
+        }else if(!isLogin){
             this.setState({
                 isModalOpen:true,
                 confirmText:"请先登录！",

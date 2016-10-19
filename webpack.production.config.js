@@ -63,11 +63,11 @@ module.exports={
     plugins:[
         new ExtractTextPlugin("[name].[chunkhash:8].css"),
         new webpack.optimize.CommonsChunkPlugin("vendor","vendor.[chunkhash:8].bundle.js"),
-        new webpack.optimize.UglifyJsPlugin({//压缩
+        /*new webpack.optimize.UglifyJsPlugin({//压缩
             compress:{
                 warnings:false
             }
-        }),
+        }),*/
         new HtmlWebpackPlugin({
             filename:"index.html",
             template:path.resolve(__dirname,"index_production.html"),
