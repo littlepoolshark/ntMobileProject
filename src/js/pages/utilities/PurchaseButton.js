@@ -51,7 +51,8 @@ let PurchaseButton=React.createClass({
         //note：这里存在一个问题，就是服务器现在时间还没到发布时间，后台返回的status字段的值早就变成"bidding"，也就是抢购中的状态
         if(status && status === "prepublish" && publishTime){
             if(publishTime - sysCurrentTime < 60000){
-                buttonText=<CountDown countDownDuration={60} textAfterFinish="立即抢购"/>;
+                let countDownDuration=parseInt((publishTime - sysCurrentTime)/1000);
+                buttonText=<CountDown countDownDuration={countDownDuration} textAfterFinish="立即抢购" reload={true}/>;
             }else {
                 buttonText=this._formatTimeStamp(this.props.publishTime)+"开抢";
             }

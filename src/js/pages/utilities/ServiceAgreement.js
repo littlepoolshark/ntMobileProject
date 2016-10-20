@@ -15,7 +15,7 @@ function ServiceAgreement(props){
         <Group>
             <h6>服务协议</h6>
             <div className="content">
-                <input type="checkbox" defaultChecked />
+                <input type="checkbox" defaultChecked  disabled/>
                 同意
                 <Link to={linkPath}>《{serviceAgreementName}》</Link>
             </div>

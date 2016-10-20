@@ -20,6 +20,9 @@ let CountDown=React.createClass({
                     })
                 }else {
                     this._clearTimer();
+                    if(this.props.reload === true){
+                        window.location.reload();
+                    }
                 }
 
             }.bind(this),1000);

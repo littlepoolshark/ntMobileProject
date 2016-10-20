@@ -331,13 +331,14 @@ const Modal = createClass({
     classSet[this.prefixClass('backdrop')] = true;
     classSet[this.setClassNS('active')] = true;
     classSet[this.prefixClass('backdrop-out')] = this.state.isClosing;
-
+    //note:原代码中，backdrop的height是通过window.innerHeight来设置，
+    //后来在微信浏览器中，由于height的高度检测不准确，我将height设置为100%来解决这个问题。
     return (
       <span>
         {children}
         <div
           className={classNames(classSet)}
-          style={{height: window.innerHeight}}
+          style={{height: "100%"}}
           ref="backdrop"
           onClick={onClick}
           onTouchMove={preventDefault}
