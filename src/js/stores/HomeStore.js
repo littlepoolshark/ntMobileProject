@@ -8,7 +8,11 @@ var HomeStore={
         totalAmountOfInvestment:"--",
         registerUserCount:"--",
         productList:[],
-        bannerList:[]
+        bannerList:[{//使用“加载中”图片来占位，撑开容器的高度。
+            link:"",
+            pic:require("../../img/banner_placeholder_loading.png"),
+            title:""
+        }]
     },
     setAll(source){
         Object.assign(this._all,source);

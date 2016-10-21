@@ -41,14 +41,24 @@ let Home=React.createClass({
         });
     },
     _handleBannerClick(iframeSource){
+        //基于内嵌ih5的页面时，页面会被放大。而不内嵌时，页面显示正常的情况下考虑。
+        //如果后台返回的链接地址跟农泰金融是同一个域名之下，则跳转到应用的内部组件中，
+        //否则，就跳出当前的SPA，跳转至给链接地址
         if(!!iframeSource){
-            this.context.router.push({
-                pathname:"BannerPageWrapper",
-                query:{
-                    iframeSource:iframeSource
-                }
-            });
+            if(iframeSource.indexOf("ntjrChina") > -1){
+                this.context.router.push({
+                    pathname:"BannerPageWrapper",
+                    query:{
+                        iframeSource:iframeSource
+                    }
+                });
+            }else {
+                window.location.href=iframeSource;
+            }
         }
+    },
+    _handleImgLoadFailed(event){
+        event.target.src=require("../../img/banner_placeholder_failed.png");
     },
     getInitialState(){
         return this._getAllDataFromStore();
@@ -68,7 +78,9 @@ let Home=React.createClass({
                         bannerList.map(function(item,index){
                             return (
                                 <Slider.Item key={index + 1}>
-                                    <a href="javascript:void(0);" onClick={this._handleBannerClick.bind(null,item.link)}><img src={item.pic} /></a>
+                                    <a href="javascript:void(0);" onClick={this._handleBannerClick.bind(null,item.link)}>
+                                        <img src={item.pic} onError={this._handleImgLoadFailed} />
+                                    </a>
                                 </Slider.Item>
                             )
                         }.bind(this))
