@@ -25,8 +25,11 @@ var DailyEarnAppointmentStore={
             investMaximum,
             orderAmount
             }=this._all;
-        if(orderAmount.indexOf(",") > -1){//把格式化后的数字中的“,”去掉
-            orderAmount=orderAmount.replace(/\,/g,"");
+        //把从后台返回的格式化后的数字中的“,”去掉
+        if(typeof orderAmount === "string" ){
+            if(orderAmount.indexOf(",") > -1){
+                orderAmount=orderAmount.replace(/\,/g,"");
+            }
         }
         investMaximum=purchaseMaximum - parseFloat(userInTotal) - parseFloat(orderAmount) ;
         this._all.investMaximum=investMaximum < 0 ? 0 : investMaximum;//对于白名单即vip用户，投资限额有可能为负数。若为负数则显示为0；

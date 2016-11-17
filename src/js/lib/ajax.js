@@ -14,15 +14,6 @@ import Message from "../UIComponents/Message";
 
 function ajax(obj) {
     const CONSIDER_IE=false;//因为这是移动端的项目，所以不考虑ie浏览器
-   /* let initData={
-        ciUrl:"/ci"+obj.ciUrl,
-        content:{
-            "imei":"23ffgffffffffffffffff",
-            "opSource":"wx",
-            "terminal":"wx",
-            "version":"2.0"
-        },
-    };*/
 
      let initData={
          "imei":"23ffgffffffffffffffff",

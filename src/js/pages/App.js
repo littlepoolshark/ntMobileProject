@@ -11,6 +11,7 @@ import TabBar from "../UIComponents/TabBar";
 import View from "../UIComponents/View";
 
 import config from "../config";
+import geParamObjFromUrl from "../lib/getParamObjFromUrl";
 
 
 const App = React.createClass({
@@ -103,6 +104,14 @@ const App = React.createClass({
                 </TabBar>
             </Container>
         );
+    },
+    componentDidMount(){
+
+        //从url获取标志第三方来源的参数，放置于sessionStorage里面，以便提交注册表时提取和提交给后台
+        let paramObj=geParamObjFromUrl();
+        if(paramObj.ntjrSource && paramObj.ntjrSource !== ""){
+            sessionStorage.setItem("ntjrSource",paramObj.ntjrSource);
+        }
     }
 });
 
