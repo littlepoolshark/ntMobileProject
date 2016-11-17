@@ -18,8 +18,44 @@
     @include color-and-fontSize($C3,$T5);
   }
 
+  .item-title-wrapper {
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .unionpay-icon {
+      width:rem-calc(58);
+      height:rem-calc(17);
+      margin-left:rem-calc(5);
+      background:url("../../img/bank_unionpay.png");
+      background-size:cover;
+    }
+    .bankStar-icon1,
+    .bankStar-icon2,
+    .bankStar-icon3 {
+      width:rem-calc(48);
+      height:rem-calc(13);
+      margin-left:rem-calc(4);
+
+    }
+    .bankStar-icon1 {
+      background:url("../../img/bank_star_one.png");
+      background-size:cover;
+    }
+    .bankStar-icon2 {
+      background:url("../../img/bank_star_two.png");
+      background-size:cover;
+    }
+    .bankStar-icon3 {
+      background:url("../../img/bank_star_three.png");
+      background-size:cover;
+    }
+
+  }
+
   .item-subtitle {
     @include color-and-fontSize($C3,$T9);
   }
+
 
 }

@@ -23,7 +23,8 @@ let MobileVerificationCode=React.createClass({
     _handleClick(){
         let {
             phoneNo,
-            type
+            type,
+            rechargeAmount
             }=this.props;
         let _self=this;
         phoneNo=typeof phoneNo === "function" ? phoneNo() : phoneNo ;
@@ -32,22 +33,53 @@ let MobileVerificationCode=React.createClass({
         }else if(!(/1\d{10}$/i).test(phoneNo)){
             Message.broadcast("手机号码格式不对，请检查！");
         } else if(this.state.active){
-            ajax({
-                ciUrl:"/platinfo/v2/getVerifyCode",
-                 data:{
-                     phone:phoneNo,
-                     type:type//验证码类型：1: 注册，2：找回登录密码 3:找回交易密码 4:绑定银行卡 5：删除银行卡
-                 },
-                 success:function(rs){
-                     if(rs.code === 0){//发送验证码成功
-                         _self._countDown();
-                         Message.broadcast("验证码发送成功！");
-                         cookie.setCookie("tempUserId",rs.data.userId,59);//将临时userid设置到cookie中，供需要该字段的接口使用
-                     }else {//发送验证码失败
-                         Message.broadcast("验证码发送失败！"+rs.description);
-                     }
-                 }
-             })
+            //当type=“7”时，意味着当前请求的是中信充值验证码
+            if(type === "7"){
+                if(rechargeAmount !== ""){
+                    ajax({
+                        ciUrl: "/platinfo/v2/zxChargeMsg",
+                        data: {
+                            chargeAmount: rechargeAmount
+                        },
+                        success: function (rs) {
+                            if(rs.code === 0){
+                                Message.broadcast("验证码发送成功！");
+                                //中信充值时，发送验证码成功后，后台会返回短信流水号码“merBillNo”，
+                                //我们需要设置到cookie中，以供 "ZhongjinShortcutPay" 组件使用
+                                rs.data.merBillNo && cookie.setCookie("merBillNo_ZhongJinShortcutPay",rs.data.merBillNo,59);
+                            }else {
+                                Message.broadcast(rs.description);
+                            }
+                        }
+                    });
+                }
+
+            }else {//其余的情况统一请求这个接口
+                ajax({
+                    ciUrl:"/platinfo/v2/getVerifyCode",
+                    data:{
+                        phone:phoneNo,
+                        type:type//验证码类型："1": 注册，"2"：找回登录密码 "3":找回交易密码 "4":绑定银行卡 "5"：删除银行卡 "6":开通中信快捷支付
+                    },
+                    success:function(rs){
+                        if(rs.code === 0){//发送验证码成功
+                            _self._countDown();
+                            Message.broadcast("验证码发送成功！");
+                            cookie.setCookie("tempUserId",rs.data.userId,59);//将临时userid设置到cookie中，供需要该字段的接口使用
+
+                            //开通中金的快捷支付时，发送验证码成功后，后台会返回“bindNo”和“token”字段，
+                            //我们需要设置到cookie中，以供 "OpenZhongjinShortcut" 组件使用
+                            if(type === "6"){
+                                rs.data.bindNo && cookie.setCookie("bindNo_zhongjinShortcut",rs.data.bindNo,59);
+                                rs.data.token && cookie.setCookie("token_zhongjinShortcut",rs.data.token,59);
+                            }
+                        }else {//发送验证码失败
+                            Message.broadcast("验证码发送失败！"+rs.description);
+                        }
+                    }
+                })
+            }
+
         }else {
             return false;
         }
@@ -82,8 +114,7 @@ let MobileVerificationCode=React.createClass({
     },
     componentDidMount(){
         this.props.autoSend && this._handleClick();
-        this.props.countDownOnly && this._countDown();
-        this.isFirst
+        !!this.props.countDownOnly && this._countDown();
     }
 });
 

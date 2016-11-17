@@ -7,8 +7,10 @@
 function setCookie(name,value,expireMinutes)
 {
     let expiredate=new Date();
-    expiredate.setMinutes(expiredate.getMinutes()+expireMinutes);
-    document.cookie=name+ "=" +escape(value)+ ((expireMinutes==null) ? "" : ";expires="+expiredate.toGMTString());
+    if(expireMinutes){
+        expiredate.setMinutes(expiredate.getMinutes()+expireMinutes);
+    }
+    document.cookie=name+ "=" +escape(value)+ ( !expireMinutes ? "" : ";expires="+expiredate.toGMTString());
 }
 
 function getCookie(name)

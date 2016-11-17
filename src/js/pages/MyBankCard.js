@@ -2,7 +2,6 @@ require("../../scss/page/MyBankCard.scss");
 let MyBankCardAction=require("../actions/MyBankCardAction");
 let MyBankCardStore=require("../stores/MyBankCardStore");
 import React from "react";
-/*import { Link } from "react-router";*/
 import className from "classnames";
 
 import Container from "../UIComponents/Container";
@@ -13,22 +12,59 @@ import Modal from "../UIComponents/modal/Modal";
 import NavBar from "../UIComponents/NavBar";
 
 let NoBankCard=React.createClass({
-    _addBankCard(){
-        MyBankCardAction.addBankCard();
+    _jumpToRegisterToZXBank(){
+        this.context.router.push({
+            pathname:"registerToZXBank",
+            query:{
+                beforeComponent:"securityCenter"
+            }
+        });
+    },
+    _jumpToRegisterToZXFailedHint(){
+        this.context.router.push({
+            pathname:"registerToZXFailedHint",
+            query:{
+                beforeComponent:"securityCenter"
+            }
+        });
+    },
+    _handleNoCardClick(leftQureyTime,istempuser,zxcgOpen){
+        if(zxcgOpen === "yes"){
+            if(istempuser === "yes"){
+                this._jumpToRegisterToZXFailedHint();
+            }else {
+                return null;
+            }
+        }else {
+            if(leftQureyTime > 0){
+                this._jumpToRegisterToZXBank();
+            }else {
+                this._jumpToRegisterToZXFailedHint();
+            }
+        }
     },
     render(){
+        let {
+            leftQureyTime,
+            istempuser,
+            zxcgOpen
+            }=this.props;
         return (
             <div className="noBankCard-wrapper" >
                 <Icon classPrefix="imgIcon" name="money-bag" />
-                <span className="subtitle">绑定银行卡，开启财富升值之旅</span>
-                <div className="addBankCard-btn" onClick={this._addBankCard}>
+                <span className="subtitle">开通银行存管账户，完成银行卡绑定</span>
+                <div className="addBankCard-btn" onClick={this._handleNoCardClick.bind(null,leftQureyTime,istempuser,zxcgOpen)}>
                     <Icon classPrefix="imgIcon" name="plus-icon" />
-                    <span className="title">添加银行卡</span>
+                    <span className="title">开通存管账户</span>
                 </div>
             </div>
         )
     }
 });
+
+NoBankCard.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 let HasBankCard=React.createClass({
     _renderCardNo(cardNo){
@@ -73,16 +109,17 @@ let HasBankCard=React.createClass({
                     )   :
                     null
                 }
-                <div className={classes} onClick={this._jumpToBankCardDetail.bind(null,status)}>
+                <div className={classes} >
                     <div className="header">
                         <img src={shortIcon} alt="" style={{width:"40px",height:"auto"}}/>
                         <span className="title">{bankName}</span>
-                        <Icon  name="right-nav"/>
+                        {/*<Icon  name="right-nav"/>*/}
                     </div>
                     {
                         this._renderCardNo(fullCardNo)
                     }
                 </div>
+                <div className="warm-hint">提示：根据银行存管的要求，银行卡无法更换</div>
             </div>
 
         )
@@ -137,7 +174,7 @@ let MyBankCard = React.createClass({
                 />
                 {
                     (this.state.bankCardInfo === null || !!!this.state.bankCardInfo.id) ?
-                    <NoBankCard /> :
+                    <NoBankCard {...this.state.bankCardInfo} />:
                     <HasBankCard {...this.state.bankCardInfo}/>
                 }
 

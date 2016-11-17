@@ -6,7 +6,7 @@ let Slogan=React.createClass({
         return (
             <div className="slogan">
                 <span className="icon-insurance"></span>
-                交易过程阳光保险全程保障
+                资金由银行全面监管
             </div>
         )
     }

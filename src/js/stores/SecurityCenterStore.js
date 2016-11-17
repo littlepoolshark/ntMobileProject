@@ -8,7 +8,9 @@ var SecurityCenterStore={
         ispasswordSet: "no",
         isDealPwdSet: "no",
         idCardVerified: "no",
-        emailVerified: "no"
+        emailVerified: "no",
+        zxcgOpen:"no",
+        leftQureyTime:3
     },
     updateAll(source){
         this._all=Object.assign(this._all,source);
@@ -28,17 +30,18 @@ var SecurityCenterStore={
             ispasswordSet: "no",
             isDealPwdSet: "no",
             idCardVerified: "no",
-            emailVerified: "no"
+            emailVerified: "no",
+            zxcgOpen:"no"
         }
     },
     calculateSecurityScore(){
-        let mobileScore,loginPasswordScore,dealPasswordScore,idCardScore;
+        let mobileScore,loginPasswordScore,dealPasswordScore,idCardScore,zxcgOpen;
         let userScore=0;
         mobileScore=this._all.mobileVerified === "yes" ? 25 : 0;
         loginPasswordScore=this._all.ispasswordSet === "yes" ? 25 : 0;
         dealPasswordScore=this._all.isDealPwdSet === "yes" ? 25 : 0;
-        idCardScore=this._all.idCardVerified === "yes" ? 25 : 0;
-        userScore=mobileScore + loginPasswordScore + dealPasswordScore + idCardScore;
+        zxcgOpen=(this._all.zxcgOpen === "yes" && this._all.istempuser === "no") ? 25 : 0;
+        userScore=mobileScore + loginPasswordScore + dealPasswordScore + zxcgOpen;
 
         return userScore ;
     }
@@ -53,7 +56,14 @@ appDispatcher.register(function(payload){
                 ciUrl:"/user/v2/userInfoDetail",
                 success(rs){
                     if(rs.code === 0){
-                        SecurityCenterStore.updateAll(Object.assign(rs.data.sercuInfo,{mobile:rs.data.personInfo.mobile}));
+
+                        let personInfo=rs.data.personInfo;
+                        SecurityCenterStore.updateAll(Object.assign(rs.data.sercuInfo,{
+                            mobile:personInfo.mobile,
+                            zxcgOpen:personInfo.zxcgOpen,
+                            istempuser:personInfo.istempuser,
+                            leftQureyTime:personInfo.leftQureyTime
+                        }));
                         if(SecurityCenterStore.checkIdCardVerified()){
                             SecurityCenterStore.updateAll({
                                 idcard:rs.data.personInfo.idcard,

@@ -13,6 +13,8 @@ import Slider from "../UIComponents/Slider";
 import Group from "../UIComponents/Group";
 import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
+import Icon from "../UIComponents/Icon";
+import SpecialModal from "../UIComponents/modal/SpecialModal";
 
 //utilites component
 import DailyEarnCard from "./utilities/DailyEarnCard";
@@ -23,12 +25,39 @@ import cookie from "../lib/cookie";
 
 
 
-//首页:Index component
+//开通中信存管通知条:RegisterZXBankNoticeBar component
+let RegisterZXBankNoticeBar=React.createClass({
+    render(){
+        return (
+            <div className="registerToZX-bar-wrapper">
+                <div className="registerToZX-bar" onClick={this.props.onAction}>
+                    <div className="left">
+                        <Icon classPrefix="imgIcon" name="red-shield"/>
+                        <span>开通银行存管账户，保障资金安全</span></div>
+                    <div className="right"><a href="javascript:void(0)" >立即开通</a></div>
+                </div>
+            </div>
+        )
+    }
+});
 
+//首页:Index component
 let Home=React.createClass({
     mixins:[mixin],
-    _getAllDataFromStore(){
-        return HomeStore.getAll();
+    getInitialState(){
+        let beforeComponent=this.props.location.query.beforeComponent;
+        let hadShowRedbag=sessionStorage.getItem("hadShowRedbag");
+        let isRedbagModalOpen=false;
+        if(beforeComponent === "verifyCodeForRegisterGuide"){
+            if(hadShowRedbag !== "yes"){
+                isRedbagModalOpen=true;
+                sessionStorage.setItem("hadShowRedbag","yes")
+            }
+        }
+        return {
+            data:HomeStore.getAll(),
+            isRedbagModalOpen:isRedbagModalOpen
+        };
     },
     _jumpToAboutUs(){
         this.context.router.push({
@@ -41,17 +70,27 @@ let Home=React.createClass({
         });
     },
     _handleBannerClick(iframeSource){
-        //基于内嵌ih5的页面时，页面会被放大。而不内嵌时，页面显示正常的情况下考虑。
+        //基于内嵌ih5的页面时，页面会被放大。而不内嵌时，页面显示正常的情况下考虑,
         //如果后台返回的链接地址跟农泰金融是同一个域名之下，则跳转到应用的内部组件中，
         //否则，就跳出当前的SPA，跳转至给链接地址
         if(!!iframeSource){
-            if(iframeSource.indexOf("ntjrChina") > -1){
-                this.context.router.push({
-                    pathname:"BannerPageWrapper",
-                    query:{
-                        iframeSource:iframeSource
-                    }
-                });
+            if(iframeSource.indexOf("ntjrchina") > -1){
+                if(iframeSource.indexOf("weixin") > -1){//新版微信
+                    let index=iframeSource.indexOf("#");
+                    let componentOfBanner=iframeSource.slice(index+2);
+                    this.context.router.push({
+                        pathname:componentOfBanner
+                    });
+
+                }else{//老版微信页面
+                    this.context.router.push({
+                        pathname:"BannerPageWrapper",
+                        query:{
+                            iframeSource:iframeSource
+                        }
+                    });
+                }
+
             }else {
                 window.location.href=iframeSource;
             }
@@ -60,8 +99,31 @@ let Home=React.createClass({
     _handleImgLoadFailed(event){
         event.target.src=require("../../img/banner_placeholder_failed.png");
     },
-    getInitialState(){
-        return this._getAllDataFromStore();
+    _jumpToZXBankRegister(leftQureyTime){
+        if(leftQureyTime === 0){
+            this.context.router.push({
+                pathname:"registerToZXFailedHint",
+                query:{
+                    beforeComponent:"home"
+                }
+            });
+        }else {
+            this.context.router.push({
+                pathname:"registerToZXBank",
+                query:{
+                    beforeComponent:"home"
+                }
+            });
+        }
+
+    },
+    _jumpToCouponList(){
+        this.context.router.push({
+            pathname:"couponList",
+            query:{
+                productType:"all"
+            }
+        })
     },
     render(){
         let {
@@ -69,9 +131,21 @@ let Home=React.createClass({
             productList,
             registerUserCount,
             totalAmountOfInvestment
-            }=this.state;
+            }=this.state.data;
+
+        let zxcgOpenInfo=this.state.data.zxcgOpenInfo;
+        let isZxcgOpen=(zxcgOpenInfo && zxcgOpenInfo.zxcgOpen === "yes") ? true  : false ;
+        let leftQureyTime=zxcgOpenInfo.leftQureyTime;
+        let isLogin=!!cookie.getCookie("token");
+
         return (
             <Container scrollable={true}  id="home">
+
+                {
+                    isLogin && !isZxcgOpen ?
+                    <RegisterZXBankNoticeBar onAction={this._jumpToZXBankRegister.bind(null,leftQureyTime)}/>:
+                    null
+                }
 
                 <Slider>
                     {
@@ -131,6 +205,13 @@ let Home=React.createClass({
                     <div className="amount text-center">{totalAmountOfInvestment}</div>
                     <Slogan />
                 </div>
+
+                <SpecialModal
+                    role="customize"
+                    isOpen={this.state.isRedbagModalOpen}
+                >
+                    <div className="redbag-wrapper" onClick={this._jumpToCouponList}></div>
+                </SpecialModal>
             </Container>
 
 
@@ -140,7 +221,7 @@ let Home=React.createClass({
         HomeAction.getDataFromServer();
 
         HomeStore.bind("change",function(){
-            this.setState(this._getAllDataFromStore())
+            this.setState(HomeStore.getAll())
         }.bind(this));
     }
 });

@@ -156,6 +156,7 @@ $am-dimensions: (null, h, v, top, right, bottom, left) !default;
 
 //Responsive img
 img.responsive {
+  width:100%;
   max-width:100%;
   height:auto;
 }

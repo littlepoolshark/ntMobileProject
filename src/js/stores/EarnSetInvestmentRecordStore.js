@@ -57,9 +57,9 @@ var EarnSetInvestmentRecordStore={
                 investStatus:listType,//该款投资所进入的状态（apply:申请加入中；repaying:回款中；clearing：已结清）
                 productType:list[i].type,//产品类型（）
                 title:list[i].title,//标的名称
-                interestRate:list[i].interestRate + "%",//加息券的年化lilv
+                interestRate:(list[i].interestRate).toFixed(1) + "%",//加息券的年化lilv
                 redPackageAmount:list[i].redAmount,//红包金额
-                yearRate:list[i].rate + "%",//标的的年化利率
+                yearRate:(list[i].rate).toFixed(1) + "%",//标的的年化利率
                 deadline:list[i].time//标的的期限,或者还款期数目，形如 “3/6”,表示剩余期数 / 总期数
             }
         }
@@ -83,8 +83,14 @@ var EarnSetInvestmentRecordStore={
         //更新当前列表类型，所查询的产品类型
         this.updateProductTypeByListType(source.productType,source.listType);
 
-        //更新列表数据
-        let newList=this.processData(source.listType,source.list);
+        //加工待结算或者已结清列表数据（不加工配标列表）
+        let newList=[];
+        if(source.listType === "matchLoan"){
+            newList=source.list;
+        }else {
+            newList=this.processData(source.listType,source.list);
+        }
+
         switch (source.listType){
             case "repaying":
                 if(source.updateType === "paging"){
@@ -103,7 +109,7 @@ var EarnSetInvestmentRecordStore={
                 this._all.clearingListPageIndex=source.pageIndex;
                 break;
             case "matchLoan":
-                this._all.matchLoanDetailList=source.list;
+                this._all.matchLoanDetailList=newList;
                 this._all.matchLoanDetailPageIndex=source.pageIndex;
                 break;
             default:

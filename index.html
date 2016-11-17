@@ -19,6 +19,26 @@
   <script src="./dist/app.65c07110.bundle.js"></script>-->
   <!--<script src="/app.bundle.js"></script>-->
   <!--<script src="/src/js/lib/debug.min.js"></script>-->
+  <script type='text/javascript'>
+    /*
+     * 这段代码growingio.com的sdk，用于数据收集。
+     * @https://help.growingio.com/SDK/JS.html
+     */
+    var _vds = _vds || [];
+    window._vds = _vds;
+    (function(){
+      _vds.push(['setAccountId', '83ea53aea172ada5']);
+      _vds.push(['enableHT', true]);//对于使用 hashtag 作为单页应用页面切换的网站来说,需要激活这个特性
+      (function() {
+        var vds = document.createElement('script');
+        vds.type='text/javascript';
+        vds.async = true;
+        vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(vds, s);
+      })();
+    })();
+  </script>
 </head>
 <body>
   <div id="app-root" style="height: 100%; width: 100%; overflow: hidden;">

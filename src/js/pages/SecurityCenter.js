@@ -14,9 +14,9 @@ import List from "../UIComponents/List";
 //安全分数变换动画
 let ScoreAnimation=React.createClass({
     getInitialState(){
-      return {
-          score:this.props.score
-      }
+        return {
+            score:this.props.score
+        }
     },
     _scoreCount(score){
         let intervalTime=3000 / score;
@@ -53,11 +53,13 @@ let SecurityCenter=React.createClass({
     },
     renderMedia(option){
         return  option === "yes" ?
-                <Icon classPrefix="imgIcon" name="right-check"/> :
-                <Icon classPrefix="imgIcon" name="attention"/>
+            <Icon classPrefix="imgIcon" name="right-check"/> :
+            <Icon classPrefix="imgIcon" name="attention"/>
     },
     _jumpBack(){
-        this.context.router.goBack();
+        this.context.router.push({
+            pathname:"userHome"
+        });
     },
     _renderSecurityText(score){
         let securityText="";
@@ -101,13 +103,47 @@ let SecurityCenter=React.createClass({
             });
         }
     },
+    _jumpToRegisterToZXBank(){
+        this.context.router.push({
+            pathname:"registerToZXBank",
+            query:{
+                beforeComponent:"securityCenter"
+            }
+        });
+    },
+    _jumpToRegisterToZXFailedHint(){
+        this.context.router.push({
+            pathname:"registerToZXFailedHint",
+            query:{
+                beforeComponent:"securityCenter"
+            }
+        });
+    },
+    _handleZxRegisterBarClick(leftQureyTime,zxcgOpen,istempuser){
+        if(zxcgOpen === "yes"){
+            if(istempuser === "yes"){
+                this._jumpToRegisterToZXFailedHint();
+            }else {
+                return null;
+            }
+        }else {
+            if(leftQureyTime > 0){
+                this._jumpToRegisterToZXBank();
+            }else {
+                this._jumpToRegisterToZXFailedHint();
+            }
+        }
+    },
     render(){
         let {
             mobileVerified,
             ispasswordSet,
             isDealPwdSet,
             idCardVerified,
-            mobile
+            zxcgOpen,//是否已开通中信存管
+            mobile,
+            istempuser,//是否是手动干预让它成为已经开通中信存管的
+            leftQureyTime
             }=this.state.securityInfo;
         let score=this.state.score;
         let dashboardWrapperClasses=score ? "dashboard-wrapper " + "score" + score : "dashboard-wrapper";
@@ -131,12 +167,19 @@ let SecurityCenter=React.createClass({
                 </div>
 
                 <List >
+                    {/*<List.Item
+                     href="javascript:void(0)"
+                     title="实名认证"
+                     media={this.renderMedia(idCardVerified)}
+                     after={idCardVerified === "yes" ?  "查看" : "设置"}
+                     onClick={this._jumpToRealNameAuthentication}
+                     />*/}
                     <List.Item
                         href="javascript:void(0)"
-                        title="实名认证"
-                        media={this.renderMedia(idCardVerified)}
-                        after={idCardVerified === "yes" ?  "查看" : "设置"}
-                        onClick={this._jumpToRealNameAuthentication}
+                        title="银行存管账户"
+                        media={this.renderMedia(zxcgOpen === "no" ? "no" : (istempuser === "yes" ? "no" : "yes"))}
+                        after={zxcgOpen === "yes" && istempuser === "no" ?  "已成功开通" : (zxcgOpen  === "no" && istempuser === "no" ? "立即开通" : "未开通")}
+                        onClick={this._handleZxRegisterBarClick.bind(null,leftQureyTime,zxcgOpen,istempuser)}
                     />
                     <List.Item
                         href={"#/setDealPassword/?actionType=" + (isDealPwdSet === "yes" ? "modify" : "setting")}

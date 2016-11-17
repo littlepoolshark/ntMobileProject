@@ -1,6 +1,8 @@
 require("../../scss/page/DailyEarnCenter.scss");
 let DailyEarnCenterAction=require("../actions/DailyEarnCenterAction.js");
 let DailyEarnCenterStore=require("../stores/DailyEarnCenterStore.js");
+let UserHomeAction=require("../actions/UserHomeAction.js");
+let UserHomeStore=require("../stores/UserHomeStore.js");
 import React from "react";
 import {
     Link
@@ -14,12 +16,17 @@ import Col from "../UIComponents/Col";
 import List from "../UIComponents/List";
 import Message from "../UIComponents/Message";
 import NavBar from "../UIComponents/NavBar";
+import Modal from "../UIComponents/modal/Modal";
 
 
 //用户中心页面：DailyEarnCenter component
 let DailyEarnCenter=React.createClass({
     getInitialState(){
-        return DailyEarnCenterStore.getAll()
+        return {
+            data:DailyEarnCenterStore.getAll(),
+            isModalOpen:false,
+            confirmText:""
+        }
     },
     _jumpToDailyEarnIntroduction(productId){
         this.context.router.push({
@@ -31,17 +38,30 @@ let DailyEarnCenter=React.createClass({
         });
     },
     _jumpToDailyEarnRollOut(){
-        this.context.router.push({
-            pathname:"dailyEarnRollOut"
-        });
+        UserHomeAction.rollOutDailyEarnCheck();
     },
     _handleExtractBtnClick(){
-        DailyEarnCenterAction.extractDailyEarnIncome()
+        UserHomeAction.extractDailyEarnIncomeCheck();
     },
     _handleLeftNavClick(){
         this.context.router.push({
             pathname:"userHome"
         });
+    },
+    _jumpToNextLocation(confirm){
+        if(confirm){
+            this.context.router.push({
+                pathname:"securityCenter"
+            })
+        }else {
+            this._handleModalClose();
+        }
+
+    },
+    _handleModalClose(){
+        this.setState({
+            isModalOpen:false
+        })
     },
     render(){
         let {
@@ -51,7 +71,7 @@ let DailyEarnCenter=React.createClass({
             zrLixi,
             ljLixi,
             ktqMoney
-            }=this.state;
+            }=this.state.data;
         let leftNav= {
             component:"a",
             icon: 'left-nav',
@@ -111,11 +131,21 @@ let DailyEarnCenter=React.createClass({
                         </Col>
                     </Grid>
                 </div>
+                <Modal
+                    title="提示"
+                    ref="modal"
+                    isOpen={this.state.isModalOpen}
+                    role="confirm"
+                    onAction={this._jumpToNextLocation}
+                >
+                    {this.state.confirmText}
+                </Modal>
             </Container>
         )
     },
     componentDidMount(){
         DailyEarnCenterAction.getDailyEarnCenterInfo();
+        UserHomeAction.getUserInfoDetail();
 
         DailyEarnCenterStore.bind("change",function(){
             this.setState(DailyEarnCenterStore.getAll())
@@ -128,6 +158,36 @@ let DailyEarnCenter=React.createClass({
         DailyEarnCenterStore.bind("extractDailyEarnIncomeFailed",function(msg){
             Message.broadcast(msg);
         });
+
+        UserHomeStore.bind("ZXBankOpenCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了您的资金安全，请先开通银行存管"
+            })
+        }.bind(this));
+
+
+        UserHomeStore.bind("dealPasswordSetCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了您的资金安全，请先设置交易密码"
+            })
+        }.bind(this));
+
+        UserHomeStore.bind("dailyEarnIncomeExtractCheckSuccess",function(){
+            //直接把action放在异步回调中，dispatcher无法dispatche到这个action
+            //@see https://github.com/goatslacker/alt/issues/71
+            setTimeout(function(){
+                DailyEarnCenterAction.extractDailyEarnIncome();
+            },0)
+
+        });
+
+        UserHomeStore.bind("dailyEarnRollOutCheckSuccess",function(){
+             this.context.router.push({
+                pathname:"dailyEarnRollOut"
+             });
+        }.bind(this));
 
     }
 });

@@ -1,0 +1,35 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#registerZXSuccessHint {
+  .wrapper {
+    padding:0 rem-calc(15);
+  }
+
+
+  .big-success-icon {
+    display:inline-block;
+    width: rem-calc(58);
+    height:rem-calc(58);
+    margin-top:rem-calc(10);
+    background: url("../../img/depository_suc.png");
+    background-size: cover;
+  }
+  .title {
+    margin-top:rem-calc(10);
+    @include color-and-fontSize($C3,$T4);
+  }
+
+  .content {
+    margin-top:rem-calc(10);
+    margin-bottom:rem-calc(20);
+    @include color-and-fontSize($C4,$T8);
+  }
+}

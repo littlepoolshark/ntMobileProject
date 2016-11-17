@@ -59,9 +59,13 @@ let CountDown=React.createClass({
         this._tick();
     },
     componentWillReceiveProps(nextProps){
-        this.setState({
-            countDownDuration:nextProps.countDownDuration
-        });
+        if(nextProps.doNotReceiveNewProps === true){
+            return ;
+        }else {
+            this.setState({
+                countDownDuration:nextProps.countDownDuration
+            });
+        }
 
     },
     componentWillUnmount(){

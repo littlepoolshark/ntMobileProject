@@ -18,13 +18,43 @@ var UserHOmeAction={
     },
     recharge(){
         appDispatcher.dispatch({
-            actionName:"recharge"
+            actionName:"securityCheck",
+            data:{
+                operationName:"recharge"
+            }
         });
     },
     withdraw(){
         appDispatcher.dispatch({
-            actionName:"withdraw"
+            actionName:"securityCheck",
+            data:{
+                operationName:"withdraw"
+            }
         });
+    },
+    extractDailyEarnIncomeCheck(){
+        appDispatcher.dispatch({
+            actionName:"securityCheck",
+            data:{
+                operationName:"dailyEarnIncomeExtract"
+            }
+        })
+    },
+    rollOutDailyEarnCheck(){
+        appDispatcher.dispatch({
+            actionName:"securityCheck",
+            data:{
+                operationName:"dailyEarnRollOut"
+            }
+        })
+    },
+    transferDebtCheck(){
+        appDispatcher.dispatch({
+            actionName:"securityCheck",
+            data:{
+                operationName:"transferDebt"
+            }
+        })
     }
 };
 

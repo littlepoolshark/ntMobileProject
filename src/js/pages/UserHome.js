@@ -184,15 +184,25 @@ let UserHome=React.createClass({
             });
         }.bind(this));
 
-        UserHomeStore.bind("securityCheckFailed",function(){
+        UserHomeStore.bind("ZXBankOpenCheckFailed",function(){
             this.setState({
                 isModalOpen:true,
-                confirmText:"为了资金安全，请升级您的账户安全级别!",
+                confirmText:"为了您的资金安全，请先开通银行存管",
                 nextLocation:"securityCenter"
             })
         }.bind(this));
 
-        UserHomeStore.bind("bankCardIsNotBind",function(){
+
+        UserHomeStore.bind("dealPasswordSetCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了您的资金安全，请先设置交易密码",
+                nextLocation:"securityCenter"
+            })
+        }.bind(this));
+
+
+/*        UserHomeStore.bind("bankCardIsNotBind",function(){
             this.setState({
                 isModalOpen:true,
                 confirmText:"充值或者提现需要先绑定银行卡，去绑卡？",
@@ -206,14 +216,14 @@ let UserHome=React.createClass({
                 confirmText:"为了资金安全，提现需要完整的银行卡信息，去完善？",
                 nextLocation:"myBankCardDetail"
             })
-        }.bind(this));
+        }.bind(this));*/
 
 
     },
     componentWillUnmount(){
         UserHomeStore.unbind("change");
-        UserHomeStore.unbind("bankCardIsBind");
-        UserHomeStore.unbind("bankCardIsNotBind");
+        /*UserHomeStore.unbind("bankCardIsBind");
+        UserHomeStore.unbind("bankCardIsNotBind");*/
     }
 });
 

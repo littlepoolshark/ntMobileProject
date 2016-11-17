@@ -468,6 +468,62 @@ const rootRoute = {
                 }
             },
             {
+                path: 'zhongJinShortcutPay',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"ZhongJinShortcutPay"));
+                    })
+                }
+            },
+            {
+                path: 'openZhongJinShortcut',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"OpenZhongJinShortcut"));
+                    })
+                }
+            },
+            {
+                path: 'registerToZXBank',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"RegisterToZXBank"));
+                    })
+                }
+            },
+            {
+                path: 'double11',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"specialActivity/Double11"));
+                    })
+                }
+            },
+            {
+                path: 'openZXIntroduction',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"specialActivity/OpenZXIntroduction"));
+                    })
+                }
+            },
+            {
+                path: 'registerToZXFailedHint',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"RegisterToZXFailedHint"));
+                    })
+                }
+            },
+            {
+                path: 'registerToZXSuccessHint',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"RegisterToZXSuccessHint"));
+                    })
+                }
+            },
+            {
                 path:"*",
                 getComponent(nextState, cb) {
                     require.ensure([], (require) => {

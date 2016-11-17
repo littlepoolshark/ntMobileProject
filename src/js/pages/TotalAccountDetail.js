@@ -168,6 +168,7 @@ let TotalAccountDetail=React.createClass({
     },
     componentDidMount(){
         TotalAccountDetailAction.getAccountInfoFromServer();
+        UserHomeAction.getUserInfoDetail();
 
 
 
@@ -199,7 +200,25 @@ let TotalAccountDetail=React.createClass({
             });
         }.bind(this));
 
-        UserHomeStore.bind("securityCheckFailed",function(){
+
+        UserHomeStore.bind("ZXBankOpenCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了您的资金安全，请先开通银行存管",
+                nextLocation:"securityCenter"
+            })
+        }.bind(this));
+
+
+        UserHomeStore.bind("dealPasswordSetCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了您的资金安全，请先设置交易密码",
+                nextLocation:"securityCenter"
+            })
+        }.bind(this));
+
+      /*  UserHomeStore.bind("securityCheckFailed",function(){
             this.setState({
                 isModalOpen:true,
                 confirmText:"为了资金安全，请升级您的账户安全级别!",
@@ -221,7 +240,7 @@ let TotalAccountDetail=React.createClass({
                 confirmText:"为了资金安全，提现需要完整的银行卡信息，去完善？",
                 nextLocation:"myBankCardDetail"
             })
-        }.bind(this));
+        }.bind(this));*/
     }
 });
 

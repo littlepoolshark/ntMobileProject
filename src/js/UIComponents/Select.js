@@ -54,7 +54,6 @@ let Select=React.createClass({
     },
     componentDidMount(){
         TransitionEvent.on(this.refs.selectMask,function(){
-            //console.log("TransitionEvent");
         }.bind(this));
     }
 });

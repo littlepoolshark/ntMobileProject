@@ -53,11 +53,15 @@ appDispatcher.register(function(payload){
                 ciUrl:"/user/v2/userInfoDetail",
                 success(rs){
                     if(rs.code === 0){
-
+                        let personInfo=rs.data.personInfo;
                         MyBankCardStore.updateAll({
                             idCardVerified:rs.data.sercuInfo.idCardVerified,
-                            realName:rs.data.personInfo.realName
+                            realName:personInfo.realName,
+                            leftQureyTime:personInfo.leftQureyTime,
+                            istempuser:personInfo.istempuser,
+                            zxcgOpen:personInfo.zxcgOpen
                         });
+                        MyBankCardStore.trigger("change");
                     }
                 }
             });

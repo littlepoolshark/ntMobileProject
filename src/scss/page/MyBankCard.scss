@@ -17,7 +17,7 @@
 
     .imgIcon-money-bag {
       width:rem-calc(50);
-      height:rem-calc(60);
+      height:rem-calc(63);
     }
 
     .title {
@@ -112,5 +112,9 @@
       }
     }
 
+  }
+  .warm-hint {
+    padding:0 rem-calc(15);
+    @include color-and-fontSize($C4,$T8);
   }
 }

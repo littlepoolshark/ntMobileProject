@@ -5,6 +5,7 @@ let RechargeStore=require("../stores/RechargeStore.js");
 import React from "react";
 import classNames from 'classnames';
 import cookie from "../lib/cookie";
+import getParamObjFromUrl from "../lib/getParamObjFromUrl";
 
 import Container from "../UIComponents/Container";
 import Button from "../UIComponents/Button";
@@ -59,9 +60,25 @@ let RechargeAmountSelection=React.createClass({
 //充值组件
 let Recharge=React.createClass({
     getInitialState(){
+        let hasOpenIdInCookie=!!cookie.getCookie("openId");//用户微信充值的token
+        let openIdInUrl=getParamObjFromUrl().openId;
+        /*
+         *  如果当前cookie和url都没有携带openId，则通过一系列的流转和回跳获取openId
+         *  weXin -> https://open.weixin.qq.com/connect/oauth2/authorize ->  /ci/toCiWxRecharge.do -> 后台返回的过度页面 -> weXin的recharge组件
+         */
+        if( !hasOpenIdInCookie && !openIdInUrl){
+            let protocol = window.location.protocol;
+            var host = window.location.host;
+            var redirectUri= encodeURIComponent(protocol+"//"+host+"/ci/user/toCiWxRecharge.do");
+            var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8164883e71adab3a&redirect_uri="+redirectUri+"&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect";
+            window.location.href = url;
+        }else if(!!openIdInUrl){
+            cookie.setCookie("openId",openIdInUrl,59);
+        }
         return {
             data:RechargeStore.getAll(),
-            isLimitDetailModalOpen:false
+            isLimitDetailModalOpen:false,
+            confirmModalOpen:false
         }
     },
     _handleRechargeSubmit(){
@@ -94,6 +111,25 @@ let Recharge=React.createClass({
         this.setState({
             isLimitDetailModalOpen:true
         })
+    },
+    _closeConfirmModal(){
+        this.setState({
+            confirmModalOpen:false
+        })
+    },
+    _openConfirmModal(){
+        this.setState({
+            confirmModalOpen:true
+        })
+    },
+    _confirmModalAction(confirm){
+        if(confirm){
+            this.context.router.push({
+               pathname:"openZhongJinShortcut"
+            });
+        }else {
+            this._closeConfirmModal();
+        }
     },
     _showLimitDetailOfWCPay(){
         this._openLimitDetailModal();
@@ -130,13 +166,13 @@ let Recharge=React.createClass({
                     </div>
                 </Group>
 
-                {/* <Group
+                <Group
                     header={<span>最高限额：50,000元  <a href="javascript:void(0);" className="showLimitDetail-btn" onClick={this._showLimitDetailOfWCPay}>支持银行及限额？</a></span>}
                     className={currRechargeType === "wechat" ? "active" : ""}
                     onClick={this._handleRechargeTypeChange.bind(null,"wechat")}
                 >
                     <img src={require("../../img/wechat.png")} alt="" className="recharge-card-bg" />
-                </Group>*/}
+                </Group>
 
                 <Group
                     header=""
@@ -180,6 +216,15 @@ let Recharge=React.createClass({
                     暂时没做这个限额详情
                 </Modal>
 
+                <Modal
+                    ref="confirmModal"
+                    isOpen={this.state.confirmModalOpen}
+                    role="confirm"
+                    onAction={this._confirmModalAction}
+                >
+                    您还没有开通快捷支付，去开通？
+                </Modal>
+
                 <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>
                     <Button amStyle="primary" block radius={true} onClick={this._handleRechargeSubmit}>完成充值</Button>
                 </div>
@@ -207,6 +252,21 @@ let Recharge=React.createClass({
             shortcutForm.submit();
         });
 
+        //已经开通中金支付的快捷支付的话，就跳转到确认支付页面
+        RechargeStore.bind("hadOpenZhongJinShortcut",function(rechargeAmount){
+            this.context.router.push({
+                pathname:"zhongJinShortcutPay",
+                query:{
+                    rechargeAmount:rechargeAmount
+                }
+            });
+        }.bind(this));
+
+        //还没有开通中金支付的快捷支付的话，就跳转值开通中金快捷支付页面
+        RechargeStore.bind("hadNotOpenZhongJinShortcut",function(){
+            this._openConfirmModal();
+        }.bind(this));
+
         RechargeStore.bind("rechargeSuccess",function(){
             Message.broadcast("充值成功！");
         });
@@ -214,6 +274,7 @@ let Recharge=React.createClass({
         RechargeStore.bind("rechargeFailed",function(msg){
             Message.broadcast(msg);
         });
+
     },
     componentWillUnmount(){
         RechargeStore.clearAll();

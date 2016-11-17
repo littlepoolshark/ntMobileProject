@@ -1,0 +1,368 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#registerGuide {
+  .group {
+    margin:0;
+  }
+  .title {
+    margin-top:rem-calc(15);
+    @include color-and-fontSize(#fff,rem-calc(20));
+    font-weight: bold;
+  }
+  .footerBg-wrapper {
+    margin:0 rem-calc(-15);
+  }
+  /*
+  *  注册表单区块
+  */
+  .registerForm-section {
+      .group-body {
+        padding:0;
+        background-color:#e7594d ;
+      }
+
+      .register-form {
+        padding-left:rem-calc(50);
+        padding-right:rem-calc(50);
+      }
+
+      input {
+        border:none;
+        border-radius:rem-calc(3);
+      }
+
+      .registerAgreement {
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top:rem-calc(-10);
+        margin-bottom:rem-calc(20);
+        @include color-and-fontSize(#fff,$T10);
+
+        &>input,
+        &>a  {
+          display:block;
+        }
+
+        input {
+          margin-right:rem-calc(3);
+        }
+
+        a {
+          @include color-and-fontSize(#ffcf2d,$T10);
+        }
+
+      }
+
+      .verifyCodeImg-wrapper {
+        height:rem-calc(42);
+        line-height:rem-calc(40);
+        text-align: center;
+        margin-left:rem-calc(10);
+        @include color-and-fontSize(#333,rem-calc(20));
+        background-color: #ddd;
+
+        &>span:not(:first-child){
+          margin-left:rem-calc(3);
+        }
+
+      }
+
+      #registerBtn {
+        background:#fae789;
+        color:#df4b3c;
+        border:none;
+      }
+
+
+
+  }
+  /*
+  *  "谁是农泰"区块
+  */
+  .ntShortIntroduction {
+    .group-body {
+      background-color: #ffc12d;
+      padding-bottom:0;
+    }
+
+    .subtitle {
+      margin-top:rem-calc(15);
+
+      &>span {
+        display:inline-block;
+        width:rem-calc(100);
+        height:rem-calc(28);
+        line-height: rem-calc(30);
+        text-align: center;
+        @include color-and-fontSize(#fff,rem-calc(14));
+        background-color:#e1473d;
+        border-radius:rem-calc(14);
+      }
+
+      &>strong {
+        @include color-and-fontSize(#fff,rem-calc(25));
+        font-weight:bold;
+      }
+    }
+
+    .content {
+      margin-top:rem-calc(20);
+      padding-bottom:rem-calc(10);
+      text-indent:rem-calc(24);
+      line-height:1.8;
+      @include color-and-fontSize(#fff,rem-calc(12));
+    }
+  }
+
+  /*
+  *  "为什么选择农泰"区块
+  */
+  .reasonOfChoosingNT {
+    .group-body {
+      background-color: #2fba9d;
+    }
+    ul {
+      padding:0;
+      margin:0;
+      list-style: none;
+
+      &>li {
+        display:flex;
+        justify-content:space-between;
+        align-items: center;
+        padding:rem-calc(40) rem-calc(15);
+        border-top:1px dashed #fff;
+        position:relative;
+
+        &:first-child {
+          margin-top:rem-calc(30);
+          border-top:none;
+        }
+
+        .down-triangle {
+          display:block;
+          width:rem-calc(35);
+          height:0;
+          border:rem-calc(25) solid transparent;
+          border-top-color:#fff;
+          position:absolute;
+          top:-1px;
+          left:50%;
+          margin-left:rem-calc(-25);
+        }
+
+        img {
+          display:block;
+          width:rem-calc(125);
+          height:rem-calc(125);
+        }
+
+        .subtitle {
+          &>span {
+            display:inline-block;
+            height:rem-calc(28);
+            padding:0 rem-calc(15);
+            line-height: rem-calc(30);
+            text-align: center;
+            @include color-and-fontSize(#fff,rem-calc(14));
+            background-color:rgba(0,0,0,0.3);
+            border-radius:rem-calc(14);
+          }
+
+        }
+
+        .content {
+          margin-top:rem-calc(10);
+          @include color-and-fontSize(#fff,rem-calc(12));
+        }
+      }
+    }
+  }
+
+  /*
+  *  "我们有什么产品"区块
+  */
+  .productIntroduction {
+    .group-body {
+      background-color:#fcb329 ;
+      padding-bottom:0;
+    }
+
+    .outSide-circle {
+      background-color:#fcb329;
+    }
+
+  }
+
+
+  /*
+  *  投资引导区块
+  */
+  .InvestmentGuide {
+    .group-body {
+      background-color:#e7594d ;
+    }
+
+    .outSide-circle {
+      background-color:#e7594d;
+    }
+
+    .footer-wrapper {
+      width:rem-calc(272);
+      margin:rem-calc(10) auto;
+
+      button {
+        margin:rem-calc(40) auto rem-calc(30);
+        @include color-and-fontSize(#e7594d,rem-calc(20));
+        background-color: #fff;
+        border:none;
+      }
+    }
+  }
+
+  .slider {
+    width:rem-calc(272);
+    margin:rem-calc(20) auto;
+    border-radius: rem-calc(5);
+
+    .slider-control-prev {
+      left:rem-calc(-40);
+
+      .icon-left-nav {
+        font-size:rem-calc(30);
+      }
+    }
+
+    .slider-control-next {
+      right:rem-calc(-40);
+
+      .icon-right-nav {
+        font-size:rem-calc(30);
+      }
+    }
+  }
+
+  .sliderPage-wrapper {
+    height:rem-calc(50);
+    margin:rem-calc(20) rem-calc(30) 0;
+    position:relative;
+
+    .cutLine {
+      width:100%;
+      height:1px;
+      background-color:#fff;
+      position:absolute;
+      left:0;
+      top:7px;
+      z-index: 1;
+    }
+
+
+    .outSide-circle {
+      display:inline-block;
+      width:rem-calc(16);
+      height:rem-calc(16);
+      border:1px solid #fff;
+      border-radius:50%;
+      position:absolute;
+      top:0;
+      margin-left:rem-calc(-8);
+      z-index:2;
+
+      .inner-circle {
+        display:none;
+        width: rem-calc(8);
+        height:rem-calc(8);
+        background-color: #fff;
+        border-radius:50%;
+        position:absolute;
+        left:rem-calc(3);
+        top:rem-calc(3);
+      }
+
+      &.active .inner-circle {
+        display:inline-block;
+      }
+
+      .inner-text {
+        display:inline-block;
+        width: rem-calc(60);
+        height:rem-calc(20);
+        line-height: rem-calc(20);
+        text-align: center;
+        @include color-and-fontSize(#fff,rem-calc(12));
+        position:absolute;
+        top:rem-calc(20);
+        left:50%;
+        margin-left:rem-calc(-30);
+      }
+
+    }
+  }
+  /*
+  * PI is short for "product introduction"
+  */
+  .PI-sliderImg-wrapper {
+    width:rem-calc(272);
+    height:rem-calc(270);
+    background:url("../../img/PISlider-item1.png");
+    background-size:cover;
+
+    &.item1 {
+      background:url("../../img/PISlider-item1.png");
+      background-size:cover;
+    }
+    &.item2 {
+      background:url("../../img/PISlider-item2.png");
+      background-size:cover;
+    }
+    &.item3 {
+      background:url("../../img/PISlider-item3.png");
+      background-size:cover;
+    }
+    &.item4 {
+      background:url("../../img/PISlider-item4.png");
+      background-size:cover;
+    }
+    &.item5 {
+      background:url("../../img/PISlider-item5.png");
+      background-size:cover;
+    }
+  }
+
+
+  /*
+ * IG is short for "investment Guide"
+ */
+  .IG-sliderImg-wrapper {
+    width:rem-calc(272);
+    height:rem-calc(390);
+    background:url("../../img/IGSlider-item1.png");
+    background-size:cover;
+
+    &.item1 {
+      background:url("../../img/IGSlider-item1.png");
+      background-size:cover;
+    }
+    &.item2 {
+      background:url("../../img/IGSlider-item2.png");
+      background-size:cover;
+    }
+    &.item3 {
+      background:url("../../img/IGSlider-item3.png");
+      background-size:cover;
+    }
+    &.item4 {
+      background:url("../../img/IGSlider-item4.png");
+      background-size:cover;
+    }
+  }
+}

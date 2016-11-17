@@ -1,0 +1,92 @@
+// Functions
+@import "../../helper/functions";
+
+// Variables
+@import "../../variables";
+
+// Mixin
+@import "../../helper/mixins";
+
+$C1-openZXIntroduction:#fff;
+$C2-openZXIntroduction:#f9f9f9;
+$C3-openZXIntroduction:#ebc692;
+
+#openZXIntroduction {
+  overflow-y: scroll;
+
+  .title {
+    @include color-and-fontSize(#333,rem-calc(20));
+  }
+  .subtitle {
+    @include color-and-fontSize(#666,rem-calc(15));
+  }
+  .introduction-bar1 {
+    display: table;
+    padding:rem-calc(20);
+    background-color: $C2-openZXIntroduction;
+
+    &>div {
+      display:table-cell;
+      vertical-align: middle;
+    }
+
+    .img-wrapper {
+      width:rem-calc(60);
+      padding-right:rem-calc(10);
+
+      img {
+        width:rem-calc(50);
+        height:rem-calc(60);
+      }
+    }
+
+    .content {
+      line-height:1.8;
+      @include color-and-fontSize(#333,rem-calc(14));
+    }
+
+  }
+
+  .introduction-bar2 {
+    padding:rem-calc(20);
+    background: $C1-openZXIntroduction;
+
+    img {
+      margin-top:rem-calc(20);
+    }
+  }
+
+  .introduction-bar3 {
+    padding:rem-calc(20);
+    background: $C3-openZXIntroduction;
+
+    img {
+      margin-top:rem-calc(15);
+    }
+  }
+
+  .introduction-bar4 {
+    padding:rem-calc(20);
+    background: $C1-openZXIntroduction;
+
+    .content {
+      @include color-and-fontSize(#666,rem-calc(14));
+    }
+
+    dl {
+      margin-top:0;
+
+      dt {
+        margin-top:rem-calc(40);
+        &:first-child {
+          margin-top:rem-calc(20);
+        }
+      }
+      dd {
+        margin:rem-calc(5) rem-calc(12) ;
+      }
+    }
+
+  }
+
+}

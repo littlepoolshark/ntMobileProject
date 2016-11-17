@@ -54,7 +54,7 @@ let  HomeCommonCard=React.createClass({
             publishtimeL
             }=this.props;
         //如果是赚系列的标的就跳转到赚系列共用的详情页，否则跳转到好采投和债转的详情页
-        let pathName=type === "loan_product" ? "fixLoanIntroduction" : "earnSetIntroduction";
+        let pathName=type === "loan_product" ? "fixedLoanIntroduction" : "earnSetIntroduction";
 
         return (
             <Link to={{pathname:pathName,query:{type:type,productId:id}}}>

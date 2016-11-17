@@ -52,10 +52,10 @@ var FixedLoanInvestmentRecordStore={
                 investStatus:listType,//该款投资所进入的状态（apply:申请加入中；repaying:回款中；clearing：已结清）
                 productType:"loan_product",//产品类型
                 title:list[i].loanTitle,//标的名称
-                interestRate:!!list[i].interestRate ? list[i].interestRate * 100 + "%" : 0,//加息券的年化利率
+                interestRate:!!list[i].interestRate ? (list[i].interestRate * 100).toFixed(1) + "%" : 0,//加息券的年化利率
                 redPackageAmount:list[i].redAmount,//红包金额
                 yearRate:list[i].yearRateString + "%",//标的的年化利率
-                rewardRate:!!list[i].rewardRate ? list[i].rewardRate * 100 + "%" : 0,//标的奖励利率
+                rewardRate:!!list[i].rewardRate ? (list[i].rewardRate * 100).toFixed(1) + "%" : 0,//标的奖励利率
                 deadline:list[i].qsNum+"期",//标的的期限,或者还款期数目，形如 “3/6”,表示剩余期数 / 总期数
                 status:list[i].status
             }

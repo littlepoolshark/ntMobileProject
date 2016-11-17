@@ -80,3 +80,9 @@ a {
     max-width: none !important;
   }
 }
+
+//隐藏滚动条
+::-webkit-scrollbar {
+  width: 0;/*对垂直流动条有效*/
+  height: 0;/*对水平流动条有效*/
+}

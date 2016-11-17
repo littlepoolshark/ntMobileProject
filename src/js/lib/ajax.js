@@ -1,5 +1,8 @@
 let cookie=require("./cookie");
 import Message from "../UIComponents/Message";
+import {
+    hashHistory
+} from 'react-router';
 /* @desc 自己封装的ajax，目前主要支持工作中常用的post，get请求。调用方式几乎等同于jquery的ajax封装，略有出入。
 *
 *  @param obj.ciUrl {string} // 请求的url
@@ -53,12 +56,30 @@ function ajax(obj) {
         return arr.join('&');
     }
 
+    //获取该请求所在的component
+    function getCurrComponent(){
+        let hashStr=window.location.hash;
+        let currComponent="";
+        if(hashStr.indexOf("?") > -1){
+            currComponent=hashStr.slice(2,hashStr.indexOf("?"));
+        }else {
+            currComponent=hashStr.slice(2);
+        }
+        return currComponent;
+    }
+
     function callback() {
-        if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304){  //判断http的交互是否成功，200表示成功
+        if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304){  //判断http的交互是否成功
             let resultObj=JSON.parse(xhr.responseText);//将返回的json字符串解析返回
             if(resultObj.code === 14){//需要用户登录，而用户未登录或者登录超时
                 Message.broadcast("您没有登录或者登录超时，请重新登录");
-                window.location.href="#/";
+                let beforeComponent=obj.isJumpBack ? getCurrComponent() : "home";//默认的登录超时回跳地址是首页home
+                hashHistory.push({
+                    pathname:"/",
+                    query:{
+                        beforeComponent:beforeComponent
+                    }
+                })
             }else {
                 obj.success(resultObj);
             }
@@ -73,7 +94,7 @@ function ajax(obj) {
 
     //通过使用JS随机字符串解决IE浏览器第二次默认获取缓存的问题
 
-    obj.url = "http://192.168.1.90:9090/ci" + obj.ciUrl + "?t="+Math.random() ;
+    obj.url = "http://192.168.1.92:9090/ci"+ obj.ciUrl + (obj.ciUrl.indexOf("?") > -1 ? "&t="+Math.random() : "?t="+Math.random()) ;
     //obj.url = "/ci" + obj.ciUrl + "?t="+Math.random() ;
     obj.method = obj.method || "post";//因为实际开发环境中的接口大部分都是post请求，所以默认是post方法。
 

@@ -1,0 +1,32 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#registerZXFailedHint {
+  .wrapper {
+    padding:0 rem-calc(15);
+  }
+
+
+  .title {
+    margin-top:rem-calc(10);
+    @include color-and-fontSize($C3,$T4);
+  }
+
+  .content {
+    margin-top:rem-calc(10);
+    margin-bottom:rem-calc(20);
+    @include color-and-fontSize($C4,$T8);
+
+    em {
+      font-weight: bold;
+      @include color-and-fontSize($C4,$T7);
+    }
+  }
+}

@@ -107,10 +107,16 @@ let PurchaseButton=React.createClass({
                 success(rs){
                     if(rs.code === 0){
                         locationQuery.userBalance=rs.data.available;
-                        if(rs.data.dealPassVerifyInfo.isDealPwdSet === "no" || rs.data.idCardVerifyInfo.idCardVerified === "no"){
+                        if(rs.data.zxcgOpenInfo.zxcgOpen === "no"){
                             _self.setState({
                                 isModalOpen:true,
-                                confirmText:"请先升级您账户的安全级别！",
+                                confirmText:"为了您的资金安全，请先开通银行存管",
+                                type:2
+                            })
+                        }else if(rs.data.dealPassVerifyInfo.isDealPwdSet === "no"){
+                            _self.setState({
+                                isModalOpen:true,
+                                confirmText:"为了您的资金安全，请先设置交易密码",
                                 type:2
                             })
                         } else if(productStatusText === "预约"){
@@ -138,7 +144,7 @@ let PurchaseButton=React.createClass({
                 this.context.router.push({
                     pathname:"/"
                 });
-            }else if(this.state.type === 2){//type等于2是代表用户没有设置交易密码或者没有进行实名认证
+            }else if(this.state.type === 2){//type等于2是代表用户没有设置交易密码或者没有开通中信存管
                 this.context.router.push({
                     pathname:"/securityCenter"
                 });

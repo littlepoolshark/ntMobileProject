@@ -1,0 +1,69 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#registerToZXBank {
+  .list {
+    margin:rem-calc(15) 0;
+
+    .item input[readonly] {
+      color:$C4;
+    }
+  }
+  .warm-hint {
+    padding:0 rem-calc(15) 0 rem-calc(10);
+    margin-top:rem-calc(5);
+    display: flex;
+    align-items: flex-start;
+    @include color-and-fontSize($C4,$T10);
+
+    &>span {
+      display:block;
+    }
+
+    .imgIcon-attention {
+      width:rem-calc(20);
+      height:rem-calc(18);
+    }
+
+    #{&}-text {
+      line-height:1.8;
+    }
+
+    strong {
+      font-weight: normal;
+      color:$C1;
+    }
+  }
+
+  .btn-wrapper {
+    margin-top:rem-calc(10);
+    padding:rem-calc(10) rem-calc(15) 0;
+
+    button {
+      margin-bottom:rem-calc(5);
+    }
+
+    .registerCount-hint {
+      text-align: center;
+      @include color-and-fontSize($C3,$T8);
+
+      strong {
+        font-weight: normal;
+        color:$C1;
+      }
+
+    }
+  }
+
+  .registerFailed-hint {
+    padding:0 rem-calc(15);
+    @include color-and-fontSize($C1,$T10);
+  }
+}

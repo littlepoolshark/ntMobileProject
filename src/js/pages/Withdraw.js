@@ -16,16 +16,16 @@ import Message from "../UIComponents/Message";
 import Modal from "../UIComponents/modal/Modal";
 
 import BankCard from "./utilities/BankCard";
-import Slogan from "./utilities/Slogan";
 
 
 //充值组件
 let Withdraw=React.createClass({
     getInitialState(){
         return {
-            showSlogan:true,
+            showWithdrawHint:true,
             data:WithdrawStore.getAll(),
-            isModalOpen:false,
+            isWarmHintModalOpen:false,
+            isConfirmModalOpen:false,
             showDealPasswordField:false
         }
     },
@@ -49,8 +49,18 @@ let Withdraw=React.createClass({
             WithdrawAction.confirmToSubmit();
         }
         this.setState({
-            isModalOpen:false
+            isConfirmModalOpen:false
         });
+    },
+    _closeWarmHintModal(){
+        this.setState({
+            isWarmHintModalOpen:false
+        })
+    },
+    _openWarmHintModal(){
+        this.setState({
+            isWarmHintModalOpen:true
+        })
     },
     _toggleEyeOfField(fieldName){
         switch (fieldName){
@@ -122,20 +132,32 @@ let Withdraw=React.createClass({
                     <Button amStyle="primary" block radius={true} onClick={this._submitWithdrawForm}>完成提现</Button>
                 </div>
                 {
-                    this.state.showSlogan ?
-                    <Slogan />    :
+                    this.state.showWithdrawHint ?
+                    <a href="javascript:void(0)" className="withdraw-hint-btn text-center" onClick={this._openWarmHintModal}>提现到账时间?</a>   :
                     null
                 }
                 <Modal
                     title="确认"
                     ref="modal"
-                    isOpen={this.state.isModalOpen}
+                    isOpen={this.state.isConfirmModalOpen}
                     role="confirm"
                     onAction={this._jumpToNextLocation}
                 >
                     <div>提现金额：{withdrawAmount}元</div>
                     <div>手续费：{handlingCharge}元</div>
                     <div>实际到账：{acctAccount.toFixed(2)}元</div>
+                </Modal>
+                <Modal
+                    title="提示"
+                    ref="warmHintModal"
+                    isOpen={this.state.isWarmHintModalOpen}
+                    role="alert"
+                    onAction={this._closeWarmHintModal}
+                >
+                    <div className="text-left">工作日上午10点前申请提现，当日10点统一处理；</div>
+                    <div className="text-left">下午16点以前申请提现，当日16点统一处理；</div>
+                    <div className="text-left">下午16点以后申请提现，次日10点统一处理，节假日顺延；</div>
+                    <div className="text-left">具体请以银行出账时间为准。</div>
                 </Modal>
             </Container>
         )
@@ -149,7 +171,7 @@ let Withdraw=React.createClass({
         window.onresize=function(){
             let currHeight=window.innerHeight;
             this.setState({
-               showSlogan:currHeight < originHeight ? false : true
+               showWithdrawHint:currHeight < originHeight ? false : true
             });
         }.bind(this);
 
@@ -159,7 +181,7 @@ let Withdraw=React.createClass({
 
         WithdrawStore.bind("confirmSubmit",function(){
             this.setState({
-                isModalOpen:true
+                isConfirmModalOpen:true
             })
         }.bind(this));
 

@@ -150,6 +150,7 @@ function handleOnEnter(nextState, replace) {
     let componentName = nextState.params.componentName;
     let pageName = componentName.charAt(0).toUpperCase() + componentName.slice(1);
     let isLoing = !!cookie.getCookie("token");
+
     if (config.needToInterceptPages.indexOf(pageName) > -1 && !isLoing) {
         replace({
             pathname: "/"

@@ -23,6 +23,7 @@ module.exports={
         path:path.resolve(__dirname,"build"),
         filename:"[name].bundle.js"
     },
+    devtool:"eval-source-map",
     module:{
         loaders:[
             {
@@ -34,7 +35,9 @@ module.exports={
                     plugins:[
                               "transform-object-rest-spread",
                               "transform-react-jsx",
-                              "transform-object-assign"
+                              "transform-object-assign",
+                              "transform-flow-strip-types"
+                              //"syntax-flow"
                             ]
                 }
             },

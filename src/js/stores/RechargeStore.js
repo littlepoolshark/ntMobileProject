@@ -1,6 +1,7 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
+var cookie=require("../lib/cookie");
 
 import config from "../config";
 
@@ -73,16 +74,20 @@ appDispatcher.register(function(payload){
             if(rechargeAmountCheckResult.success){
                 let {
                     currRechargeType,
-                    rechargeAmount
+                    rechargeAmount,
+                    payType,//支付方式：1代表使用的是连连支付，2代表是使用的是中金支付
+                    isActive//是否已经开通快捷支付（针对中金支付而言）
                     }=RechargeStore.getAll();
                 let ua = window.navigator.userAgent.toLowerCase();
 
                 if(currRechargeType === "wechat"){//微信充值
                     if(ua.match(/MicroMessenger/i) == 'micromessenger'){//判断用户是否在微信应用中打开
+                         let openId=cookie.getCookie("openId");
                          ajax({
                                 ciUrl:"/user/wechatPay.do",
                                 data:{
-                                     "rechargeAmount":rechargeAmount
+                                     "rechargeAmount":rechargeAmount,
+                                     "openId":openId
                                 },
                                 success(data){
                                      if(data.flag){
@@ -95,22 +100,32 @@ appDispatcher.register(function(payload){
                                              "paySign":data.payInfo.paySign//微信签名
                                          },function(res){
                                              if(res.err_msg == "get_brand_wcpay_request:ok" ) {// 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-                                                 window.location.href = "/#/userHome";
+                                                 //window.location.href = "/#/userHome";
+                                                 RechargeStore.trigger("rechargeSuccess");
                                              } else {
-                                                 alert("已取消");
+                                                 RechargeStore.trigger("rechargeFailed","微信充值已取消");
                                              }
 
                                          });
                                      }else{
-                                        alert(data.msg);
+                                         RechargeStore.trigger("rechargeFailed",data.msg);
                                      }
                                 }
                          });
                     }else {
-                        alert("请在微信里面打开");
+                        RechargeStore.trigger("rechargeFailed","请在微信客户端打开");
                     }
                 }else if(currRechargeType === "shortcut"){//网银充值
-                    RechargeStore.trigger("submitShortcutForm");
+                    if(payType === 1){//连连支付（用户是否开通连连支付的快捷支付交由连连支付验证）
+                        RechargeStore.trigger("submitShortcutForm");
+                    }else if(payType === 2){//中金支付（用户是否开通中金支付的快捷支付由我们服务端来验证）
+                        if(isActive === "yes"){//已经开通中金支付的快捷支付
+                            RechargeStore.trigger("hadOpenZhongJinShortcut",rechargeAmount);
+                        }else{//还没开通中金支付的快捷支付
+                            RechargeStore.trigger("hadNotOpenZhongJinShortcut");
+                        }
+                    }
+
                 }
 
             }else {

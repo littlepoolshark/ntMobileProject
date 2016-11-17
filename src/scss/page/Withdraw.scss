@@ -20,10 +20,11 @@
     text-align: right;
   }
 
-  .slogan {
+  .withdraw-hint-btn {
+    width:rem-calc(300);
     position:fixed;
     left:50%;
     transform: translateX(-50%);
-    bottom:rem-calc(5);
+    bottom:rem-calc(15);
   }
 }

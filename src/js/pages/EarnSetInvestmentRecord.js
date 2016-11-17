@@ -239,11 +239,13 @@ let EarnSetInvestmentRecord=React.createClass({
         EarnSetInvestmentRecordStore.bind("noDataTemporarily",function(currListType){
             if(currListType === "repaying"){
                 this.setState({
-                    noRepayingData:true
+                    noRepayingData:true,
+                    isActionModalOpen:false
                 })
             }else if( currListType === "clearing"){
                 this.setState({
-                    noClearingData:true
+                    noClearingData:true,
+                    isActionModalOpen:false
                 })
             }else if(currListType === "matchLoan"){
                 this.setState({

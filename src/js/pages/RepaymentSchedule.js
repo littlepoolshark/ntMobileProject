@@ -1,6 +1,8 @@
 require("../../scss/page/RepaymentSchedule.scss");
 let RepaymentScheduleAction=require("../actions/RepaymentScheduleAction.js");
 let RepaymentScheduleStore=require("../stores/RepaymentScheduleStore.js");
+let UserHomeAction=require("../actions/UserHomeAction.js");
+let UserHomeStore=require("../stores/UserHomeStore.js");
 import React from "react";
 import classNames from "classnames";
 
@@ -10,24 +12,35 @@ import Group from "../UIComponents/Group";
 import Button from "../UIComponents/Button";
 import NoDataHint from "./utilities/NoDataHint";
 import Icon from "../UIComponents/Icon";
+import Modal from "../UIComponents/modal/Modal";
 
 
 //好采投和债权转让汇款进度详情：RepaymentSchedule component
 let RepaymentSchedule=React.createClass({
     getInitialState(){
-        return RepaymentScheduleStore.getAll();
+        return {
+            data:RepaymentScheduleStore.getAll(),
+            isModalOpen:false,
+            confirmText:""
+        }
     },
-    _handleAssignmentBtnClick(investMoney){
-        let {
-            creditorId
-            }=this.props.location.query;
-        this.context.router.push({
-            pathname:"assignmentOfDebt",
-            query:{
-                creditorId:creditorId,
-                investMoney:investMoney
-            }
-        });
+    _handleAssignmentBtnClick(){
+        UserHomeAction.transferDebtCheck();
+    },
+    _jumpToNextLocation(confirm){
+        if(confirm){
+            this.context.router.push({
+                pathname:"securityCenter"
+            })
+        }else {
+            this._handleModalClose();
+        }
+
+    },
+    _handleModalClose(){
+        this.setState({
+            isModalOpen:false
+        })
     },
     render(){
         let {
@@ -39,7 +52,7 @@ let RepaymentSchedule=React.createClass({
             yjbx,
             dsbx,
             qsNum
-            }=this.state.loanInfo;
+            }=this.state.data.loanInfo;
 
         let {
             productType,
@@ -68,7 +81,7 @@ let RepaymentSchedule=React.createClass({
                         }
                         {
                             status === "holding" ?
-                            <Button amStyle="primary" radius onClick={this._handleAssignmentBtnClick.bind(null,investMoney)}>转让</Button> :
+                            <Button amStyle="primary" radius onClick={this._handleAssignmentBtnClick}>转让</Button> :
                             null
                         }
                     </div>
@@ -109,7 +122,7 @@ let RepaymentSchedule=React.createClass({
                     <div className="body">
                         <ul>
                             {
-                                this.state.list.map(function(item,index){
+                                this.state.data.list.map(function(item,index){
                                     return (
                                         <RepaymentScheduleItem {...item} key={index+1}/>
                                     )
@@ -117,10 +130,19 @@ let RepaymentSchedule=React.createClass({
                             }
                         </ul>
                         {
-                            this.state.list.length <= 0 ?  <NoDataHint style={{margin:"2rem 0"}}/> : null
+                            this.state.data.list.length <= 0 ?  <NoDataHint style={{margin:"2rem 0"}}/> : null
                         }
                     </div>
                 </Group>
+                <Modal
+                    title="提示"
+                    ref="modal"
+                    isOpen={this.state.isModalOpen}
+                    role="confirm"
+                    onAction={this._jumpToNextLocation}
+                >
+                    {this.state.confirmText}
+                </Modal>
             </Container>
         )
     },
@@ -132,9 +154,39 @@ let RepaymentSchedule=React.createClass({
             }=this.props.location.query;
         //RepaymentScheduleAction.getRepaymentScheduleData(loanId,productType === "loan_product" && creditorId ? creditorId : null);
         RepaymentScheduleAction.getRepaymentScheduleData(loanId,creditorId);
+        UserHomeAction.getUserInfoDetail();
 
         RepaymentScheduleStore.bind("change",function(){
             this.setState(RepaymentScheduleStore.getAll());
+        }.bind(this));
+
+        UserHomeStore.bind("ZXBankOpenCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了您的资金安全，请先开通银行存管"
+            })
+        }.bind(this));
+
+
+        UserHomeStore.bind("dealPasswordSetCheckFailed",function(){
+            this.setState({
+                isModalOpen:true,
+                confirmText:"为了您的资金安全，请先设置交易密码"
+            })
+        }.bind(this));
+
+        UserHomeStore.bind("transferDebtCheckSuccess",function(){
+            let {
+                  creditorId
+                }=this.props.location.query;
+            let investMoney=this.state.data.loanInfo.investMoney;
+            this.context.router.push({
+                 pathname:"assignmentOfDebt",
+                 query:{
+                     creditorId:creditorId,
+                     investMoney:investMoney
+                 }
+             });
         }.bind(this));
 
 
@@ -164,7 +216,7 @@ let RepaymentScheduleItem=React.createClass({
                 </div>
                 <div className="section-middle">
                     <span className="subtitle label">应收本金：<span className="number">￥{principal}</span></span>
-                    <span className="subtitle label">应还利息：<span className="number">￥{interest}</span></span>
+                    <span className="subtitle label">应还利息：<span className="number">￥{interest.toFixed(2)}</span></span>
                     <span className="subtitle label">实还日期：<span className="number">{!!realRepayTimeString ? realRepayTimeString : "--"}</span></span>
                 </div>
                 <div className="section-right">

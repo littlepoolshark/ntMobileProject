@@ -56,3 +56,12 @@ export ServiceAgreement_creditor_product from "./ServiceAgreement_creditor_produ
 export ServiceAgreement_new_product from "./ServiceAgreement_new_product";
 export AboutUs from "./AboutUs";
 export BannerPageWrapper from "./BannerPageWrapper";
+export ZhongJinShortcutPay from "./ZhongJinShortcutPay";
+export OpenZhongJinShortcut from "./OpenZhongJinShortcut";
+export RegisterToZXBank from "./RegisterToZXBank";
+export Double11 from "./specialActivity/Double11";
+export OpenZXIntroduction from "./specialActivity/OpenZXIntroduction";
+export RegisterToZXFailedHint from "./RegisterToZXFailedHint";
+export RegisterToZXSuccessHint from "./RegisterToZXSuccessHint";
+export RegisterGuide from "./RegisterGuide";
+export VerifyCodeForRegisterGuide from "./VerifyCodeForRegisterGuide"

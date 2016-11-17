@@ -68,7 +68,11 @@ let config={
         "ServiceAgreement_loan_product":"好采投服务协议",
         "ServiceAgreement_creditor_product":"债权转让服务协议",
         "AboutUs":"关于我们",
-        "BannerPageWrapper":"农泰金融"
+        "BannerPageWrapper":"农泰金融",
+        "ZhongJinShortcutPay":"充值",
+        "OpenZhongJinShortcut":"开通快捷支付",
+        "RegisterToZXBank":"开通银行存管账户",
+        "VerifyCodeForRegisterGuide":"手机验证码"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -91,7 +95,14 @@ let config={
         "DailyEarnInvestmentRecord",
         "EarnSetInvestmentRecord",
         "AssignmentDebtSuccess",
-        "InviteMyFriend"
+        "InviteMyFriend",
+        "RegisterToZXBank",
+        "BankCardList",
+        "Double11",
+        "OpenZXIntroduction",
+        "RegisterToZXFailedHint",
+        "RegisterToZXSuccessHint",
+        "RegisterGuide"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",

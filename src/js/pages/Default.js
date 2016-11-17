@@ -229,9 +229,17 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("loginSuccess",function(){
-            this.context.router.push({
-               pathname:"/home"
-            });
+            let beforeComponent=this.props.location.query.beforeComponent;
+            if(beforeComponent){
+                this.context.router.push({
+                    pathname:beforeComponent
+                });
+            }else {
+                this.context.router.push({
+                    pathname:"/home"
+                });
+            }
+
         }.bind(this));
 
 

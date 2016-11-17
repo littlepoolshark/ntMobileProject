@@ -52,9 +52,9 @@ var CreditorLoanInvestmentRecordStore={
                 investStatus:listType,//该款投资所进入的状态（apply:申请加入中；repaying:回款中；clearing：已结清）
                 productType:"creditor_product",//产品类型
                 title:list[i].loanTitle,//标的名称
-                interestRate:0,//加息券的年化lilv
+                interestRate:0,//加息券的年化利率
                 redPackageAmount:0,//红包金额
-                yearRate:list[i].apr + "%",//标的的年化利率
+                yearRate:(list[i].apr).toFixed(1) + "%",//标的的年化利率
                 deadline:list[i].qsNum+"期",//标的的期限,或者还款期数目，形如 “3/6”,表示剩余期数 / 总期数
                 status:list[i].status
             }

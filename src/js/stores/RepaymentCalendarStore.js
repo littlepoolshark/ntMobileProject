@@ -149,7 +149,6 @@ var RepaymentCalendarStore={
     updateDatePickerCellList(list){
         let repaymentDateArr=this._extractRepaymentDateArr(list);
         let newDatePickerCellList=this._generateDateArray(this._all.currYear,this._all.currMonth,repaymentDateArr);
-        console.log("newDatePickerCellList:",newDatePickerCellList);
         Object.assign(this._all,{
             datePickerCellList:newDatePickerCellList
         });

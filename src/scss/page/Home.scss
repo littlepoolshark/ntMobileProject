@@ -11,6 +11,67 @@
 #home {
   padding-bottom:rem-calc(55);
 
+  .registerToZX-bar-wrapper {
+    position:absolute;
+    left:0;
+    top:rem-calc(25);
+    width:100%;
+    height:rem-calc(35);
+    padding:0 rem-calc(15);
+    z-index:999;
+  }
+  .registerToZX-bar {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    width:100%;
+    height:100%;
+    padding:0 rem-calc(10);
+    @include color-and-fontSize($C3,$T8);
+    background-color: #fff8f2;
+    border-radius: rem-calc(4);
+
+    .left {
+      display:flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      &>span {
+        display:block;
+      }
+
+      .imgIcon-red-shield {
+        width:rem-calc(15);
+        height:rem-calc(15);
+        margin-right:rem-calc(3);
+      }
+    }
+
+    .right {
+      &>a {
+        @include color-and-fontSize($C1,$T8);
+        text-decoration: none;
+      }
+    }
+  }
+
+  .modal-customize {
+    width:rem-calc(300);
+    height:rem-calc(356);
+
+    .modal-inner {
+      background-color: transparent;
+    }
+
+    .redbag-wrapper {
+      width:rem-calc(300);
+      height:rem-calc(356);
+      background:url("../../img/popupRedbag.png");
+      background-size: cover;
+    }
+  }
+
+
 }
 /*平台介绍 && 邀请有礼*/
 .home-introduction-item {

@@ -12,7 +12,8 @@ var UserHomeStore={
         dqAmount:"----",
         hcCount:"--",
         tikectCount:"--",
-        sercuInfo:{}
+        sercuInfo:{},
+        personInfo:{}
     },
     getAll(){
         return this._all;
@@ -31,6 +32,9 @@ var UserHomeStore={
     },
     checkBankCardIntegrity(){//检查银行卡信息是否完整（开户支行以及开户支行所在的省份和市区，）
         return !!this._all.bankCardInfo && !!this._all.bankCardInfo.branch && !!this._all.bankCardInfo.parentAreaId && !!this._all.bankCardInfo.region ;
+    },
+    checkZXBankOpen(){
+        return this._all.personInfo.zxcgOpen === "yes"  ? true : false;
     }
 };
 MicroEvent.mixin(UserHomeStore);
@@ -56,6 +60,9 @@ UserHomeStore.dispatchToken=appDispatcher.register(function(payload){
                 ciUrl:"/user/v2/userInfoDetail",
                 success(rs){
                     if(rs.code === 0){
+                        _vds.push(["setCS2","isNew",rs.data.personInfo.isNew]);//设置growingio的第二个字段
+                        _vds.push(["setCS3","idCardVerified",rs.data.sercuInfo.idCardVerified]);//设置growingio的第三个字段
+
                         UserHomeStore.updateAll({
                             sercuInfo:rs.data.sercuInfo,
                             personInfo:rs.data.personInfo,
@@ -81,26 +88,31 @@ UserHomeStore.dispatchToken=appDispatcher.register(function(payload){
                 }
             });
             break;
-        case "recharge":
-            //跳转到充值页面之前的条件检查
-            if(!UserHomeStore.checkIdCardVerifiedSet() || !UserHomeStore.checkDealPasswordSet()){
-                UserHomeStore.trigger("securityCheckFailed");
-            }else if(!UserHomeStore.checkBankCardBind()){
-                UserHomeStore.trigger("bankCardIsNotBind");
+        case "securityCheck":
+            if(!UserHomeStore.checkZXBankOpen()){
+                UserHomeStore.trigger("ZXBankOpenCheckFailed");
+            }else if(!UserHomeStore.checkDealPasswordSet()){
+                UserHomeStore.trigger("dealPasswordSetCheckFailed");
             }else {
-                UserHomeStore.trigger("rechargeCheckSuccess");
-            }
-            break;
-        case "withdraw":
-            //跳转到提现页面之前的条件检查
-            if(!UserHomeStore.checkIdCardVerifiedSet() || !UserHomeStore.checkDealPasswordSet()){
-                UserHomeStore.trigger("securityCheckFailed");
-            }else if(!UserHomeStore.checkBankCardBind()){
-                UserHomeStore.trigger("bankCardIsNotBind");
-            }else if(!UserHomeStore.checkBankCardIntegrity()){
-                UserHomeStore.trigger("bankCardIntegrityCheckFailed");
-            }else {
-                UserHomeStore.trigger("withdrawCheckSuccess");
+                switch (payload.data.operationName){
+                    case "recharge":
+                        UserHomeStore.trigger("rechargeCheckSuccess");
+                        break;
+                    case "withdraw":
+                        UserHomeStore.trigger("withdrawCheckSuccess");
+                        break;
+                    case "dailyEarnIncomeExtract":
+                        UserHomeStore.trigger("dailyEarnIncomeExtractCheckSuccess");
+                        break;
+                    case "dailyEarnRollOut":
+                        UserHomeStore.trigger("dailyEarnRollOutCheckSuccess");
+                        break;
+                    case "transferDebt":
+                        UserHomeStore.trigger("transferDebtCheckSuccess");
+                        break;
+                    default:
+                        break;
+                }
             }
             break;
         default:
