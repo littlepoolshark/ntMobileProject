@@ -15,6 +15,7 @@ import Grid from "../UIComponents/Grid";
 import Col from "../UIComponents/Col";
 import Icon from "../UIComponents/Icon";
 import SpecialModal from "../UIComponents/modal/SpecialModal";
+import Notification from "../UIComponents/Notification";
 
 //utilites component
 import DailyEarnCard from "./utilities/DailyEarnCard";
@@ -48,6 +49,7 @@ let Home=React.createClass({
         let beforeComponent=this.props.location.query.beforeComponent;
         let hadShowRedbag=sessionStorage.getItem("hadShowRedbag");
         let isRedbagModalOpen=false;
+        let isInAppWebView=cookie.getCookie("isInAppWebView");
         if(beforeComponent === "verifyCodeForRegisterGuide"){
             if(hadShowRedbag !== "yes"){
                 isRedbagModalOpen=true;
@@ -56,8 +58,14 @@ let Home=React.createClass({
         }
         return {
             data:HomeStore.getAll(),
-            isRedbagModalOpen:isRedbagModalOpen
+            isRedbagModalOpen:isRedbagModalOpen,
+            isNotificationVisible:isInAppWebView === "true" ? false : true,
         };
+    },
+    _closeNotification(){
+        this.setState({
+            isNotificationVisible:false
+        });
     },
     _jumpToAboutUs(){
         this.context.router.push({
@@ -137,6 +145,7 @@ let Home=React.createClass({
         let isZxcgOpen=(zxcgOpenInfo && zxcgOpenInfo.zxcgOpen === "yes") ? true  : false ;
         let leftQureyTime=zxcgOpenInfo.leftQureyTime;
         let isLogin=!!cookie.getCookie("token");
+        let isNotificationVisible=this.state.isNotificationVisible;
 
         return (
             <Container scrollable={true}  id="home">
@@ -212,6 +221,27 @@ let Home=React.createClass({
                 >
                     <div className="redbag-wrapper" onClick={this._jumpToCouponList}></div>
                 </SpecialModal>
+                <Notification
+                    title=""
+                    amStyle=""
+                    visible={isNotificationVisible}
+                    animated
+                    onDismiss={this._closeNotification}
+                    id="homeNotification"
+                >
+                    <div className="downloadAppGuide">
+                        <div className="logo-wrapper">
+                            <div className="downloadAppGuide-logo"></div>
+                            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.ntjr.std" className="download-btn">立即下载</a>
+                        </div>
+
+                        <div className="downloadAppGuide-slogan">
+                            <span>随时理财</span>
+                            <span>查收益</span>
+                            <span>抽iPhone7大奖</span>
+                        </div>
+                    </div>
+                </Notification>
             </Container>
 
 

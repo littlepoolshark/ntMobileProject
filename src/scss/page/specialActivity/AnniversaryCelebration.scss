@@ -1,0 +1,442 @@
+// Functions
+@import "../../helper/functions";
+
+// Variables
+@import "../../variables";
+
+// Mixin
+@import "../../helper/mixins";
+
+$body-bg-color:#a93634;
+
+$activity-title-font-color1:#feeda8;
+$activity-title-font-color2:#ffdd53;
+$card-title-font-color:#fbdac0;
+$card-bg-color:#db4542;
+
+$btn1-font-color:#5e2714;
+$btn2-font-color:#5e2714;
+$btn2-bg-color:#fcaf45;
+
+$fruit-item-font-color1:#712a03;
+$fruit-item-font-color2:#a93331;
+$fruit-item-font-color3:#cb274e;
+
+#anniversaryCelebration {
+  height:rem-calc(1000);
+  background-color: $body-bg-color;
+
+  .activity-title {
+    margin-top:rem-calc(30);
+    @include color-and-fontSize($activity-title-font-color1,rem-calc(18));
+    font-weight: bold;
+
+    strong {
+      @include color-and-fontSize($activity-title-font-color2,rem-calc(24));
+    }
+  }
+
+  .activity-card {
+    width:rem-calc(300);
+    margin:rem-calc(60) auto rem-calc(90);
+    background-color:$card-bg-color ;
+    position:relative;
+
+
+    .activity-card-header {
+      width:rem-calc(310);
+      height:rem-calc(73);
+      padding-top:rem-calc(15);
+      @include color-and-fontSize($card-title-font-color,rem-calc(12));
+      background:url("../../../img/specialActivity/anniversaryCelebration/cake_top.png");
+      background-size:cover;
+      position:absolute;
+      top:rem-calc(-40);
+      left:50%;
+      margin-left:rem-calc(-154);
+
+      strong {
+        margin-right:rem-calc(5);
+        font-size:rem-calc(16);
+      }
+    }
+
+    .activity-card-body {
+      padding:rem-calc(40) rem-calc(10) rem-calc(20) rem-calc(10);
+      min-height: rem-calc(200);
+
+      .cake-wrapper {
+        text-align: center;
+        img {
+          display:inline-block;
+          width:rem-calc(140);
+          height:auto;
+        }
+      }
+
+      .broadcast-section {
+        width:rem-calc(260);
+        height:rem-calc(180);
+        margin:rem-calc(20) auto 0;
+        background-color:#fff7e8;
+        border-radius:rem-calc(5);
+
+        .broadcast-title{
+          @include color-and-fontSize(#e02e2b,rem-calc(14));
+          font-weight: bold;
+        }
+      }
+
+      .content {
+        line-height:1.3;
+        @include color-and-fontSize(#ffd1d1,rem-calc(14));
+      }
+
+      .fruit-list {
+        width:100%;
+
+        .fruit-item {
+          width:49%;
+          margin-top:2%;
+          padding:rem-calc(5);
+          float:left;
+          background:#fff;
+
+          &:first-child {
+            margin-right:2%;
+          }
+
+          .fruit-item-title {
+            @include color-and-fontSize($fruit-item-font-color1,rem-calc(12));
+
+            strong {
+              @include color-and-fontSize($fruit-item-font-color2,rem-calc(14));
+            }
+          }
+          .fruit-item-subtitle {
+            margin-top:rem-calc(3);
+            @include color-and-fontSize($fruit-item-font-color1,rem-calc(12));
+          }
+        }
+      }
+
+      .firstTimeReward-bar {
+        display:flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top:2%;
+        padding:rem-calc(10) 0;
+        background:#fff;
+
+        .firstTimeReward-bar-title {
+          @include color-and-fontSize($fruit-item-font-color3,rem-calc(12));
+          font-weight: bold;
+        }
+
+        .firstTimeReward-bar-title {
+          @include color-and-fontSize($fruit-item-font-color3,rem-calc(12));
+          font-weight: bold;
+        }
+
+        .firstTimeReward-bar-subtitle {
+          @include color-and-fontSize($fruit-item-font-color1,rem-calc(12));
+        }
+
+        .firstTimeReward-bar-imgWrapper {
+          width:rem-calc(70);
+          height:rem-calc(35);
+        }
+
+      }
+
+      .inviteCount-rankList {
+        margin-top:2%;
+        background:#fff;
+
+        .inviteCount-rankList-title {
+          margin-top:rem-calc(5);
+          @include color-and-fontSize(#e02e2b,rem-calc(14));
+          font-weight: bold;
+        }
+
+        table {
+          thead th {
+            background-color: #fff;
+            @include color-and-fontSize($fruit-item-font-color1,rem-calc(14));
+          }
+
+          tbody td {
+            @include color-and-fontSize(#712a03,rem-calc(12));
+
+            em {
+              @include color-and-fontSize(#712a03,rem-calc(12));
+              font-weight: bold;
+            }
+          }
+          tbody tr {
+            border-bottom:1px solid rgba(235,235,235,0.3);
+          }
+        }
+      }
+
+      .invite-rewardList {
+        margin-top:rem-calc(70);
+        padding-top:rem-calc(45);
+        position:relative;
+
+        .rewardList-wrapper {
+          margin-top:rem-calc(20);
+
+          &>div {
+            float:left;
+            width:32%;
+
+            &:first-child {
+              margin-right:2%;
+            }
+            &:last-child {
+              margin-left:2%;
+            }
+          }
+        }
+      }
+    }
+
+    .activity-card-footer {
+      width:rem-calc(310);
+      height:rem-calc(52);
+      background:url("../../../img/specialActivity/anniversaryCelebration/cake_bottom.png");
+      background-size:cover;
+      position:absolute;
+      bottom:rem-calc(-50);
+      left:50%;
+      margin-left:rem-calc(-154);
+    }
+  }
+
+  .ac-btn {
+    display:inline-block;
+    width:rem-calc(200);
+    height:rem-calc(42);
+    line-height: rem-calc(33);
+    text-align: center;
+    @include color-and-fontSize($btn1-font-color,rem-calc(16));
+    background:url("../../../img/specialActivity/anniversaryCelebration/btn_big.png");
+    background-size: cover;
+    border:none;
+    outline:none;
+
+    &.small {
+      width:rem-calc(110);
+      background:url("../../../img/specialActivity/anniversaryCelebration/btn_little.png");
+      background-size: cover;
+    }
+
+  }
+
+  .rights-declaring {
+    height:rem-calc(50);
+    margin-top:rem-calc(65);
+    @include color-and-fontSize(#ffd1d1,rem-calc(12));
+    background-color:#7a1815;
+    position: relative;
+
+    .bg-wrapper {
+      width:100%;
+      height:rem-calc(25);
+      position:absolute;
+      left:0;
+      top:rem-calc(-20);
+    }
+  }
+
+
+  .modal-customize {
+    width:rem-calc(300);
+    border-radius:rem-calc(11);
+  }
+  /*
+   * 优化在iphone6+等大屏幕上面的显示效果
+   */
+  @media screen and (min-width:375px){
+    .modal-customize {
+      width:rem-calc(340);
+    }
+  }
+  .modal-inner {
+    border-radius:rem-calc(11);
+  }
+  .customize-modal {
+    width:100%;
+    padding:rem-calc(10);
+    background:#f3504b;
+    border-radius:rem-calc(11);
+  }
+
+  .customize-modal-header {
+    width:100%;
+    height:rem-calc(5);
+    position:relative;
+    border-radius:rem-calc(11);
+
+    &>span {
+      display:block;
+      width:rem-calc(25);
+      height:rem-calc(25);
+      background:url("../../../img/specialActivity/close.png");
+      background-size: cover;
+      position:absolute;
+      top:rem-calc(0);
+      right:rem-calc(5);
+    }
+  }
+
+  //活动规则modal窗的定制样式
+  .rules-introduction-modal {
+    .customize-modal-body {
+
+      .title {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        margin:rem-calc(15) 0 rem-calc(10);
+        @include color-and-fontSize(#fff,rem-calc(16));
+
+        &>img {
+          display:block;
+          width:rem-calc(30);
+          height:auto;
+        }
+
+        &>span {
+          display:block;
+          margin:0 rem-calc(15);
+        }
+      }
+
+      p {
+        text-align: left;
+        @include color-and-fontSize(#fff,rem-calc(12));
+        margin:rem-calc(5) 0 0;
+      }
+
+    }
+  }
+
+  //提醒用户登录或者注册modal窗的定制样式
+  .loginOrRegister-modal,
+  .sendWishesSuccess-modal {
+
+    .customize-modal-header {
+        .mascot,
+        .ribbon1,
+        .ribbon2 {
+          position:absolute;
+        }
+
+        .mascot {
+          width:rem-calc(200);
+          height:rem-calc(67);
+          left:50%;
+          margin-left:rem-calc(-100);
+          top:rem-calc(-77);
+        }
+
+        .ribbon1 {
+          width:rem-calc(30);
+          height:auto;
+          left:rem-calc(20);
+          top:rem-calc(0);
+        }
+        .ribbon2 {
+          width:rem-calc(30);
+          height:auto;
+          right:rem-calc(60);
+          top:rem-calc(-20);
+        }
+    }
+    .title {
+      margin-top:rem-calc(30);
+      @include color-and-fontSize(#fff,rem-calc(14));
+
+      strong {
+        @include color-and-fontSize(#fff,rem-calc(16));
+      }
+    }
+
+    .customize-modal-footer {
+      margin-top:rem-calc(20);
+      margin-bottom:rem-calc(20);
+
+      button + button {
+        margin-left:rem-calc(40);
+      }
+    }
+  }
+
+  //用户填写朱福语的modal窗的定制样式
+  .sendWishes-modal {
+      position: relative;
+      .customize-modal-header {
+
+        .cake-top-bg {
+          display:block;
+          width:rem-calc(320);
+          max-width:none;
+          height:rem-calc(85);
+          position:absolute;
+          left:rem-calc(-20);
+          top:rem-calc(-45);
+          z-index:1;
+        }
+
+        @media screen and (min-width:375px){
+          .cake-top-bg {
+            display:block;
+            width:rem-calc(360);
+            max-width:none;
+            height:rem-calc(85);
+            position:absolute;
+            left:rem-calc(-20);
+            top:rem-calc(-45);
+            z-index:1;
+          }
+        }
+
+        .candle {
+          display:block;
+          width:rem-calc(100);
+          height:auto;
+          position:absolute;
+          left:50%;
+          margin-left:rem-calc(-50);
+          top:rem-calc(-100);
+          z-index:2;
+        }
+
+      }
+
+    .customize-modal-body {
+      padding-top:rem-calc(50);
+
+      .toggle-wished-btn {
+        display:inline-block;
+        height:rem-calc(30);
+        line-height:rem-calc(30);
+        padding:0 rem-calc(8);
+        margin-bottom:rem-calc(10);
+        @include color-and-fontSize(#5e2714,rem-calc(14));
+        border-radius:rem-calc(15);
+        background-color: #ffed5c;
+      }
+
+      textarea {
+        @include color-and-fontSize(#aeaeae,rem-calc(12));
+        border:none;
+        outline:none;
+      }
+    }
+
+  }
+
+}

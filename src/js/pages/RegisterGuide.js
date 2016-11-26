@@ -145,7 +145,7 @@ let RegisterGuide=React.createClass({
                         />
                         <Field
                             label=""
-                            type="text"
+                            type="password"
                             placeholder="请设置登录密码"
                             value={password}
                             ref="password"
@@ -158,7 +158,7 @@ let RegisterGuide=React.createClass({
                                 onChange={this._handleToggleCheck}
                             />
                             同意
-                            <Link to="home">《农泰金融注册服务协议》</Link>
+                            <Link to="ServiceAgreement_register">《农泰金融注册服务协议》</Link>
                         </div>
                         <Grid collapse={true}>
                             <Col cols={4}>
@@ -232,7 +232,7 @@ let RegisterGuide=React.createClass({
                         <li>
                             <div><img src={require("../../img/item-bg3.png")} alt="" className="item-bg"/></div>
                             <div>
-                                <div className="subtitle"><span>资金第三方存管</span></div>
+                                <div className="subtitle"><span>资金安全</span></div>
                                 <div className="content">
                                     农泰金融不接触任何用户资金<br/>
                                     所有项目资金专款专用<br/>

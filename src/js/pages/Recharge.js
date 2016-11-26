@@ -6,6 +6,7 @@ import React from "react";
 import classNames from 'classnames';
 import cookie from "../lib/cookie";
 import getParamObjFromUrl from "../lib/getParamObjFromUrl";
+import type from "../lib/type";
 
 import Container from "../UIComponents/Container";
 import Button from "../UIComponents/Button";
@@ -15,6 +16,7 @@ import Icon from "../UIComponents/Icon";
 import Group from "../UIComponents/Group";
 import Message from "../UIComponents/Message";
 import Modal from "../UIComponents/modal/Modal";
+import NavBar from "../UIComponents/NavBar";
 
 import BankCard from "./utilities/BankCard";
 
@@ -60,25 +62,36 @@ let RechargeAmountSelection=React.createClass({
 //充值组件
 let Recharge=React.createClass({
     getInitialState(){
-        let hasOpenIdInCookie=!!cookie.getCookie("openId");//用户微信充值的token
+        //sessionStorage.setItem("openId","ou6bcs4ZgG8vO2qor1CWLbyFdrcc");
+        let hasOpenIdInSessionStorage=!!sessionStorage.getItem("openId");//用户微信充值的token(openId,它是农泰公众号appId与用户id结合生成的一个唯一标识码)
         let openIdInUrl=getParamObjFromUrl().openId;
+        let ua= window.navigator.userAgent.toLowerCase();
+        let isInWeChatBrowser=ua.match(/MicroMessenger/i) == 'micromessenger';//ua.match(/MicroMessenger/i)的返回值要么就是null，要么就是一个数组
+        let isSupportForWeChatPay=isInWeChatBrowser;
         /*
-         *  如果当前cookie和url都没有携带openId，则通过一系列的流转和回跳获取openId
+         *  如果当前SessionStorage和url都没有携带openId，则通过一系列的流转和回跳获取openId
          *  weXin -> https://open.weixin.qq.com/connect/oauth2/authorize ->  /ci/toCiWxRecharge.do -> 后台返回的过度页面 -> weXin的recharge组件
          */
-        if( !hasOpenIdInCookie && !openIdInUrl){
-            let protocol = window.location.protocol;
-            var host = window.location.host;
-            var redirectUri= encodeURIComponent(protocol+"//"+host+"/ci/user/toCiWxRecharge.do");
-            var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8164883e71adab3a&redirect_uri="+redirectUri+"&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect";
-            window.location.href = url;
-        }else if(!!openIdInUrl){
-            cookie.setCookie("openId",openIdInUrl,59);
+        if(!hasOpenIdInSessionStorage){
+            //如果SessionStorage里面没有openId这个key，url里面也没有openId这个key的话，
+            // 并且是在微信客户端里面，就跳转到https://open.weixin.qq.com
+            if(openIdInUrl === undefined && isInWeChatBrowser){
+                let protocol = window.location.protocol;
+                var host = window.location.host;
+                var redirectUri= encodeURIComponent(protocol+"//"+host+"/ci/user/toCiWxRecharge.do");
+                var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8164883e71adab3a&redirect_uri="+redirectUri+"&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect";
+                window.location.href = url;
+            }else if(openIdInUrl === "" || openIdInUrl === "null" || openIdInUrl === "undefined"){//这种情况属于用户没有关注农泰公众号
+                isSupportForWeChatPay = false;
+            }else {//如果成功取回openId的话，就存放在SessionStorage中
+                sessionStorage.setItem("openId",openIdInUrl);
+            }
         }
         return {
             data:RechargeStore.getAll(),
             isLimitDetailModalOpen:false,
-            confirmModalOpen:false
+            confirmModalOpen:false,
+            isSupportForWeChatPay:isSupportForWeChatPay
         }
     },
     _handleRechargeSubmit(){
@@ -134,8 +147,12 @@ let Recharge=React.createClass({
     _showLimitDetailOfWCPay(){
         this._openLimitDetailModal();
     },
+    _handleNavClick(){
+        this.context.router.push({
+            pathname:"userHome"
+        });
+    },
     render (){
-        let bankCardInfo=this.state.data;
         let {
             currRechargeType,
             rechargeAmount,
@@ -147,16 +164,29 @@ let Recharge=React.createClass({
             realNameFull,
             id
             }=this.state.data;
+
+        let leftNav= {
+            component:"a",
+            icon: 'left-nav',
+            title: '返回'
+        };
+
+        let isSupportForWeChatPay=this.state.isSupportForWeChatPay;
         let token=cookie.getCookie("token");
         let everydayLimitText=everydayLimit > 0 ? "单日限额"+everydayLimit+"元" : "单日无限额";
         let warmHintText="单笔限额"+singleLimit+"元，" + everydayLimitText;
+
         return (
             <Container  {...this.props} scrollable={false} id="recharge">
-                {/*<BankCard {...bankCardInfo}/>*/}
-
+                <NavBar
+                    title="充值"
+                    leftNav={[leftNav]}
+                    amStyle="primary"
+                    onAction={this._handleNavClick}
+                />
                 <Group
                     header={warmHintText}
-                    className={currRechargeType === "shortcut" ? "active" : ""}
+                    className={currRechargeType === "shortcut" && isSupportForWeChatPay ? "active" : ""}
                     onClick={this._handleRechargeTypeChange.bind(null,"shortcut")}
                 >
                     <div className="shortcut-pay-wrapper cf">
@@ -165,14 +195,17 @@ let Recharge=React.createClass({
                         <span className="fr">{bankName}</span>
                     </div>
                 </Group>
-
-                <Group
-                    header={<span>最高限额：50,000元  <a href="javascript:void(0);" className="showLimitDetail-btn" onClick={this._showLimitDetailOfWCPay}>支持银行及限额？</a></span>}
-                    className={currRechargeType === "wechat" ? "active" : ""}
-                    onClick={this._handleRechargeTypeChange.bind(null,"wechat")}
-                >
-                    <img src={require("../../img/wechat.png")} alt="" className="recharge-card-bg" />
-                </Group>
+                {
+                    isSupportForWeChatPay ?
+                    <Group
+                        header={<span>最高限额：50,000元  </span>}
+                        className={currRechargeType === "wechat" ? "active" : ""}
+                        onClick={this._handleRechargeTypeChange.bind(null,"wechat")}
+                    >
+                        <img src={require("../../img/wechat.png")} alt="" className="recharge-card-bg" />
+                    </Group> :
+                    null
+                }
 
                 <Group
                     header=""
@@ -223,6 +256,9 @@ let Recharge=React.createClass({
                     onAction={this._confirmModalAction}
                 >
                     您还没有开通快捷支付，去开通？
+                    {
+                        /*<a href="javascript:void(0);" className="showLimitDetail-btn" onClick={this._showLimitDetailOfWCPay}>支持银行及限额？</a>*/
+                    }
                 </Modal>
 
                 <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>
@@ -268,6 +304,9 @@ let Recharge=React.createClass({
         }.bind(this));
 
         RechargeStore.bind("rechargeSuccess",function(){
+            this.context.router.push({
+                pathname:"userHome"
+            });
             Message.broadcast("充值成功！");
         });
 

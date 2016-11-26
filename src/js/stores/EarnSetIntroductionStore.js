@@ -15,6 +15,7 @@ let  EarnSetIntroductionStore={
         data.buyProgress=data.buyProgress + "%";
         data.productApr=(data.productApr * 100).toFixed(1);
         data.remainAmount=data.remainAmount.toFixed(2);
+        data.orderSwitch=!!data.orderSwitch ? data.orderSwitch : "true";//如果后台代码没有上线，则缺乏这个字段。这对这种情况，默认为天天赚预约是开放的
         return data;
     }
 };

@@ -17,6 +17,7 @@ import {
 
 function ajax(obj) {
     const CONSIDER_IE=false;//因为这是移动端的项目，所以不考虑ie浏览器
+    let testFlag=obj.ciUrl === "/user/v2/myBankCardInfo" || obj.ciUrl === "/user/v2/securityCenter";
 
      let initData={
          "imei":"23ffgffffffffffffffff",

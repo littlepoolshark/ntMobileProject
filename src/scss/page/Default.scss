@@ -16,6 +16,10 @@
    /* background: url("../../img/login_bg.png") 0 0 no-repeat;
     background-size:cover;*/
     position:relative;
+
+    .popup-body {
+        padding:0;
+    }
 }
 .ntLogo-wrapper {
     width:rem-calc(184);

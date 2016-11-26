@@ -43,7 +43,8 @@ let PurchaseButton=React.createClass({
             type,
             status,
             publishTime,
-            sysCurrentTime
+            sysCurrentTime,
+            orderSwitch
             }=this.props;
         let buttonText=this._getProductStatusText(type,status);
         //预发布状态下，如果服务器现在的时间距离标的发布的时间大于1分钟(等于60000毫秒)话，就显示形如"12:00开抢"
@@ -57,7 +58,25 @@ let PurchaseButton=React.createClass({
                 buttonText=this._formatTimeStamp(this.props.publishTime)+"开抢";
             }
         }
+        if(buttonText === "预约" && orderSwitch === "false"){
+            buttonText="售罄"
+        }
         return buttonText;
+    },
+    _isButtonDisabled(){
+        let {
+            type,
+            status,
+            orderSwitch
+            }=this.props;
+        let isButtonDisabled=false;
+        let buttonText=this._getProductStatusText(type,status);
+        if(buttonText === "立即抢购" || (buttonText === "预约" && orderSwitch === "true")){
+            isButtonDisabled=false;
+        }else{
+            isButtonDisabled=true;
+        }
+        return isButtonDisabled;
     },
     _handleOnClick(){
         let {
@@ -71,12 +90,16 @@ let PurchaseButton=React.createClass({
             repaymentLimit,
             mainMonth,
             minNotRateTime,
-            maxNotRateTime
+            maxNotRateTime,
+            orderSwitch
             }=this.props;
 
         let _self=this;
 
         let productStatusText=this._getProductStatusText(type,status);
+        if(productStatusText === "预约" && orderSwitch === "false" ){//如果天天赚预约开关是关闭的话，则转换为“售罄”
+            productStatusText="售罄";
+        }
         let isLogin=!!cookie.getCookie("token");
         let locationQuery={
             type:type,
@@ -90,9 +113,8 @@ let PurchaseButton=React.createClass({
             minNotRateTime:minNotRateTime,
             maxNotRateTime:maxNotRateTime
         };
-        if(productStatusText === "售罄"){
-            Message.broadcast("该标的已经售罄！");
-        } else if(productStatusText === "预发布"){
+
+        if(productStatusText === "预发布"){
             Message.broadcast("该标的预发布中，目前还不能购买");
         }else if(!isLogin){
             this.setState({
@@ -119,7 +141,7 @@ let PurchaseButton=React.createClass({
                                 confirmText:"为了您的资金安全，请先设置交易密码",
                                 type:2
                             })
-                        } else if(productStatusText === "预约"){
+                        } else if(productStatusText === "预约" && orderSwitch === "true"){
                             _self.context.router.push({
                                 pathname:"/dailyEarnAppointment",
                                 query:locationQuery
@@ -164,7 +186,6 @@ let PurchaseButton=React.createClass({
 
     },
     render(){
-
         return (
             <div className="purchaseButton-wrapper"
                  style={{
@@ -179,6 +200,7 @@ let PurchaseButton=React.createClass({
                     amStyle="primary"
                     style={{marginBottom:0}}
                     onClick={this._handleOnClick}
+                    disabled={this._isButtonDisabled() ? true : false}
                     >
                     {this._renderButtonText()}
                 </Button>

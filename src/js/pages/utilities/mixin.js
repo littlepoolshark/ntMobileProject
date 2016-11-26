@@ -36,8 +36,12 @@ let mixin={
                     statusText="立即抢购";
                 }else if(productStatus === "prepublish"){
                     statusText="预发布";
-                }else {
-                    statusText="售罄";
+                }else if(["full","firstTrial","noFirstTrial","recheck","noRecheck","releasing","failure"].indexOf(productStatus) > -1){
+                    statusText="放款中";
+                }else if(productStatus === "deal"){
+                    statusText="还款中";
+                }else if(productStatus === "repaid"){
+                    statusText="已结束";
                 }
                 break;
             case "creditor_product":

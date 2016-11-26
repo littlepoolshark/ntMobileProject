@@ -59,9 +59,13 @@
 }
 
 @mixin button-disabled() {
-  opacity: $button-opacity-disabled;
-  cursor: not-allowed;
-  pointer-events: none;
+  color:$C4;
+  background-color: #ddd;
+  /*opacity: $button-opacity-disabled;
+  cursor: not-allowed;*/
+ /* pointer-events: none;*/
+  border:none;
+  cursor: pointer;
 }
 
 @mixin button() {

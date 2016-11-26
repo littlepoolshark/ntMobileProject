@@ -48,6 +48,7 @@ export RepaymentSchedule from "./RepaymentSchedule";
 export AssignmentOfDebt from "./AssignmentOfDebt";
 export AssignmentDebtSuccess from "./AssignmentDebtSuccess";
 export NewbieGuide from "./NewbieGuide";
+export ServiceAgreement_register from "./ServiceAgreement_register";
 export ServiceAgreement_ttz_product from "./ServiceAgreement_ttz_product";
 export ServiceAgreement_yyz_product from "./ServiceAgreement_yyz_product";
 export ServiceAgreement_jjz_product from "./ServiceAgreement_jjz_product";
@@ -64,4 +65,6 @@ export OpenZXIntroduction from "./specialActivity/OpenZXIntroduction";
 export RegisterToZXFailedHint from "./RegisterToZXFailedHint";
 export RegisterToZXSuccessHint from "./RegisterToZXSuccessHint";
 export RegisterGuide from "./RegisterGuide";
-export VerifyCodeForRegisterGuide from "./VerifyCodeForRegisterGuide"
+export VerifyCodeForRegisterGuide from "./VerifyCodeForRegisterGuide";
+export AnniversaryCelebration from "./specialActivity/AnniversaryCelebration_index";
+export AnniversaryCelebration_fruitStory from "./specialActivity/AnniversaryCelebration_fruitStory";

@@ -71,7 +71,6 @@
     }
   }
 
-
 }
 /*平台介绍 && 邀请有礼*/
 .home-introduction-item {
@@ -277,5 +276,50 @@
     font-size:rem-calc(35);
   }
 
+}
+
+#homeNotification {
+  width:100%;
+  /*height:rem-calc(70);*/
+  background:url("../../img/downloadApp-bg.jpg");
+  background-size: cover;
+  box-shadow: 0 2px 10px #ededed;
+
+  .logo-wrapper {
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .downloadAppGuide-logo {
+      width:rem-calc(148);
+      height:rem-calc(22);
+      background:url("../../img/downloadApp-logo.png");
+      background-size: cover;
+    }
+
+    .download-btn {
+      display:block;
+      height:rem-calc(25);
+      line-height: rem-calc(27);
+      width:auto;
+      margin-left:rem-calc(10);
+      padding:0 rem-calc(10);
+      @include color-and-fontSize(#fff,rem-calc(14));
+      background:#e7594d;
+      border-radius: rem-calc(13);
+    }
+
+  }
+
+
+  .downloadAppGuide-slogan {
+    margin-top:rem-calc(5);
+    @include color-and-fontSize(#625656,rem-calc(16));
+
+    &>span {
+      margin-right:rem-calc(10);
+    }
+
+  }
 }
 

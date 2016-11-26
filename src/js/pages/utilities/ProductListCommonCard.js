@@ -88,7 +88,7 @@ let ProductListCommonCard=React.createClass({
             rewardRate,
             publishtimeL//预发布的时间戳
             }=this.props;
-        let isSoldOut=this._getProductStatusText(type,status) === "售罄" ? true : false ;
+        let isSoldOut=["售罄","放款中","还款中","已结束"].indexOf(this._getProductStatusText(type,status)) > -1 ? true : false ;
         let pathName="";
         switch (type){
             case "loan_product":

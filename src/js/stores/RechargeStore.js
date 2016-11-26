@@ -82,9 +82,9 @@ appDispatcher.register(function(payload){
 
                 if(currRechargeType === "wechat"){//微信充值
                     if(ua.match(/MicroMessenger/i) == 'micromessenger'){//判断用户是否在微信应用中打开
-                         let openId=cookie.getCookie("openId");
+                         let openId=sessionStorage.getItem("openId");
                          ajax({
-                                ciUrl:"/user/wechatPay.do",
+                                ciUrl:"/user/v2/wechatPay.do",
                                 data:{
                                      "rechargeAmount":rechargeAmount,
                                      "openId":openId
@@ -100,7 +100,6 @@ appDispatcher.register(function(payload){
                                              "paySign":data.payInfo.paySign//微信签名
                                          },function(res){
                                              if(res.err_msg == "get_brand_wcpay_request:ok" ) {// 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-                                                 //window.location.href = "/#/userHome";
                                                  RechargeStore.trigger("rechargeSuccess");
                                              } else {
                                                  RechargeStore.trigger("rechargeFailed","微信充值已取消");

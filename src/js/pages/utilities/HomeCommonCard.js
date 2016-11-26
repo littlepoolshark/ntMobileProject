@@ -17,7 +17,8 @@ let  HomeCommonCard=React.createClass({
     mixins:[mixin],
     _renderCardStatus(productType,productStatus,remainAmount){
         let statusText=this._getProductStatusText(productType,productStatus);
-        if(statusText !== "售罄"){
+        let isSoldOut=["售罄","放款中","还款中","已结束"].indexOf(statusText) >  -1;
+        if(!isSoldOut){
             return (
                 <div className="subtitle-right">
                     <span className="amount">{this._amountFormater(remainAmount)}</span>

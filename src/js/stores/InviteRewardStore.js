@@ -21,6 +21,7 @@ appDispatcher.register(function(payload){
         case "getInviteRewardData":
             ajax({
                 ciUrl:"/user/v2/myRecommendStat",
+                isJumpBack:true,
                 success(rs){
                     if(rs.code === 0){
                         InviteRewardStore.updateAll({

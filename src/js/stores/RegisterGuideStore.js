@@ -57,6 +57,11 @@ var RegisterGuideStore={
                 success:false,
                 msg:"登录密码不能为空，请输入"
             }
+        }else if(password.length < 6){
+            validationResult={
+                success:false,
+                msg:"登录密码不能少于6个字符，请检查"
+            }
         }else if(isAgreeWithAgreement === false){
             validationResult={
                 success:false,

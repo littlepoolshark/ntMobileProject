@@ -15,6 +15,24 @@ import mixin from "./mixin";
 
 let DailyEarnCard=React.createClass({
     mixins:[mixin],
+    _renderSoldOutBtn(isSoldOut,orderSwitch){
+        if(isSoldOut){
+            if(orderSwitch === "false"){//是否关闭预约机制，“false”代表关闭了
+                return (
+                    <Button amSize="xs" amStyle="primary" radius={true} disabled>
+                        已售罄
+                    </Button>
+                )
+            }else {
+                return (
+                    <Button amSize="xs" amStyle="primary" radius={true}>
+                        立即预约
+                    </Button>
+                    )
+
+            }
+        }
+    },
     render(){
         let {
             id,
@@ -24,7 +42,8 @@ let DailyEarnCard=React.createClass({
             repaymentLimit,
             repaymentTypeUnit,
             remainAmount,
-            status
+            status,
+            orderSwitch
             }=this.props;
         let isSoldOut=this._getProductStatusText(type,status) === "预约" ? true : false ;
         let dailyEarnCardItemClasses =classNames({
@@ -73,13 +92,8 @@ let DailyEarnCard=React.createClass({
                                 }
 
                                 {
-                                    isSoldOut ?
-                                    (
-                                        <Button amSize="xs" amStyle="primary" radius={true} >
-                                            立即预约
-                                        </Button> ): null
+                                   this._renderSoldOutBtn(isSoldOut,orderSwitch)
                                 }
-
                             </div>
                         </Col>
                     </Grid>

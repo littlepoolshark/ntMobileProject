@@ -38,8 +38,8 @@ function OpenZXIntroduction(props){
                     </dd>
                     <dt>2.开通存管账号</dt>
                     <dd>
-                        <div className="content">填写姓名、身份证号码、银行卡以及银行卡预留手机号，确认无误，点击“开通存管账户”。</div>
-                        <div><img src={require("../../../img/specialActivity/screenshot4_openZXIntroduction.jpg")} alt="" className="responsive"/></div>
+                        <div className="content">填写姓名、身份证号码、银行卡以及银行卡预留手机号，确认无误，点击“提交信息到银行验证”。</div>
+                        <div><img src={require("../../../img/specialActivity/screenshot4_openZXIntroduction.png")} alt="" className="responsive"/></div>
                     </dd>
                     <dt>3.充值</dt>
                     <dd>

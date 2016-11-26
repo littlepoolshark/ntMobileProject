@@ -404,6 +404,14 @@ const rootRoute = {
                 }
             },
             {
+                path: 'serviceAgreement_register',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"ServiceAgreement_register"));
+                    })
+                }
+            },
+            {
                 path: 'serviceAgreement_new_product',
                 getComponent(nextState, cb) {
                     require.ensure([], (require) => {
@@ -516,10 +524,26 @@ const rootRoute = {
                 }
             },
             {
-                path: 'registerToZXSuccessHint',
+                path: 'registerToZXFailedHint',
                 getComponent(nextState, cb) {
                     require.ensure([], (require) => {
-                        cb(null, require(PAGE_BASIC_PATH+"RegisterToZXSuccessHint"));
+                        cb(null, require(PAGE_BASIC_PATH+"RegisterToZXFailedHint"));
+                    })
+                }
+            },
+            {
+                path: 'registerGuide',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"RegisterGuide"));
+                    })
+                }
+            },
+            {
+                path: 'verifyCodeForRegisterGuide',
+                getComponent(nextState, cb) {
+                    require.ensure([], (require) => {
+                        cb(null, require(PAGE_BASIC_PATH+"VerifyCodeForRegisterGuide"));
                     })
                 }
             },

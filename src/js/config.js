@@ -61,6 +61,7 @@ let config={
         "RepaymentSchedule":"好采投详情",
         "AssignmentOfDebt":"债权转让",
         "NewbieGuide":"新手任务",
+        "ServiceAgreement_register":"农泰金融注册服务协议",
         "ServiceAgreement_new_product":"新手标服务协议",
         "ServiceAgreement_ttz_product":"天天赚服务协议",
         "ServiceAgreement_yyz_product":"月月赚服务协议",
@@ -72,7 +73,8 @@ let config={
         "ZhongJinShortcutPay":"充值",
         "OpenZhongJinShortcut":"开通快捷支付",
         "RegisterToZXBank":"开通银行存管账户",
-        "VerifyCodeForRegisterGuide":"手机验证码"
+        "VerifyCodeForRegisterGuide":"手机验证码",
+        "AnniversaryCelebration_fruitStory":"水果故事"
     },
     noNavBarPages:[//不需要显示navBar的页面
         "/",
@@ -102,7 +104,9 @@ let config={
         "OpenZXIntroduction",
         "RegisterToZXFailedHint",
         "RegisterToZXSuccessHint",
-        "RegisterGuide"
+        "RegisterGuide",
+        "Recharge",
+        "AnniversaryCelebration"
     ],
     hasTabBarPages:[//需要显示tabBar的页面
         "Home",
