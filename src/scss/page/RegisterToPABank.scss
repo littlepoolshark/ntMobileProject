@@ -1,0 +1,85 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#registerToPABank {
+  .list {
+    margin:rem-calc(15) 0;
+
+    .item input[readonly] {
+      color:#333;
+      @include text-overflow;
+    }
+  }
+  
+
+  .btn-wrapper {
+    margin-top:rem-calc(10);
+    padding:rem-calc(10) rem-calc(15) 0;
+
+    button {
+      margin-bottom:rem-calc(5);
+    }
+
+    .registerCount-hint {
+      text-align: center;
+      @include color-and-fontSize($C3,$T8);
+
+      strong {
+        font-weight: normal;
+        color:$C1;
+      }
+
+    }
+  }
+
+  .imgIcon-rtpab-doubt {
+    @include size(rem-calc(40),rem-calc(40));
+    margin-right:rem-calc(-8);
+  }
+
+  .verificationCodeForm {
+    padding-top:rem-calc(20);
+    position:relative;
+
+    .imgIcon-modal-closeBtn {
+      @include size(rem-calc(40),rem-calc(40));
+      position: absolute;
+      top:rem-calc(-15);
+      right: rem-calc(-10);
+    }
+
+    .title {
+      @include color-and-fontSize(#333,rem-calc(16));
+    }
+
+    button {
+      margin-top:rem-calc(20);
+    }
+
+    li.item-input {
+      padding-right:0;
+
+      .getVerificationcode-btn {
+        display:block;
+        padding:0 5px;
+        border-left:1px solid #e1e1e1;
+        font-size:rem-calc(14);
+
+        &.disabled {
+            color:#999;
+        }
+      }
+    }
+  }
+
+  #PABankSeviceAgreementLink {
+    margin-bottom:rem-calc(5);
+  }
+}

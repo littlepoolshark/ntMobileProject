@@ -1,0 +1,67 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+.commonCard-wrapper {
+  h1 {
+    height:rem-calc(45);
+    line-height:1;
+    display: flex;
+    align-items: center;
+    margin-bottom:0;
+    @include color-and-fontSize($C3,$T5);
+    font-weight: normal;
+    border-bottom:1px solid #ececec;
+
+    &>span {
+      display:block;
+    }
+
+    &>.imgIcon {
+      width:rem-calc(18);
+      height:rem-calc(18);
+      margin-left:rem-calc(15);
+      margin-right:rem-calc(5);
+    }
+
+    .newbie-tag {
+      height:rem-calc(18);
+      width:rem-calc(64);
+      padding-left:3px;
+      margin-left:rem-calc(3);
+      line-height:rem-calc(18);
+      text-align:center;
+      display:inline-block;
+      @include color-and-fontSize(#fff,rem-calc(12));
+      background-image:url("../../img/label_yici@2x.png");
+      background-size:cover;
+    }
+  }
+
+  &.group-no-padded .group-body .group-body {
+    padding:rem-calc(15);
+  }
+
+  .commonCard.group {
+    margin:0;
+  }
+
+  & > .group-body > a {
+    .commonCard {
+      border-bottom:1px solid #eee;
+    }
+
+    &:last-child .commonCard {
+      border-bottom:none;
+    }
+
+  }
+
+
+
+}

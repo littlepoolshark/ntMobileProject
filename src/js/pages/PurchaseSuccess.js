@@ -19,7 +19,11 @@ let PurchaseSuccess=React.createClass({
             yyz_product:"月月赚",
             jjz_product:"季季赚",
             loan_product:"好采投",
-            creditor_product:"债权转让"
+            creditor_product:"债权转让",
+            rich:"丰收盈",
+            moon:"月满盈",
+            glj:"果乐金",
+            ced:"车e贷"
         };
        /* if(productType === "ttz_product"){
             return (
@@ -65,7 +69,7 @@ let PurchaseSuccess=React.createClass({
                     </div> :
                     <div className="title">
                         <span className="icon-end"></span>
-                        项目到期预计收益{expectedReward}元
+                        项目到期收益{expectedReward}元
                         <div className="subtitle">{endTime}</div>
                     </div>
                 }
@@ -79,27 +83,48 @@ let PurchaseSuccess=React.createClass({
             pathname:"/productList"
         });
     },
-    _getNextLocation(productType){
+    _jumpToNextLocation(productType){
         let nextLocation="";
         switch (productType){
             case "ttz_product":
-                nextLocation="#/dailyEarnInvestmentRecord";
+                nextLocation="dailyEarnInvestmentRecord";
                 break;
             case "new_product":
             case "yyz_product":
             case "jjz_product":
-                nextLocation="#/earnSetInvestmentRecord";
-                break;
             case "loan_product":
-                nextLocation="#/fixedLoanInvestmentRecord";
-                break;
             case "creditor_product":
-                nextLocation="#/creditorLoanInvestmentRecord";
+            case "glj":
+            case "ced":
+            case "nyd":
+
+               /* @note:以下三个组件/页面已经被废弃了，有空可以把他们删除掉
+                nextLocation="earnSetInvestmentRecord";
+                nextLocation="fixedLoanInvestmentRecord";
+                nextLocation="creditorLoanInvestmentRecord";*/
+                nextLocation="allProductEMInvestmentRecord";
+                break;
+            case "moon":
+                nextLocation="moonLoanInvestmentRecord";
                 break;
             default:
                 break;
         }
-        return nextLocation;
+        if(productType === "moon"){
+            this.context.router.push({
+                pathname:nextLocation,
+                query:{
+                    defaultActiveKey:0
+                }
+            });
+        }else {
+            this.context.router.push({
+                pathname:nextLocation,
+                query:{
+                    productType
+                }
+            });
+        }
     },
     render(){
         let {
@@ -107,7 +132,7 @@ let PurchaseSuccess=React.createClass({
             investMoney,//投资金额
             lixiTime,//起息时间
             endTime,//预计到期时间
-            expectedReward//预计收益
+            expectedReward//收益
             }=this.props.location.query;
 
         let doneNav= {
@@ -125,8 +150,9 @@ let PurchaseSuccess=React.createClass({
                 {this._renderStageBar(productType,investMoney,lixiTime,endTime,expectedReward)}
                 <List>
                     <List.Item
-                        href={this._getNextLocation(productType)}
+                        href="javascript:void(0)"
                         title="投资记录"
+                        onClick={this._jumpToNextLocation.bind(null,productType)}
                     />
                 </List>
             </Container>

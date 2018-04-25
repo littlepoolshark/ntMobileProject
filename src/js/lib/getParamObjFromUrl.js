@@ -1,7 +1,7 @@
 
 export  default function getParamObjFromUrl(){
     let paramObj={};
-    let locationStr=location.href;
+    let locationStr=location.hash;
     let index=locationStr.indexOf("?");
     if(index > -1){
         let paramArr=locationStr.slice(index+1).split("&");

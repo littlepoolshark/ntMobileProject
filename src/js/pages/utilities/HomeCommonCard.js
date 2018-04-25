@@ -8,29 +8,30 @@ import Group from "../../UIComponents/Group";
 import Grid from "../../UIComponents/Grid";
 import Col from "../../UIComponents/Col";
 import Icon from "../../UIComponents/Icon";
+import Button from "../../UIComponents/Button";
 
 //utilites component
 import mixin from "./mixin";
 
-//除了天天赚，首页中所有标的（新手标，月月赚，季季赚和好采投）的展示都用这个组件
+//首页中所有标的的展示都用这个组件
 let  HomeCommonCard=React.createClass({
     mixins:[mixin],
-    _renderCardStatus(productType,productStatus,remainAmount){
-        let statusText=this._getProductStatusText(productType,productStatus);
-        let isSoldOut=["售罄","放款中","还款中","已结束"].indexOf(statusText) >  -1;
+    _renderCardStatus(productType,productStatus,remainAmount,orderSwitch,publishtimeL){
+        let statusText=this._getProductStatusText(productType,productStatus,orderSwitch);
+        let isSoldOut=["已售罄","放款中","还款中","已结束","预发布"].indexOf(statusText) >  -1;
+
         if(!isSoldOut){
             return (
-                <div className="subtitle-right">
-                    <span className="amount">{this._amountFormater(remainAmount)}</span>
-                    <span className="unit">万</span>
-                </div>
+                <span>
+                    剩余<strong>{this._amountFormater(remainAmount)}</strong>万
+                </span>
             )
         }else {
+            if(statusText === "预发布"){
+                statusText="今天" + this._formatTimeStamp(publishtimeL) + "开售";
+            }
             return (
-                <div className="subtitle-right">
-                    <span className="amount">售罄</span>
-                    <span className="unit"></span>
-                </div>
+                <span className="soldOut-btn">{statusText}</span>
             )
         }
     },
@@ -52,61 +53,89 @@ let  HomeCommonCard=React.createClass({
             repaymentTypeUnit,
             remainAmount,
             status,
-            publishtimeL
+            publishtimeL,
+            orderSwitch,
+            rewardRate,
+            minRate,//月满盈的最小年化利率
+            maxRate,//月满盈的最大年化利率
+            vipRate//好采投的vip加息利率（目前只有好采,果乐金投有而已）
             }=this.props;
+
+
         //如果是赚系列的标的就跳转到赚系列共用的详情页，否则跳转到好采投和债转的详情页
-        let pathName=type === "loan_product" ? "fixedLoanIntroduction" : "earnSetIntroduction";
+        let pathName="";
+        switch (type){
+            case "moon":
+                pathName="moonLoanIntroduction";
+                break;
+            case "rich":
+                pathName="richLoanIntroduction";
+                break;
+            case "loan_product":
+                pathName="fixedLoanIntroduction";
+                break;
+            case "creditor_product":
+                pathName="creditorLoanIntroduction";
+                break;
+            case "glj":
+                pathName="gljLoanIntroduction";
+                break;
+            case "ced":
+                pathName="cedLoanIntroduction";
+                break;    
+            default :
+                pathName="earnSetIntroduction";
+                break;
+        };
+
+        if(type ==="new_product"){//首页于2017/11/20号改版，改版后，新手标使用单独的卡片来展示
+            return null;
+        }
 
         return (
             <Link to={{pathname:pathName,query:{type:type,productId:id}}}>
-                <Group className="home-earnSet-card" noSidePadded={true}>
-                    <h6 className="title">
-                        {
-                            type === "new_product" ?
-                                (<span className="icon-new"></span>) :
-                                (<span className="icon-redStar"></span>)
-                        }
-                        <span className="text">{productName}</span>
-                    </h6>
+                <div className="home-card">
                     <Grid collapse={true}>
-                        <Col cols={3} className="home-earnSet-card-item">
-                            <div className="text-center yearRate">{this._yearRateFormater(productApr)}<span className="unit">%</span></div>
-                            <div className="text-center subtitle" >预期年化</div>
-                        </Col>
-                        <Col cols={3} className="home-earnSet-card-item">
-                            <div className="subtitle">
-                                <div className="subtitle-left">
-                                    <span className="icon-time"></span>
-                                    投资期限
-                                </div>
-                                <div className="subtitle-right">
-                                    <span className="amount">{repaymentLimit}</span>
-                                    <span className="unit">{repaymentTypeUnit}</span>
-                                </div>
+                        <Col cols={4} className="home-card-item">
+                            <div className="yearRate">
+                                {
+                                    type === "moon" ?
+                                    this._yearRateFormater(minRate) + "~" + this._yearRateFormater(maxRate):
+                                    ( type === "rich" ? this._yearRateFormater(minRate) : this._yearRateFormater(productApr))
+                                }
+                                <span className="unit">%</span>
+                                {
+                                    !!rewardRate ?
+                                    <span className="rewardRate">+{(rewardRate * 100).toFixed(1) + "%"}</span>  :
+                                    null
+                                }
                             </div>
-                            <div className="subtitle" style={{marginTop:"5px"}}>
-                                <div className="subtitle-left">
-                                    <span className="icon-money"></span>
-                                    可投金额
-                                </div>
-                                {this._renderCardStatus(type,status,remainAmount)}
+                            <div className="subtitle" >
+                                <span className="productName">{productName}&nbsp;•&nbsp;</span>
+                                <span className="productRate"> 历史年化</span> 
+                            </div>
+                        </Col>
+                        <Col cols={2} className="home-card-item">
+                            <div className="deadline">
+                                    <span className="label">期限 </span>
+                                    <span className="unit">{repaymentLimit + repaymentTypeUnit}</span>
+                                    {/* {
+                                         type === "moon" ?
+                                         <span> | 每月可退</span>:
+                                         null
+                                    } */}
+                            </div>
+                            <div className="remainAmount">
+                                {this._renderCardStatus(type,status,remainAmount,orderSwitch,publishtimeL)}
                             </div>
                         </Col>
                     </Grid>
                     {
-                        this._getProductStatusText(type,status) === "预发布" ?
-                            <div className="prePublish-hint">
-                                <Icon classPrefix="imgIcon" name="clock"/>
-                                <span>今天<strong>{this._formatTimeStamp(publishtimeL)}</strong>开售</span>
-                            </div>   :
-                            null
+                        vipRate ?
+                        <div className="vip-rate">{"VIP+" + (vipRate * 100).toFixed(1) + "%"}</div> :
+                        null
                     }
-                    {
-                        type === "new_product" ?
-                            (<div className="newbieLoan-label"></div>)  :
-                            null
-                    }
-                </Group>
+                </div>
             </Link>
         )
     }

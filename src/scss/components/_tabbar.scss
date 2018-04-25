@@ -119,8 +119,8 @@ $tabbar-styles: map_merge($am-colors, (dark: $dark-alt)) !default;
   a {
     color:$C3;
 
-    &.active {
-      color:$C3;
+    &.active .tabbar-label{
+      color:#e6b980;
     }
   }
 

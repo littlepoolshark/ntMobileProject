@@ -9,16 +9,17 @@
 
 $C1-openZXIntroduction:#fff;
 $C2-openZXIntroduction:#f9f9f9;
-$C3-openZXIntroduction:#ebc692;
+$C3-openZXIntroduction:#FFCD79;
 
 #openZXIntroduction {
   overflow-y: scroll;
 
   .title {
+    margin-top:rem-calc(10);
     @include color-and-fontSize(#333,rem-calc(20));
   }
   .subtitle {
-    @include color-and-fontSize(#666,rem-calc(15));
+    @include color-and-fontSize(#666,rem-calc(14));
   }
   .introduction-bar1 {
     display: table;
@@ -31,8 +32,8 @@ $C3-openZXIntroduction:#ebc692;
     }
 
     .img-wrapper {
-      width:rem-calc(60);
-      padding-right:rem-calc(10);
+      width:rem-calc(65);
+      padding-right:rem-calc(15);
 
       img {
         width:rem-calc(50);
@@ -54,6 +55,10 @@ $C3-openZXIntroduction:#ebc692;
     img {
       margin-top:rem-calc(20);
     }
+
+    .subtitle {
+      margin-top:rem-calc(10);
+    }
   }
 
   .introduction-bar3 {
@@ -66,8 +71,9 @@ $C3-openZXIntroduction:#ebc692;
   }
 
   .introduction-bar4 {
-    padding:rem-calc(20);
     background: $C1-openZXIntroduction;
+    padding:rem-calc(20) 0;
+
 
     .content {
       @include color-and-fontSize(#666,rem-calc(14));
@@ -75,18 +81,77 @@ $C3-openZXIntroduction:#ebc692;
 
     dl {
       margin-top:0;
+      padding-left:rem-calc(20);
+      padding-right:rem-calc(20);
 
       dt {
-        margin-top:rem-calc(40);
+        margin-bottom:0;
+        @include color-and-fontSize(#333,rem-calc(14));
+        font-weight: normal;
+
         &:first-child {
-          margin-top:rem-calc(20);
+          margin-top:rem-calc(15);
         }
       }
       dd {
         margin:rem-calc(5) rem-calc(12) ;
+
+        & > div {
+          padding:rem-calc(10) rem-calc(40) rem-calc(25);
+        
+          img + img {
+            margin-top:rem-calc(10);
+          }
+        }
       }
     }
 
+  }
+
+  .introduction-bar5 {
+    padding:rem-calc(20);
+
+    .warmHint-header {
+      margin-top:rem-calc(10);
+      margin-bottom:rem-calc(20);
+
+      & > img {
+        display:block;
+        @include size(rem-calc(140),rem-calc(31));
+        margin:0 auto;
+      }
+      
+    }
+
+    section {
+      margin-bottom:rem-calc(25);
+
+      .warmHint-title {
+        line-height: 1.5;
+        @include color-and-fontSize(#333,rem-calc(15));
+
+        em {
+          font-weight: bold;
+        }
+      }
+  
+      .warmHint-content {
+        text-align: justify;
+        @include color-and-fontSize(#666,rem-calc(14));
+      }
+    }
+   
+  }
+
+  .tabs-nav {
+    border:none;
+    position:relative;
+
+    .btn-hollow.btn-primary {
+      padding-left:0;
+      padding-right:0;
+      padding-bottom:rem-calc(5);
+    }
   }
 
 }

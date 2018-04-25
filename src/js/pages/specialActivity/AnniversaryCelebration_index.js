@@ -19,14 +19,94 @@ import TransitionEvent from '../../UIComponents/utils/TransitionEvents';
 import cookie from "../../lib/cookie";
 
 
+//送祝福名单滚动广播栏(实现了无缝链接，congratulations！)
+let Broadcast=React.createClass({
+    getInitialState(){
+        return {
+            broadcastList:this.props.broadcastList,
+            in:false
+        }
+    },
+    _scroll(){
 
-//双11活动页面
+        if(this.state.in){
+            let _broadcastList=[];
+            let firstItem,secondItem;
+            for(let i=0;i<this.state.broadcastList.length;i++){
+                _broadcastList[i]=this.state.broadcastList[i];
+            };
+            firstItem=_broadcastList.shift();
+            secondItem=_broadcastList.shift();
+            _broadcastList.push(firstItem);
+            _broadcastList.push(secondItem);
+            this.setState({
+                broadcastList:_broadcastList,
+                in:false
+            });
+        }else {
+            this.setState({
+                in:true
+            });
+        }
+
+    },
+    render(){
+        let ulClass=this.state.in ? "in": "out";
+        return (
+            <div className="broadcast-wrapper">
+                {
+                    this.state.broadcastList.length > 0 ?
+                    <ul className={ulClass}>
+                        {
+                            this.state.broadcastList.map(function(item,index){
+                                return (
+                                    <li key={index}>
+                                        <div className="title">{item.mobile}</div>
+                                        <div className="content">
+                                            {item.commentDesc}
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul> :
+                    <ul className="out">
+                        <li style={{lineHeight:"4.375",borderBottom:"none"}} className="text-center">
+                           <em>暂时没有祝福！</em>
+                        </li>
+                    </ul>
+                }
+
+            </div>
+        )
+    },
+    componentDidMount(){
+        this.timer=setInterval(function(){
+            if(this.state.broadcastList.length > 2){
+                this._scroll();
+            }
+        }.bind(this),3000);
+    },
+    componentWillReceiveProps(nextProps){
+        if(nextProps.broadcastList.length !== this.props.broadcastList.length){
+            this.setState({
+                broadcastList:nextProps.broadcastList,
+                in:nextProps.broadcastList.length > 2 ? true : false
+            })
+        }
+    },
+    componentWillUnmount(){
+        clearInterval(this.timer);
+    }
+});
+
+//1周年专题页
 let AnniversaryCelebration = React.createClass({
     getInitialState(){
         return {
             isModalOpen:false,
-            getInterestRewardIsRequesting:false,
             modalType:1,//3:未登录提示框 2：成功领取一张加息券
+            requestOfSubmitIsStarting:false,
             data:AnniversaryCelebrationStore.getAll()
         }
     },
@@ -85,10 +165,21 @@ let AnniversaryCelebration = React.createClass({
     },
     _handleWishesChange(){
         let wishesText=this.refs.wishesTextarea.value;
+        if(wishesText.length > 60){
+            wishesText=wishesText.slice(0,60);
+        }
         AnniversaryCelebrationAction.changeWishes(wishesText);
     },
     _submitWishesText(){
-        AnniversaryCelebrationAction.submitWishesText();
+        if(!this.state.requestOfSubmitIsStarting){
+            AnniversaryCelebrationAction.submitWishesText();
+        }
+    },
+    _handleTextareaFocus(){//当textarea获取焦点的时候，清空它的值
+        AnniversaryCelebrationAction.changeWishes("");
+    },
+    _handleTextareaBlur(){
+        //AnniversaryCelebrationAction.toggleWishes();
     },
     _renderInnerModal(modalType){
         if(modalType === 1){//活动规则modal
@@ -103,10 +194,10 @@ let AnniversaryCelebration = React.createClass({
                             <span>活动规则</span>
                             <img src={require("../../../img/specialActivity/anniversaryCelebration/ribbon2.png")} alt=""/>
                         </div>
-                        <p>1、推荐好友理财除享受活动期间的两重奖励，依然还可享受平台既有的推荐奖励。</p>
-                        <p>2、推荐好友理财时，被推荐人在注册时需填写推荐人的注册手机号码。</p>
+                        <p>1、推荐好友投资除享受活动期间的两重奖励，依然还可享受平台既有的推荐奖励。</p>
+                        <p>2、推荐好友投资时，被推荐人在注册时需填写推荐人的注册手机号码。</p>
                         <p>3、推荐好友活动前已注册，在活动期间首次投资（此前无投资记录）的，也可视为成功邀请。</p>
-                        <p>4、推荐好友理财仅限投资平台新手标、月月赚、季季赚、好采投项目。</p>
+                        <p>4、推荐好友投资仅限投资平台新手标、月月赚、季季赚、好采投项目。</p>
                         <p>5、推荐好友如遇邀请人数相同的情况，则排名依据用户邀请最后一位好友完成首投时间的早晚而定，完成早的则用户排名靠前。</p>
                         <p>6、活动结束后，平台客服将以电话形式取得获奖人员的邮寄信息，并统一于7个工作内将奖品开始邮寄给各位获奖人员。</p>
                         <p>7、活动期间，通过技术手段刷数据的用户，一经查实，将取消活动资格。</p>
@@ -164,7 +255,16 @@ let AnniversaryCelebration = React.createClass({
                     </div>
                     <div className="customize-modal-body">
                         <div><span className="fr toggle-wished-btn" onClick={this._toggleWishes}>换个祝福</span></div>
-                        <textarea ref="wishesTextarea" cols="30" rows="3" value={this.state.data.wishes} onChange={this._handleWishesChange}/>
+                        <textarea
+                            ref="wishesTextarea"
+                            cols="30"
+                            rows="3"
+                            value={this.state.data.wishes}
+                            onChange={this._handleWishesChange}
+                            onFocus={this._handleTextareaFocus}
+                            onBlur={this._handleTextareaBlur}
+                        />
+                        <div className="cf"><span className="fr chartCount-hint">最多只能输入60个字符！</span></div>
                     </div>
                     <div className="customize-modal-footer">
                         <button className="ac-btn"  onClick={this._submitWishesText}>为农泰金融送出祝福</button>
@@ -197,15 +297,17 @@ let AnniversaryCelebration = React.createClass({
         let {
             rankList,
             wishesList,
-            hadSendWished,
+            hadSendWishes,
             wishes
             }=this.state.data;
+
+        let isLogin=!!cookie.getCookie("token");
 
         return (
             <Container id="anniversaryCelebration" scrollable={true}>
                 <img src={require("../../../img/specialActivity/anniversaryCelebration/banner.jpg")} alt="" className="responsive"/>
                 <div className="activity-title text-center">
-                    [活动一]送祝福点亮生日蜡烛，<strong>500</strong>元<br/>
+                    活动一、送祝福点亮生日蜡烛，<strong>500</strong>元<br/>
                     感恩大礼包等您拿！（仅限2万份）
                 </div>
                 <div className="activity-card">
@@ -213,13 +315,20 @@ let AnniversaryCelebration = React.createClass({
                         活动期间，为农泰金融送祝福点亮生日蜡烛<br/>
                         即可获得价值500元的生日感恩大礼包。
                     </div>
+
                     <div className="activity-card-body">
                         <div className="cake-wrapper">
-                            <img src={require("../../../img/specialActivity/anniversaryCelebration/cake.png")} alt=""/>
+                            {
+                                hadSendWishes && isLogin ?
+                                <img src={require("../../../img/specialActivity/anniversaryCelebration/cake_lightUp.gif")} alt=""/> :
+                                <img src={require("../../../img/specialActivity/anniversaryCelebration/cake.png")} alt=""/>
+                            }
+
                         </div>
                         <div className="broadcast-section">
                             <img src={require("../../../img/specialActivity/anniversaryCelebration/flags.png")} alt="" className="responsive"/>
                             <div className="text-center broadcast-title">祝福留言榜</div>
+                            <Broadcast broadcastList={wishesList}/>
                         </div>
                         <div className="btn-wrapper text-center">
                             <button className="ac-btn" onClick={this._sendWishesToNt}>为农泰金融送生日祝福</button>
@@ -228,7 +337,7 @@ let AnniversaryCelebration = React.createClass({
                     <div className="activity-card-footer"></div>
                 </div>
                 <div className="activity-title text-center">
-                    [活动二]推荐好友理财，额外享两重奖励 <br/>
+                    活动二、推荐好友投资，额外享两重奖励 <br/>
                     <strong style={{fontSize:"1.125rem"}} onClick={this._openModal.bind(null,1)}>点击了解活动说明>></strong>
                 </div>
                 <div className="activity-card">
@@ -250,7 +359,7 @@ let AnniversaryCelebration = React.createClass({
                                 </div>
                                 <img src={require("../../../img/specialActivity/anniversaryCelebration/pic1.jpg")} alt="" className="responsive"/>
                                 <div className="fruit-item-subtitle" style={{minHeight:"2.375rem"}}>
-                                    赣南脐橙1箱(10斤)<span className="">+沂源苹果1箱(8斤)</span>
+                                    赣南脐橙1箱(10斤)<span className="fade">+沂源苹果1箱(8斤)</span>
                                 </div>
                             </div>
                             <div className="fruit-item">
@@ -260,7 +369,7 @@ let AnniversaryCelebration = React.createClass({
                                 </div>
                                 <img src={require("../../../img/specialActivity/anniversaryCelebration/pic2.jpg")} alt="" className="responsive"/>
                                 <div className="fruit-item-subtitle">
-                                    赣南脐橙1箱(10斤)+沂源苹果1箱(8斤)
+                                    赣南脐橙1箱(10斤)+沂蒙红苹果1箱(8斤)
                                 </div>
                             </div>
                         </div>
@@ -268,28 +377,28 @@ let AnniversaryCelebration = React.createClass({
                             <div className="fruit-item">
                                 <div className="fruit-item-title cf">
                                     <span className="fl">6≤推荐人数≤7</span>
-                                    <strong className="fr" style={{marginTop:"-3px"}}>￥388</strong>
+                                    <strong className="fr" style={{marginTop:"-3px"}}>￥278</strong>
                                 </div>
                                 <img src={require("../../../img/specialActivity/anniversaryCelebration/pic3.jpg")} alt="" className="responsive"/>
                                 <div className="fruit-item-subtitle">
-                                    赣南脐橙1箱(10斤)+沂源苹果1箱(8斤)+阿克苏特级大枣(4斤)
+                                    赣南脐橙1箱(10斤)+沂蒙红苹果1箱(8斤)+阿克苏特级大枣(4斤)
                                 </div>
                             </div>
                             <div className="fruit-item">
                                 <div className="fruit-item-title cf">
                                     <span className="fl">推荐人数≥8</span>
-                                    <strong className="fr" style={{marginTop:"-3px"}}>￥278</strong>
+                                    <strong className="fr" style={{marginTop:"-3px"}}>￥388</strong>
                                 </div>
                                 <img src={require("../../../img/specialActivity/anniversaryCelebration/pic4.jpg")} alt="" className="responsive"/>
                                 <div className="fruit-item-subtitle">
-                                    赣南脐橙1箱(20斤)+沂源苹果1箱(8斤)+阿克苏特级大枣(6斤)
+                                    赣南脐橙1箱(20斤)+沂蒙红苹果1箱(8斤)+阿克苏特级大枣(6斤)
                                 </div>
                             </div>
                         </div>
                         <div className="firstTimeReward-bar">
                             <div className="firstTimeReward-bar-title">
                                 被推荐用户<br/>
-                                用户有礼
+                                首投有礼
                             </div>
                             <div className="firstTimeReward-bar-imgWrapper">
                                 <img src={require("../../../img/specialActivity/anniversaryCelebration/voucher.png")} alt="" className="responsive"/>
@@ -316,7 +425,7 @@ let AnniversaryCelebration = React.createClass({
                                     rankList.map(function(item,index){
                                         return (
                                             <tr key={index}>
-                                                <td ><em>{index+1}</em></td>
+                                                <td ><em className={index+1 < 4 ? "important" : ""}>{index+1}</em></td>
                                                 <td >{item.mobile}</td>
                                                 <td ><em>{item.countNumber}</em></td>
                                             </tr>
@@ -379,7 +488,11 @@ let AnniversaryCelebration = React.createClass({
         }.bind(this));
 
         AnniversaryCelebrationStore.bind("submitWishesSuccess",function(){
-            this._openModal(3);
+            this.setState({
+                isModalOpen:true,
+                modalType:3,
+                data:AnniversaryCelebrationStore.getAll()
+            })
         }.bind(this));
 
         AnniversaryCelebrationStore.bind("submitWishesFailed",function(msg){
@@ -408,7 +521,21 @@ let AnniversaryCelebration = React.createClass({
             Message.broadcast("对不起，活动已经结束了");
         });
 
+        AnniversaryCelebrationStore.bind("requestIsStarting",function(){
+            this.setState({
+                requestOfSubmitIsStarting:true
+            });
+        }.bind(this));
 
+        AnniversaryCelebrationStore.bind("requestIsEnd",function(){
+            this.setState({
+                requestOfSubmitIsStarting:false
+            });
+        }.bind(this));
+
+    },
+    componentWillUnmount(){
+        AnniversaryCelebrationStore.clearAll();
     }
 });
 

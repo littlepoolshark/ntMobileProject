@@ -51,7 +51,7 @@ let OpenZhongJinShortcut=React.createClass({
         return (
             <Container  {...this.props} scrollable={false}>
                 <BankCard
-                    groupTitle="存管账户已成功开通，现开通快捷支付即可开始充值"
+                    groupTitle="存管子账户已成功开通，现开通快捷支付即可开始充值"
                     bankName={bankName}
                     cardno={cardno}
                     shortIcon={shortIcon}

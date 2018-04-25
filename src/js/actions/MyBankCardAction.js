@@ -15,6 +15,11 @@ var MyBanKCardAction={
         appDispatcher.dispatch({
             actionName:"addBankCard_myBankCard"
         })
+    },
+    unbindBankCard(){
+        appDispatcher.dispatch({
+            actionName:"unbindBankCard_myBankCard"
+        })
     }
 };
 

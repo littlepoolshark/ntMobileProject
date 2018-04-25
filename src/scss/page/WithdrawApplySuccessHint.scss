@@ -1,0 +1,101 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#withdrawApplySuccessHint {
+
+  .safty-guarder {
+    display:block;
+    width: rem-calc(50);
+    height:rem-calc(50);
+    margin:rem-calc(20) auto rem-calc(10);
+    background: url("../../img/icon_success_withdraw@2x.png");
+    background-size: cover;
+  }
+
+  .withdraw-detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom:rem-calc(5);
+  }
+
+  .title {
+    @include color-and-fontSize(#333,rem-calc(18));
+
+    &.withdraw-detail {
+        margin-bottom:rem-calc(20);
+        padding-bottom:rem-calc(10);
+        @include point5Line(bottom);
+    }
+  }
+
+  .subtitle {
+    @include color-and-fontSize(#999,rem-calc(12));    
+  }
+
+  .amount {
+    @include color-and-fontSize(#999,rem-calc(12));
+
+    strong {
+        font-weight: normal;
+        color:$C1;
+    }
+  }
+
+  #withdrawReasonSurvey {
+      padding:rem-calc(15);
+      padding-top:0;
+
+      .title {
+            @include color-and-fontSize(#333,rem-calc(16));
+          line-height: 1.3;
+      }
+      
+      ul {
+          padding:rem-calc(5) 0;
+          margin:0;
+          list-style: none;
+
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height:rem-calc(30);
+            @include color-and-fontSize(#888,$T8);
+
+            .virtual-radio {
+                display: block;
+                margin-right:rem-calc(8);
+                @include size(rem-calc(16),rem-calc(16));
+                border-radius:rem-calc(8);
+                border:1px solid #ddd;
+                background-color:#fff;
+            }
+          }
+
+          li.active {
+            .virtual-radio {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border:2px solid $C1;
+
+                &:before {
+                    display:block;
+                    content:"";
+                    @include size(rem-calc(6),rem-calc(6));
+                    border-radius:rem-calc(3);
+                    background-color:$C1;
+                }
+            }
+          }
+      }
+  }
+}

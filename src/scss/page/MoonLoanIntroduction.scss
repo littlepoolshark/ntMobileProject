@@ -1,0 +1,231 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#moonLoanIntroduction {
+  padding-bottom:rem-calc(42);
+
+  @import "./Summary";
+  @import "./RuleDescription";
+
+  .summary {
+    .title,.amount,.unit {
+      text-align:center;
+      @include color-and-fontSize($C3,$T5);
+    }
+    .subtitle {
+      margin-top:0;
+      margin-bottom:rem-calc(5);
+      @include color-and-fontSize($C4,$T9);
+    }
+
+    .progressBar {
+      margin-top:rem-calc(30);
+      margin-bottom:0;
+    }
+
+    .yearRate {
+      position: relative;
+
+      .rewardRate {
+        display:inline-block;
+        line-height:1;
+        @include color-and-fontSize($C1,$T8);
+        position:absolute;
+        top:0;
+        left:50%;
+        margin-left:rem-calc(50);
+      }
+
+      .amount {
+        font-size:4rem;
+      }
+    }
+
+  }
+
+  .tabs {
+    margin-top:0;
+    margin-bottom:0;
+    padding-top:rem-calc(50);
+    padding-bottom:rem-calc(40);
+    background-color:transparent;
+
+    .tabs-body .tab-panel{
+      padding:0;
+    }
+
+    .tabs-nav {
+      margin-bottom:-1px;
+      padding:rem-calc(5) rem-calc(15);
+      border-top:1px solid $separation-line-color;
+      border-bottom:1px solid $separation-line-color;
+      background:#fff;
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
+
+      .btn-sm {
+        @include color-and-fontSize($C3,$T5);
+      }
+    }
+
+    .btn-hollow.btn-primary {
+      border:none;
+      color:$C3;
+
+      &.active {
+        background:#fff;
+        color:$C1;
+      }
+    }
+
+  }
+
+  .group {
+
+    section {
+      margin-top:rem-calc(15);
+    }
+    h6 {
+      display:flex;
+      align-items: center;
+      margin-bottom:rem-calc(10);
+      @include color-and-fontSize($C3,$T7);
+      font-weight:normal;
+
+      &>span {
+        display:block;
+      }
+
+      &>span.title-flag {
+        width:rem-calc(4);
+        height:rem-calc(13);
+        margin-right:rem-calc(5);
+        margin-top:rem-calc(-2);
+        background-color:$C1;
+        border-radius:rem-calc(4);
+      }
+
+      &>span.imgIcon-blue-questionMark {
+        width:rem-calc(40);
+        height:rem-calc(40);
+      }
+    }
+
+    .label {
+      @include color-and-fontSize($C3,$T7);
+    }
+    .content {
+      @include color-and-fontSize($C4,$T8);
+      text-align: justify;
+    }
+    .process-chart-wrapper {
+      width:100%;
+      margin:rem-calc(5) 0 rem-calc(15);
+    }
+  }
+
+  #productIntroduction {
+
+    .g {
+      padding-bottom:rem-calc(15);
+      border-bottom:1px dashed #eee;
+
+      .col-2 {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .img-wrapper {
+          width:rem-calc(47);
+          height:rem-calc(47);
+          margin-bottom:rem-calc(5);
+          background-size: cover;
+
+          &.shengxi {
+            background-image:url("../../img/icon_shengxi.png");
+          }
+
+          &.jiexi {
+            background-image:url("../../img/icon_anshi.png");
+          }
+
+          &.ketui {
+            background-image:url("../../img/icon_tuichu.png");
+          }
+
+        }
+
+        .subtitle {
+          @include color-and-fontSize(#333,rem-calc(14))
+        }
+      }
+    }
+
+  }
+
+  .description-mask {
+    width:100%;
+    height:100%;
+    padding:0 rem-calc(45) rem-calc(70);
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .body {
+      margin-top:rem-calc(110);
+
+      .title {
+        margin-bottom:rem-calc(28);
+        padding-bottom:rem-calc(10);
+        @include color-and-fontSize(#fff,$T6);
+        border-bottom:1px solid #fff;
+      }
+
+      .content {
+        p {
+          margin:rem-calc(5) 0 0;
+          @include color-and-fontSize(#fff,$T8);
+        }
+      }
+    }
+    .footer {
+      .imgIcon-closeBtnInWrapper {
+        display:block;
+        margin:0 auto;
+        width:rem-calc(45);
+        height:rem-calc(45);
+      }
+    }
+  }
+
+  .popup {
+    background:#f8f8f8;
+  }
+  .popup-header {
+    z-index:9999;
+  }
+  .popup-body {
+    padding:0;
+  }
+
+  @import "./CheckMoreDetailBar";
+
+  .share-guide-img {
+    display:inline-block;
+    width:50%;
+    height:auto;
+    position:absolute;
+    top:rem-calc(10);
+    right:rem-calc(10);
+  }
+
+}

@@ -1,0 +1,69 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#myInviteFriendDetail {
+  background-color:#fffaf1;
+
+  .dashboard {
+    padding:rem-calc(15) 0;
+
+    .title {
+      margin-right:rem-calc(8);
+      @include color-and-fontSize(#6f341f,rem-calc(14));
+    }
+
+    .number {
+      @include color-and-fontSize(#333,rem-calc(20));
+
+      strong {
+        height:rem-calc(50);
+        line-height:rem-calc(50);
+        @include color-and-fontSize($C1,rem-calc(44));
+        font-weight: normal;
+      }
+    }
+
+    .unit {
+      @include color-and-fontSize($C1,rem-calc(20));
+    }
+
+    .body {
+      margin-bottom:rem-calc(10);
+    }
+  }
+
+  .myInviteFriend-list-wrapper {
+    height:rem-calc(360);
+    margin:rem-calc(15);
+    padding:rem-calc(5);
+    border:1px solid #eee;
+    border-radius:rem-calc(5);
+    background-color:#fff;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    table {
+      thead {
+        th {
+          @include color-and-fontSize(#999,rem-calc(13));
+          background-color:#fff;
+        }
+
+      }
+
+      tbody  {
+        td {
+          @include color-and-fontSize(#512a1c,rem-calc(12));
+          background-color:#fff;
+        }
+
+      }
+    }
+  }
+}

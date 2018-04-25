@@ -145,6 +145,7 @@ let DatePickerCard=React.createClass({
     render(){
         let selectedDate=this.state.selectedDate;
         let dateList=this.props.datePickerCellList;
+
         return (
             <Group  style={{margin:0}}>
                 <div className="datePicker-card">
@@ -189,13 +190,38 @@ let DatePickerCard=React.createClass({
 let TodayRepaymentDetailList=React.createClass({
     _renderItemAfter(item){
         let itemAfter="";
-        if(item.principle !== 0 && item.interest !== 0){
-            itemAfter="本息" + (item.principle+item.interest).toFixed(2) + "元";
-        }else if(item.principle !== 0 && item.interest === 0){
-            itemAfter="本金" + (item.principle).toFixed(2) + "元";
-        }else if(item.interest !== 0 &&  item.principle === 0){
-            itemAfter="利息" + (item.interest).toFixed(2) + "元";
+        let statusText=item.status === "paid" ? "已还" : "未还";
+        if(item.isCompensationItem){
+            itemAfter=(
+                <div>提前还款补偿{item.compensationAmount.toFixed(2)}元</div>
+            )
+        }else {
+            if(item.principle !== 0 && item.interest !== 0){
+                itemAfter=(
+                    <div>{"本息" + (item.principle+item.interest).toFixed(2) + "元"}<strong>{statusText}</strong></div>
+                )
+            }else if(item.principle !== 0 && item.interest === 0){
+                itemAfter=(
+                    <div>{"本金" + (item.principle).toFixed(2) + "元"}<strong>{statusText}</strong></div>
+                )
+            }else if(item.interest !== 0 &&  item.principle === 0){
+                if(item.principalDelay === "yes"){
+                    itemAfter=(
+                        <div>
+                            <div>{"利息" + (item.interest).toFixed(2) + "元"}<strong>{statusText}</strong></div>
+                            <div>本金<span className="hint-text">债转成功后到账</span></div>
+                        </div>
+                    )
+                }else {
+                    itemAfter=(
+                        <div>
+                            {"利息" + (item.interest).toFixed(2) + "元"}<strong>{statusText}</strong>
+                        </div>
+                    )
+                }
+            }
         }
+
         return itemAfter;
     },
     render(){
@@ -285,9 +311,6 @@ let RepaymentCalendar=React.createClass({
         //获取某个月有的日历表格中的元素列表，默认获取当前月份的相关数据
         let monthTime=RepaymentCalendarStore.getCurrMonthTime(0);
         RepaymentCalendarAction.getDatePickerCellList(monthTime);
-
-        //获取某个月份的回款统计数据，默认获取当前月份的相关数据
-        RepaymentCalendarAction.getRepaymentDashboardData();
 
         RepaymentCalendarStore.bind("change",function(){
             this.setState({

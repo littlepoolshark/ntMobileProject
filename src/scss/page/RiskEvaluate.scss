@@ -1,0 +1,158 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#riskEvaluate {
+    background-color:#fff;
+
+    .title {
+        text-align: center;
+        font-weight: bold;
+        @include color-and-fontSize(#333,rem-calc(25));
+    }
+
+    .subtitle {
+        padding:rem-calc(5) rem-calc(40);
+        text-align: center;
+        @include color-and-fontSize(#666,rem-calc(16));
+    }
+
+    #haveNotFinishRiskEvaluate  {
+        padding:rem-calc(15);
+
+        .imgIcon {
+            margin:rem-calc(40) auto rem-calc(20);
+            @include size(rem-calc(140),rem-calc(140));
+        }
+
+        .subtitle {
+            margin-bottom:rem-calc(20);
+        }
+    }
+
+    #hadFinishRiskEvaluate  {
+        padding:rem-calc(15);
+
+        .imgIcon {
+            margin:rem-calc(40) auto rem-calc(20);
+            @include size(rem-calc(140),rem-calc(140));
+        }
+
+        .subtitle {
+            padding:rem-calc(5) rem-calc(20);
+        }
+
+        .btn-primary {
+            margin-top:rem-calc(30);
+        }
+
+        a {
+            color:#fff;
+        }
+
+        .reEvaluateBtn {
+            margin-top:rem-calc(-10);
+            text-align: center;
+            color:#e0b982;
+        }
+
+    }
+
+    #riskEvaluateQuestionnaire {
+        width:100%;
+        height:100%;
+        padding:rem-calc(15);
+        background-color:#eee;
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .group {
+            margin-top:0;
+        }
+        
+        .questionnaire-header {
+            height:rem-calc(60);
+            padding:rem-calc(15);
+            margin-bottom:rem-calc(15);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content:space-between;
+            @include color-and-fontSize(#333,rem-calc(14));
+
+            .right {
+                color:$C1;
+            }
+        }
+
+        .questionnaire-body {
+            margin-bottom:0;
+            flex:1 1 auto;
+            background:#fff;
+
+            .questionnaireItem {
+                .hintText {
+                    padding-bottom:rem-calc(5);
+                    @include color-and-fontSize(#999,rem-calc(14));
+                    @include point5Line(bottom);
+                }
+                h4 {
+                    margin:0;
+                    margin-top:rem-calc(15);
+                    @include color-and-fontSize(#666,rem-calc(16));
+                    
+                }
+                ul {
+                    padding:0;
+                    margin:0;
+                    list-style:none;
+
+                    li {
+                        display:flex;
+                        align-items: center;
+                        padding:rem-calc(10) 0;
+                        @include color-and-fontSize(#999,rem-calc(14));
+                    }
+                }
+            }
+        }
+
+       
+
+        footer {
+            box-sizing: border-box;
+            width:100%;
+            position: fixed;
+            bottom:rem-calc(25);
+            margin-left:rem-calc(-15);
+            padding:0 rem-calc(30);
+            display: flex;
+            justify-content:space-between;
+            @include color-and-fontSize(#999,rem-calc(14));
+
+            .prevBtn {
+                color:$C1;
+            }
+        }
+
+    }
+
+    #warmHintTextMask {
+        padding:rem-calc(15);
+        text-indent: 2rem;
+        @include color-and-fontSize(#666,rem-calc(14));
+
+        .hideBtn {
+            margin-top:rem-calc(20);
+            color:$C1;
+        }
+    }
+
+
+}

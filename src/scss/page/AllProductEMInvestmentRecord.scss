@@ -1,0 +1,28 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+.allProductEMInvestmentRecord-navBar {
+  padding: rem-calc(10) 0;
+
+  .icon {
+    margin-left: rem-calc(5);
+    font-size: rem-calc(16);
+    font-weight: normal;
+  }
+}
+
+#allProductEMInvestmentRecord {
+  padding-bottom: rem-calc(20);
+
+  .tabs {
+    .tabs-nav {
+      position: relative;
+    }
+  }
+}

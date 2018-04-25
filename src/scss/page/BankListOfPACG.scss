@@ -1,0 +1,26 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#bankList {
+  .bankCard-logo {
+    width:rem-calc(45);
+    height:rem-calc(45);
+  }
+
+  .item-title {
+    padding-top:rem-calc(5);
+    @include color-and-fontSize($C3,$T5);
+  }
+
+  .item-subtitle {
+    @include color-and-fontSize($C3,$T9);
+  }
+
+
+}

@@ -20,6 +20,8 @@ import MobileVerificationCode from "../UIComponents/MobileVerificationCode";
 let GetBackDealPassword=React.createClass({
     getInitialState(){
         return {
+            newDealPassword:"",
+            confirmDealPassword:"",
             showDealPasswordField:false,
             showConfirmDealPasswordField:false
         }
@@ -50,11 +52,36 @@ let GetBackDealPassword=React.createClass({
 
         GetBackDealPasswordAction.submitForm(verificationCode,newDealPassword,confirmDealPassword);
     },
+    _handleFieldValueChange(fieldName){
+        let fieldValue=this.refs[fieldName].getValue();
+        switch (fieldName){
+            case "newDealPassword":
+                if(fieldValue.length > 16){
+                    fieldValue=fieldValue.slice(0,16);
+                }
+                this.setState({
+                    newDealPassword:fieldValue
+                });
+                break;
+            case "confirmDealPassword":
+                if(fieldValue.length > 16){
+                    fieldValue=fieldValue.slice(0,16);
+                }
+                this.setState({
+                    confirmDealPassword:fieldValue
+                });
+                break;
+            default:
+                break;
+        };
+    },
     render (){
         let phoneNo=cookie.getCookie("phoneNo");
         let {
             showDealPasswordField,
-            showConfirmDealPasswordField
+            showConfirmDealPasswordField,
+            newDealPassword,
+            confirmDealPassword
             }=this.state;
         return (
             <Container  {...this.props} scrollable={false}>
@@ -91,8 +118,10 @@ let GetBackDealPassword=React.createClass({
                             <Field
                                 type={showDealPasswordField ? "text" : "password"}
                                 label="新交易密码"
-                                placeholder="6～20位字母，字符，符号"
+                                placeholder="6-16位字母和数字组合"
                                 ref="newDealPassword"
+                                value={newDealPassword}
+                                onChange={this._handleFieldValueChange.bind(null,"newDealPassword")}
                             />
                             <Icon
                                 name={showDealPasswordField ? "eye-on" : "eye-off"}
@@ -106,8 +135,10 @@ let GetBackDealPassword=React.createClass({
                             <Field
                                 type={showConfirmDealPasswordField ? "text" : "password"}
                                 label="确认新密码"
-                                placeholder="6～20位字母，字符，符号"
+                                placeholder="请再次输入密码"
                                 ref="confirmDealPassword"
+                                value={confirmDealPassword}
+                                onChange={this._handleFieldValueChange.bind(null,"confirmDealPassword")}
                             />
                             <Icon
                                 name={showConfirmDealPasswordField ? "eye-on" : "eye-off"}

@@ -9,112 +9,123 @@
 
 #myBankCard {
   .noBankCard-wrapper {
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-top:rem-calc(50);
-    padding:0 rem-calc(15);
+    margin-top: rem-calc(50);
+    padding: 0 rem-calc(15);
 
     .imgIcon-money-bag {
-      width:rem-calc(50);
-      height:rem-calc(63);
+      width: rem-calc(50);
+      height: rem-calc(63);
     }
 
     .title {
-      @include color-and-fontSize($C4,$T5);
+      @include color-and-fontSize($C4, $T5);
     }
 
     .subtitle {
-      margin-top:rem-calc(8);
-      @include color-and-fontSize($C4,$T8);
+      margin-top: rem-calc(8);
+      @include color-and-fontSize($C4, $T8);
     }
 
     .addBankCard-btn {
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      width:100%;
-      height:rem-calc(90);
-      margin-top:rem-calc(23);
-      padding:rem-calc(30) 0;
-      border:1px solid #eee;
-      border-radius:5px;
-      background-color:$white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: rem-calc(90);
+      margin-top: rem-calc(23);
+      padding: rem-calc(30) 0;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      background-color: $white;
 
       .imgIcon-plus-icon {
-        width:rem-calc(27);
-        height:rem-calc(27);
-        margin-right:rem-calc(15);
+        width: rem-calc(27);
+        height: rem-calc(27);
+        margin-right: rem-calc(15);
       }
 
-      &>span {
-        display:block;
+      & > span {
+        display: block;
       }
     }
   }
   .deleteCard-hint {
-    margin-top:rem-calc(20);
-    text-align:center;
-    @include color-and-fontSize($C1,$T7);
+    margin-top: rem-calc(20);
+    text-align: center;
+    @include color-and-fontSize($C1, $T7);
   }
   .hasBankCard-wrapper {
-    margin: rem-calc(15);
-    padding:rem-calc(15);
-    border:1px solid $separation-line-color;
-    border-radius: rem-calc(5);
-    background-color:#fff;
+    margin: rem-calc(15) rem-calc(10);
+    padding: rem-calc(15) rem-calc(40);
+    background-image: url("../../img/bank_bg.png");
+    background-size: 100% 100%;
 
     .header {
-      display:flex;
+      display: flex;
       justify-content: flex-start;
       align-items: center;
-      padding-bottom:rem-calc(10);
-      border-bottom:1px solid $separation-line-color;
+      padding-bottom: rem-calc(10);
+      border-bottom: 1px solid $separation-line-color;
 
       .bankLogo {
-        width:rem-calc(41);
-        height:rem-calc(41);
+        width: rem-calc(41);
+        height: rem-calc(41);
       }
 
       .title {
-        margin-right:auto;
-        margin-left:rem-calc(10);
-        @include color-and-fontSize($C3,$T4);
+        margin-right: auto;
+        margin-left: rem-calc(10);
+        @include color-and-fontSize($C3, $T4);
       }
 
       .icon-right-nav {
-        color:#ddd;
+        color: #ddd;
       }
 
-      &>span,
-      &>img {
-        display:block;
+      & > span,
+      & > img {
+        display: block;
       }
     }
 
     .body {
-      display:flex;
+      height: rem-calc(100);
+      display: flex;
       justify-content: space-between;
-      margin-top:rem-calc(15);
+      align-items: center;
+      color: #fff;
+      font-size: rem-calc(20);
 
-      &>span {
-        display:block;
+      & > span {
+        display: block;
+
+        &.imgIcon-my-bankCard {
+          @include size(rem-calc(50), rem-calc(50));
+        }
       }
     }
 
     &.disabled {
-      margin-top:rem-calc(5);
-      background-color:#e7e7e7;
-      border:1px solid #ddd;
+      margin-top: rem-calc(5);
+      background-color: #e7e7e7;
+      border: 1px solid #ddd;
 
       .header {
-        border-bottom:1px solid #ddd;
+        border-bottom: 1px solid #ddd;
       }
     }
 
+    
   }
   .warm-hint {
+    padding: 0 rem-calc(15);
+    @include color-and-fontSize($C4, $T8);
+  }
+
+  .btn-wrapper {
     padding:0 rem-calc(15);
-    @include color-and-fontSize($C4,$T8);
   }
 }

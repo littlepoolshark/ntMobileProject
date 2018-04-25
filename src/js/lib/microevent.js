@@ -11,7 +11,7 @@
 
 var MicroEvent	= function(){};
 MicroEvent.prototype	= {
-	bind : function(event, fct){
+	bind : function(event, fct){	
 		this._events = this._events || {};
 		this._events[event] = this._events[event]	|| [];
 		this._events[event].push(fct);
@@ -23,8 +23,11 @@ MicroEvent.prototype	= {
 	},
 	trigger	: function(event /* , args... */){
 		this._events = this._events || {};
-		if( event in this._events === false  )	return;
-		for(var i = 0; i < this._events[event].length; i++){
+		if( event in this._events === false  )	{
+			//throw new Error(`${event}事件没有绑定回调函数，请检查‘bind’方法是否是同步执行的！`);
+			return ;
+		};
+		for(var i = 0; i < this._events[event].length; i++){	
 			this._events[event][i].apply(this, Array.prototype.slice.call(arguments, 1));
 		}
 	}

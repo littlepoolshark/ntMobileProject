@@ -1,30 +1,67 @@
 // Functions
-@import "../helper/functions";
+@import '../helper/functions';
 
 // Variables
-@import "../variables";
+@import '../variables';
 
 // Mixin
-@import "../helper/mixins";
+@import '../helper/mixins';
 
 #withdraw {
-  position:relative;
+  position: relative;
 
   .withdraw-form {
-    margin-bottom:0;
+    margin-bottom: 0;
+    .item-input {
+      border: none;
+      @include point5Line(bottom);
+    }
+    .subtitle {
+      @include color-and-fontSize(#999, rem-calc(14));
+
+      strong {
+        font-weight: normal;
+        color: $C1;
+      }
+    }
+
+    .title {
+      @include color-and-fontSize(#666, rem-calc(16));
+    }
+
+    .header {
+      margin-bottom: rem-calc(5);
+    }
+
+    .group-body {
+      padding-right: 0;
+
+      .item-input {
+        padding-left: 0;
+      }
+    }
+
+    .footer {
+      margin-top: rem-calc(5);
+      padding-right: rem-calc(15);
+    }
   }
 
   .forgetPassword-wrapper {
-    margin-top:rem-calc(5);
-    padding:0 rem-calc(15);
+    margin-top: rem-calc(5);
+    padding: 0 rem-calc(15);
     text-align: right;
   }
 
   .withdraw-hint-btn {
-    width:rem-calc(300);
-    position:fixed;
-    left:50%;
+    width: rem-calc(300);
+    position: fixed;
+    left: 50%;
     transform: translateX(-50%);
-    bottom:rem-calc(15);
+    bottom: rem-calc(15);
+  }
+  .field-label {
+    font-size: rem-calc(25);
+    width: rem-calc(30);
   }
 }

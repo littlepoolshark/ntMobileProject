@@ -8,6 +8,7 @@ var GetBackDealPasswordStore={
            success:true,
            msg:""
        };
+        let checkPassword_regexp=/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{6,16}$/;//登录密码和交易密码共用同一个正则表达式来验证
 
        if(verificationCode === ""){
            validationResult={
@@ -19,25 +20,25 @@ var GetBackDealPasswordStore={
                success:false,
                msg:"验证码格式有误，请检查"
            }
-       } else if(newDealPassword === ""){
+       }else if(newDealPassword === ""){
            validationResult={
                success:false,
                msg:"新交易密码不能为空，请输入！"
            }
-       }else if (newDealPassword.length < 6 || newDealPassword.length > 20){
+       }else if (newDealPassword.length < 6){
            validationResult={
                success:false,
-               msg:"新交易密码长度有误，请检查"
+               msg:"密码至少设置6位"
+           }
+       }else if (!checkPassword_regexp.test(newDealPassword)){
+           validationResult={
+               success:false,
+               msg:"密码必须是字母和数字组合"
            }
        }else if(confirmDealPassword === ""){
            validationResult={
                success:false,
                msg:"确认交易密码不能为空，请输入"
-           }
-       }else if (confirmDealPassword.length < 6 || confirmDealPassword.length > 20){
-           validationResult={
-               success:false,
-               msg:"确认交易密码长度有误，请检查"
            }
        }else if(confirmDealPassword !== newDealPassword){
            validationResult={

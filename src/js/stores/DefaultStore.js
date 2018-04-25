@@ -107,7 +107,7 @@ appDispatcher.register(function(payload){
                     success:function(rs){
                         if(rs.code === 0){
                             _vds.push(["setCS1","user_id",rs.data.userId]);//设置growingio的第一个字段
-                            cookie.setCookie("token",rs.data.token,59);//用户的登录状态有效时长设置为59分钟
+                            cookie.setCookie("token",rs.data.token,180);//用户的登录状态有效时长设置为59分钟
                             cookie.setCookie("phoneNo",loginPhoneNo);//将用户的手机号码设置到cookie,全局使用
                             cookie.setCookie("userId",rs.data.userId);//将用户Id设置到cookie，全局使用（双11专题页面）
                             DefaultStore.trigger("loginSuccess");
@@ -161,10 +161,17 @@ appDispatcher.register(function(payload){
             }
             break;
         case "toggleAgreementOfProtocol":
+            let isAgreemtChecked=DefaultStore.getAll().isAgreement;
             DefaultStore.updateAll({
-                isAgreement:payload.data.isAgreement
+                isAgreement:!isAgreemtChecked
             });
+            DefaultStore.trigger("change");
             break;
+        case "resetToEmpty":
+            DefaultStore.updateAll({
+                loginPhoneNo:""
+            });
+            DefaultStore.trigger("change");
         default:
         //no op
     }

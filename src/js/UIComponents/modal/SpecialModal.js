@@ -125,6 +125,7 @@ const Modal = createClass({
   },
 
   handleBackdropClick(e) {
+    
     if (e.target !== e.currentTarget || !this.props.closeViaBackdrop) {
       return;
     }

@@ -39,7 +39,7 @@ let DailyEarnRollOut=React.createClass({
                     </div>
                     <div className="dailyEarn-rollOut-amount">
                         <span className="subtitle">今日平台剩余可转额度(元)</span>
-                        <span className="amount">{sysAmount}</span>
+                        <span className="amount">{sysAmount < 0 ? 0 : sysAmount }</span>
                     </div>
                 </Group>
 

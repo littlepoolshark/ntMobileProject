@@ -9,11 +9,21 @@ var AssignmentOfDebtAction={
             }
         });
     },
-    submitDebtAssignmentForm(dealPassword){
+    submitDebtAssignmentForm(){
         appDispatcher.dispatch({
-            actionName:"submitDebtAssignmentForm",
+            actionName:"submitDebtAssignmentForm"
+        });
+    },
+    assignAgreement(){
+        appDispatcher.dispatch({
+            actionName:"assignAgreement_aod"
+        });
+    },
+    changeDealPassword(dealPassword){
+        appDispatcher.dispatch({
+            actionName:"changeDealPassword_aod",
             data:{
-                dealPassword:dealPassword
+                dealPassword
             }
         });
     }

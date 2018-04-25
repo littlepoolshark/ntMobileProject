@@ -1,6 +1,14 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var RegisterAction={
+    askForShowInviteEntry(ntjrSource) {
+         appDispatcher.dispatch({
+            actionName:"askForShowInviteEntry_register",
+            data:{
+                ntjrSource
+            }
+        })
+    },
     register (phoneNo,password,verificationCode){
         appDispatcher.dispatch({
             actionName:"register",

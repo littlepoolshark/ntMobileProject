@@ -1,0 +1,26 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#setNewMobilePhoneNo {
+    #phoneNoWrapper {
+        .group-body {
+            display: flex;
+            align-items: center;
+
+            .imgIcon-phone-icon {
+                margin-right:rem-calc(5);
+                @include size(rem-calc(28),rem-calc(28));
+            }
+
+            strong {
+                margin-left:auto;
+            }
+        }
+    }
+}

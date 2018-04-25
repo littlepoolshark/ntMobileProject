@@ -1,0 +1,173 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#shareCoupon {
+    background: #fff5e5;
+
+    // 采用SUIT命名法
+    .CouponCard {
+        margin:0 rem-calc(15) rem-calc(15);
+        position:relative;
+        z-index:2;
+
+        .u-title {
+            @include color-and-fontSize(#6e3737,rem-calc(14));
+
+            strong {
+                font-weight: normal;
+                @include color-and-fontSize(#e93c3e,rem-calc(14));
+            }
+        }
+        
+        .u-deadlineOfInterest {
+             @include color-and-fontSize(#cd9b57,rem-calc(12));
+        }
+
+        .u-interestAmount {
+             @include color-and-fontSize(#cc2e33,rem-calc(30));
+        }
+
+         .u-interestUnit {
+             @include color-and-fontSize(#cc2e33,rem-calc(14));
+        }
+
+
+        .CouponCard-body {
+            width:100%;
+            height:rem-calc(86);
+        }
+        
+        .CouponCard-body-summary,
+        .CouponCard-body-detail {
+            width:43%;
+            height:100%;
+            float:left;
+            background-color:#fff;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom:1px dashed #e2cfb6;
+        }
+
+        .CouponCard-body-detail {
+            padding-left:rem-calc(20);
+            align-items: flex-start;
+        }
+
+        .CouponCard-body-summary {
+            border-right:1px dashed #e2cfb6;
+        }
+
+        .CouponCard-body-shareBtn {
+            width:14%;
+            height:100%;
+            padding:rem-calc(5) 0;
+            float:left;
+            @include color-and-fontSize(#fff,rem-calc(14));  
+            background:linear-gradient(to bottom,#fc564c,#e4353a);//“background:linear-gradient(bottom,#fc564c,#e4353a)”是旧语法，新语法是将“bottom” 改为 “to bottom”
+            display:flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            
+            & > span {
+                display:block;
+                line-height:1;
+            }
+        }
+
+        .CouponCard-footer {
+            padding:rem-calc(5) rem-calc(10);
+            @include color-and-fontSize(#6e3737,rem-calc(12));
+            background-color:#fffcf3;
+        }
+
+        .CouponCard-tag {
+            width:rem-calc(48);
+            height:rem-calc(48);
+            background-size:cover;
+            position:absolute;
+            left:0;
+            top:0;
+        }
+
+        .CouponCard-tag--redPacket {
+            background-image:url("../../img/icon_redbag@2x.png");
+        }
+
+         .CouponCard-tag--interest {
+            background-image:url("../../img/icon_jiaxiquan@2x.png");
+        }
+
+        &.is-disabled {
+            .u-title,
+            .u-deadlineOfInterest,
+            .u-interestAmount,
+            .u-interestUnit {
+                color:#666;
+
+                strong {
+                    color:#666;
+                }
+            }
+
+            .CouponCard-body-shareBtn {
+                color:#fff;
+                background:linear-gradient(to bottom,#dadada,#837f7f);
+            }
+
+            .CouponCard-footer {
+                color:#999;
+            }
+
+            .CouponCard-tag--redPacket {
+                background-image:url("../../img/icon_redbag_dis@2x.png");
+            }
+
+             .CouponCard-tag--interest {
+                background-image:url("../../img/icon_jiaxiquan_dis@2x.png");
+            }
+            
+        }
+    }
+
+
+    .footer-bg-wrapper {
+        margin-top:rem-calc(-50);
+        position:relative;
+        z-index: 1;
+
+        .footer-text {
+            width:100%;
+            height:rem-calc(55);
+            line-height: rem-calc(55);
+            text-align: center;
+            @include color-and-fontSize(#c24a49,rem-calc(15));  
+            position:absolute;
+            left:0;
+            bottom:0;          
+        }
+    }
+
+    .share-guide-img {
+        display:inline-block;
+        width:50%;
+        height:auto;
+        position:absolute;
+        top:rem-calc(10);
+        right:rem-calc(10);
+  }
+
+  .noData-hint {
+      position:relative;
+      z-index:2;
+      padding:rem-calc(20) 0;
+  }
+}

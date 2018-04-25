@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>农泰金融</title>
+  <title>饭米粒理财</title>
   <meta name="format-detection" content="telephone=no">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <link rel="alternate icon" type="image/png" href="http://s.amazeui.org/assets/react/i/favicon.png">
@@ -55,13 +55,14 @@
   加载中.......
   <script src="/src/js/lib/qrcode.min.js"></script>
   <script src="/app.bundle.js"></script>
+  <script src="/src/js/lib/ShareSDK.js"></script>
   <!--<script src="/src/js/lib/iscroll.js"></script>-->
   <!--<script src="/src/js/lib/debug.min.js"></script>-->
   <script>
     //使用客户端代理探测方案，如果是uc浏览器，则为html标签挂上"ua-stupid-uc"样式类
     var ua = navigator.userAgent;
     if(/android/i.test(ua) || ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
-      document.documentElement.className += ' ua-stupid-uc';
+      document.documentElement.className += ' ua-stupid-uc isAndroid';
     }
 
     //笨拙地兼容iphone手机下的dom元素fixed问题
@@ -69,6 +70,66 @@
       document.documentElement.className += ' isIOS';
     }
 
+  </script>
+  <script>
+    /*function init()
+    {
+      //android的平台配置信息跟ShareSDK.xml一致；
+      var QZoneInfo =
+      {
+        "Id" : "5",
+        "SortId" : "5",
+        "AppKey" : "NFXJIKnqVAGz5o2j",
+        "AppId" : "1104972445",
+        "ShareByAppClient" : "false",
+      };
+
+      var WechatInfo =
+      {
+        "Id" : "2",
+        "SortId" : "2",
+        "AppSecret":"3e639c38e61d073d7c446e8a74399aca",
+        "AppId" : "wx0dcf29fadf7c94d6",
+        "BypassApproval" : "false",
+        "Enable" : "true"
+      };
+
+      var WechatMomentsInfo =
+      {
+        "Id" : "4",
+        "SortId" : "4",
+        "AppSecret":"3e639c38e61d073d7c446e8a74399aca",
+        "AppId" : "wx0dcf29fadf7c94d6",
+        "BypassApproval" : "false",
+        "Enable" : "true"
+      };
+
+      var QQInfo =
+      {
+        "Id" : "3",
+        "SortId" : "3",
+        "AppKey":"NFXJIKnqVAGz5o2j",
+        "AppId" : "1104972445",
+        "BypassApproval" : "false",
+        "Enable" : "true"
+      };
+
+      var ShortMessageInfo={
+        "Id" : "1",
+        "SortId" : "1",
+        "Enable" : "true"
+      }
+
+      //platformConfig平台配置信息可为null，此时用ShareSDK.xml
+      var platformConfig = {};
+      platformConfig[$sharesdk.PlatformID.QZone] = QZoneInfo;
+      platformConfig[$sharesdk.PlatformID.Wechat] = WechatInfo;
+      platformConfig[$sharesdk.PlatformID.WechatMoments] = WechatMomentsInfo;
+      platformConfig[$sharesdk.PlatformID.QQ] = QQInfo;
+      platformConfig[$sharesdk.PlatformID.ShortMessage] = ShortMessageInfo;
+      $sharesdk.initSDKAndSetPlatfromConfig("127bff51a4d43", platformConfig);
+
+    }*/
   </script>
 </body>
 </html>

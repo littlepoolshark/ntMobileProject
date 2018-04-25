@@ -1,0 +1,29 @@
+// Functions
+@import '../helper/functions';
+
+// Variables
+@import '../variables';
+
+// Mixin
+@import '../helper/mixins';
+
+#bankQuotaTable {
+  padding-bottom: rem-calc(20);
+  table thead th {
+    @include color-and-fontSize(#999, rem-calc(14));
+  }
+
+  table tbody tr {
+    border-top: none;
+    td {
+      font-size: rem-calc(14);
+      @include point5Line(bottom);
+    }
+    &:last-child {
+      td {
+        @include point5Line(none);
+      }
+    }
+  }
+  background-color: #fff;
+}

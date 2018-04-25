@@ -83,3 +83,12 @@
     flex: 1;
   }
 }
+
+.#{$button-group-prefix}-scrollable {
+  width:100%;
+  overflow-x: scroll;
+
+  > .#{$button-prefix} {
+    width:rem-calc(100);
+  }
+}

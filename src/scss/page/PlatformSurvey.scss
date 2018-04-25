@@ -1,0 +1,183 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#platformSurvey {
+    background-color: #fff;
+
+    .slider {
+      width:100%;
+      height:100%;
+
+      .slider-slides {
+        width:100%;
+        height:100%;
+
+
+        &>li {
+          width:100%;
+          height:100%;
+
+          &>.content-wrapper {
+            width:100%;
+            height:100%;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+
+            .title {
+              text-align: center;
+              @include color-and-fontSize(#666,rem-calc(24));
+            }
+
+            .subtitle {
+              @include color-and-fontSize(#999,rem-calc(12));
+            }
+
+            .digit {
+              @include color-and-fontSize(#333,rem-calc(20));
+            }
+          }
+
+          & > .frame1 {
+
+            .title {
+              margin-bottom:rem-calc(50);
+            }
+
+            .block-icon {
+               display: block;
+               margin:0 auto rem-calc(20);
+               @include size(rem-calc(78),rem-calc(78));
+            }
+
+            .frame1-row-cell {
+                float:left;
+                width:50%;
+            }
+            
+            .frame1-row {
+              width:100%;
+              margin-bottom:rem-calc(40);
+            }
+
+          }
+
+          & > .frame2 {
+
+            .title {
+              margin-bottom:rem-calc(50);
+            }
+
+             img {
+               display: block;
+               margin:0 auto;
+               @include size(rem-calc(288),rem-calc(193));
+             }
+          }
+
+          & > .frame3 {
+
+            .title {
+              margin-bottom:rem-calc(50);
+            }
+
+            .g {
+              width:100%;
+            }
+
+            .block-icon {
+               display: block;
+               margin:0 auto rem-calc(10);
+               @include size(rem-calc(85),rem-calc(105));
+            }
+
+            & > img {
+              display:block;
+              margin:rem-calc(50) auto 0;
+              @include size(rem-calc(249),rem-calc(180));
+            }
+          } 
+
+          & > .frame4 {
+            & > img {
+              display: block;
+              margin:0 auto;
+            }
+
+            .circle-chart {
+                margin-top:rem-calc(25);
+                @include size(rem-calc(157),rem-calc(157));
+            }
+
+            .list-chart {
+                 margin-top:rem-calc(25);
+                @include size(rem-calc(160),rem-calc(170));
+            }
+          }
+
+           & > .frame5 {
+
+            .title {
+              margin-bottom:rem-calc(40); 
+            }
+
+            .digit {
+                line-height: 1.2;                  
+            }
+
+             .g {
+               width:100%;
+               margin-bottom:rem-calc(40);
+
+               .col-3 {
+                 display: flex;
+                 flex-direction: column;
+                 align-items: center;
+                 justify-content: center;
+               }
+             }
+
+              .block-icon1 {
+                display: block;
+                margin: 0 auto rem-calc(20);
+                @include size(rem-calc(184),rem-calc(70));
+              }
+
+              .block-icon2 {
+                display: block;
+                margin: 0 auto rem-calc(20);
+                @include size(rem-calc(184),rem-calc(67));
+              }
+
+              .block-icon3 {
+                display: block;
+                margin: 0 auto rem-calc(20);
+                @include size(rem-calc(182),rem-calc(66));
+              }
+          }
+        }
+
+
+      }
+
+      .slider-indicators {
+        li {
+          background:#ddd;
+
+          &.active {
+            background:$C1;
+          }
+        }
+      }
+
+
+    }
+}

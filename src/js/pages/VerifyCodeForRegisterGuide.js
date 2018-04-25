@@ -12,6 +12,7 @@ import Icon from "../UIComponents/Icon";
 import Group from "../UIComponents/Group";
 import Message from "../UIComponents/Message";
 import MobileVerificationCode from "../UIComponents/MobileVerificationCode";
+import NavBar from "../UIComponents/NavBar";
 
 
 
@@ -32,17 +33,34 @@ let VerifyCodeForRegisterGuide=React.createClass({
     _submitRegisterForm(){
         VerifyCodeForRegisterGuideAction.submitRegisterForm();
     },
+    _handleNavClick(){
+        this.context.router.push({
+            pathname:"registerGuide"
+        });
+    },
     render (){
-        let phoneNo=this.props.location.query.loginName;
+
         let {
             loginName,
             verifyCode
             }=this.state.data;
 
+        let leftNav= {
+            component:"a",
+            icon: 'left-nav',
+            title: '返回'
+        };
+
         return (
             <Container  {...this.props} scrollable={false}>
+                <NavBar
+                    title="手机验证码"
+                    leftNav={[leftNav]}
+                    amStyle="primary"
+                    onAction={this._handleNavClick}
+                />
                 <div style={{marginTop:"10px",fontSize:"14px",textAlign:"center",color:"#666"}}>手机验证码正在发送到您的手机</div>
-                <div style={{margin:"10px 0",fontSize:"20px",textAlign:"center"}}>{this._formatPhoneNo(phoneNo)}</div>
+                <div style={{margin:"10px 0",fontSize:"20px",textAlign:"center"}}>{this._formatPhoneNo(loginName)}</div>
                 <Group
                     header=""
                     noPadded
@@ -57,7 +75,11 @@ let VerifyCodeForRegisterGuide=React.createClass({
                                 label="手机验证码"
                                 placeholder="请输入验证码"
                                 ref="verificationCode"
-                                inputAfter={ <MobileVerificationCode phoneNo={phoneNo} autoSend={true}  type="1"/>}
+                                inputAfter={
+                                     !!loginName ?
+                                    <MobileVerificationCode phoneNo={loginName} autoSend={true}  type="1"/> :
+                                    null
+                                    }
                                 onChange={this._handleVerifyCodeChange}
                                 value={verifyCode}
                             />
@@ -82,10 +104,7 @@ let VerifyCodeForRegisterGuide=React.createClass({
 
         VerifyCodeForRegisterGuideStore.bind("registerSuccess",function(){
             this.context.router.push({
-                pathname:"home",
-                query:{
-                    beforeComponent:"verifyCodeForRegisterGuide"
-                }
+                pathname:"registerSuccessHint"
             });
         }.bind(this));
 
@@ -95,7 +114,7 @@ let VerifyCodeForRegisterGuide=React.createClass({
 
     },
     componentWillUnmount(){
-       // VerifyCodeForRegisterGuideStore.clearAll();
+       VerifyCodeForRegisterGuideStore.clearAll();
     }
 });
 

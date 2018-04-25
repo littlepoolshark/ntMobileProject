@@ -312,7 +312,7 @@
   */
   .PI-sliderImg-wrapper {
     width:rem-calc(272);
-    height:rem-calc(270);
+    height:rem-calc(314);
     background:url("../../img/PISlider-item1.png");
     background-size:cover;
 
@@ -345,11 +345,11 @@
   .IG-sliderImg-wrapper {
     width:rem-calc(272);
     height:rem-calc(390);
-    background:url("../../img/IGSlider-item1.png");
+    background:url("../../img/IGSlider-item1.jpg");
     background-size:cover;
 
     &.item1 {
-      background:url("../../img/IGSlider-item1.png");
+      background:url("../../img/IGSlider-item1.jpg");
       background-size:cover;
     }
     &.item2 {

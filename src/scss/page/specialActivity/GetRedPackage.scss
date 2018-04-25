@@ -1,0 +1,325 @@
+// Functions
+@import "../../helper/functions";
+
+// Variables
+@import "../../variables";
+
+// Mixin
+@import "../../helper/mixins";
+
+$primary-bg-color:#c12939;
+$second-bg-color:#fffce8;
+$primary-font-color:#a64731;
+$second-font-color:#fcc684;
+
+#getRedPackage {
+  .group {
+    margin:0;
+  }
+  .title {
+    margin-top:rem-calc(15);
+    @include color-and-fontSize(#fff,rem-calc(20));
+    font-weight: bold;
+  }
+
+  .srp-btn.primary {
+    display:inline-block;
+    width:rem-calc(240);
+    height:rem-calc(57);
+    padding:0;
+    line-height:rem-calc(55);
+    text-align: center;
+    @include color-and-fontSize(#fff,rem-calc(18));
+    background-image:url("../../../img/specialActivity/sendRedPackage/btn-bg.png");
+    background-size: cover;
+    border:none;
+    outline:none;
+  }
+  .grp-btn.primary {
+    display:inline-block;
+    width:rem-calc(223);
+    height:rem-calc(45);
+    padding:0;
+    line-height:rem-calc(45);
+    text-align: center;
+    @include color-and-fontSize(#a64731,rem-calc(18));
+    background-color:#f6e7c5;
+    border:none;
+    outline:none;
+    border-radius:rem-calc(10);
+  }
+
+  .grp-btn.second {
+    display:inline-block;
+    width:rem-calc(240);
+    height:rem-calc(42);
+    padding:0;
+    line-height:rem-calc(44);
+    text-align: center;
+    @include color-and-fontSize(#fff,rem-calc(18));
+    background-color:#e13a47;
+    border-radius:rem-calc(5);
+    border:none;
+    outline:none;
+  }
+  /*
+  *  领取红包表单区块
+  */
+  .getRedPackageForm-section {
+
+    .group-body {
+      background-image:url("../../../img/specialActivity/sendRedPackage/container-bg.jpg");
+      background-size:cover;
+
+      .getRedPackage-form {
+        width:rem-calc(300);
+        margin:0 auto;
+        margin-bottom:rem-calc(60);
+      }
+
+      .getRedPackage-form-header {
+        width:rem-calc(300);
+        height:rem-calc(213);
+        background-image: url("../../../img/specialActivity/sendRedPackage/modal-bg.png");
+        background-size:cover;
+        position:relative;
+
+        &>div {
+          display:flex;
+          flex-direction:column;
+          justify-content: center;
+          width:100%;
+          height:rem-calc(115);
+          @include color-and-fontSize(#a64731,rem-calc(20));
+          position:absolute;
+          left:0;
+          top:rem-calc(88);
+
+          strong {
+            color:#e83649;
+            font-weight: normal;
+          }
+
+          .subtitle {
+            font-size:rem-calc(14);
+          }
+        }
+      }
+
+      .getRedPackage-form-body {
+        width:100%;
+        padding:rem-calc(15) rem-calc(15) rem-calc(30);
+        margin-top:-2px;
+        background-color:#f2374b;
+        border-radius:0 0 rem-calc(5) rem-calc(5);
+
+        .title {
+          margin:0;
+          font-weight:normal;
+          @include color-and-fontSize(#fffce8,rem-calc(16))
+        }
+
+        input {
+          width:rem-calc(223);
+          margin:to-rem(15) auto rem-calc(20);
+          border:none;
+          border-radius:rem-calc(5);
+        }
+      }
+
+      .showRewardDetail-btn-wrapper {
+        margin:rem-calc(20) 0 rem-calc(5);
+
+        .showRewardDetail-btn {
+          display:inline-block;
+          padding:rem-calc(5) rem-calc(20);
+          background-color:#fe9b23;
+          border-radius:rem-calc(17);
+          @include color-and-fontSize(#fff,rem-calc(16));
+        }
+      }
+
+
+    }
+
+  }
+  /*
+  *  "谁是农泰"区块
+  */
+  .ntShortIntroduction {
+    .group-body {
+      background-color: #ffc12d;
+      padding-bottom:0;
+    }
+
+    .subtitle {
+      margin-top:rem-calc(15);
+
+      &>span {
+        display:inline-block;
+        width:rem-calc(100);
+        height:rem-calc(28);
+        line-height: rem-calc(30);
+        text-align: center;
+        @include color-and-fontSize(#fff,rem-calc(14));
+        background-color:#e1473d;
+        border-radius:rem-calc(14);
+      }
+
+      &>strong {
+        @include color-and-fontSize(#fff,rem-calc(25));
+        font-weight:bold;
+      }
+    }
+
+    .content {
+      margin-top:rem-calc(20);
+      padding-bottom:rem-calc(10);
+      text-indent:rem-calc(24);
+      line-height:1.8;
+      @include color-and-fontSize(#fff,rem-calc(12));
+    }
+  }
+
+  /*
+  *  "为什么选择农泰"区块
+  */
+  .reasonOfChoosingNT {
+    .group-body {
+      background-color: #2fba9d;
+    }
+    ul {
+      padding:0;
+      margin:0;
+      list-style: none;
+
+      &>li {
+        display:flex;
+        justify-content:space-between;
+        align-items: center;
+        padding:rem-calc(40) rem-calc(15);
+        border-top:1px dashed #fff;
+        position:relative;
+
+        &:first-child {
+          margin-top:rem-calc(30);
+          border-top:none;
+        }
+
+        .down-triangle {
+          display:block;
+          width:rem-calc(35);
+          height:0;
+          border:rem-calc(25) solid transparent;
+          border-top-color:#fff;
+          position:absolute;
+          top:-1px;
+          left:50%;
+          margin-left:rem-calc(-25);
+        }
+
+        img {
+          display:block;
+          width:rem-calc(125);
+          height:rem-calc(125);
+        }
+
+        .subtitle {
+          &>span {
+            display:inline-block;
+            height:rem-calc(28);
+            padding:0 rem-calc(15);
+            line-height: rem-calc(30);
+            text-align: center;
+            @include color-and-fontSize(#fff,rem-calc(14));
+            background-color:rgba(0,0,0,0.3);
+            border-radius:rem-calc(14);
+          }
+
+        }
+
+        .content {
+          margin-top:rem-calc(10);
+          @include color-and-fontSize(#fff,rem-calc(12));
+        }
+      }
+    }
+  }
+
+  /*
+ * 自定义modal样式
+ */
+  .modal-customize {
+    width:rem-calc(320);
+
+    .modal-inner {
+      background-color:transparent;
+      border-radius:rem-calc(10);
+    }
+    .modal-body {
+      padding:0;
+    }
+  }
+  .customize-modal {
+    width:rem-calc(320);
+    position:relative;
+
+    &.yellowWhite-modal {
+      padding:rem-calc(15);
+      background-color:$second-bg-color;
+      border-radius:rem-calc(10);
+
+      .customize-modal-header {
+        width:100%;
+        height:rem-calc(40);
+        position:absolute;
+        left:0;
+        top:0;
+
+        &>span {
+          display:block;
+          width:rem-calc(30);
+          height:rem-calc(30);
+          background:url("../../../img/specialActivity/sendRedPackage/closeBtn_wrappe.png");
+          background-size:cover;
+          position:absolute;
+          top:rem-calc(-10);
+          right:rem-calc(-10);
+        }
+      }
+
+      .title {
+        margin:rem-calc(20) 0;
+        text-align: center;
+        @include color-and-fontSize(#a64731,rem-calc(20));
+
+        strong {
+          color:#e83649;
+          font-weight: normal;
+        }
+      }
+
+      .content {
+        @include color-and-fontSize(#333,rem-calc(14));
+      }
+
+      .reward-detail {
+        p {
+          margin-top:0;
+          margin-bottom:rem-calc(10);
+          line-height:1.5;
+          text-align: left;
+        }
+      }
+    }
+
+    .customize-modal-footer {
+      margin:rem-calc(20) 0;
+      text-align: center;
+
+      button + button {
+        margin-left:rem-calc(50);
+      }
+    }
+  }
+}

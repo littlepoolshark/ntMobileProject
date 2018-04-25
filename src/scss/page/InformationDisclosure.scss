@@ -1,0 +1,27 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+
+#informationDisclosure {
+    padding-bottom:rem-calc(30);
+    .tabs-nav {
+        position: relative;
+
+        .btn {
+            padding-left:0;
+            padding-right:0;
+            -webkit-tap-highlight-color: transparent;
+
+            &.btn-hollow.btn-primary.active {
+                background-color: transparent;
+            }
+        }
+    }
+}

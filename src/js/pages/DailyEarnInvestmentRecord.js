@@ -4,6 +4,7 @@ let DailyEarnInvestmentRecordStore=require("../stores/DailyEarnInvestmentRecordS
 import React from "react";
 
 //ui component
+import View from "../UIComponents/View";
 import Container from "../UIComponents/Container";
 import Tabs from "../UIComponents/Tabs";
 import NavBar from "../UIComponents/NavBar";
@@ -11,21 +12,30 @@ import Loader from "../UIComponents/Loader";
 import Modal from "../UIComponents/modal/Modal";
 import List from "../UIComponents/List";
 
-import CSSCore from "../UIComponents/utils/CSSCore";
+import NoDataHint from "./utilities/NoDataHint";
 
 
-//更多理财列表页：DailyEarnInvestmentRecord component
-
-let RecordItem=React.createClass({
+let DealRecordItem=React.createClass({
     render(){
+        let {
+            date,
+            desc,
+            money,
+            type
+            }=this.props;
         return (
-            <li>
-                <span className="date">{this.props.date}</span>
-                <span className="amount">￥{this.props.money}</span>
+            <li className="dealRecord-item">
+                <div className="title">
+                    <span className="amount">{type === "in" ? "+" : "-"}{money}</span>
+                    <span className="desc">{desc}</span>
+                </div>
+                <div className="subtitle">
+                    <span className="date">{date}</span>
+                </div>
             </li>
         )
     }
-})
+});
 
 let DailyEarnInvestmentRecord=React.createClass({
     getInitialState(){
@@ -51,20 +61,6 @@ let DailyEarnInvestmentRecord=React.createClass({
             isModalOpen:true
         });
     },
-    _getCurrTabType(){
-        let currListType="in";//默认打开的是“投资明细”tab
-        let investmentDetailList=document.getElementById("investmentDetailList");
-        let rollOutDetailList=document.getElementById("rollOutDetailList");
-        let incomeDetailList=document.getElementById("incomeDetailList");
-        if(CSSCore.hasClass(investmentDetailList,"active")){
-            currListType="in";
-        }else if(CSSCore.hasClass(rollOutDetailList,"active")){
-            currListType="out";
-        }else if(CSSCore.hasClass(incomeDetailList,"active")){
-            currListType="lixi";
-        }
-        return currListType;
-    },
     _loadMoreData(){
         let dailyEarnInvestmentRecord=document.getElementById("dailyEarnInvestmentRecord");
         let offsetHeight=dailyEarnInvestmentRecord.offsetHeight;//元素出现在视口中区域的高度
@@ -72,8 +68,7 @@ let DailyEarnInvestmentRecord=React.createClass({
         let scrollHeight=dailyEarnInvestmentRecord.scrollHeight;//元素总的内容高度
 
         if(scrollHeight - offsetHeight - scrollTop <= 3){
-            let listType=this._getCurrTabType();
-            DailyEarnInvestmentRecordAction.getNextPage(listType);
+            DailyEarnInvestmentRecordAction.getNextPage("investmentList");
             Loader.show();
         }
     },
@@ -89,101 +84,62 @@ let DailyEarnInvestmentRecord=React.createClass({
         };
         let {
             investmentDetailList,
-            rollOutDetailList,
-            incomeDetailList,
             matchLoanDetailList,
-            investmentDetailPageIndex,
-            rollOutDetailPageIndex,
-            incomeDetailPageIndex,
-            matchLoanDetailPageIndex
+            investmentDetailPageIndex
             }=this.state.data;
 
-        return (
-            <Container scrollable={true}   id="dailyEarnInvestmentRecord"  onScroll={this._loadMoreData}>
-                <NavBar
-                    title="灵活理财"
-                    leftNav={[leftNav]}
-                    rightNav={[rightNav]}
-                    amStyle="primary"
-                    onAction={this._handleNavClick}
-                />
-                <Tabs defaultActiveKey={0} >
+        let isEmpty=investmentDetailList.length > 0 ? false : true;
 
-                    <Tabs.Item
-                        title="投资明细"
-                        key={0}
-                        navStyle={null}
-                        id="investmentDetailList"
-                    >
-                        <ul className="detailList">
+        return (
+        <View>
+            <NavBar
+                title="交易明细"
+                leftNav={[leftNav]}
+                rightNav={[rightNav]}
+                amStyle="primary"
+                onAction={this._handleNavClick}
+            />
+            <Container scrollable={true}   id="dailyEarnInvestmentRecord"  onScroll={this._loadMoreData}>
+                {
+                    isEmpty ?
+                        <NoDataHint/> :
+                        <ul className="dealRecord-list">
                             {
                                 investmentDetailList.map(function(item,index){
                                     return (
-                                        <RecordItem key={investmentDetailPageIndex * (index+1)} {...item} />
+                                        <DealRecordItem key={investmentDetailPageIndex * 10 + index} {...item} />
                                     )
                                 })
                             }
                         </ul>
-                    </Tabs.Item>
-                    <Tabs.Item
-                        title="退出明细"
-                        key={1}
-                        navStyle={null}
-                        id="rollOutDetailList"
-                    >
-                        <ul className="detailList">
-                            {
-                                rollOutDetailList.map(function(item,index){
-                                    return (
-                                        <RecordItem key={rollOutDetailPageIndex * (index+1)} {...item} />
-                                    )
-                                })
-                            }
-                        </ul>
-                    </Tabs.Item>
-                    <Tabs.Item
-                        title="收益明细"
-                        key={2}
-                        navStyle={null}
-                        id="incomeDetailList"
-                    >
-                        <ul className="detailList">
-                            {
-                                incomeDetailList.map(function(item,index){
-                                    return (
-                                        <RecordItem key={incomeDetailPageIndex * (index+1)} {...item} />
-                                    )
-                                })
-                            }
-                        </ul>
-                    </Tabs.Item>
-                </Tabs>
+                }
 
                 <Loader amStyle="primary" rounded={true}/>
-
-                <Modal
-                    title="配标详情"
-                    ref="matchLoanModal"
-                    isOpen={this.state.isModalOpen}
-                    role="popup"
-                    onDismiss={this._handleModalClose}
-                    id="matchLoanModal"
-                >
-                    <List>
-                        {
-                            matchLoanDetailList.map(function(item,index){
-                                return (
-                                    <List.Item
-                                        href={"#/fixedLoanIntroduction?productId="+item.loanId+"&type=loan_product"}
-                                        title={item.title}
-                                        after={"￥"+item.amount}
-                                    />
-                                )
-                            })
-                        }
-                    </List>
-                </Modal>
             </Container>
+            <Modal
+                title="配标详情"
+                ref="matchLoanModal"
+                isOpen={this.state.isModalOpen}
+                role="popup"
+                onDismiss={this._handleModalClose}
+                id="matchLoanModal"
+            >
+                <List>
+                    {
+                        matchLoanDetailList.map(function(item,index){
+                            return (
+                                <List.Item
+                                    key={index + 1}
+                                    href={"#/fixedLoanIntroduction?productId="+item.loanId+"&type=loan_product"}
+                                    title={item.title}
+                                    after={"￥"+item.amount}
+                                />
+                            )
+                        })
+                    }
+                </List>
+            </Modal>
+        </View>
         )
     },
     componentDidMount(){

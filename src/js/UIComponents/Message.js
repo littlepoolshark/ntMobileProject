@@ -15,30 +15,47 @@ import ReactDOM from 'react-dom';
 import TransitionEvent from './utils/TransitionEvents';
 import classNames from 'classnames';
 
+const DEFAULT_INNER_STYLE={
+    backgroundColor:"rgba(0, 0, 0, 0.5)",
+    color:"#fff"
+};
 
 const Message=React.createClass({
     getInitialState(){
         return {
             "hide":true,
-            "msg":""
+            "msg":"",
+            "innerStyle":DEFAULT_INNER_STYLE
         }
     },
     render(){
-        let msgBoxClasses=classNames({"msg-hide":this.state.hide},{"msg-box-wrapper":true});
+        let {
+            hide,
+            msg,
+            innerStyle
+        }=this.state;
+
+        let msgBoxClasses=classNames(
+            "msg-box-wrapper",
+            {
+                "msg-hide":hide
+            }
+        );
         return (
             <div className={msgBoxClasses} ref="msgBox">
-                <div className="msg-box">
-                    {this.state.msg}
+                <div className="msg-box" style={innerStyle}>
+                    {msg}
                 </div>
             </div>
 
         )
     },
     componentDidMount(){
-        pubsub.bind("msgBox.broadcast",function(msg){
+        pubsub.bind("msgBox.broadcast",function(msg,innerstyle){
             this.setState({
                 "hide":false,
-                "msg":msg
+                "msg":msg,
+                "innerStyle":innerstyle || DEFAULT_INNER_STYLE
             })
         }.bind(this));
     },
@@ -69,11 +86,11 @@ Message.contextTypes = {
     router:React.PropTypes.object.isRequired
 };
 
-Message.broadcast=function(msg){
+Message.broadcast=function(msg,innerstyle){
     if(!!!msgBoxContainer){
         createMsgBoxContainer();
     }
-    pubsub.trigger("msgBox.broadcast",msg);
+    pubsub.trigger("msgBox.broadcast",msg,innerstyle);
 }
 
 function createMsgBoxContainer(){

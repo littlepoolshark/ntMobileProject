@@ -1,0 +1,126 @@
+// Functions
+@import "../../helper/functions";
+
+// Variables
+@import "../../variables";
+
+// Mixin
+@import "../../helper/mixins";
+
+//Animation
+@import "../../helper/animation";
+
+@keyframes redPackage-shake {
+  0% {
+    transform: rotate(-10deg);
+  }
+  5% {
+    transform: rotate(10deg);
+  }
+  10% {
+    transform: rotate(-9deg);
+  }
+  15% {
+    transform: rotate(9deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  25% {
+    transform: rotate(8deg);
+  }
+  30% {
+    transform:rotate(-7deg);
+  }
+  35% {
+    transform:rotate(7deg);
+  }
+  40% {
+    transform: rotate(-6deg);
+  }
+  45% {
+    transform: rotate(6deg);
+  }
+  50% {
+    transform: rotate(-5deg);
+  }
+  55% {
+    transform: rotate(5deg);
+  }
+  60% {
+    transform: rotate(-4deg);
+  }
+  65% {
+    transform: rotate(4deg);
+  }
+  70% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+  80% {
+    transform: rotate(-2deg);
+  }
+  85% {
+    transform: rotate(2deg);
+  }
+  90% {
+    transform: rotate(-1deg);
+  }
+  95% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+#openRedPackage {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image:url("../../../img/specialActivity/sendRedPackage/container-bg.jpg");
+  background-size: cover;
+  
+
+  .redPackage-wrapper {
+    padding:rem-calc(10);
+    background-image: linear-gradient(45deg,#ff9a64,#ff4a80);
+    border-radius:rem-calc(10);
+    position:relative;
+
+    .redPackage-enable {
+        width:rem-calc(310);
+        height:rem-calc(355);
+        background-image:url("../../../img/specialActivity/sendRedPackage/redPackage-wrapper.png");
+        background-size: cover;
+    }
+
+    .redPackage-disable {
+        width:rem-calc(310);
+        height:rem-calc(216);
+        background-image:url("../../../img/specialActivity/sendRedPackage/redPackage-wrapper-disable.png");
+        background-size: cover;
+    }
+
+ 
+    .title {
+      padding-top:rem-calc(25);
+      @include color-and-fontSize(#fcc684,rem-calc(16));
+    }
+
+    &.active {
+      animation:redPackage-shake 3s 1;
+    }
+
+  }
+
+  .applyTo-text {
+     @include color-and-fontSize(#9a3118,rem-calc(16));
+     position:absolute;
+     left:0;
+     top:105%;
+  }
+}

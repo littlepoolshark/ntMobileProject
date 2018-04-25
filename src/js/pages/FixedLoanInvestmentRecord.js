@@ -16,7 +16,7 @@ import CSSCore from "../UIComponents/utils/CSSCore";
 
 
 
-//理财计划明细列表页：FixedLoanInvestmentRecord component
+//投资计划明细列表页：FixedLoanInvestmentRecord component
 let FixedLoanInvestmentRecord=React.createClass({
     getInitialState(){
         return {
@@ -53,7 +53,8 @@ let FixedLoanInvestmentRecord=React.createClass({
                 creditorId:props.creId,
                 productType:"loan_product",
                 investAmount:props.investAmount,
-                status:props.status
+                status:props.status,
+                interestRate:props.interestRate
             }
         })
     },

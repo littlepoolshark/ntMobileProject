@@ -22,6 +22,7 @@ var RegisterGuideStore={
         loginName:"",
         password:"",
         imgVerifyCode:"",
+        inviteCode:"",
         randomVerifyCode:generateVerifyCode(),
         isAgreeWithAgreement:true,
         totalAmountOfInvestment:"----",
@@ -57,6 +58,11 @@ var RegisterGuideStore={
                 success:false,
                 msg:"登录密码不能为空，请输入"
             }
+        }else if(!/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{6,16}$/.test(password)){//  /^(?!\D+$)(?![^a-z]+$)[a-zA-Z\d]{6,}$/是匹配字母和数字混合的字符串的正则表达式
+            validationResult={
+                success:false,
+                msg:"格式不符，请输入6~16位数字和英文的密码组合！"
+            }
         }else if(password.length < 6){
             validationResult={
                 success:false,
@@ -91,6 +97,7 @@ var RegisterGuideStore={
             loginName:"",
             password:"",
             imgVerifyCode:"",
+            inviteCode:"",
             randomVerifyCode:generateVerifyCode(),
             isAgreeWithAgreement:true,
             totalAmountOfInvestment:"----",
@@ -104,6 +111,9 @@ MicroEvent.mixin(RegisterGuideStore);
 appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "getInitialData_registerGuide":
+            RegisterGuideStore.updateAll({
+                inviteCode:payload.data.inviteCode,
+            });
             ajax({
                 ciUrl:"/platinfo/v2/homePageData",
                 success:function(rs){

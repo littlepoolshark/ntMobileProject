@@ -18,6 +18,12 @@
   &:focus {
     outline: 0;
   }
+
+  @media screen and (min-width:320px){
+    & {
+      width:rem-calc(300);
+    }
+  }
 }
 
 .#{$modal-prefix}-inner {
@@ -26,6 +32,7 @@
   backface-visibility: hidden;
   perspective: 1000px;
   animation: amt-modal-in $modal-duration ease-out;
+  border-radius:rem-calc(5);
 
   .#{$modal-prefix}-out & {
     animation-name: amt-modal-out;
@@ -205,7 +212,7 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  z-index: $z-index-modal;
+  z-index: $z-index-popupModal;
   background: #fff;
   overflow: hidden;
 
@@ -229,7 +236,7 @@
   width: 100%;
   height: rem-calc($modal-popup-title-height);
   border-bottom: 1px solid $modal-border-color;
-  background-color: $C1;
+  background-color: #d3af7c;
 }
 
 .#{$modal-popup-prefix}-icon {

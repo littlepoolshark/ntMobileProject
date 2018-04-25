@@ -47,12 +47,12 @@ let My2DCode=React.createClass({
                         <img src={require("../../img/qr_gold.png")} alt="" className="bg-img"/>
                     </div>
                 </div>
-                {
-                    <div className="buts-wrapper">
-                        <Button amStyle="primary" block radius onClick={this._showShareTip}>分享给好友</Button>
-                        <Button amStyle="warning" block radius onClick={this._jumpToNextLocation}>更多农泰金融成长历程</Button>
-                    </div>
-                }
+
+                <div className="buts-wrapper">
+                    {/*<Button amStyle="primary" block radius onClick={this._showShareTip}>分享给好友</Button>*/}
+                    <Button amStyle="warning" block radius onClick={this._jumpToNextLocation}>更多农泰金融成长历程</Button>
+                </div>
+                
                 <div className={maskClasses} onClick={this._closeShareTip}>
                     <img src={require("../../img/share-guide.png")} alt="" className="share-guide-img"/>
                 </div>
@@ -62,7 +62,7 @@ let My2DCode=React.createClass({
     componentDidMount(){
         //使用qrcode.js原生插件来生成二维码
          let codeUrl=this.props.location.query.codeUrl;
-         //let codeUrl="http://192.168.1.90:1024/#/?view=register&inviteCode=123456";
+         //let codeUrl="http://192.168.1.26:1024/#/EarnSetIntroduction?productId=6267&type=yyz_product&inviteCode=13682330541";
          new QRCode(document.getElementById("codeImgWrapper"), {
             text: codeUrl,
             width: 170,

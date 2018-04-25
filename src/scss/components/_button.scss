@@ -120,9 +120,13 @@
 
 // Modifiers: colors
 // -----------------------------------------------------------------------------
-@each $color-key, $color in $am-colors {
+@each $color-key, $color in map_merge($am-colors, (primary:#e0b982)) {
   .#{$button-prefix}-#{$color-key} {
-    @include button-style($color, auto);
+    @if $color-key == "primary" {
+      @include button-style($color, auto,#fff);
+    }@else {
+      @include button-style($color, auto);
+    }
   }
 }
 

@@ -1,0 +1,39 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#upgradeToPABank {
+  .list {
+    margin: rem-calc(15) 0;
+
+    .item input[readonly] {
+      color: #333;
+      @include text-overflow;
+    }
+  }
+
+  .btn-wrapper {
+    margin-top: rem-calc(10);
+    padding: rem-calc(10) rem-calc(15) 0;
+
+    button {
+      margin-bottom: rem-calc(5);
+    }
+  }
+
+  .socialCreditCode-group {
+    margin: rem-calc(-15) 0 rem-calc(15);
+
+    input {
+      padding-left: 0;
+      padding-right: 0;
+      margin: 0;
+      border: none;
+    }
+  }
+}

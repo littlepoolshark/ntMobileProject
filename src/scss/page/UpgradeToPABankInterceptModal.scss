@@ -1,0 +1,46 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#upgradeToPABankHint-modal {
+  padding: 0;
+  margin: rem-calc(-15) rem-calc(-10);
+  position: relative;
+
+  .imgIcon-modal-closeBtn {
+    @include size(rem-calc(40),rem-calc(40));
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .banner {
+    width: 100%;
+    height: auto;
+    border-radius: rem-calc(5) rem-calc(5) 0 0;
+  }
+
+  .title {
+    margin: rem-calc(10) 0;
+    @include color-and-fontSize(#333,rem-calc(18));
+  }
+
+  .content {
+    padding: rem-calc(20);
+    @include color-and-fontSize(#666,rem-calc(12));
+  }
+
+  .upgradeToPABankHint-modal-btn-wrapper {
+    padding: rem-calc(20);
+    padding-top: 0;
+
+    button {
+      margin: 0;
+    }
+  }
+}

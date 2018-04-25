@@ -9,11 +9,6 @@ var RepaymentCalendarAction={
             }
         })
     },
-    getRepaymentDashboardData(){
-        appDispatcher.dispatch({
-            actionName:"getRepaymentDashboardData_repaymentCalendar",
-        })
-    },
     selectDate(date){
         appDispatcher.dispatch({
             actionName:"selectDate_repaymentCalendar",

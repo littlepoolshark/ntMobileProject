@@ -23,6 +23,11 @@
   }
   .number {
     @include color-and-fontSize($C3,$T8);
+
+    strong {
+      @include color-and-fontSize(#cd9b57,rem-calc(12));
+      font-weight: normal;
+    }
   }
   .loan-title-group {
     position:relative;
@@ -63,6 +68,15 @@
       }
       &.transfered {
         background-image: url("../../img/icon_label_transfered.png");
+      }
+      &.moon-holding {
+        background-image: url("../../img/icon_huikuan_moon.png");
+      }
+      &.moon-quitting {
+        background-image: url("../../img/icon_tuichu_moon.png");
+      }
+      &.moon-quited {
+        background-image: url("../../img/icon_yituichu_moon.png");
       }
     }
   }

@@ -1,0 +1,43 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#registerToPABankFailedHint {
+   background-color: #fff;
+
+  .wrapper {
+    padding:0 rem-calc(15);
+  }
+
+  .group-body {
+      padding:0;
+  }
+
+  .failed-emotionIcon {
+      @include size(rem-calc(49),rem-calc(49));
+      margin:rem-calc(30) auto 0;
+      background-image:url("../../img/btn_fail.png");
+      background-size:cover;
+  }
+
+  .title {
+    @include color-and-fontSize($C3,$T4);
+  }
+
+  .content {
+    margin-top:rem-calc(10);
+    margin-bottom:rem-calc(20);
+    @include color-and-fontSize($C4,$T8);
+
+    em {
+      font-weight: bold;
+      @include color-and-fontSize($C4,$T7);
+    }
+  }
+}

@@ -127,6 +127,21 @@
     }
   }
 
+  .item-after {
+    @include color-and-fontSize(#333,rem-calc(14));
+    text-align: right;
+
+    strong {
+      margin-left:rem-calc(10);
+      color:$C1;
+      font-weight: normal;
+    }
+
+    .hint-text {
+      margin-left:rem-calc(10);
+      color:#999;
+    }
+  }
 
   .todayTotalRepayment {
      margin:0;

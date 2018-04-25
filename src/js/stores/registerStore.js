@@ -15,7 +15,8 @@ var RegisterStore={
         let validationResult={
             success:true,
             msg:""
-        }
+        };
+        let checkPassword_regexp=/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{6,16}$/;//登录密码和交易密码共用同一个正则表达式来验证
         if(verificationCode === ""){
             validationResult={
                 success:false,
@@ -26,10 +27,15 @@ var RegisterStore={
                 success:false,
                 msg:"登录密码不能为空，请填写"
             }
-        }else if(password.length < 6 || password.length > 20){
+        }else if (password.length < 6){
             validationResult={
                 success:false,
-                msg:"登录密码的格式不对，请检查"
+                msg:"密码至少设置6位"
+            }
+        }else if(!checkPassword_regexp.test(password)){
+            validationResult={
+                success:false,
+                msg:"密码必须是字母和数字组合"
             }
         }
 
@@ -51,6 +57,19 @@ MicroEvent.mixin(RegisterStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
+        case "askForShowInviteEntry_register":
+            ajax({
+                ciUrl:"/user/v2/validatePageUrl",
+                data:{
+                    ntjrSource:payload.data.ntjrSource
+                },
+                success:function(rs){
+                    if(rs.code === 0 && rs.data && rs.data.isAbleWriteCode === "no"){
+                        RegisterStore.trigger("shutdownTheInviteCodeEntry");
+                    }
+                }
+            });
+            break;
         case "register":
             let {
                 password,
@@ -74,7 +93,8 @@ appDispatcher.register(function(payload){
                     data:postData,
                     success:function(rs){
                         if(rs.code === 0){
-                            cookie.setCookie("token",rs.data.token,59);
+                            cookie.setCookie("phoneNo",phoneNo,180);
+                            cookie.setCookie("token",rs.data.token,180);
                             RegisterStore.trigger("registerSuccess");
                         }else {
                             RegisterStore.trigger("registerFailed",rs.description);

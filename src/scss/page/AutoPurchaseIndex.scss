@@ -1,0 +1,88 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#autoPurchaseIndex {
+
+    .autoPurchaseHint {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include color-and-fontSize(#666,$T7);
+
+        & > span {
+            display:block;
+            @include size(rem-calc(28),rem-calc(28));
+        }
+    }
+
+    .autoPurchaseRecord {
+        .g {
+            margin-bottom: rem-calc(15);
+        }
+        .subtitle {
+            @include color-and-fontSize($C4,$T9);
+        }
+        .yearRate {
+            @include color-and-fontSize(#cc2e33,rem-calc(20));
+
+            .unit {
+                @include color-and-fontSize(#cc2e33,$T9);
+            }
+        }
+        .deadline {
+             @include color-and-fontSize($C3,rem-calc(20));
+
+            .unit {
+                @include color-and-fontSize($C3,$T9);
+            }
+        }
+        .validDate {
+            margin:0 rem-calc(-15);
+            padding:rem-calc(15) rem-calc(15) 0;
+            @include color-and-fontSize($C4,$T9);
+            @include point5Line(top);
+        }
+        .rightNavWrapper {
+            display:flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            &>span {
+                display:block;
+                @include color-and-fontSize(#dedede,rem-calc(20));
+            }
+        }
+    }
+
+    .autoPurchaseAgreement {
+        display:flex;
+        justify-content:flex-start;
+        align-items:center;
+        padding-left:rem-calc(15);
+        @include color-and-fontSize($C4,$T8);
+
+        & > span {
+            display:block;
+            margin-right:2px;
+
+            &.imgIcon-autoPurchase-agreement-checked {
+                @include size(rem-calc(25),rem-calc(25));
+            }
+
+            &.imgIcon-autoPurchase-agreement-unchecked {
+                @include size(rem-calc(25),rem-calc(25));
+            }
+
+            &.imgIcon-autoPurchase-info {
+                @include size(rem-calc(18),rem-calc(18));
+            }
+        }
+    }
+
+}

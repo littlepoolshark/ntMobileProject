@@ -9,7 +9,8 @@ var VerifyCodeForRegisterGuideStore={
         loginName:"",
         password:"",
         verifyCode:"",
-        imgVerifyCode:""
+        imgVerifyCode:"",
+        inviteCode:""
     },
     getAll(){
         return this._all;
@@ -34,6 +35,13 @@ var VerifyCodeForRegisterGuideStore={
         this._all=Object.assign(this._all,source);
     },
     clearAll(){
+        this._all={
+            loginName:"",
+            password:"",
+            verifyCode:"",
+            imgVerifyCode:"",
+            inviteCode:""
+        };
     }
 };
 MicroEvent.mixin(VerifyCodeForRegisterGuideStore);
@@ -58,7 +66,8 @@ appDispatcher.register(function(payload){
                     loginName,
                     password,
                     verifyCode,
-                    imgVerifyCode
+                    imgVerifyCode,
+                    inviteCode
                     }=VerifyCodeForRegisterGuideStore.getAll();
                 let postData={
                     accountName:loginName,
@@ -69,15 +78,20 @@ appDispatcher.register(function(payload){
                 };
                 let ntjrSource=sessionStorage.getItem("ntjrSource");
                 if(!!ntjrSource){
-                    postDate.ntjrSource=ntjrSource;
+                    postData.ntjrSource=ntjrSource;
                 }
+                if(inviteCode){
+                    postData.inventCode=inviteCode;
+                }
+
 
                 ajax({
                     ciUrl:"/user/v2/userRegister",
                     data:postData,
                     success:function(rs){
                         if(rs.code === 0){
-                            cookie.setCookie("token",rs.data.token,59);
+                            cookie.setCookie("token",rs.data.token,180);
+                            cookie.setCookie("phoneNo",loginName);//将用户的手机号码设置到cookie,全局使用
                             VerifyCodeForRegisterGuideStore.trigger("registerSuccess");
                         }else {
                             VerifyCodeForRegisterGuideStore.trigger("registerFailed",rs.description);

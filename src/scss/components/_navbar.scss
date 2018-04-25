@@ -16,17 +16,18 @@
 
   @if $item-style {
     .#{$navbar-prefix}-nav-item {
-      color: darken(islight($background), 5%);
+      //color: darken(islight($background), 5%);
+      color:#fff;
     }
   }
 }
 
 @mixin navbar {
-  display:-webkit-flex;
+  //display:-webkit-flex;//不知道为何，在生产环境中，这条样式规则没有生成
   display: flex;
-  -webkit-flex:0 0 auto;
+  //-webkit-flex:0 0 auto;//不知道为何，在生产环境中，这条样式规则没有生成
   flex: 0 0 auto;
-  -webkit-align-items: center;
+  //-webkit-align-items: center;//不知道为何，在生产环境中，这条样式规则没有生成
   align-items: center;
   justify-content: flex-start;
   overflow: visible;
@@ -96,9 +97,9 @@
 
 // Order: left | center | right
 .#{$navbar-class-left} {
-  -webkit-order:1;//不知道为何，在生产环境中，这条样式规则没有生成
+  //-webkit-order:1;//不知道为何，在生产环境中，这条样式规则没有生成
   order: 1;
-  -webkit-flex:0 0 $navbar-side-width;//不知道为何，在生产环境中，这条样式规则没有生成
+  //-webkit-flex:0 0 $navbar-side-width;//不知道为何，在生产环境中，这条样式规则没有生成
   flex: 0 0 $navbar-side-width;
   @include flex-basis-fallback($navbar-side-width);
 
@@ -108,9 +109,9 @@
 }
 
 .#{$navbar-class-center} {
-  -webkit-order:2;//不知道为何，在生产环境中，这条样式规则没有生成
+  //-webkit-order:2;//不知道为何，在生产环境中，这条样式规则没有生成
   order: 2;
-  -webkit-flex:0 0 $navbar-center-width;//不知道为何，在生产环境中，这条样式规则没有生成
+  //-webkit-flex:0 0 $navbar-center-width;//不知道为何，在生产环境中，这条样式规则没有生成
   flex: 0 0 $navbar-center-width;
   text-align: center;
   @include flex-basis-fallback($navbar-center-width);
@@ -145,10 +146,16 @@
 
 // Modifiers
 // -----------------------------------------------------------------------------
-$navbar-styles: map_merge($am-colors, (dark: $dark-alt)) !default;
+//农泰金融品牌升级为饭米粒理财，将navbar的颜色改为#d3af7c
+$navbar-styles: map_merge($am-colors, (dark: $dark-alt,primary:#d3af7c)) !default;
 
 @each $color-key, $color in $navbar-styles {
+
+  $font-color:islight($color);
+  @if $color-key == "primary" {
+    $font-color:#fff;
+  }
   .#{$navbar-prefix}-#{$color-key} {
-    @include navbar-colors($color, islight($color));
+    @include navbar-colors($color,$font-color );
   }
 }

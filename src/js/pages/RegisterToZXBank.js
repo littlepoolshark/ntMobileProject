@@ -40,6 +40,7 @@ let RegisterToZXBank=React.createClass({
             loginName,
             hadFailed
             }=this.state.data;
+        let beforeComponent="registerToZXBank";
         this.context.router.push({
             pathname:"bankCardList",
             query:{
@@ -49,7 +50,8 @@ let RegisterToZXBank=React.createClass({
                 bankId,
                 cardNo,
                 loginName,
-                hadFailed
+                hadFailed,
+                beforeComponent
             }
         });
     },
@@ -62,8 +64,14 @@ let RegisterToZXBank=React.createClass({
                 fieldValue=fieldValue.replace(/[^a-z0-9]+/gi,"");
                 break;
             case "cardNo":
+                //这段正则表达式能过滤非空格的字符，也能满足四个数字为一段的格式化要求
+                fieldValue=fieldValue.replace(/\s/g,'').replace(/\D/g,'').replace(/(\d{4})(?=\d)/g,"$1 ");
+                break;
             case "loginName":
                 fieldValue=fieldValue.replace(/[^\d]/g,"");
+                if(fieldValue.length > 11){
+                    fieldValue=fieldValue.slice(0,11);
+                }
                 break;
             default:
                 break;
@@ -106,8 +114,11 @@ let RegisterToZXBank=React.createClass({
             isRealNameReadOnly,
             isIdcardReadOnly,
             isCardNoReadOnly,
-            hadFailed
+            hadFailed,
+            showHintOfDifferentPhoneNo,
+            isZXCGOpen
             }=this.state.data;
+
 
         let leftNav= {
             component:"a",
@@ -115,11 +126,12 @@ let RegisterToZXBank=React.createClass({
             title: '返回'
         };
 
+        let isShowSkipRegisteringZXBtn=!isZXCGOpen && 0 < leftQureyTime && leftQureyTime < 3;
 
         return (
             <Container id="registerToZXBank" scrollable={true}>
                 <NavBar
-                    title="开通银行存管账户"
+                    title="开通银行存管子账户"
                     leftNav={[leftNav]}
                     amStyle="primary"
                     onAction={this._handleNavClick}
@@ -200,11 +212,15 @@ let RegisterToZXBank=React.createClass({
                         />
                     </List.Item>
                 </List>
-                <div className="warm-hint">
-                    <Icon classPrefix="imgIcon" name="attention" style={{width:"2rem"}}/>
-                    <span className="warm-hint-text">如果手机号与注册手机号不一致，则在存管账户开通之后，您的<strong>登录用户名</strong>也将更换为<strong>该手机号</strong>，请特别注意！</span>
-                </div>
 
+                {
+                    showHintOfDifferentPhoneNo ?
+                    <div className="warm-hint">
+                        <Icon classPrefix="imgIcon" name="attention" />
+                        <span className="warm-hint-text">即使填写的手机号不同，在存管开通之后，<strong>登录手机号</strong>也保持<strong>不变</strong>。</span>
+                    </div> :
+                    null
+                }
 
                 <div className="btn-wrapper">
                     <Button
@@ -215,13 +231,13 @@ let RegisterToZXBank=React.createClass({
                         onClick={this._submitRegisterForm.bind(null,leftQureyTime)}>
                         提交信息到银行验证
                     </Button>
-                    <div className="registerCount-hint">
+                    <div className={ isShowSkipRegisteringZXBtn ? "registerCount-hint cf text-left" : "registerCount-hint cf text-center"}>
+                        <span >您还有<strong>{leftQureyTime}</strong>次开通机会</span>
                         {
-                            leftQureyTime > 0 ?
-                                <span>您还有<strong>{leftQureyTime}</strong>次开通机会</span> :
-                                <span>您开通机会已经用完，如需继续开通请联系客服！</span>
+                            isShowSkipRegisteringZXBtn ?
+                            <Link className="fr"  to="skipRegisteringZX">暂不开通存管子账户</Link> :
+                            null
                         }
-
                     </div>
                 </div>
                 <Modal
@@ -267,38 +283,71 @@ let RegisterToZXBank=React.createClass({
             this.setState({
                 isModalOpen:true,
                 modalRole:"loading",
-                modalInnerText:"处理中，请稍后..."
+                modalInnerText:"处理中，请稍候..."
             })
         }.bind(this));
 
         RegisterToZXBankStore.bind("registerSuccessAndHadOpenZXShortcut",function(msg){
             let beforeComponent=this.props.location.query.beforeComponent;
+            let hadSetDealPassword=RegisterToZXBankStore.getAll().hadSetDealPassword;
+            hadSetDealPassword=hadSetDealPassword ? "true" : "false" ;//将boolean值转为为字符串，便于url传输
             let locationObj={
-                pathname:"registerToZXSuccessHint"
+                pathname:"registerToZXSuccessHint",
+                query:{
+                    hadSetDealPassword:hadSetDealPassword
+                }
             };
             if(!!beforeComponent){
-                locationObj.query={
-                    beforeComponent:beforeComponent
-                }
+                locationObj.query.beforeComponent=beforeComponent;
             }
             this.context.router.push(locationObj);
         }.bind(this));
 
         RegisterToZXBankStore.bind("registerZXFailed",function(msg){
             let {
-                leftQureyTime
+                leftQureyTime,
+                hadIdCardVerified,
+                hadSetDealPassword,
+                hadBindBankCard,
+                realName
                 }=RegisterToZXBankStore.getAll();
-            let beforeComponent=this.props.location.query.beforeComponent;
+
             if(leftQureyTime === 0){//如果剩余的开通机会为0，则跳转到开通存管帮助页面
-                let locationObj={
-                    pathname:"registerToZXFailedHint"
-                };
-                if(!!beforeComponent){
-                    locationObj.query={
-                        beforeComponent:beforeComponent
+                if(!hadIdCardVerified){//没有实名认证
+                    this.context.router.push({
+                        pathname:"realNameAuthentication",
+                        query:{
+                            beforeComponent:"registerToZXBank"
+                        }
+                    })
+                }else if(!hadSetDealPassword){//没有设置交易密码
+                    this.context.router.push({
+                        pathname:"setDealPassword",
+                        query:{
+                            actionType:"setting",
+                            beforeComponent:"registerToZXBank"
+                        }
+                    })
+                }else if(!hadBindBankCard){//没有绑定银行卡
+                    this.context.router.push({
+                        pathname:"bindBankCard",
+                        query:{
+                            beforeComponent:"registerToZXBank",
+                            realName:realName
+                        }
+                    });
+                }else {//否则，跳转到开通存管失败帮助页面
+                    let beforeComponent=this.props.location.query.beforeComponent;
+                    let locationObj={
+                        pathname:"registerToZXFailedHint"
+                    };
+                    if(!!beforeComponent){
+                        locationObj.query={
+                            beforeComponent:beforeComponent
+                        }
                     }
+                    this.context.router.push(locationObj);
                 }
-                this.context.router.push(locationObj);
             }else {
                 this.setState({
                     data:RegisterToZXBankStore.getAll(),

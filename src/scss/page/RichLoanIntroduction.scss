@@ -1,0 +1,299 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#richLoanIntroduction {
+  padding-bottom:rem-calc(42);
+
+  @import "./Summary";
+  @import "./RuleDescription";
+
+  .summary {
+    .title,.amount,.unit {
+      text-align:center;
+      @include color-and-fontSize($C3,$T5);
+    }
+    .subtitle {
+      margin-top:0;
+      margin-bottom:rem-calc(5);
+      @include color-and-fontSize($C4,$T9);
+    }
+
+    .progressBar {
+      margin-top:rem-calc(30);
+      margin-bottom:0;
+    }
+
+    .yearRate {
+      position: relative;
+
+      .rewardRate {
+        display:inline-block;
+        line-height:1;
+        @include color-and-fontSize($C1,$T8);
+        position:absolute;
+        top:0;
+        left:50%;
+        margin-left:rem-calc(50);
+      }
+    }
+
+  }
+
+  .tabs {
+    margin-top:0;
+    margin-bottom:0;
+    padding-top:rem-calc(50);
+    padding-bottom:rem-calc(40);
+    background-color:transparent;
+
+    .tabs-body .tab-panel{
+      padding:0;
+    }
+
+    .tabs-nav {
+      margin-bottom:-1px;
+      padding:rem-calc(5) rem-calc(15);
+      border-top:1px solid $separation-line-color;
+      border-bottom:1px solid $separation-line-color;
+      background:#fff;
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
+
+      .btn-sm {
+        @include color-and-fontSize($C3,$T5);
+      }
+    }
+
+    .btn-hollow.btn-primary {
+      border:none;
+      color:$C3;
+
+      &.active {
+        background:#fff;
+        color:$C1;
+      }
+    }
+
+  }
+
+  .group {
+    h6 {
+      display:flex;
+      align-items: center;
+      margin-bottom:rem-calc(10);
+      @include color-and-fontSize($C3,$T7);
+      font-weight:normal;
+
+      &>span {
+        display:block;
+      }
+
+      &>span.title-flag {
+        width:rem-calc(4);
+        height:rem-calc(13);
+        margin-right:rem-calc(5);
+        margin-top:rem-calc(-2);
+        background-color:$C1;
+        border-radius:rem-calc(4);
+      }
+
+      &>span.imgIcon-blue-questionMark {
+        width:rem-calc(40);
+        height:rem-calc(40);
+      }
+    }
+
+    .label {
+      @include color-and-fontSize($C3,$T7);
+    }
+    .content {
+      @include color-and-fontSize($C4,$T8);
+      text-align: justify;
+    }
+  }
+
+  table {
+    background:#fff;
+  }
+  #productIntroduction {
+
+    .g {
+      padding-bottom:rem-calc(15);
+      border-bottom:1px dashed #eee;
+
+      .col-2 {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .img-wrapper {
+          width:rem-calc(47);
+          height:rem-calc(47);
+          margin-bottom:rem-calc(5);
+          background-size: cover;
+
+          &.wending {
+            background-image:url("../../img/icon_shouru.png");
+          }
+
+          &.jiexi {
+            background-image:url("../../img/icon_anshi.png");
+          }
+
+          &.shengxin {
+            background-image:url("../../img/icon_anxin.png");
+          }
+
+        }
+
+        .subtitle {
+          @include color-and-fontSize(#333,rem-calc(14))
+        }
+      }
+    }
+
+    /*投资周期组件*/
+    .investment-cycle {
+      margin-top:15px;
+
+      .cycle-bar {
+        width:100%;
+
+        .title {
+          @include color-and-fontSize(#3f3f3f,rem-calc(12));
+        }
+        .subtitle {
+          @include color-and-fontSize(#999,rem-calc(12));
+        }
+        .markup-line {
+          width:rem-calc(3);
+          height:rem-calc(48);
+          background-image:url("../../img/investment-cycle-bar-line.png");
+          background-size:cover;
+          position:absolute;
+        }
+
+        .left-bar {
+          width:35%;
+
+          .left-bar-wrapper {
+            height:rem-calc(48);
+            padding:rem-calc(10) 0;
+            position:relative;
+
+            .left-bar-body {
+              height:rem-calc(28);
+              line-height: rem-calc(28);
+              text-align: center;
+              @include color-and-fontSize(#3f3f3f,rem-calc(12));
+              background-color:#f1f1f1;
+            }
+
+            .markup-line {
+              left:0;
+              top:0;
+            }
+
+          }
+        }
+
+        .right-bar {
+          width:65%;
+
+          .right-bar-wrapper {
+            height:rem-calc(48);
+            padding:rem-calc(10) 0;
+            position:relative;
+
+            .markup-line.left {
+              left:0;
+              top:0;
+            }
+
+            .markup-line.right {
+              right:0;
+              top:0;
+            }
+
+            .right-bar-body {
+              height:rem-calc(28);
+              line-height: rem-calc(28);
+              text-align: center;
+              @include color-and-fontSize(#fff,rem-calc(12));
+              background-image:url("../../img/investment-cycle-bar-bg.png");
+              background-size:cover;
+            }
+
+          }
+        }
+      }
+    }
+
+  }
+
+  .description-mask {
+    width:100%;
+    height:100%;
+    padding:0 rem-calc(45) rem-calc(70);
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .body {
+      margin-top:rem-calc(110);
+
+      .title {
+        margin-bottom:rem-calc(28);
+        padding-bottom:rem-calc(10);
+        @include color-and-fontSize(#fff,$T6);
+        border-bottom:1px solid #fff;
+      }
+
+      .content {
+        p {
+          margin:rem-calc(5) 0 0;
+          @include color-and-fontSize(#fff,$T8);
+        }
+      }
+    }
+    .footer {
+      .imgIcon-closeBtnInWrapper {
+        display:block;
+        margin:0 auto;
+        width:rem-calc(45);
+        height:rem-calc(45);
+      }
+    }
+  }
+
+  .popup {
+    background:#f8f8f8;
+  }
+  .popup-header {
+    z-index:9999;
+  }
+  .popup-body {
+    padding:0;
+  }
+
+  @import "./CheckMoreDetailBar";
+
+  .share-guide-img {
+    display:inline-block;
+    width:50%;
+    height:auto;
+    position:absolute;
+    top:rem-calc(10);
+    right:rem-calc(10);
+  }
+
+}

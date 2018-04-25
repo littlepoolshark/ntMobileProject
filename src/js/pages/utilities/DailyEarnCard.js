@@ -61,7 +61,7 @@ let DailyEarnCard=React.createClass({
                     <Grid collapse={true}>
                         <Col cols={3} className="dailyEarn-card-item">
                             <div className="text-center yearRate">{(productApr * 100).toFixed(1)}<span className="unit">%</span></div>
-                            <div className="text-center subtitle" >预期年化</div>
+                            <div className="text-center subtitle" >历史年化</div>
                         </Col>
                         <Col cols={3} className={dailyEarnCardItemClasses}>
                             <div className="subtitle">

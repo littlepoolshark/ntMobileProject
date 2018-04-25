@@ -1,0 +1,14 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#operationReport {
+    .tabs-nav {
+        position:relative;
+    }
+}

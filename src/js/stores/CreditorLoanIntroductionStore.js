@@ -15,7 +15,8 @@ let  CreditorLoanIntroductionStore={
         totalAmount:0,
         productName:"",
         bidDays:0,
-        publishTime:0//这个值应该是数字类型的时间戳
+        publishTime:0,//这个值应该是数字类型的时间戳
+        repayType:"xxhb"//还款方式，oneOf["xxhb","debx"],分别代表“先息后本”和“等额本息”
     },
     setAll(source){
         Object.assign(this._all,source);
@@ -60,7 +61,14 @@ appDispatcher.register(function(payload){
                             bidDays:7,//债权转让默认是7天后就"流标"
                             mainMonth:data.mainMonth,//剩余未还息期限
                             minNotRateTime:data.minNotRateTime,//最低未还息时间
-                            maxNotRateTime:data.maxNotRateTime//最高未还息时间
+                            maxNotRateTime:data.maxNotRateTime,//最高未还息时间
+                            rewardRate:data.rewardRate || 0,
+                            vipRaiseRate:data.vipRaiseRate || 0,
+                            repayType:data.repayType,
+                            nowPeriodNo:data.nowPeriodNo,//当前期数(整数类型)
+                            days:data.days,//当前时间与最近一期还款相差天数(整数类型)
+                            sumPeriodNo:data.sumPeriodNo, //投资总期限(整数类型)
+                            repaymentPeriod:data.repaymentPeriod
                         };
                         CreditorLoanIntroductionStore.setAll(CreditorLoanIntroductionStore.processData(source));
                         CreditorLoanIntroductionStore.trigger("change");

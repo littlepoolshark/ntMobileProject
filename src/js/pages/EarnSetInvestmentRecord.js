@@ -18,7 +18,7 @@ import CSSCore from "../UIComponents/utils/CSSCore";
 
 
 
-//理财计划明细列表页：EarnSetInvestmentRecord component
+//投资计划明细列表页：EarnSetInvestmentRecord component
 let EarnSetInvestmentRecord=React.createClass({
     getInitialState(){
         return {
@@ -107,14 +107,14 @@ let EarnSetInvestmentRecord=React.createClass({
         return (
                 <View id="earnSetInvestmentRecordView">
                     <NavBar
-                        title="理财计划投资明细"
+                        title="投资计划投资明细"
                         leftNav={[leftNav]}
                         rightNav={[rightNav]}
                         amStyle="primary"
                         onAction={this._handleNavClick}
                     />
                     <Container scrollable={true}   id="earnSetInvestmentRecord"  onScroll={this._loadMoreData}>
-                        <Tabs defaultActiveKey={0} >
+                        <Tabs defaultActiveKey={0}  >
                             <Tabs.Item
                                 title="待结算"
                                 key={0}

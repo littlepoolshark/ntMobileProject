@@ -1,6 +1,11 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var SetDealPasswordAction={
+    getInitialData(){
+        appDispatcher.dispatch({
+            actionName:"getInitialData_setDealPassword"
+        })
+    },
     submitDealPasswordForSetting (dealPassword,confirmDealPassword){
         appDispatcher.dispatch({
             actionName:"submitDealPassword_setting",

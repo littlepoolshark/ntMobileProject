@@ -94,4 +94,28 @@
   }
 
   @import "./CheckMoreDetailBar";
+
+  .summary {
+    .yearRate {
+      position:relative;
+
+      .rewardRate {
+        display:block;
+        line-height:1.5;
+        @include color-and-fontSize($C1,rem-calc(14));
+        position:absolute;
+        top:0;
+        right:22%;
+      }
+    }
+  }
+
+  .share-guide-img {
+    display:inline-block;
+    width:50%;
+    height:auto;
+    position:absolute;
+    top:rem-calc(10);
+    right:rem-calc(10);
+  }
 }

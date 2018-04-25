@@ -7,6 +7,8 @@
 // Mixin
 @import "../helper/mixins";
 #bannerPageWrapper {
+  background:#fff;
+
   &.frame-wrapper {
     width:100%;
     max-width:100%;

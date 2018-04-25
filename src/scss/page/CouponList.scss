@@ -26,7 +26,7 @@
   .coupon-card {
      position:relative;
      width:100%;
-     height:rem-calc(122);
+     //height:rem-calc(122);
      margin-bottom:rem-calc(20);
 
     &:last-child {
@@ -34,7 +34,7 @@
     }
 
     .coupon-card-body {
-      height:rem-calc(95);
+      //height:rem-calc(95);
       padding:rem-calc(15);
       background-color:#fff;
 

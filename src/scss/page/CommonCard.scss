@@ -18,15 +18,26 @@
   .title {
     display:flex;
     align-items: center;
+    margin-bottom:rem-calc(5);
     @include color-and-fontSize($C3,$T5);
     font-weight:normal;
 
-    span:first-child {
-      margin-right: auto;
+    span {
+      display:block;
 
       &.creditor-title {
         margin-right:rem-calc(10);
       }
+    }
+
+    .vip-rate {
+      height:rem-calc(18);
+      padding:0 rem-calc(3) 0 rem-calc(9);
+      margin-left:rem-calc(5);
+      @include color-and-fontSize(#fff,rem-calc(12));
+      line-height:rem-calc(19);
+      background-image:url("../../img/vipRate-bg.png");
+      background-size:cover;
     }
   }
 
@@ -44,11 +55,7 @@
     }
 
     .rewardRate {
-      display:inline-block;
       @include color-and-fontSize($C1,$T10);
-      position: absolute;
-      top:0;
-      right:rem-calc(-10);
     }
   }
 
@@ -64,15 +71,13 @@
 
   .tag {
     display:inline-block;
-    height:rem-calc(16);
-    background-size: cover;
-
-    & + .tag {
-      margin-left:rem-calc(8);
-    }
+    padding:2px 5px;
+    margin-left:rem-calc(5);
+    @include color-and-fontSize(#cd9b57,rem-calc(12));
+    border:1px solid #cd9b57;
   }
 
-  .tag-redPackage {
+  /*.tag-redPackage {
     width:rem-calc(35);
     background-image:url("../../img/financial_laber_redbag.png");
   }
@@ -90,17 +95,35 @@
   .tag-transfer {
     width:rem-calc(20);
     background-image:url("../../img/financial_laber_transfer.png");
-  }
+  }*/
 
   .stamp {
     width:rem-calc(70);
     height:rem-calc(70);
-    background-size:cover;
-    background-image:url("../../img/icon_soldout.png");
     position: absolute;
     top:50%;
     margin-top:- rem-calc(35);
     right:rem-calc(15);
+
+    &.soldOut {
+      background-image:url("../../img/productStatus_soldout.png");
+      background-size:cover;
+    }
+
+    &.releasing {
+      background-image:url("../../img/productStatus_releasing.png");
+      background-size:cover;
+    }
+
+    &.repaying {
+      background-image:url("../../img/productStatus_repaying.png");
+      background-size:cover;
+    }
+
+    &.over {
+      background-image:url("../../img/productStatus_over.png");
+      background-size:cover;
+    }
   }
 
   .prePublish-hint {
@@ -122,6 +145,18 @@
       width:rem-calc(16);
       height:rem-calc(16);
       margin-right:rem-calc(2);
+    }
+  }
+
+  .ttz-btn-wrapper {
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+
+    button {
+      margin:0;
     }
   }
 

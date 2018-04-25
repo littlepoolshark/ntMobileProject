@@ -1,0 +1,60 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#registerSuccessHint {
+    position: relative;
+    background-color:#fdf9ee;
+    
+    .title {
+        margin:rem-calc(45) 0 rem-calc(35);
+        @include color-and-fontSize(#333,rem-calc(18));
+    }
+
+    .subtitle {
+        margin:rem-calc(5) 0 rem-calc(20);
+        @include color-and-fontSize(#333,rem-calc(16));        
+    }
+
+    .content {
+        margin-top: rem-calc(5);
+        @include color-and-fontSize(#333,rem-calc(16));
+    }
+
+    .group {
+        margin:0 rem-calc(30);
+        position: relative;
+        z-index: 2;
+    }
+
+    .qrCode-wrapper {
+        margin-bottom:rem-calc(30);
+        &>img {
+            width: rem-calc(125);
+            height:rem-calc(125);
+        }
+    }
+
+    .bottom-bg {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left:0;
+        z-index:1;
+    }
+
+    .downloan-APP-guide {
+        .title {
+            color:#a54c16;
+        }
+        .btn-wrapper {
+            margin-bottom:rem-calc(20);
+            padding:0 rem-calc(15);
+        }
+    }
+}

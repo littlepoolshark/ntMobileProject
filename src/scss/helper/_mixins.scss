@@ -3,7 +3,7 @@
 @mixin clearfix {
   &:before,
   &:after {
-    content: " ";
+    content: ' ';
     display: table;
   }
 
@@ -70,7 +70,7 @@
 /// @param {color} $triangle-color - Color of the triangle.
 /// @param {keyword} $triangle-direction - Direction the triangle points. Can be `top`, `right`, `bottom`, or `left`.
 @mixin css-triangle($triangle-size, $triangle-color, $triangle-direction) {
-  content: "";
+  content: '';
   display: block;
   width: 0;
   height: 0;
@@ -93,7 +93,6 @@
   }
 }
 
-
 // Retina borders
 // @see https://gist.github.com/w0rm/c0dd4b7aed71acc03900
 // @see http://dieulot.net/css-retina-hairline
@@ -102,7 +101,7 @@
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     top: 0;
     left: 0;
     position: absolute;
@@ -124,7 +123,7 @@
   position: relative;
 
   &::after {
-    content: "";
+    content: '';
     bottom: 0;
     left: 0;
     position: absolute;
@@ -155,7 +154,6 @@
 %force-hardware-acceleration {
   @include force-hardware-acceleration();
 }
-
 
 // Browser compatibility
 // -----------------------------------------------------------------------------
@@ -192,7 +190,79 @@ $legacy-android-uc: 'ua-stupid-uc';
 }
 
 //根据传入的颜色和文字的级别，返回对应的样式集合
-@mixin color-and-fontSize($C,$T) {
-  color:$C;
-  font-size:$T;
+@mixin color-and-fontSize($C, $T) {
+  color: $C;
+  font-size: $T;
+}
+
+//根据传入的方位，产生一条0.5px的线
+@mixin point5Line($direction, $color: #ddd) {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: $color;
+
+    @if ($direction == top) {
+      width: 100%;
+      height: 1px;
+      left: 0;
+      top: 0;
+      border-top: 1px solid $color;
+      transform-origin: 0 0;
+      transform: scaleY(0.5);
+    }
+
+    @if ($direction == bottom) {
+      width: 100%;
+      height: 1px;
+      left: 0;
+      bottom: 0;
+      border-bottom: 1px solid $color;
+      transform-origin: 0 0;
+      transform: scaleY(0.5);
+    }
+
+    @if ($direction == left) {
+      width: 1px;
+      height: 100%;
+      left: 0;
+      top: 0;
+      border-left: 1px solid $color;
+      transform-origin: 0 0;
+      transform: scaleX(0.5);
+    }
+
+    @if ($direction == right) {
+      width: 1px;
+      height: 100%;
+      right: 0;
+      top: 0;
+      border-right: 1px solid $color;
+      transform-origin: 0 0;
+      transform: scaleX(0.5);
+    }
+
+    @if ($direction == around) {
+      width: 200%;
+      height: 200%;
+      left: 0;
+      top: 0;
+      z-index: -1;
+      border: 1px solid $color;
+      transform-origin: 0 0;
+      transform: scaleX(0.5);
+    }
+    @if ($direction == none) {
+      width: 200%;
+      height: 200%;
+      left: 0;
+      top: 0;
+      z-index: -1;
+      border: none;
+      transform-origin: 0 0;
+      transform: scaleX(0.5);
+    }
+  }
 }

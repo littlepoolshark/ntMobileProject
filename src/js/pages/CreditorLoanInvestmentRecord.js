@@ -89,7 +89,7 @@ let CreditorLoanInvestmentRecord=React.createClass({
                                     return (
                                         <InvestmentRecordCard
                                             {...item}
-                                            key={item.creId}
+                                            key={index}
                                             clickHandler={this._handleCardClick}
                                         />
                                     )

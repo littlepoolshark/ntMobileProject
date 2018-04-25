@@ -48,6 +48,7 @@
     .dashboard {
       width:rem-calc(145);
       height:rem-calc(35);
+      padding-left:rem-calc(20);
       @include color-and-fontSize($white,$T4);
       background-color:#419cc9;
       border-radius:rem-calc(18);
@@ -119,6 +120,7 @@
     .isFinish-flag {
       width:rem-calc(80);
       height:rem-calc(23);
+      margin-top:rem-calc(5);
       display:flex;
       justify-content: center;
       align-items: center;

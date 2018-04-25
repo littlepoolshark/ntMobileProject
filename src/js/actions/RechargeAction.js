@@ -1,32 +1,24 @@
-var appDispatcher=require("../dispatcher/dispatcher.js");
+var appDispatcher = require("../dispatcher/dispatcher.js");
 
-var RechargeAction={
-    getBankCardInfoFromServer (){
-        appDispatcher.dispatch({
-            actionName:"getBankCardInfoFromServer_recharge",
-        })
-    },
-    recharge(){
-        appDispatcher.dispatch({
-            actionName:"submitRechargeAmount"
-        })
-    },
-    changeRechargeAmount(amount){
-        appDispatcher.dispatch({
-            actionName:"rechargeAmountChange",
-            data:{
-                rechargeAmount:amount
-            }
-        })
-    },
-    changeRechargeType(type){
-        appDispatcher.dispatch({
-            actionName:"rechargeTypeChange",
-            data:{
-                rechargeType:type
-            }
-        })
-    }
+var RechargeAction = {
+  getBankCardInfoFromServer() {
+    appDispatcher.dispatch({
+      actionName: "getBankCardInfoFromServer_recharge"
+    });
+  },
+  recharge_upgrade() {
+    appDispatcher.dispatch({
+      actionName: "submitRechargeAmount_upgrade"
+    });
+  },
+  changeRechargeAmount(amount) {
+    appDispatcher.dispatch({
+      actionName: "rechargeAmountChange",
+      data: {
+        rechargeAmount: amount
+      }
+    });
+  }
 };
 
-module.exports=RechargeAction;
+module.exports = RechargeAction;

@@ -17,6 +17,8 @@ import Modal from "../UIComponents/modal/Modal"
 import Icon from "../UIComponents/Icon";
 import Slider from "../UIComponents/Slider";
 
+import getParamObjFromUrl from "../lib/getParamObjFromUrl";
+
 let SliderWrapper=React.createClass({
     getInitialState(){
         return {
@@ -28,6 +30,11 @@ let SliderWrapper=React.createClass({
             currIndex:index
         })
     },
+    _jumpToProductList(){
+        this.context.router.push({
+            pathname:"productList"
+        });
+    },
     render(){
         let sliderPageList=this.props.sliderPageList;
         let sliderWrapperClassPrefix=this.props.wrapperClassPrefix;
@@ -37,6 +44,8 @@ let SliderWrapper=React.createClass({
             sliderImgList.push(sliderWrapperClassPrefix+" item"+(i+1));
         }
         let currIndex=this.state.currIndex;
+        let canIJump=sliderWrapperClassPrefix === "PI-sliderImg-wrapper";
+
         return (
             <div className="slider-wrapper">
                 <div className="sliderPage-wrapper">
@@ -66,10 +75,13 @@ let SliderWrapper=React.createClass({
                         sliderImgList.map(function(item,index){
                             return (
                                 <Slider.Item key={index}>
-                                    <div className={item}></div>
+                                    <div
+                                        className={item}
+                                        onClick={canIJump ? this._jumpToProductList : null}>
+                                    </div>
                                 </Slider.Item>
                             )
-                        })
+                        }.bind(this))
                     }
 
                 </Slider>
@@ -77,6 +89,10 @@ let SliderWrapper=React.createClass({
         )
     }
 });
+
+SliderWrapper.contextTypes = {
+    router:React.PropTypes.object.isRequired
+};
 
 
 let RegisterGuide=React.createClass({
@@ -146,7 +162,7 @@ let RegisterGuide=React.createClass({
                         <Field
                             label=""
                             type="password"
-                            placeholder="请设置登录密码"
+                            placeholder="6~16位数字和字母的密码组合"
                             value={password}
                             ref="password"
                             onChange={this._handleFieldValueChange.bind(null,"password")}
@@ -158,7 +174,7 @@ let RegisterGuide=React.createClass({
                                 onChange={this._handleToggleCheck}
                             />
                             同意
-                            <Link to="ServiceAgreement_register">《农泰金融注册服务协议》</Link>
+                            <Link to="ServiceAgreement_register">《注册服务协议》</Link>
                         </div>
                         <Grid collapse={true}>
                             <Col cols={4}>
@@ -184,6 +200,7 @@ let RegisterGuide=React.createClass({
                             </Col>
                         </Grid>
                         <Button block amStyle="warning" radius id="registerBtn" onClick={this._submitRegisterForm}>注册领红包</Button>
+                        <div className="text-right"><Link to="/" style={{color:"#fff"}}>立即登录</Link></div>
                     </div>
                     <div className="footBg-wrapper">
                         <img src={require("../../img/clouds.png")} alt="" className="responsive"/>
@@ -283,7 +300,7 @@ let RegisterGuide=React.createClass({
                     </ul>
                 </Group>
                 <Group className="productIntroduction">
-                    <div className="title text-center">农泰金融有些什么理财产品？</div>
+                    <div className="title text-center">农泰金融有些什么投资产品？</div>
                     <SliderWrapper sliderPageList={["新手标","天天赚","月月赚","季季赚","好采投"]} wrapperClassPrefix="PI-sliderImg-wrapper"/>
                     <div className="footerBg-wrapper">
                         <img src={require("../../img/monneybag.png")} alt="" className="responsive"/>
@@ -301,8 +318,8 @@ let RegisterGuide=React.createClass({
         )
     },
     componentDidMount(){
-
-        RegisterGuideAction.getInitialData();
+        let inviteCode=getParamObjFromUrl().hasOwnProperty("inviteCode") &&  getParamObjFromUrl().inviteCode || "";
+        RegisterGuideAction.getInitialData(inviteCode);
         RegisterGuideAction.changeVerifyCodeImg();
 
         RegisterGuideStore.bind("change",function(){
@@ -320,13 +337,15 @@ let RegisterGuide=React.createClass({
                 loginName,
                 password,
                 imgVerifyCode,
-                }=RegisterGuideStore.getAll();
+                inviteCode
+                }=this.state.data;
             this.context.router.push({
                 pathname:"verifyCodeForRegisterGuide",
                 query:{
                     loginName,
                     password,
-                    imgVerifyCode
+                    imgVerifyCode,
+                    inviteCode
                 }
             })
         }.bind(this));

@@ -45,9 +45,10 @@
 
   .legend-color-block {
     display:inline-block;
-    width:rem-calc(15);
-    height:rem-calc(15);
+    width:rem-calc(12);
+    height:rem-calc(12);
     margin-right:rem-calc(10);
+    border-radius:rem-calc(6);
 
     &.c1 {
       background-color:#ff7659;
@@ -64,15 +65,18 @@
     &.c5 {
       background-color:#ae7bb4;
     }
-
+    &.c6 {
+      background-color:#6297db;
+    }
   }
+
 
   #legendList {
     margin-top:rem-calc(15);
     margin-bottom:rem-calc(15);
 
     .item {
-      padding:rem-calc(7) rem-calc(15);
+      padding:rem-calc(7) rem-calc(50);
     }
     .list-item-title {
       display:flex;

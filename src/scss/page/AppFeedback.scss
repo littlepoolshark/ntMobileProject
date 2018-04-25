@@ -1,0 +1,26 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#appFeedback {
+    .group {
+        margin-top:0;
+
+        textarea {
+            margin-bottom:rem-calc(5);
+            border-color:#eee;
+        }
+
+        .input-count-hint {
+            @include color-and-fontSize(#999,rem-calc(14));
+        }
+    }
+    .btn-wrapper {
+        padding:0 rem-calc(15);
+    }
+}

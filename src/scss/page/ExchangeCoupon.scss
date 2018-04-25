@@ -1,0 +1,20 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#exchangeCoupon {
+  .btn-wrapper {
+    margin:rem-calc(20) 0;
+    padding:0 rem-calc(15);
+  }
+
+  .warm-hint-text {
+    margin-top:rem-calc(-10);
+    @include color-and-fontSize(#666,rem-calc(12));
+  }
+}

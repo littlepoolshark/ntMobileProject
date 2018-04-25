@@ -7,32 +7,71 @@
 // Mixin
 @import "../helper/mixins";
 
+$default-primary:#e6b980;
+
 .default-container {
     width:100%;
     height:100%;
     min-height:100%;
     padding:rem-calc(60) rem-calc(26) 0;
+    background-color:#281b08;
     /*由于键盘上升，下降后会漏出这层背景图片下面的背景色，所以将这一层背景图去掉*/
-   /* background: url("../../img/login_bg.png") 0 0 no-repeat;
-    background-size:cover;*/
+    background: url("../../img/bg@2x.jpg") 0 0 no-repeat;
+    background-size:cover;
     position:relative;
 
     .popup-body {
         padding:0;
     }
+
+    a {
+        color:$default-primary;
+    }
+
+    .agreement-bar {
+        display:flex;
+        align-items: center;
+        margin-top:rem-calc(-8);
+        margin-left:rem-calc(-8);
+        color:rgb(194,193,193);
+        font-size:rem-calc(14);
+
+        & > a,
+        & > span {
+            display:block;
+        }
+
+        .imgIcon {
+            @include size(rem-calc(32),rem-calc(32));
+        }
+    }
+
+    .btn-wrapper {
+        margin-top:rem-calc(50);
+    
+        .btn-primary {
+            @include color-and-fontSize(#000,rem-calc(18));
+            background:linear-gradient(to right,rgb(240,210,170),rgb(216,167,105));
+            border:none;
+            //-webkit-tap-highlight-color: linear-gradient(to right,rgb(161,143,118),rgb(146,115,75));
+            -webkit-tap-highlight-color: rgba(146,115,75,0.5);
+        }
+    }
+    
 }
 .ntLogo-wrapper {
-    width:rem-calc(184);
-    height:rem-calc(53);
-    margin:0 auto;
+    width:rem-calc(145);
+    height:rem-calc(90);
+    margin:0 auto rem-calc(50);
     background-size:cover;
-    background-image:url("../../img/login_logo.png");
+    background-image:url("../../img/logo_default.png");
 }
 .slogan-text {
     margin-top:rem-calc(5);
     @include color-and-fontSize($C1,$T10);
 }
-#login-form,#register-form {
+#login-form,
+#register-form {
     margin-top:rem-calc(40);
     margin-bottom:rem-calc(10);
     padding: 0;
@@ -40,24 +79,47 @@
 
     & > li {
         padding:0;
+        border:none;
+        border-bottom:1px solid  rgba(229,201,160,0.59);
+
+
     }
     .item-input input {
-        padding:rem-calc(21) 0;
+        padding:rem-calc(15) 0;
+        @include color-and-fontSize(rgb(194,193,193),rem-calc(16));
         background:transparent;
     }
+    .imgIcon-phone,
+    .imgIcon-password {
+        @include size(rem-calc(16),rem-calc(18))
+    }
+
+    .imgIcon-eye-off,
+    .imgIcon-eye-on,
+    .imgIcon-round-delete-btn {
+        @include size(rem-calc(35),rem-calc(35))
+    }
+    
 }
 #register-form {
     & > li {
         border-top:none;
     }
 }
-.btn-wrapper {
-    margin-top:rem-calc(30);
-}
+
 .default-footer {
+    display:flex;
     width:100%;
     text-align: center;
-    margin-top:rem-calc(80);
-    color:#626566;
+    margin-top:rem-calc(14);
+    color:rgb(194,193,193);
+
+    &.justify-content-center {
+        justify-content: center;
+    }
+
+    &.justify-content-between {
+        justify-content: space-between;
+    }
 }
 

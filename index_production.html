@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-    <title>农泰金融</title>
+    <title>饭米粒理财</title>
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
    <!-- <link rel="alternate icon" type="image/png" href="http://s.amazeui.org/assets/react/i/favicon.png">
     <link rel="apple-touch-icon-precomposed" href="http://s.amazeui.org/assets/react/i/app-icon72x72@2x.png">-->
-    <meta name="apple-mobile-web-app-title" content="农泰金融 专业理财平台 农业垂直"/>
+    <meta name="apple-mobile-web-app-title" content="饭米粒理财 专业理财平台 农业垂直"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <script>
@@ -41,24 +41,40 @@
             })();
         })();
     </script>
+    <script>
+        //使用客户端代理探测方案，如果是uc浏览器，则为html标签挂上"ua-stupid-uc"样式类
+        var ua = navigator.userAgent;
+        if(/android/i.test(ua) || ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
+            document.documentElement.className += ' ua-stupid-uc isAndroid';
+        }
+
+        //笨拙地兼容iphone手机下的dom元素fixed问题
+        if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+            document.documentElement.className += ' isIOS';
+        }
+
+    </script>
     <script src="./qrcode.min.js"></script>
 </head>
 <body >
 <div id="app-root" style="height: 100%; width: 100%; overflow: hidden;">
 </div>
  加载中.......
-</body>
-<script>
-    //使用客户端代理探测方案，如果是uc浏览器，则为html标签挂上"ua-stupid-uc"样式类
-    var ua = navigator.userAgent;
-    if(/android/i.test(ua) || ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
-        document.documentElement.className += ' ua-stupid-uc';
-    }
-
-    //笨拙地兼容iphone手机下的dom元素fixed问题
-    if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
-        document.documentElement.className += ' isIOS';
-    }
-
+ <script>
+    /*
+    * 这段代码腾讯数据统计的sdk，用于数据收集。
+    * @see: http://data.qq.com/product/h5
+    */
+    var _mtac = {};
+    (function() {
+        var mta = document.createElement("script");
+        mta.src = "http://pingjs.qq.com/h5/stats.js?v2.0.4";
+        mta.setAttribute("name", "MTAH5");
+        mta.setAttribute("sid", "500507488");
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(mta, s);
+    })();
 </script>
+
+</body>
 </html>

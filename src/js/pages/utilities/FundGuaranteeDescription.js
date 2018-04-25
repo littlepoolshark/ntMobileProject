@@ -7,9 +7,9 @@ import Group from "../../UIComponents/Group";
 function FundGuaranteeDescription(props){
     return (
         <Group>
-            <h6>资金保障</h6>
+            <h6><span className="title-flag"></span>资金保障</h6>
             <div className="content">
-                一、用户资金存放以及流转完全通过第三方存管系统，农泰金融不触碰用户交易资金。<br/>
+                一、用户资金存放以及流转完全通过第三方存管系统，饭米粒理财不触碰用户交易资金。<br/>
                 二、用户资金同卡进出，到期本息返还至用户账户。<br/>
             </div>
         </Group>

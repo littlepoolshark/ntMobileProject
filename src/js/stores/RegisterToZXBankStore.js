@@ -1,6 +1,7 @@
 var MicroEvent = require('../lib/microevent.js');
 var appDispatcher=require('../dispatcher/dispatcher.js');
 var ajax=require("../lib/ajax.js");
+var cookie=require("../lib/cookie");
 
 var RegisterToZXBankStore={
     _all:{
@@ -17,7 +18,12 @@ var RegisterToZXBankStore={
         loginName:"",
         leftQureyTime:3,//剩余的开通次数
         isOpenZXShortcut:false,//是否已经开通快捷支付
-        visitFrom:""//是否是从银行卡列表返回到此页面的标志位
+        visitFrom:"",//是否是从银行卡列表返回到此页面的标志位
+        showHintOfDifferentPhoneNo:false//是否显示“开通中信存管手机号与登录号码不同”的提示
+    },
+    trimCardNo(cardNo){
+        cardNo=cardNo + "";
+        return cardNo.replace(/\s+/g,"");
     },
     checkForBindCardForm(){
         let validationResult={
@@ -32,7 +38,9 @@ var RegisterToZXBankStore={
             cardNo,
             loginName
             }=this._all;
-        cardNo=cardNo+"";//确保cardNo是字符串
+        cardNo=this.trimCardNo(cardNo);//去除格式化加入的空格
+
+
         if(realName === ""){
             validationResult={
                 success:false,
@@ -103,7 +111,8 @@ var RegisterToZXBankStore={
             loginName:"",
             leftQureyTime:3,//剩余的开通次数
             isOpenZXShortcut:false,//是否已经开通快捷支付
-            visitFrom:""//是否是从银行卡列表返回到此页面的标志位
+            visitFrom:"",//是否是从银行卡列表返回到此页面的标志位
+            showHintOfDifferentPhoneNo:false//是否显示“开通中信存管手机号与登录号码不同”的提示
         }
     }
 
@@ -121,6 +130,7 @@ appDispatcher.register(function(payload){
                         let idCardVerifyInfo=rs.data.idCardVerifyInfo;
                         let zxcgOpenInfo=rs.data.zxcgOpenInfo;
                         let mobileVerifyInfo=rs.data.mobileVerifyInfo;
+                        let dealPassVerifyInfo=rs.data.dealPassVerifyInfo;
 
                         let needModify=bankInfo.needModify;
                         let leftQureyTime=zxcgOpenInfo.leftQureyTime;
@@ -143,7 +153,11 @@ appDispatcher.register(function(payload){
                             loginName:(needModify === "yes" && bankInfo.bankId !== "") ? "" :mobileVerifyInfo.mobileFull,
                             leftQureyTime:leftQureyTime,
                             isOpenZXShortcut:(bankInfo.isActive === "no" || bankInfo.isActive === "")? false : true,
-                            zxcgOpenFailedReason:!!zxcgOpenInfo.zxcgOpenFailedReason ? zxcgOpenInfo.zxcgOpenFailedReason : "请输入新的银行卡开通存管账户，"
+                            isZXCGOpen:zxcgOpenInfo.zxcgOpen === "yes" ? true : false ,
+                            zxcgOpenFailedReason:!!zxcgOpenInfo.zxcgOpenFailedReason ? zxcgOpenInfo.zxcgOpenFailedReason : "请输入新的银行卡开通存管子账户，",
+                            hadIdCardVerified:idCardVerifyInfo.idCardVerified === "yes" ? true : false,
+                            hadSetDealPassword:dealPassVerifyInfo.isDealPwdSet === "yes" ? true : false,
+                            hadBindBankCard:bankInfo.bankCardVerified === "yes" ? true : false
                         };
 
                         RegisterToZXBankStore.updateAll(Object.assign(dataFormServer,dataFormQuery));
@@ -154,7 +168,13 @@ appDispatcher.register(function(payload){
             break;
         case "changeFieldValue_registerToZXBank":
             let source={};
+            let originLoginName=cookie.getCookie("phoneNo");
             source[payload.data.fieldName]=payload.data.fieldValue;
+            if( payload.data.fieldName === "loginName"){
+                if(payload.data.fieldValue.length  ===11 && payload.data.fieldValue !== originLoginName){
+                    source.showHintOfDifferentPhoneNo=true;
+                }
+            }
             RegisterToZXBankStore.updateAll(source);
             RegisterToZXBankStore.trigger("change");
             break;
@@ -169,8 +189,9 @@ appDispatcher.register(function(payload){
                     loginName,
                     isOpenZXShortcut
                     }=RegisterToZXBankStore.getAll();
-                RegisterToZXBankStore.trigger("registerRequestIsStarting");
+                cardNo=RegisterToZXBankStore.trimCardNo(cardNo);//去除格式化加入的空格
 
+                RegisterToZXBankStore.trigger("registerRequestIsStarting");
                 ajax({
                     ciUrl:"/user/v2/registerToZhongxin",
                     data:{

@@ -8,17 +8,17 @@ var wishesTemplates=[
     "希望农泰金融一如既往地带领大家挣钱致富，祝农泰金融越来越好。",
     "不知不觉就一周年了，生日快乐么么哒，继续这么稳健务实哦~",
     "祝农泰金融收益高又稳定，哈哈，新的一年发展要更快哦~",
-    "理财小白幸运和农泰金融相遇，对未来的生活有了盼头。农泰金融一周岁快乐！",
+    "投资小白幸运和农泰金融相遇，对未来的生活有了盼头。农泰金融一周岁快乐！",
     "呀，一不留神，农泰都一周岁了！",
     "希望和农泰金融一起为中国三农发展做出贡献，祝农泰金融发展越来越好。",
-    "理财选农泰，安全赚钱快。选择农泰金融，未来生活有保障，祝农泰金融生日快乐。",
+    "投资选农泰，安全赚钱快。选择农泰金融，未来生活有保障，祝农泰金融生日快乐。",
     "感谢农泰金融让我今年的收成又有了盼头，祝农泰金融越来越好。"
 ];
 var AnniversaryCelebrationStore={
     _all:{
         rankList:[],
         wishesList:[],
-        hadSendWished:false,
+        hadSendWishes:false,
         wishes:wishesTemplates[0],
         currWishedIndex:0
     },
@@ -53,6 +53,10 @@ var AnniversaryCelebrationStore={
     },
     updateAll(source){
         this._all=Object.assign(this._all,source);
+    },
+    clearAll(){
+        this._all.hadSendWishes=false;
+        this._all.currWishedIndex=0;
     }
 
 };
@@ -62,6 +66,19 @@ appDispatcher.register(function(payload){
     let isLogin=!!cookie.getCookie("token");
     switch(payload.actionName){
         case "getInitialData_AC":
+            ajax({
+                ciUrl:"/activity/activityCommentAuditList.do?no=A161201_7",
+                success(rs){
+                    let source={
+                        wishesList:rs.list
+                    };
+                    if(isLogin && rs.isComment === "already"){
+                        source.hadSendWishes=true;
+                    }
+                    AnniversaryCelebrationStore.updateAll(source);
+                    AnniversaryCelebrationStore.trigger("change");
+                }
+            });
             ajax({
                 ciUrl:"/activity/recommendInvestList.do",
                 success(rs){
@@ -104,13 +121,21 @@ appDispatcher.register(function(payload){
             break;
         case "submitWishesText_AC":
             let validationResult=AnniversaryCelebrationStore.checkForm();
-            console.log(validationResult);
             if(validationResult.success){
                 let wishesText=AnniversaryCelebrationStore.getAll().wishes;
+                AnniversaryCelebrationStore.trigger("requestIsStarting");
                 ajax({
-                    ciUrl:"/activity/wishComment.do?no=A161201_7&commentDesc="+wishesText,
+                    ciUrl:"/activity/wishComment.do",
+                    data:{
+                        no:"A161201_7",
+                        commentDesc:wishesText
+                    },
                     success(rs){
+                        AnniversaryCelebrationStore.trigger("requestIsEnd");
                         if(rs.result.code === "0001"){
+                            AnniversaryCelebrationStore.updateAll({
+                                hadSendWishes:true
+                            });
                             AnniversaryCelebrationStore.trigger("submitWishesSuccess");
                         }else {
                             AnniversaryCelebrationStore.trigger("submitWishesFailed",rs.result.msg);

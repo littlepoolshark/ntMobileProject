@@ -1,0 +1,22 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#articlesOfNTLaw {
+    padding:rem-calc(15);
+    background-color:#fff;
+
+    .title {
+        @include color-and-fontSize(#333,rem-calc(18));
+    }
+
+    section.content {
+        margin-top:rem-calc(20);
+         @include color-and-fontSize(#999,rem-calc(14));    
+    }
+}

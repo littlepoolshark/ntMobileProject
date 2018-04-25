@@ -1,0 +1,89 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#moonLoanInvestmentRecord {
+
+  .dashboard {
+    margin:0;
+
+    .title {
+      @include color-and-fontSize(#999,rem-calc(14));
+    }
+
+    .amount {
+      @include color-and-fontSize($C1,rem-calc(14));
+
+      strong {
+        font-size:rem-calc(40);
+        font-weight: normal;
+      }
+    }
+
+    .body  {
+      padding:rem-calc(15) rem-calc(15) 0;
+
+      .amount {
+        height:rem-calc(40);
+        line-height: rem-calc(40);
+      }
+    }
+
+    .footer {
+      padding:rem-calc(40) rem-calc(15) rem-calc(15);
+      background-image: url("../../img/bg_shadingtwo.png");
+      background-size:cover;
+    }
+  }
+
+  .tabs {
+    .tabs-nav {
+      position:relative;
+
+      button {
+        padding-left:0;
+        padding-right:0;
+      }
+    }
+  }
+
+  .canNotApplyHint-mask {
+    width:100%;
+    height:100%;
+    padding:0 rem-calc(45) rem-calc(70);
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .body {
+      margin-top:rem-calc(110);
+
+      .title {
+        margin-bottom:rem-calc(28);
+        padding-bottom:rem-calc(10);
+        @include color-and-fontSize(#fff,$T6);
+        border-bottom:1px solid #fff;
+      }
+
+      .content {
+        p {
+          margin:rem-calc(5) 0 0;
+          @include color-and-fontSize(#fff,$T8);
+        }
+      }
+    }
+    .footer {
+      .imgIcon-closeBtnInWrapper {
+        display:block;
+        margin:0 auto;
+        width:rem-calc(45);
+        height:rem-calc(45);
+      }
+    }
+  }
+}

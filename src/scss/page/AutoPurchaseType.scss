@@ -1,0 +1,22 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#autoPurchaseType {
+    .typeCell {
+        height: rem-calc(45);
+        line-height: rem-calc(45);
+        margin:rem-calc(10) 0;
+        text-align: center;
+        border:1px solid #ddd;
+
+        &.iSelected {
+            border:2px solid $C1;
+        }
+    }
+}

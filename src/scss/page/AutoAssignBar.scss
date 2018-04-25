@@ -1,0 +1,29 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#autoAssignBar {
+    width: 100%;
+    padding:rem-calc(15);
+    background: #fff;
+    position: fixed;
+    bottom:0;
+    left:0;
+
+    .iconWrapper {
+        margin-bottom:rem-calc(5);
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        @include color-and-fontSize(#666,rem-calc(14));
+
+        .imgIcon {
+            @include size(rem-calc(28),rem-calc(28));
+        }
+    }
+}

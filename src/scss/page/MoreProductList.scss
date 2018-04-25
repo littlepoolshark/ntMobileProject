@@ -29,7 +29,8 @@
       z-index:999;
 
       .btn-sm {
-        @include color-and-fontSize($C3,$T5);
+        margin-left:0;
+        @include color-and-fontSize($C3,$T6);
       }
     }
 

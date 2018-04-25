@@ -10,6 +10,10 @@
   &.container {
     padding:rem-calc(15);
   }
+
+  & > section {
+    margin-bottom:rem-calc(20);
+  }
   .nt-agreement-tag1,
   h2 {
     font-weight: normal;
@@ -86,5 +90,17 @@
   }
   .nt-agreement-tag3{
     font-size: 13px;
+  }
+  table {
+    background: #fff;
+    border:1px solid #eee;
+    thead th {
+      border-right:1px solid #eee;
+      background: #fff;
+    }
+
+    tbody td {
+      border-right:1px solid #eee;
+    }
   }
 }

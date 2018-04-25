@@ -1,0 +1,101 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#searchSubbranchBank {
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    
+
+    .searchForm {
+        min-height:rem-calc(70);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding:rem-calc(15);
+        background-color:#f1f1f1;
+
+        .navBtn {
+
+            .icon-left-nav {
+                width:rem-calc(40);
+                height:rem-calc(40);
+                line-height:rem-calc(40);
+                text-align: left;
+                @include color-and-fontSize(#c2c2c2,rem-calc(20));
+            }
+            
+        }
+
+        .input-wrapper {
+            height:rem-calc(40);
+            padding:rem-calc(4) rem-calc(10);
+            padding-right:0;
+            flex:1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color:#fff;
+            border-radius: rem-calc(20);
+
+            & > input {
+                display: block;
+                flex:1 1 auto;
+                height:100%;
+                margin:0;
+                padding:0;
+                padding-left:rem-calc(10);
+                border:none;
+            }
+            
+            .deleteBtn-wrapper {
+                padding:0 rem-calc(10);
+            }
+            .imgIcon-input-delete {
+                @include size(rem-calc(32),rem-calc(32));
+            }
+
+        }
+
+        .searchBtn {
+            width:rem-calc(40);
+            height:rem-calc(40);
+            margin-left:rem-calc(10);
+            line-height:rem-calc(40);
+            text-align: center;
+            @include color-and-fontSize(#333,rem-calc(14));            
+        }
+    }
+
+    .content-wrapper {
+        flex:1 1 auto;
+        background-color:#fff;
+       // overflow-y: scroll;//这个属性很重要，这有设置了这个属性，“content-wrapper”才能正确占据剩余空间。
+       @include scrollable;
+
+        ul.subbranchBankList {
+            padding:0 0 rem-calc(50);
+            margin:0;
+
+            & >  li {
+                height:rem-calc(50);
+                width:100%;
+                padding: 0 rem-calc(15);
+                line-height: rem-calc(50);
+                @include color-and-fontSize(#333,rem-calc(14));   
+                @include point5Line(bottom);   
+            }
+        }
+    }
+
+}

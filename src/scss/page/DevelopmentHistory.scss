@@ -1,0 +1,47 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#developmentHistory {
+    padding:rem-calc(30) rem-calc(15) rem-calc(15) rem-calc(100);
+    background-color: #fff;
+
+    & > section {
+        padding-left:rem-calc(10);
+        padding-bottom:rem-calc(35);
+        border-left:1px solid $C1;
+        position: relative;
+
+        .title {
+            @include color-and-fontSize(#333,rem-calc(16));
+            transform: translateY(-10px);
+        }
+        .hollow-circle {
+            height:8px;
+            width: 8px;
+            border:1px solid $C1;
+            border-radius: 4px;
+            background-color:#fff;
+            position:absolute;
+            left:-4px;
+            top:-4px;
+        }
+        .event-time {
+            @include size(auto,rem-calc(16));
+            padding:0 rem-calc(10) 0 rem-calc(5);
+            line-height:rem-calc(16);
+            @include color-and-fontSize(#fff,rem-calc(12));
+            background:url("../../img/event-time-bg.png") no-repeat ;
+            background-size:100% 100%;
+            position:absolute;
+            top:0;
+            left:-10px;
+            transform: translate(-100%,-50%);
+        }
+    }
+}

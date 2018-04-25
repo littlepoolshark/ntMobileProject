@@ -23,6 +23,7 @@ import config from "./src/js/config";
 import geParamObjFromUrl from "./src/js/lib/getParamObjFromUrl";
 
 
+
 // 解构赋值
 let {
     Default,
@@ -39,7 +40,7 @@ const App = React.createClass({
             children,
             ...props
             } = this.props;
-        let transition = children.props.transition || 'sfr';
+        //let transition = children.props.transition || 'sfr';
         let currPageName;
         if (params.componentName) {
             currPageName = params.componentName.charAt(0).toUpperCase() + params.componentName.slice(1);
@@ -70,7 +71,7 @@ const App = React.createClass({
                     />
                     <TabBar.Item
                         component={Link}
-                        title="理财"
+                        title="投资"
                         iconClassPrefix="imgIcon"
                         icon="financial-pig"
                         selectedIcon="financial-pig_active"
@@ -94,9 +95,14 @@ const App = React.createClass({
 
         //从url获取标志第三方来源的参数，放置于sessionStorage里面，以便注册的时候提取和提交给后台
         let paramObj=geParamObjFromUrl();
+
         if(paramObj.ntjrSource && paramObj.ntjrSource !== ""){
             sessionStorage.setItem("ntjrSource",paramObj.ntjrSource);
+        };
+        if(paramObj.inviteCode){
+            sessionStorage.setItem("ntInviteCode",paramObj.inviteCode);
         }
+
     }
 });
 
@@ -106,6 +112,7 @@ const Page = React.createClass({
         event.preventDefault();
         window.history.back();
     },
+
     render() {
         let component = this.props.params.componentName;
         let queryStr = this.props.location.query.type;
@@ -128,7 +135,7 @@ const Page = React.createClass({
         let navBarClass = classNames({
             "hide": config.noNavBarPages.indexOf(component) > -1 ? true : false
         });
-
+    
         return (
             <View >
                 <NavBar
@@ -153,7 +160,10 @@ function handleOnEnter(nextState, replace) {
 
     if (config.needToInterceptPages.indexOf(pageName) > -1 && !isLoing) {
         replace({
-            pathname: "/"
+            pathname: "/",
+            query:{
+                beforeComponent:componentName
+            }
         });
     }
 }

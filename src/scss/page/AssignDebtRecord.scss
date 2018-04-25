@@ -1,0 +1,18 @@
+
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#assignDebtRecord {
+    .tabs {
+      .tabs-nav {
+        position:relative;
+      }
+    }
+
+}

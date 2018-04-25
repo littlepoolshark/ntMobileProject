@@ -15,6 +15,8 @@ import Button from '../Button';
 import Icon from '../Icon';
 import Loader from '../Loader';
 
+import cookie from "../../lib/cookie";
+
 // MUST be equal to $modal-duration in _modal.scss
 const TRANSITION_TIMEOUT = 300;
 
@@ -189,6 +191,12 @@ const Modal = createClass({
     );
   },
 
+  _isInWebViewOfNTApp(){//检测当前web app的所处的环境是否是农泰金融的安卓或者ios客户端的webview。
+    let deviceType=cookie.getCookie("deviceType");
+    let isInAppWebview=["ntandroid","ntios"].indexOf(deviceType.toLowerCase()) > -1;
+    return isInAppWebview;
+  },
+
   renderPopup(classSet) {
     classSet[this.props.classPrefix] = false;
 
@@ -199,6 +207,18 @@ const Modal = createClass({
       ...props
     } = this.props;
 
+    //因为在IOS系统中，绝对定位元素会随着页面滚动而跑位，所以采取此退让的方案来解决这个兼容性问题
+    var ua = navigator.userAgent;
+    let isInIOS=!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    let popupInnerStyle={};
+    let popupHeaderStyle={};
+    if(this._isInWebViewOfNTApp() || isInIOS){
+      popupInnerStyle.paddingTop=0;
+    }
+    if(isInIOS){
+      popupHeaderStyle.position="relative";
+    }
+
     return (
       <div
         {...props}
@@ -206,8 +226,8 @@ const Modal = createClass({
         key="modalPopup"
         ref="modal"
       >
-        <div className={this.setClassNS('popup-inner')}>
-          <div className={this.setClassNS('popup-header')}>
+        <div className={this.setClassNS('popup-inner')} style={popupInnerStyle}>
+          <div className={classNames(this.setClassNS('popup-header'),this._isInWebViewOfNTApp() ? "hide" : "")} style={popupHeaderStyle}>
             {title ? (
               <h4 className={this.setClassNS('popup-title')}>
                 {title}
@@ -336,13 +356,15 @@ const Modal = createClass({
     return (
       <span>
         {children}
-        <div
-          className={classNames(classSet)}
-          style={{height: "100%"}}
-          ref="backdrop"
-          onClick={onClick}
-          onTouchMove={preventDefault}
-        ></div>
+        {this.props.role === 'popup' ? null : (
+          <div
+            className={classNames(classSet)}
+            style={{ height: '100%' }}
+            ref="backdrop"
+            onClick={onClick}
+            onTouchMove={preventDefault}
+          />
+        )}
       </span>
     );
   },

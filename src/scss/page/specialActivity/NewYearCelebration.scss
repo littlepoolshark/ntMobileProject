@@ -1,0 +1,526 @@
+// Functions
+@import "../../helper/functions";
+
+// Variables
+@import "../../variables";
+
+// Mixin
+@import "../../helper/mixins";
+
+$nyc-primary-color:#ef4d1e;//红色
+$nyc-second-color:#ffd451;//黄色
+$nyc-third-color:#ffedc4;//黄白色
+
+#newYearCelebration {
+  background-color:#ffedc4;
+
+  /*
+   * 覆盖amaze ui tabs组件的样式
+   */
+  .tabs-nav {
+    margin-bottom:rem-calc(10);
+    padding:0 rem-calc(15);
+    border:none;
+    overflow:visible;
+    background-color: transparent;
+
+    .slide-line {
+      display:none;
+    }
+
+    .btn-hollow.btn-primary {
+      margin:0 rem-calc(10) 0 0;
+      text-align: center;
+      @include color-and-fontSize($nyc-primary-color,rem-calc(16));
+      border:none;
+      overflow:visible;
+      background:$nyc-second-color;
+
+      &:nth-of-type(3) {
+        margin-right:0;
+      }
+
+      &.active {
+        background:$nyc-primary-color;
+        color:$nyc-third-color;
+      }
+    }
+  }
+
+  .title {
+    margin-bottom:rem-calc(15);
+    @include color-and-fontSize($nyc-third-color,rem-calc(16));
+
+    em {
+      @include color-and-fontSize($nyc-second-color,rem-calc(16))
+    }
+
+    strong {
+      font-size:rem-calc(18);
+    }
+  }
+
+  .btn-reset {
+    border:none;
+    outline:none;
+  }
+  .nyc-primary-btn {
+    display:inline-block;
+    height:rem-calc(40);
+    width:auto;
+    padding:0 rem-calc(45);
+    line-height: rem-calc(43);
+    @include color-and-fontSize($nyc-third-color,rem-calc(18));
+    font-weight: bold;
+    background-color:$nyc-primary-color;
+    @extend .btn-reset;
+
+    &.small {
+      padding:0 rem-calc(20);
+    }
+
+    &.disabled {
+      color:#fff;
+      background:#d4d4d4;
+    }
+
+    &.big-radius {
+      border-radius:rem-calc(20);
+    }
+
+    &.small-radius {
+      border-radius:rem-calc(5);
+    }
+
+  }
+
+  .nyc-second-btn {
+    display:inline-block;
+    height:rem-calc(40);
+    width:auto;
+    padding:0 rem-calc(45);
+    line-height: rem-calc(43);
+    @include color-and-fontSize(#9a5708,rem-calc(18));
+    font-weight: bold;
+    background-color:$nyc-second-color;
+    border-radius:rem-calc(20);
+    @extend .btn-reset;
+  }
+
+  .rules-introduction {
+    margin:rem-calc(25) rem-calc(10) rem-calc(20);
+    padding-bottom:rem-calc(20);
+    .rules-introduction-title {
+      @include color-and-fontSize($nyc-third-color,rem-calc(12));
+      font-weight:bold;
+    }
+
+    .rules-introduction-item {
+      @include color-and-fontSize($nyc-third-color,rem-calc(12));
+    }
+  }
+
+
+
+  /*
+  * “.lucky-draw-tab”,“.help-to-goHome-tab”,“.get-fifty-redPackage-tab”共用样式
+  */
+  .tab-wrappers-shared {
+    margin:rem-calc(50) rem-calc(15) rem-calc(15);
+    background-color:$nyc-primary-color;
+    border-radius:0 0 5px 5px;
+    position:relative;
+
+    .top-bg-img {
+      position:absolute;
+      left:0;
+      top:rem-calc(-35)
+    }
+  }
+  /*
+   * 抽大奖模块
+   */
+  .lucky-draw-tab {
+    @extend  .tab-wrappers-shared;
+    .luckyDraw-count-hint {
+      margin-bottom:rem-calc(10);
+      @include color-and-fontSize(#fff,rem-calc(12));
+
+      strong {
+        color:$nyc-second-color;
+      }
+
+      a {
+        color:#fff;
+        text-decoration: underline;
+      }
+    }
+
+    .getDrawCount-strategy {
+      margin:rem-calc(30) rem-calc(10) rem-calc(20);
+
+      .getDrawCount-strategy-title {
+        display:block;
+        width:rem-calc(180);
+        height:auto;
+        margin:0 auto rem-calc(10);
+      }
+
+      .getDrawCount-strategy-list {
+        .getDrawCount-strategy-item {
+          width:49%;
+          float:left;
+          padding:rem-calc(8);
+          margin-bottom:2%;
+          @include color-and-fontSize(#333,rem-calc(12));
+          background-color:$nyc-third-color;
+          border-radius:rem-calc(3);
+
+          &:first-child {
+            margin-right:2%;
+          }
+
+          strong {
+            color:$nyc-primary-color;
+          }
+
+          .strategy-title {
+            font-weight: bold;
+            margin-bottom:rem-calc(3);
+          }
+        }
+      }
+    }
+
+  }
+
+  /*
+  * 助力回家模块
+  */
+  .help-to-goHome-tab {
+    @extend  .tab-wrappers-shared;
+
+    .my-investment-rate {
+      margin-bottom:rem-calc(15);
+      @include color-and-fontSize($nyc-third-color,rem-calc(12));
+
+      strong {
+        color:$nyc-second-color;
+      }
+
+      a {
+        color:#fff;
+        text-decoration:underline;
+      }
+    }
+
+    ul.cash-coupon-list {
+      padding:0;
+      margin:0 rem-calc(15);
+      list-style: none;
+
+      &>li {
+        width:100%;
+        margin-bottom:rem-calc(15);
+        padding-bottom:rem-calc(10);
+        background-color:#fff;
+        border-radius:rem-calc(5);
+
+
+        .logo-banner {
+          display:flex;
+          justify-content: center;
+          align-items: center;
+          height:rem-calc(30);
+          @include color-and-fontSize(#fff,rem-calc(12));
+          font-weight: bold;
+          background-color:#ffa210;
+          border-radius:rem-calc(5) rem-calc(5) 0  0;
+
+
+          img,
+          span {
+            display:block;
+          }
+
+          img {
+            width:rem-calc(18);
+            height:rem-calc(18);
+            margin-right:rem-calc(3);
+          }
+        }
+
+        .coupon-item-title {
+          margin-top:rem-calc(5);
+          @include color-and-fontSize($nyc-primary-color,rem-calc(12));
+
+          strong {
+            @include color-and-fontSize($nyc-primary-color,rem-calc(24));
+          }
+        }
+
+        .coupon-item-labels {
+          padding:0 rem-calc(10);
+        }
+        .coupon-item-label {
+          @include color-and-fontSize(#c1741a,rem-calc(12));
+        }
+
+        .coupon-item-content {
+          @include color-and-fontSize(#333,rem-calc(12));
+        }
+
+        .btn-wrapper {
+          margin:rem-calc(10) 0;
+        }
+
+        .warm-hint {
+          @include color-and-fontSize(#999,rem-calc(12));
+
+        }
+
+      }
+    }
+
+  }
+
+  /*
+  * 领取50元红包模块
+  */
+  .get-fifty-redPackage-tab {
+    @extend  .tab-wrappers-shared;
+
+    .rules-of-getting {
+      padding:0 rem-calc(10);
+      @include color-and-fontSize($nyc-third-color,rem-calc(12));
+
+      strong {
+        @include color-and-fontSize(#fff,rem-calc(12));
+      }
+
+      img {
+        margin-top:rem-calc(15);
+      }
+    }
+
+    .invite-count-ranking {
+      padding:rem-calc(10);
+
+      .ranking-title>img {
+        display:inline-block;
+        width:rem-calc(125);
+        height:auto;
+        margin:rem-calc(15) 0;
+      }
+
+      table {
+        width:100%;
+        border-radius:rem-calc(5);
+
+        thead th {
+          height:rem-calc(30);
+          @include color-and-fontSize(#7f3f15,rem-calc(12));
+          background-color:#ffd9a3;
+
+          &:nth-of-type(1) {
+            border-radius:rem-calc(5) 0 0 0 ;
+          }
+
+          &:nth-of-type(3) {
+            border-radius:0 rem-calc(5) 0 0 ;
+          }
+        }
+
+        tbody td {
+          @include color-and-fontSize(#333,rem-calc(12));
+          background-color:#fff2d3;
+          border-bottom:1px solid #ecd9bd ;
+
+          .first-place,
+          .second-place,
+          .third-place {
+            display:block;
+            width:rem-calc(18);
+            height:rem-calc(18);
+            margin:0 auto;
+          }
+
+          .first-place {
+            background:url("../../../img/specialActivity/newYearCelebration/noone.png");
+            background-size:cover;
+          }
+
+          .second-place {
+            background:url("../../../img/specialActivity/newYearCelebration/notwo.png");
+            background-size:cover;
+          }
+
+          .third-place {
+            background:url("../../../img/specialActivity/newYearCelebration/nothree.png");
+            background-size:cover;
+          }
+
+
+        }
+
+        tbody>tr:last-child {
+
+          &>td {
+            border-bottom:none;
+          }
+
+          &>td:nth-of-type(1) {
+            border-radius: 0 0 0 rem-calc(5);
+          }
+
+          &>td:nth-of-type(3) {
+            border-radius:0  0 rem-calc(5) 0 ;
+          }
+        }
+      }
+
+      .btn-wrapper {
+        margin:rem-calc(20) 0 0;
+      }
+
+    }
+  }
+
+  .rights-copy {
+    margin-bottom:rem-calc(20);
+    @include color-and-fontSize(#823700,rem-calc(12));
+  }
+
+  /*
+  * 自定义modal样式
+  */
+  .customize-modal {
+    position:relative;
+    padding:rem-calc(20);
+    background-color:#fff6e2;
+
+    .customize-modal-header {
+      width:rem-calc(300);
+      height:rem-calc(52);
+      background:url("../../../img/specialActivity/newYearCelebration/pop_top.png");
+      background-size:cover;
+      position:absolute;
+      left:50%;
+      margin-left:rem-calc(-150);
+      top:rem-calc(-26);
+
+      &>span {
+        display:block;
+        width:rem-calc(25);
+        height:rem-calc(25);
+        background:url("../../../img/specialActivity/newYearCelebration/closed.png");
+        background-size:cover;
+        position:absolute;
+        top:rem-calc(21);
+        right:rem-calc(10);
+      }
+    }
+
+    .customize-modal-body {
+      margin:rem-calc(30) 0 rem-calc(20);
+      text-align: center;
+      @include color-and-fontSize(#333,rem-calc(14));
+    }
+
+    .customize-modal-footer {
+      text-align: center;
+
+      button + button {
+        margin-left:rem-calc(50);
+      }
+    }
+  }
+
+  /*
+  * 滚动播报组件样式
+  */
+  .broadcast-wrapper {
+    width:100%;
+    height:rem-calc(35);
+    overflow:hidden;
+    position:relative;
+
+    ul {
+      width:100%;
+      padding:0;
+      margin:0;
+      list-style: none;
+      position:absolute;
+      left:0;
+      top:0;
+
+
+      &.in {
+        top:rem-calc(-35);
+        transition:top 1s ease-in-out;
+      }
+
+      &.out {
+        top:0;
+      }
+
+      &>li {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        width:100%;
+        height:rem-calc(35);
+        @include color-and-fontSize($nyc-third-color,rem-calc(12));
+
+        span {
+          display:block;
+        }
+
+        .broadcast-icon {
+          width:rem-calc(20);
+          height:rem-calc(20);
+          margin-right:rem-calc(3);
+          margin-top:rem-calc(-3);
+          background:url("../../../img/specialActivity/newYearCelebration/notice.png");
+          background-size:cover;
+        }
+      }
+    }
+  }
+}
+
+.lucky-draw-wrapper {
+  width:rem-calc(300);
+  height:rem-calc(300);
+  margin:0 auto;
+  position:relative;
+
+  .lucky-draw-turntable {
+    width:rem-calc(300);
+    height:rem-calc(300);
+    background:url("../../../img/specialActivity/newYearCelebration/turntable_bg.png");
+    background-size:cover;
+    transition:transform 2s ease-in-out;
+    transform:rotate(0deg);
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:1;
+
+    &.active {
+      transform:rotate(720deg);
+    }
+
+  }
+
+  .lucky-draw-needle {
+    width:rem-calc(92);
+    height:rem-calc(127);
+    background:url("../../../img/specialActivity/newYearCelebration/turntable_btn.png");
+    background-size:cover;
+    position:absolute;
+    left:rem-calc(104);
+    top:rem-calc(70);
+    z-index:2;
+  }
+}

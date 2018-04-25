@@ -32,7 +32,7 @@ let FixedLoanCenterItem=React.createClass({
         let title=null;
         switch (type){
             case "earnSet":
-                title="理财计划";
+                title="投资计划";
                 break;
             case "fixedLoan":
                 title="项目直投";
@@ -91,10 +91,10 @@ let FixedLoanCenterItem=React.createClass({
                             <span className="subtitle">待收本息</span>
                             <span className="amount">￥{backTotal}</span>
                         </div>*/}
-                        <div>
+                        {/*  <div>
                             <span className="subtitle">累计收益</span>
                             <span className="amount"><strong>￥{interestTotal}</strong></span>
-                        </div>
+                        </div>*/}
                     </div>
                 </Group>
             </Link>

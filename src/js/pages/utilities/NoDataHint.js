@@ -1,3 +1,4 @@
+require("../../../scss/page/NoDataHint.scss");
 import React from "react";
 
 // 暂时没有数据提示组件
@@ -5,12 +6,17 @@ import React from "react";
 //为了避免一定程度的浪费，react官方还在0.14版本中加入了无状态组件
 function NoDataHint(props){
     return (
-        <div className="noReward-hint" style={{marginTop:"5rem"}} {...props}>
-            <div className="text-center" >
-                <img src={require("../../../img/reward_no.png")} alt="" style={{width:"4rem",height:"4rem"}}/>
+        <div className="noData-hint"  {...props}>
+            <div className="text-center img-wrapper" >
+                {
+                    props.children ?
+                    props.children :
+                    <img src={require("../../../img/reward_no.png")} alt="" />
+                }
+
             </div>
-            <div className="text-center" style={{marginTop:"0.4rem",color:"#999",fontSize:"0.875rem"}}>
-                暂时没有相关数据！
+            <div className="text-center text-hint" >
+                暂时没有相关数据
             </div>
         </div>
     )

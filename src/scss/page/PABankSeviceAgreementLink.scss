@@ -1,0 +1,26 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#PABankSeviceAgreementLink {
+   height: rem-calc(32); 
+   margin:0 rem-calc(-15);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   @include color-and-fontSize(#999,rem-calc(12));
+
+   & > span,
+   & > a {
+       display:block;
+   }
+
+   .imgIcon {
+       @include size(rem-calc(32),rem-calc(32));
+   }
+}

@@ -11,7 +11,8 @@ import Chart from "chart.js";
 
 import Container from "../UIComponents/Container";
 import Button from "../UIComponents/Button";
-import Group from "../UIComponents/Group";
+import Grid from "../UIComponents/Grid";
+import Col from "../UIComponents/Col";
 import NavBar from "../UIComponents/NavBar";
 import List from "../UIComponents/List";
 import Modal from "../UIComponents/modal/Modal";
@@ -49,11 +50,12 @@ let TotalAccountDetail=React.createClass({
                 {
                     data: dataArr,
                     backgroundColor: [
+                        "#ae7bb4",
                         "#ff7659",
                         "#ffbe40",
                         "#a2c221",
                         "#3abbce",
-                        "#ae7bb4"
+                        "#6297db"
                     ]
                 }]
         };
@@ -102,12 +104,13 @@ let TotalAccountDetail=React.createClass({
             title: '返回'
         };
         let {
-            total,
-            ttzAmount,
-            dqAmount,
-            available,
-            jrAmount,
-            withdraw
+            asset,//总资产
+            moonAmount,//月满盈资产
+            ttzAmount,//活期资产
+            dqAmount,//定期资产
+            availabeAmount,//可用余额
+            joinAmount,//加入(投资)中金额
+            withdrawAmount//提现中金额
          }=this.state;
         return (
             <Container scrollable={true} id="totalAccountDetail">
@@ -122,38 +125,42 @@ let TotalAccountDetail=React.createClass({
                 <div className="doughnut-box">
                     <canvas id="myChart" width="200" height="200"></canvas>
                     <div className="doughnut-body">
-                        <span className="amount">{total}</span>
+                        <span className="amount">{asset}</span>
                         <span className="subtitle">总资产(元)</span>
                     </div>
                 </div>
 
                 <List id="legendList">
                     <List.Item
+                        title={<span className="list-item-title"><span className="legend-color-block c5" ></span><span>月满盈</span></span>}
+                        after={moonAmount  ?  moonAmount.toFixed(2) : "0.00" }
+                    />
+                    <List.Item
                         title={<span className="list-item-title"><span className="legend-color-block c1" ></span><span>活期资产</span></span>}
-                        after={ttzAmount === 0 ? "0" : ttzAmount}
+                        after={ttzAmount ? ttzAmount.toFixed(2) : "0.00"  }
                     />
                     <List.Item
                         title={<span className="list-item-title"><span className="legend-color-block c2" ></span><span>定期资产</span></span>}
-                        after={dqAmount === 0 ? "0" : dqAmount}
+                        after={dqAmount  ? dqAmount.toFixed(2) : "0.00"  }
                     />
                     <List.Item
                         title={<span className="list-item-title"><span className="legend-color-block c3" ></span><span>可用余额</span></span>}
-                        after={available === 0 ? "0" : available}
+                        after={availabeAmount  ? availabeAmount.toFixed(2) : "0.00"  }
                     />
                     <List.Item
                         title={<span className="list-item-title"><span className="legend-color-block c4" ></span><span>加入金额</span></span>}
-                        after={jrAmount === 0 ? "0" : jrAmount}
+                        after={joinAmount  ? joinAmount.toFixed(2) : "0.00"  }
                     />
                     <List.Item
-                        title={<span className="list-item-title"><span className="legend-color-block c5" ></span><span>提现中金额</span></span>}
-                        after={withdraw === 0 ? "0" : withdraw}
+                        title={<span className="list-item-title"><span className="legend-color-block c6" ></span><span>提现中金额</span></span>}
+                        after={withdrawAmount  ? withdrawAmount.toFixed(2) : "0.00"  }
                     />
                 </List>
 
-                <div className="buttons-wrapper" >
-                    <Button amStyle="primary"  radius={true} className="recharge-btn" onClick={this._handleRechargeClick}>充值</Button>
-                    <Button amStyle="warning"  radius={true} className="withdraw-btn" onClick={this._handleWithdrawClick}>提现</Button>
-                </div>
+                {/*<div className="buttons-wrapper" >
+                 <Button amStyle="primary"  radius={true} className="recharge-btn" onClick={this._handleRechargeClick}>充值</Button>
+                 <Button amStyle="warning"  radius={true} className="withdraw-btn" onClick={this._handleWithdrawClick}>提现</Button>
+                 </div>*/}
                 <Modal
                     title="提示"
                     ref="modal"
@@ -174,14 +181,15 @@ let TotalAccountDetail=React.createClass({
 
         TotalAccountDetailStore.bind("change",function(){
             let {
-                ttzAmount,
-                dqAmount,
-                available,
-                jrAmount,
-                withdraw
+                moonAmount,//月满盈资产
+                ttzAmount,//活期资产
+                dqAmount,//定期资产
+                availabeAmount,//可用余额
+                joinAmount,//加入(投资)中金额
+                withdrawAmount//提现中金额
             }=TotalAccountDetailStore.getAll();
 
-            let doughnutDate=[ttzAmount,dqAmount,available,jrAmount,withdraw];
+            let doughnutDate=[moonAmount,ttzAmount,dqAmount,availabeAmount,joinAmount,withdrawAmount];
             this._drawDoughnutChart(doughnutDate)
             this.setState(TotalAccountDetailStore.getAll());
         }.bind(this));
@@ -201,46 +209,54 @@ let TotalAccountDetail=React.createClass({
         }.bind(this));
 
 
-        UserHomeStore.bind("ZXBankOpenCheckFailed",function(){
-            this.setState({
-                isModalOpen:true,
-                confirmText:"为了您的资金安全，请先开通银行存管",
-                nextLocation:"securityCenter"
+        // UserHomeStore.bind("ZXBankOpenCheckFailed",function(){
+        //     this.setState({
+        //         isModalOpen:true,
+        //         confirmText:(
+        //             <div>
+        //                 为了您的资金安全，<br/>请先开通银行存管子账户<br/>
+        //                 <Link to="openZXIntroduction">为什么要开通存管子账户？</Link>
+        //             </div>
+        //         ),
+        //         nextLocation:"registerToZXBank"
+        //     })
+        // }.bind(this));
+
+        UserHomeStore.bind("idCardVerifiedCheckFailed",function(){
+            this.context.router.push({
+                pathname:"realNameAuthentication",
+                query:{
+                    beforeComponent:"userHome",
+                    entryComponent:"userHome"
+                }
             })
         }.bind(this));
-
 
         UserHomeStore.bind("dealPasswordSetCheckFailed",function(){
-            this.setState({
-                isModalOpen:true,
-                confirmText:"为了您的资金安全，请先设置交易密码",
-                nextLocation:"securityCenter"
+            this.context.router.push({
+                pathname:"setDealPassword",
+                query:{
+                    actionType:"setting",
+                    beforeComponent:"userHome",
+                    entryComponent:"userHome"
+                }
             })
         }.bind(this));
 
-      /*  UserHomeStore.bind("securityCheckFailed",function(){
-            this.setState({
-                isModalOpen:true,
-                confirmText:"为了资金安全，请升级您的账户安全级别!",
-                nextLocation:"securityCenter"
+        UserHomeStore.bind("bindBankCardCheckFailed",function(){
+            let realName=UserHomeStore.getAll().personInfo.realName;
+            this.context.router.push({
+                pathname:"bindBankCard",
+                query:{
+                    beforeComponent:"userHome",
+                    realName:realName,
+                    entryComponent:"userHome"
+                }
             })
         }.bind(this));
 
-        UserHomeStore.bind("bankCardIsNotBind",function(){
-            this.setState({
-                isModalOpen:true,
-                confirmText:"充值或者提现需要先绑定银行卡，去绑卡？",
-                nextLocation:"bindBankCard"
-            })
-        }.bind(this));
 
-        UserHomeStore.bind("bankCardIntegrityCheckFailed",function(){
-            this.setState({
-                isModalOpen:true,
-                confirmText:"为了资金安全，提现需要完整的银行卡信息，去完善？",
-                nextLocation:"myBankCardDetail"
-            })
-        }.bind(this));*/
+
     }
 });
 

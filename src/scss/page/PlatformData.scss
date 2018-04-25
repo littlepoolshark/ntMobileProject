@@ -1,0 +1,56 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#platformData {
+  background:url("../../img/platFormData_bg.jpg");
+  background-size: cover;
+  position:relative;
+  display:flex;
+  justify-content:center ;
+  align-items: center;
+
+  nav {
+    position:absolute;
+    left:0;
+    top:0;
+    padding:rem-calc(15);
+    @include color-and-fontSize(#fff,rem-calc(16));
+  }
+
+  .content-wrapper {
+    .data-group {
+      width:rem-calc(265);
+      margin:0 auto;
+      margin-bottom:rem-calc(20);
+      padding-left:rem-calc(15);
+
+      &:last-child {
+        margin-bottom:0;
+      }
+
+      .title {
+        @include color-and-fontSize(#cc2e33,$T7);
+      }
+
+      .subtitle {
+        @include color-and-fontSize(#fff,rem-calc(25));
+      }
+    }
+
+    .top-bg-img,
+    .bottom-bg-img {
+      display:block;
+      width:rem-calc(265);
+      height:auto;
+      margin:0 auto ;
+    }
+  }
+
+
+}

@@ -1,0 +1,16 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#organizationStructure {
+    padding:rem-calc(15);
+    background-color:#fff;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}

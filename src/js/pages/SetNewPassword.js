@@ -20,6 +20,8 @@ import NavBar from "../UIComponents/NavBar";
 let SetNewPassword=React.createClass({
     getInitialState(){
         return {
+            newPassword:"",
+            confirmNewPassword:"",
             showOriginLoginPasswordField:false,
             showLoginPasswordField:false,
             showConfirmLoginPasswordField:false
@@ -66,11 +68,39 @@ let SetNewPassword=React.createClass({
                 break;
         }
     },
+    _handleFieldValueChange(fieldName){
+        let fieldValue=this.refs[fieldName].getValue();
+        switch (fieldName){
+            case "newPassword":
+                if(fieldValue.length > 16){
+                    fieldValue=fieldValue.slice(0,16);
+                }
+                this.setState({
+                    newPassword:fieldValue
+                });
+                break;
+            case "confirmNewPassword":
+                if(fieldValue.length > 16){
+                    fieldValue=fieldValue.slice(0,16);
+                }
+                this.setState({
+                    confirmNewPassword:fieldValue
+                });
+                break;
+            default:
+                break;
+        };
+    },
     render (){
         let {
             showOriginLoginPasswordField,
             showLoginPasswordField,
             showConfirmLoginPasswordField
+            }=this.state;
+
+        let {
+            newPassword,
+            confirmNewPassword
             }=this.state;
 
         let backNav = {
@@ -102,7 +132,7 @@ let SetNewPassword=React.createClass({
                                         <Field
                                             type={showOriginLoginPasswordField ? "text" : "password"}
                                             label="原始密码"
-                                            placeholder="6~20位字母，字符，符号"
+                                            placeholder="请输入原始登录密码"
                                             ref="originLoginPassword"
                                         />
                                         <Icon
@@ -119,8 +149,10 @@ let SetNewPassword=React.createClass({
                             <Field
                                 type={showLoginPasswordField ? "text" : "password"}
                                 label="新登录密码"
-                                placeholder="6~20位字母，字符，符号"
+                                placeholder="6-16位字母和数字组合"
                                 ref="newPassword"
+                                value={newPassword}
+                                onChange={this._handleFieldValueChange.bind(null,"newPassword")}
                             />
                             <Icon
                                 name={showLoginPasswordField ? "eye-on" : "eye-off"}
@@ -133,8 +165,10 @@ let SetNewPassword=React.createClass({
                             <Field
                                 type={showConfirmLoginPasswordField ? "text" : "password"}
                                 label="确认密码"
-                                placeholder="6~20位字母，字符，符号"
+                                placeholder="请再次输入密码"
                                 ref="confirmNewPassword"
+                                value={confirmNewPassword}
+                                onChange={this._handleFieldValueChange.bind(null,"confirmNewPassword")}
                             />
                             <Icon
                                 name={showConfirmLoginPasswordField ? "eye-on" : "eye-off"}

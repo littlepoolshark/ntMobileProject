@@ -1,0 +1,37 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#registerToPABankSuccessHint {
+  background-color: #fff;
+
+
+  .safty-guarder {
+    display:block;
+    width: rem-calc(123);
+    height:rem-calc(106);
+    margin:rem-calc(10) auto 0 ;
+    background: url("../../img/safty-guarder.png");
+    background-size: cover;
+  }
+  .title {
+    margin-top:rem-calc(10);
+    @include color-and-fontSize($C3,$T4);
+  }
+
+  .content {
+    margin-top:rem-calc(10);
+    margin-bottom:rem-calc(20);
+    @include color-and-fontSize($C4,$T8);
+  }
+
+  .btn-wrapper {
+      padding:0 rem-calc(15);
+  }
+}

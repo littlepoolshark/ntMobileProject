@@ -8,6 +8,7 @@
 @import "../helper/mixins";
 
 
+
 #home {
   padding-bottom:rem-calc(55);
 
@@ -71,216 +72,266 @@
     }
   }
 
-}
-/*平台介绍 && 邀请有礼*/
-.home-introduction-item {
-  display:flex;
-  align-items:center;
-  justify-content: center;
-
-  .platform-icon {
-    background:url("../../img/home_icon_platform.png") 0 0 no-repeat;
-  }
-
-  .invite-icon {
-    background:url("../../img/home_icon_invitation.png") 0 0 no-repeat;
-  }
-
-  .platform-icon,
-  .invite-icon {
-    width:rem-calc(40);
-    height:rem-calc(40);
-    margin-right:rem-calc(8);
+  .platform-introduction-bar {
+    background:url("../../img/btn_shading@2x.png");
     background-size: cover;
-  }
 
-  .subtitle {
-    color:#999;
-    font-size:rem-calc(12);
-  }
-}
-
-
-/*标的卡片*/
-.home-earnSet-card {
-  position:relative;
-
-  .g {
-    padding:rem-calc(10) 0;
-  }
-  .title {
-    display:flex;
-    align-items: center;
-    padding:0 rem-calc(15) rem-calc(12) rem-calc(15);
-    color:$C3;
-    font-size:$T5;
-    font-weight:normal;
-    border-bottom:1px solid #ececec;
-
-    .text {
-      height:rem-calc(17);
+    .group-body {
+      background: none;
     }
 
-  }
-  .dailyEarn-label {
-    display:inline-block;
-    width:rem-calc(120);
-    height:rem-calc(20);
-    text-align:center;
-    line-height:rem-calc(18);
-    font-size:$T8;
-    color:#fbac03;
-    border:1px solid #fbac03;
-    border-radius:rem-calc(20);
-    //flex item的margin不与相邻flex item的折叠，margin为auto值时flex父元素剩余的空间将会分配到flex item的外边距margin上
-    // 利用这个特性可以实现水平的居左，居中，居右
-    margin-left:auto;
-  }
-  .newbieLoan-label {
-    width:rem-calc(75);
-    height:rem-calc(27);
-    background-image: url("../../img/home_labe.png");
-    background-size:cover;
-    position:absolute;
-    top:0;
-    right:rem-calc(15);
-  }
-  .icon-day,
-  .icon-new,
-  .icon-redStar {
-    display:inline-block;
-    width:rem-calc(17);
-    height:rem-calc(17);
-    margin-right:rem-calc(3);
-    background-size: cover;
-  }
-  .icon-day {
-    background-image:url("../../img/home_icon_day.png");
-  }
-  .icon-new {
-    background-image: url("../../img/home_icon_new.png");
-  }
-  .icon-redStar {
-    background-image: url("../../img/home_icon_mouth.png");
-  }
-  .home-earnSet-card-item {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    border-right:1px solid #ececec;
+    .platform-introduction-wrapper {
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      @include color-and-fontSize($C3,$T8);
 
-    &:last-child {
-      border:none;
-    }
-
-    .subtitle {
-      height:rem-calc(25);
-      line-height:rem-calc(28);
-      color:$C4;
-      font-size:$T8;
-
-      .subtitle-left{
-        width:60%;
-        float:left;
-      }
-      .subtitle-right {
-        width:40%;
-        float:left;
-      }
-
-      .subtitle-left {
+      &>div {
         display:flex;
-        justify-content: flex-end;
-        align-items: flex-start;
-      }
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-      .icon-time {
-        background:url(../../img/home_icon_time.png) no-repeat;
-      }
-      .icon-money {
-        background:url(../../img/home_icon_money.png) no-repeat;
-      }
-      .icon-time,
-      .icon-money {
-        display:block;
-        width:rem-calc(25);
-        height:rem-calc(25);
-        background-size: cover;
-      }
+        .img-wrapper-cell {
+          display:inline-block;
+          width:rem-calc(40);
+          height:rem-calc(40);
+          margin-bottom:rem-calc(5);
 
-      .amount {
-        margin-left:rem-calc(5);
-        color:$C3;
-        font-size:$T6;
-      }
+          &.data-cell {
+            background:url("../../img/btn_date@2x.png");
+            background-size: cover;
+          }
 
-      .unit {
-        color:$C3;
-        font-size:$T8;
-      }
-    }
+          &.gift-cell {
+            background:url("../../img/btn_share@2x.png");
+            background-size: cover;
+          }
 
-    .yearRate {
-      height:rem-calc(40);
-      line-height:rem-calc(40);
-      color:$C1;
-      font-size:rem-calc(40);
+          &.newbieGuide-cell {
+            background:url("../../img/btn_newer@2x.png");
+            background-size: cover;
+          }
 
-      .unit {
-        font-size:$T13;
+          &.safe-cell {
+            background:url("../../img/btn_safety@2x.png");
+            background-size: cover;
+          }
+        }
       }
 
     }
 
   }
 
-  .prePublish-hint {
+  .home-group-header {
     display:flex;
     align-items: center;
-    margin-top:rem-calc(5);
-    padding:0 rem-calc(15);
-    @include color-and-fontSize($C4,$T8);
-
-    strong {
-      font-weight: normal;
-      color:#f9b704;
-    }
+    height:rem-calc(50);
+    line-height: rem-calc(50);
+    margin-left:rem-calc(-15);
+    padding-left:rem-calc(15);
+    @include color-and-fontSize(#333,rem-calc(16));
+    border-bottom:1px solid #f1f1f1;
 
     &>span {
       display:block;
+      margin-right:rem-calc(3);
     }
 
-    .imgIcon-clock {
-      width:rem-calc(16);
-      height:rem-calc(16);
-      margin-right:rem-calc(2);
+    .imgIcon-product-recommend,
+    .imgIcon-product-hot {
+      @include size(rem-calc(17),rem-calc(17));
     }
   }
+
+  .home-product-list {
+    .group-body {
+      padding:0 0 0 rem-calc(15);
+
+      &>a:last-child .home-card {
+        border:none;
+      }
+
+     
+    }
+  }
+
+  .hot-topic-bar {
+    .group-body {
+      padding:0 0 rem-calc(15);
+
+      .home-group-header {
+        margin-left:0;
+        padding:0 rem-calc(15);
+        border:none;
+
+        .title {
+          margin-right:auto;
+          @include color-and-fontSize(#000,rem-calc(14));
+        }
+      }
+    }
+
+    .hot-topic-list {
+      a {
+        display:block;
+        margin-bottom:rem-calc(15);
+
+        &:last-child {
+          margin-bottom:0;
+        }
+      }
+    }
+
+    .hot-topic-more {
+      @include color-and-fontSize(#999,rem-calc(14));
+    }
+  }
+
+  /*标的卡片*/
+  $home-card-primay:#f6313c;
+  .home-card {
+    padding:rem-calc(20) 0;
+    border-bottom:1px solid #f1f1f1;
+    position:relative;
+    //@include point5Line(bottom);//todo how to remove the last .home-card::after?
+   
+
+    .home-card-item {
+
+      .title {
+        height:rem-calc(35);
+        line-height: rem-calc(35);
+        @include color-and-fontSize($C3,$T4);
+
+        .product-badge {
+          margin-left:rem-calc(10);
+          @include color-and-fontSize(#cd9b56,$T8);
+        }
+      }
+
+      .subtitle {
+        height:rem-calc(20);
+        line-height: 1;
+        display:flex;
+        align-items: flex-end;
+
+        .label {
+          margin-right:rem-calc(6);
+        }
+
+        .productName {
+          display:block;
+          @include color-and-fontSize(#666,rem-calc(12));
+        }
+
+        .productRate {
+          display:block;          
+          @include color-and-fontSize(#666,rem-calc(12));
+        }
+      }
+
+
+     
+      .yearRate {
+        height:rem-calc(30);
+        line-height: rem-calc(30);
+        @include color-and-fontSize($home-card-primay,rem-calc(25));
+
+        .unit {
+          @include color-and-fontSize($home-card-primay,$T8);
+        }
+
+        .rewardRate {
+          margin-left:rem-calc(2);
+          @include color-and-fontSize($home-card-primay,rem-calc(12));
+        }
+      }
+
+      .deadline {
+        height:rem-calc(30);
+        line-height: rem-calc(30);
+        @include color-and-fontSize(#333,rem-calc(12));
+      }
+
+      .remainAmount {
+        height:rem-calc(20);
+        line-height: 1;
+        display:flex;
+        align-items: flex-end;
+        @include color-and-fontSize(#999,rem-calc(12));
+
+        strong {
+          @include color-and-fontSize($home-card-primay,rem-calc(16));
+          font-weight: normal;
+        }
+      }
+
+      
+
+
+      .soldOut-btn {
+        display:inline-block;
+        height:rem-calc(18);
+        line-height: rem-calc(18);
+        width:auto;
+        padding:0 rem-calc(8);
+        @include color-and-fontSize(#e6b980,rem-calc(12));
+        border:1px solid #e6b980;
+        border-radius:rem-calc(3);
+        box-sizing: content-box;
+      }
+    }
+    .vip-rate {
+      height:rem-calc(20);
+      padding:0 rem-calc(5) 0 rem-calc(11);
+      @include color-and-fontSize(#fff,rem-calc(12));
+      line-height:rem-calc(21);
+      background-image:url("../../img/vipRate-bg.png");
+      background-size:cover;
+      position:absolute;
+      top:-1px;
+      right:0;
+    }
+  }
+
+
+
+  .home-dashboard {
+    padding-bottom:rem-calc(15);
+
+    .title {
+      @include color-and-fontSize(#b7b7b7,$T8);
+    }
+
+    .amount {
+      height:rem-calc(35);
+      line-height:rem-calc(35);
+      margin-top:rem-calc(10);
+      color:#b7b7b7;
+      font-size:rem-calc(35);
+    }
+
+    .home-slogan-wrapper {
+      width:rem-calc(146);
+      height:rem-calc(24);
+      margin:0 auto;
+      background-color:#fff;
+      border-radius: rem-calc(12);
+
+      .slogan {
+        width:100%;
+        height:100%;
+      }
+    }
+
+  }
+
 }
-
-
-.home-dashboard {
-  .title {
-    @include color-and-fontSize($C3,$T9);
-
-    strong {
-      color:$C1;
-    }
-  }
-
-  .amount {
-    height:rem-calc(35);
-    line-height:rem-calc(35);
-    margin-top:rem-calc(10);
-    color:#6c6c6c;
-    font-size:rem-calc(35);
-  }
-
-}
-
 #homeNotification {
   width:100%;
-  /*height:rem-calc(70);*/
+  padding:rem-calc(15);
   background:url("../../img/downloadApp-bg.jpg");
   background-size: cover;
   box-shadow: 0 2px 10px #ededed;
@@ -290,10 +341,11 @@
     align-items: center;
     justify-content: flex-start;
 
+
     .downloadAppGuide-logo {
-      width:rem-calc(148);
-      height:rem-calc(22);
-      background:url("../../img/downloadApp-logo.png");
+      width:rem-calc(164);
+      height:rem-calc(23);
+      background:url("../../img/downloadApp-logo2.png");
       background-size: cover;
     }
 
@@ -303,10 +355,16 @@
       line-height: rem-calc(27);
       width:auto;
       margin-left:rem-calc(10);
+      margin-right:auto;
       padding:0 rem-calc(10);
       @include color-and-fontSize(#fff,rem-calc(14));
       background:#e7594d;
       border-radius: rem-calc(13);
+    }
+
+    .icon-close {
+      display:block;
+      @include color-and-fontSize($C1,rem-calc(25));
     }
 
   }
@@ -322,4 +380,8 @@
 
   }
 }
+
+
+
+
 

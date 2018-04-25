@@ -36,6 +36,10 @@ let FruitStory = React.createClass({
                         <div className="content">
                             随着家乡脐橙名气越来越大，我也想进一步扩大种植面积，让更多人吃到赣南脐橙，无奈资金周转上有些困难。去年经人推荐，通过向农泰金融融资借款，从而顺利缓解了资金周转上的困难，在此，想对农泰金融真诚地说一声“谢谢”！希望农泰金融发展越来越好，帮助更多农民丰产丰收。
                         </div>
+                        <div className="qrCode-wrapper text-center" style={{margin:"2.5rem 0"}}>
+                            <img src={require("../../../img/specialActivity/anniversaryCelebration/qt_orange.jpg")} alt="" style={{display:"inline-block",width:"6.375rem",height:"auto"}}/>
+                            <div style={{marginTop:"5px",color:"#666",fontSize:"0.75rem"}}>扫码订购农产品助农吧</div>
+                        </div>
                     </Tabs.Item>
                     <Tabs.Item
                         title="苹果故事"
@@ -57,6 +61,10 @@ let FruitStory = React.createClass({
                         <div className="content">
                             大产业就需要大金融，农泰金融背靠诺普信几十年农业行业积累的大数据资源，正以饱满的农业情怀专注农业金融，为像沂源红苹果这样的特色农产品做大做强提供强有力的金融支持。未来沂源红苹果的“出走”，会更多的与农泰金融“携手并进”。祝农泰金融一周年生日快乐！祝帮助过农民朋友的投资人身体健康，心想事成！
                         </div>
+                        <div className="qrCode-wrapper text-center" style={{margin:"2.5rem 0"}}>
+                            <img src={require("../../../img/specialActivity/anniversaryCelebration/qr_apple.jpg")} alt="" style={{display:"inline-block",width:"6.375rem",height:"auto"}}/>
+                            <div style={{marginTop:"5px",color:"#666",fontSize:"0.75rem"}}>扫码订购农产品助农吧</div>
+                        </div>
                     </Tabs.Item>
                     <Tabs.Item
                         title="红枣故事"
@@ -77,6 +85,10 @@ let FruitStory = React.createClass({
                             为了让更多的人吃到我们阿克苏的大枣，今年我特向农泰金融申请了融资服务，喜获大丰收。真的特别感恩农泰及投资人给予我资金上的帮助。值此农泰周年庆，我谨奉上阿克苏的大枣让投资人朋友品尝，也真诚的祝愿农泰生日快乐，越办越好，多为三农作贡献！
                         </div>
                         <img src={require("../../../img/specialActivity/fruitStory10.jpg")} alt="" className="responsive"/>
+                        <div className="qrCode-wrapper text-center" style={{margin:"2.5rem 0"}}>
+                            <img src={require("../../../img/specialActivity/anniversaryCelebration/qr_jujube.jpg")} alt="" style={{display:"inline-block",width:"6.375rem",height:"auto"}}/>
+                            <div style={{marginTop:"5px",color:"#666",fontSize:"0.75rem"}}>扫码订购农产品助农吧</div>
+                        </div>
                     </Tabs.Item>
                 </Tabs>
             </Container>

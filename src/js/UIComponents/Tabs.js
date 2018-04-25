@@ -4,6 +4,8 @@ import ClassNameMixin from './mixins/ClassNameMixin';
 import Button from './Button';
 import ButtonGroup from './ButtonGroup';
 
+import cookie from "../lib/cookie";
+
 const Tabs = React.createClass({
   mixins: [ClassNameMixin],
 
@@ -11,6 +13,7 @@ const Tabs = React.createClass({
     classPrefix: React.PropTypes.string,
     defaultActiveKey: React.PropTypes.any,
     onAction: React.PropTypes.func,
+    isTabNavScrollable:React.PropTypes.bool
   },
 
   getDefaultProps() {
@@ -73,6 +76,7 @@ const Tabs = React.createClass({
 
   renderNav() {
     let activeKey = this.state.activeKey;
+    let isTabNavScrollable=this.props.isTabNavScrollable;
 
     let navs = React.Children.map(this.props.children, (child, index) => {
       let {
@@ -103,15 +107,33 @@ const Tabs = React.createClass({
       );
     });
 
-    let childLength=React.Children.count(this.props.children);
-    let slideLineWidth=childLength > 1 ? (document.body.clientWidth - 2 *15) / childLength : 0;
+    let slideLineWidth,slideLineLeft;
+    if(!isTabNavScrollable){//如果tabNav的模式的弹性调整的话，那么slideLineWidth，slideLineLeft的计算方式如下
+      let childLength=React.Children.count(this.props.children);
+      slideLineWidth=childLength > 1 ? (document.body.clientWidth - 2 *15) / childLength : 0;
+      slideLineLeft=slideLineWidth * activeKey + 15;
+    }else {
+      slideLineWidth=100;//暂时将每个按钮的宽度硬编码为"100px"
+      slideLineLeft=slideLineWidth * activeKey + 15;
+    }
 
-    let slideLineLeft=slideLineWidth * activeKey + 15;
+    //因为在IOS系统中，绝对定位元素会随着页面滚动而跑位，所以采取此退让的方案来解决这个兼容性问题
+    var ua = navigator.userAgent;
+    let isInIOS=!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    let buttonGroupStyle={};
+    if(isInIOS){
+      buttonGroupStyle.position="relative";
+      buttonGroupStyle.top=0;
+    }
+
+
+    let btnGroupClasses=classNames(this.prefixClass('nav'),{"btn-group-scrollable":isTabNavScrollable});
     return (
       <ButtonGroup
-        className={this.prefixClass('nav')}
-        justify
-      >
+        className={btnGroupClasses}
+        justify={isTabNavScrollable ?  false : true}
+        style={buttonGroupStyle}
+        >
         {navs}
         <span className="slide-line" style={{width:slideLineWidth,left:slideLineLeft}}></span>
       </ButtonGroup>
@@ -152,6 +174,12 @@ const Tabs = React.createClass({
     );
   },
 
+  _isInWebViewOfNTApp(){//检测当前web app的所处的环境是否是农泰金融的安卓或者ios客户端的webview。
+    let deviceType=cookie.getCookie("deviceType");
+    let isInAppWebview=["ntandroid","ntios"].indexOf(deviceType.toLowerCase()) > -1;
+    return isInAppWebview;
+  },
+
   render() {
     let classSet = this.getClassSet();
     let {
@@ -159,10 +187,20 @@ const Tabs = React.createClass({
       ...props
     } = this.props;
 
+    //因为在IOS系统中，绝对定位元素会随着页面滚动而跑位，所以采取此退让的方案来解决这个兼容性问题
+    var ua = navigator.userAgent;
+    let isInIOS=!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    let tabStyle={};
+    if(isInIOS){
+      tabStyle.paddingTop=0;
+    }
+
+
     return (
       <div
         {...props}
         className={classNames(classSet, className)}
+        style={tabStyle}
       >
         {this.renderNav()}
         {this.renderTabPanels()}

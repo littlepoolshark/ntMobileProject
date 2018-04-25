@@ -14,9 +14,8 @@ let ProgressBar=React.createClass({
                 <div className="progressBar-body" style={{width:this.props.percent}}></div>
                 {
                     this.props.hasProgressPercent ?
-                    (
-                        <span className="progress-percent">{this.props.percent}</span>
-                    )  : null
+                    <span className="progress-percent">{this.props.percent}</span> :
+                    null
                 }
             </div>
         )

@@ -8,6 +8,7 @@
   bottom:rem-calc(100);
   left:0;
   opacity:1;
+  z-index:1011; //modal组件的backdrop/mask的z-index:1009,之上的modal-inner为1010
   /*这里的transition-property不能为“all”，因为webkitTransitionEnd事件将在元素的每个css属性发生改变之后触发一次*/
   transition:opacity 1s ease-in-out ;
 }
@@ -19,8 +20,9 @@
   text-align:center;
   color:#fff;
   font-size:rem-calc(14);
-  background:#000;
-  opacity:0.5;
+  //background:#000;
+  //opacity:0.5;
+  background-color:rgba(0,0,0,0.5);//这两种方法是有区别的，被注释的那种，相对于作用于整体的透明度（包括我们不想被作用的字体），而后面改良的这种才是我们所期待的
   border-radius:rem-calc(25);
 }
 /*

@@ -21,7 +21,8 @@
     top:-1px;
 
     &.newbieLoan-tag {
-      width:rem-calc(127);
+      width:rem-calc(100);
+      height:rem-calc(28);
       background-image: url("../../img/month_noviceexclusive.png");
     }
 
@@ -30,6 +31,24 @@
       background-image: url("../../img/day_label.png");
     }
   }
+
+  .yearRate-title {
+    position:relative;
+
+    .vip-rate {
+      height:rem-calc(20);
+      padding:0 rem-calc(5) 0 rem-calc(11);
+      @include color-and-fontSize(#fff,rem-calc(12));
+      line-height:rem-calc(21);
+      background-image:url("../../img/vipRate-bg.png");
+      background-size:cover;
+      position:absolute;
+      top:-2px;
+      left:50%;
+      margin-left:rem-calc(30);
+    }
+  }
+
   .subtitle {
     margin-top:rem-calc(5);
     text-align: center;
@@ -71,6 +90,37 @@
       &:last-child {
         border-right:none;
       }
+    }
+  }
+
+  .rulesTag-list {
+    margin-bottom:rem-calc(25);
+    position:relative;
+
+    .rulesTag {
+      display:inline-block;
+      width:auto;
+      height:rem-calc(16);
+      margin-right:rem-calc(10);
+      padding:0 rem-calc(10);
+      line-height:rem-calc(18);
+      text-align: center;
+      @include color-and-fontSize(#cd9b57,rem-calc(10));
+      border:1px solid #cd9b57;
+      border-radius:rem-calc(26);
+
+      &:last-child {
+        margin-right:0;
+      }
+    }
+
+    .imgIcon-grey-questionMark {
+      display:block;
+      width:rem-calc(40);
+      height:rem-calc(40);
+      position:absolute;
+      top:rem-calc(-8);
+      right:rem-calc(-10);
     }
   }
 

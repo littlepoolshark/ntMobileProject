@@ -5,6 +5,11 @@ var SecurityCenterAction={
         appDispatcher.dispatch({
             actionName:"getSecurityInfoFromServer_securityCenter"
         })
+    },
+     checkIDCard(){
+        appDispatcher.dispatch({
+            actionName:"checkIDCard_securityCenter"
+        })
     }
 };
 

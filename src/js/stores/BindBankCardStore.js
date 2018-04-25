@@ -4,12 +4,16 @@ var ajax=require("../lib/ajax.js");
 
 var BindBankCardStore={
     _all:{
-       userName:"",
+       realName:"",
        bankId:"",
        bankName:"",
-       cardNo:"",
-       region:"",//开户城市id
-       branch:""//开户支行名称
+       cardNo:""
+       //region:"",//开户城市id
+       //branch:""//开户支行名称
+    },
+    trimCardNo(cardNo){
+        cardNo=cardNo + "";
+        return cardNo.replace(/\s+/g,"");
     },
     checkForBindCardForm(){
         let validationResult={
@@ -21,7 +25,8 @@ var BindBankCardStore={
             bankName,
             cardNo
             }=this._all;
-        cardNo=cardNo+"";//确保cardNo是字符串
+        cardNo=this.trimCardNo(cardNo);//去除格式化加入的空格
+
         if(bankName === ""){
             validationResult={
                 success:false,
@@ -58,10 +63,8 @@ MicroEvent.mixin(BindBankCardStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "getUserNameFromLocation":
-            BindBankCardStore.updateAll({
-                userName:payload.data.userName
-            });
+        case "getInitialDataFromLocation_bindBankCard":
+            BindBankCardStore.updateAll(payload.data);
             BindBankCardStore.trigger("change");
             break;
         case "selectbankCard":
@@ -81,11 +84,13 @@ appDispatcher.register(function(payload){
 
             let validationResult=BindBankCardStore.checkForBindCardForm();
             if(validationResult.success){
+                let cardNo=BindBankCardStore.getAll().cardNo;
+
                 ajax({
                     ciUrl:"/user/v2/bindBankCard",
                     data:{
                         bankId:BindBankCardStore.getAll().bankId,
-                        cardno:BindBankCardStore.getAll().cardNo
+                        cardno:BindBankCardStore.trimCardNo(cardNo)//去除格式化加入的空格
                     },
                     success(rs){
                         if(rs.code === 0){

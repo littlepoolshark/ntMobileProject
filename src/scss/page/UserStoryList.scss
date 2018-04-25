@@ -1,0 +1,28 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#userStoryList {
+  .userStoryList {
+    padding:rem-calc(15);
+    margin:0;
+    list-style: none;
+
+    li {
+      margin-bottom:rem-calc(15);
+
+      &:last-child {
+        margin-bottom:0;
+      }
+
+      a {
+        display:block;
+      }
+    }
+  }
+}

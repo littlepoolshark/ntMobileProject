@@ -1,0 +1,134 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#autoPurchaseForm {
+
+    %item-flex-box {
+        width:100%;
+        display:flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        & > span {
+            display:block;
+        }
+    }
+
+    %customer-item-input {
+        display:block;
+        padding:0;
+        margin:0;
+        text-align: right;
+        padding-right:3px;
+        font-size:rem-calc(16);
+        outline:none;
+        border:none;
+    }
+
+    .minRate-bar {
+        width:rem-calc(100);
+        @extend %item-flex-box;
+
+        & > input {
+            @extend %customer-item-input;
+        }
+    }
+
+
+    .deadline-bar {
+        width:100%;
+        @extend %item-flex-box;
+
+        & > input {
+            width:rem-calc(25);
+            height:rem-calc(45);
+            @extend %customer-item-input;
+        }
+
+        .icon-right-nav {
+            color: rgba(136, 136, 136, 0.45);
+            font-size: 1.25rem;
+        }
+
+        .separator {
+            margin-left:7px;
+            margin-right:2px;
+            color:#333;
+        }
+    }
+
+    .productType-bar {
+        .item-after {
+            height:rem-calc(25);
+            max-width:rem-calc(205);
+            @include text-overflow;
+        }
+    }
+
+    .minAndMaxAmount-bar {
+        width:rem-calc(100);
+        @extend %item-flex-box;
+
+        & > input {
+            width:rem-calc(80);
+            height:rem-calc(45);
+            @extend %customer-item-input;
+        }
+
+        .separator {
+            margin-left:7px;
+            color:#333;
+        }
+    }
+
+    .validDate-bar {
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        &>div {
+            display:flex;
+            align-items: center;
+
+            &:first-child {
+                margin-right:rem-calc(20);
+            }
+
+            span {
+                display:block;
+
+                &.imgIcon-autoPurchase-agreement-checked {
+                    @include size(rem-calc(30),rem-calc(30));
+                }
+            }
+        }
+    }
+
+    .validDateSetting-bar {
+        width:rem-calc(230);
+        @extend %item-flex-box;
+
+        .validDateInput {
+            width:rem-calc(115);
+            height:rem-calc(45);
+            line-height: rem-calc(45);
+            text-align: right;
+        }
+
+        .separator {
+            margin-left:7px;
+            margin-right:8px;
+            color:#333;
+        }
+    }
+
+}
+.datepicker-modal .datepicker.ios .datepicker-navbar-btn {
+    color:#cc2e33;
+}

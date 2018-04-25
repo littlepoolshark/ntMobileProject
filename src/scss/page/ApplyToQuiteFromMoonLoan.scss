@@ -1,0 +1,63 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#applyToQuiteFromMoonLoan {
+  .group-body {
+    overflow:hidden;
+  }
+  .title {
+    padding:rem-calc(15);
+    font-weight:normal;
+    @include color-and-fontSize(#333,rem-calc(16));
+    border-bottom:1px solid #eee;
+  }
+  .btns-wrapper  {
+    padding:rem-calc(15);
+
+    button {
+      margin:0;
+    }
+  }
+  .warm-hint {
+    padding:rem-calc(15);
+    @include color-and-fontSize(#999,rem-calc(12));
+  }
+
+  .picker-container {
+    padding:0;
+    margin:0;
+    list-style: none;
+
+    .col-3 {
+      margin-bottom:rem-calc(15);
+
+      .date-cell {
+        height:rem-calc(40);
+        line-height: rem-calc(40);
+        text-align: center;
+        @include color-and-fontSize(#666,rem-calc(14));
+        border:1px solid #e5e5e5;
+
+        &.active {
+          border-color:#cc2e33;
+        }
+      }
+    }
+  }
+
+  .single-date-cell {
+    width:rem-calc(120);
+    height:rem-calc(40);
+    margin:0 auto rem-calc(15);
+    line-height: rem-calc(40);
+    text-align: center;
+    @include color-and-fontSize(#666,rem-calc(14));
+    border:1px solid #cc2e33;
+  }
+}

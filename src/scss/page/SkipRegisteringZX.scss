@@ -1,0 +1,42 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+
+#skipRegisteringZX {
+
+  .wrapper {
+    padding:0 rem-calc(15);
+
+    .title {
+      margin:rem-calc(60);
+      @include color-and-fontSize($C3,$T4);
+    }
+
+    .warm-hint {
+      margin-top:rem-calc(20);
+
+      &>p {
+        margin-top:0;
+        margin-bottom:0;
+        @include color-and-fontSize($C4,$T8);
+
+        .title-badge {
+          display:inline-block;
+          width:rem-calc(8);
+          height:rem-calc(8);
+          margin-right:rem-calc(4);
+          background-color:#999 ;
+          border-radius:50%;
+        }
+      }
+    }
+  }
+
+
+}

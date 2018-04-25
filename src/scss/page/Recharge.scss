@@ -9,45 +9,92 @@
 
 #recharge {
   .item-input .field-label {
-    width:16%;
+    width: 10%;
+    font-size: rem-calc(25);
+  }
+
+  .item {
+    border: none;
+  }
+
+  .header {
+    height: rem-calc(40);
+    line-height: rem-calc(40);
+    padding-left: rem-calc(15);
+    @include color-and-fontSize(#353535, rem-calc(14));
+  }
+
+  .footer {
+    height: rem-calc(30);
+    display: flex;
+    align-items: center;
+    padding-left: rem-calc(15);
+    @include color-and-fontSize(#999, rem-calc(12));
+    @include point5Line(top);
+
+    .imgIcon-guarder-icon {
+      margin-right: rem-calc(3);
+      @include size(rem-calc(15), rem-calc(15));
+    }
   }
 
   .rechargeAmount-selectionBar {
-    margin:rem-calc(15) 0 rem-calc(25);
-    padding:0 rem-calc(15);
+    margin: rem-calc(15) 0 rem-calc(25);
+    padding: 0 rem-calc(15);
 
-    &>span {
-      display:inline-block;
-      width:16%;
-      height:rem-calc(30);
-      line-height:rem-calc(32);
+    & > span {
+      display: inline-block;
+      width: 16%;
+      height: rem-calc(30);
+      line-height: rem-calc(32);
       text-align: center;
-      margin-right:5%;
-      @include color-and-fontSize($C3,$T8);
-      background-color:$white;
+      margin-right: 5%;
+      @include color-and-fontSize($C3, $T8);
+      background-color: $white;
     }
 
-    &>span:last-child {
-      margin-right:0;
+    & > span:last-child {
+      margin-right: 0;
     }
 
-    &>span.active {
-      background:$C1;
-      color:$white;
+    & > span.active {
+      background: $C1;
+      color: $white;
+    }
+  }
+
+  .bankCard-wrapper {
+    margin: rem-calc(10);
+    padding: rem-calc(15) rem-calc(40);
+    background-image: url("../../img/bank_bg.png");
+    background-size: 100% 100%;
+
+    .bankCard {
+      height: rem-calc(60);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-size: rem-calc(20);
+
+      & > span {
+        display: block;
+
+        &.imgIcon-my-bankCard {
+          @include size(rem-calc(50), rem-calc(50));
+        }
+      }
     }
   }
 
-  .group.active {
-    .group-body {
-      border:1px solid $C1;
-    }
-  }
-  .shortcut-pay-wrapper {
-    line-height:rem-calc(30);
-    @include color-and-fontSize($C4,$T8);
+  .bankQuotaRemark {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: rem-calc(20);
 
-    span:last-child {
-      margin-right:rem-calc(20);
+    a {
+      @include color-and-fontSize(#e0b982, rem-calc(14));
     }
   }
   .recharge-card-bg {

@@ -27,7 +27,7 @@ let BankCardList=React.createClass({
         }
 
         this.context.router.push({
-            pathname:"registerToZXBank",
+            pathname:query.beforeComponent,
             query:query
         });
     },
@@ -45,7 +45,7 @@ let BankCardList=React.createClass({
         let query=this.props.location.query;
         query.visitFrom="bankCardList";
         this.context.router.push({
-            pathname:"registerToZXBank",
+            pathname:query.beforeComponent,
             query:query
         });
     },

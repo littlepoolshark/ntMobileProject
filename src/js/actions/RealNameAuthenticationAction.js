@@ -1,6 +1,11 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var RealNameAuthenticationAction={
+    getInitialData(){
+        appDispatcher.dispatch({
+            actionName:"getInitialData_realNameAuthentication"
+        })
+    },
     submitAuthenticationForm (realName,idCardNo){
         appDispatcher.dispatch({
             actionName:"submitAuthenticationForm",

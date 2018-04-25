@@ -17,13 +17,25 @@ import List from "../UIComponents/List";
 
 //设置中心页面：AppSetting component
 let AppSetting=React.createClass({
+    getInitialState(){
+         return AppSettingStore.getAll();
+    },
     _handleLogout(){
         AppSettingAction.logout();
     },
-    _refreshApp(){
-        window.location.reload(true);
+    _jumpToRiskEvaluate(){
+        this.context.router.push({
+            pathname:"riskEvaluate",
+            query:{
+                isEvaluated:this.state.isRiskEvaluated
+            }
+        })
     },
     render(){
+        let {
+            isRiskEvaluated,
+            userRiskType
+        }=this.state;
 
         return (
             <Container scrollable={false} id="appSetting">
@@ -36,8 +48,15 @@ let AppSetting=React.createClass({
                         />
                     <List.Item
                         href="#/myBankCard"
-                        title="银行卡"
+                        title="我的银行卡"
                         media={<Icon classPrefix="imgIcon" name="bank-card"/>}
+                        />
+                    <List.Item
+                        href="javascript:void(0)"
+                        title="投资风险评测"
+                        media={<Icon classPrefix="imgIcon" name="feedback-icon"/>}
+                        after={userRiskType}
+                        onClick={this._jumpToRiskEvaluate}
                         />
                 </List>
 
@@ -45,7 +64,7 @@ let AppSetting=React.createClass({
                     <List.Item
                         href="#/aboutUs"
                         title="关于我们"
-                        media={<Icon classPrefix="imgIcon" name="love-heart"/>}
+                        media={<Icon classPrefix="imgIcon" name="person-avator"/>}
                         />
                     {/* <List.Item
                         href="##"
@@ -68,17 +87,17 @@ let AppSetting=React.createClass({
                         </span>
                             <span className="serverPhoneNo">400-6322-688</span>
                         </div>
-                        <div className="serverPhone-footer">客服时间：工作日9:00-18:00</div>
+                        <div className="serverPhone-footer">客服服务时间：工作日9:00-18:00</div>
                     </Group>
                 </a>
 
-                {/* <List onClick={this._refreshApp}>
+                 <List >
                     <List.Item
-                        href="javascript:void(0)"
-                        title="刷新应用"
-                        media={<Icon  name="refresh" style={{fontSize:"1rem",color:"#df4b3c",fontWeight:"bold"}}/>}
+                        href="#/appFeedback"
+                        title="意见反馈"
+                        media={<Icon  classPrefix="imgIcon" name="feedback-icon"/>}
                         />
-                </List>*/}
+                </List>
 
                 <div className="block-btn-wrapper">
                     <Button amStyle="primary" block radius onClick={this._handleLogout}>退出登录</Button>
@@ -89,6 +108,12 @@ let AppSetting=React.createClass({
         )
     },
     componentDidMount(){
+        AppSettingAction.getInitialData();
+
+        AppSettingStore.bind("change",function(){
+          this.setState(AppSettingStore.getAll())
+        }.bind(this));
+
         AppSettingStore.bind("logoutSuccess",function(){
             this.context.router.push({
                 pathname:"/",

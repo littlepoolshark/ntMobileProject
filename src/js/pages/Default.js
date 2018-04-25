@@ -9,6 +9,7 @@ import {
     Link
 } from 'react-router';
 
+
 //ui component
 import Container from "../UIComponents/Container";
 import Button from "../UIComponents/Button";
@@ -21,6 +22,7 @@ import Message from "../UIComponents/Message";
 
 //utilities
 import cookie from "../lib/cookie";
+import getParamObjFromUrl from "../lib/getParamObjFromUrl";
 import RegisterServiceAgreement from "./ServiceAgreement_register";
 
  //登录组件
@@ -48,6 +50,10 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
          let password=this.refs.password.getValue();
          DefaultAction.changePassword(password);
      },
+     _resetToEmpty(){
+        this.refs.account.getFieldDOMNode().focus();
+        DefaultAction.resetToEmpty();
+     },
      render(){
          let {
              loginPhoneNo,
@@ -66,11 +72,16 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
                              id="loginPhoneNo"
                              type="text"
                              label={null}
-                             placeholder="请输入您的手机号码"
+                             placeholder="请输入您的手机号码 "
                              ref="account"
                              value={loginPhoneNo}
                              onChange={this._handleAccountChange}
                          />
+                         <Icon
+                            name="round-delete-btn"
+                            classPrefix="imgIcon"
+                            onClick={this._resetToEmpty}
+                        />
                      </List.Item>
                      <List.Item
                          media={<Icon name="password" classPrefix="imgIcon" style={{marginTop:"-4px"}}/>}
@@ -90,7 +101,6 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
                             <Icon
                                 name={imgIconClass}
                                 classPrefix="imgIcon"
-                                style={{marginTop:"px"}}
                                 onClick={this._toggleOpenEye}
                             /> :
                             null
@@ -98,17 +108,13 @@ import RegisterServiceAgreement from "./ServiceAgreement_register";
 
                      </List.Item>
                  </List>
-                 <div className="cf">
-                     <Link to="getBackPassword" className="fr">忘记密码？</Link>
-                 </div>
                  <div className="btn-wrapper" >
-                     <Button amStyle="primary" block radius={true} onClick={this._handleLogin}>登录</Button>
+                     <Button amStyle="primary" block radius={true} onClick={this._handleLogin}>登 录</Button>
                  </div>
              </div>
          )
      },
      componentDidMount(){
-
      }
 });
 
@@ -120,8 +126,8 @@ let RegisterView=React.createClass({
     _handleClose(){
         this.refs.modal.close();
     },
-    _handleToggleCheck(event){
-        DefaultAction.toggleAgreement(event.target.checked);
+    _handleToggleCheck(){
+        DefaultAction.toggleAgreement();
     },
     _handleRegisterAccountChange(){
         let phoneNo=parseInt(this.refs.registerAccount.getValue());//过滤非法字符
@@ -133,8 +139,10 @@ let RegisterView=React.createClass({
     },
     render(){
         let {
-            registerPhoneNo
+            registerPhoneNo,
+            isAgreement
             }=this.props;
+
         return (
             <div>
                 <List id="register-form">
@@ -152,16 +160,20 @@ let RegisterView=React.createClass({
                         />
                     </List.Item>
                 </List>
-                <div>
-                    <input type="checkbox" defaultChecked onChange={this._handleToggleCheck} />
+                <div className="agreement-bar">
+                    <Icon 
+                        name={ isAgreement ? "agreement-checkbox-check" : "agreement-checkbox-uncheck" } 
+                        classPrefix="imgIcon" 
+                        onClick={this._handleToggleCheck}
+                    />
                     同意
-                    <a href="javascript:void(0);" onClick={this._showPopupWindow}>《农泰金融注册服务协议》</a>
+                    <a href="javascript:void(0);" onClick={this._showPopupWindow}>《注册服务协议》</a>
                 </div>
                 <div className="btn-wrapper" >
                     <Button amStyle="primary" block radius={true} onClick={this._getVerificationCode}>获取验证码</Button>
                 </div>
                 <Modal
-                    title="农泰金融注册服务协议"
+                    title="注册服务协议"
                     ref="modal"
                     isOpen={false}
                     role="popup"
@@ -189,34 +201,61 @@ let RegisterView=React.createClass({
             isLoginView:!this.state.isLoginView
         })
     } ,
+    _handleLoginSuccess(){
+        let beforeComponent=this.props.location.query.beforeComponent || getParamObjFromUrl().beforeComponent;
+        if(beforeComponent && beforeComponent !== "/"){
+            //使用replace方法将浏览历史堆栈的当前路由替换为下一个路由
+            //从而解决了一个需要登录的页面回跳后，点击'返回按钮'所出现的回跳死循环的现象(使用push就会出现这个问题)
+            this.context.router.replace({
+                pathname:beforeComponent
+            })
+        }else {
+            this.context.router.push({
+                pathname:"/home"
+            });
+        }
+    },
     render (){
-        let sloganClasses=classNames({
-            fade:this.state.isLoginView,
-            "text-center":true,
-            "slogan-text":true
+        let isLoginView=this.state.isLoginView;
+
+        let defaultFooterClasses=classNames({
+            "default-footer":true,
+            "justify-content-center":!isLoginView,
+            "justify-content-between":isLoginView
         });
 
         return (
                 <Container className="default-container" {...this.props}>
                     <div className="text-center ntLogo-wrapper"></div>
-                    <div className={sloganClasses}>上市公司战略投资理财平台，注册即送180红包</div>
                     {
-                        this.state.isLoginView ?
+                        isLoginView ?
                         <LoginView handleLogin={this._handleLogin} {...this.state.data} /> :
                         <RegisterView history={this.props.history} {...this.state.data} />
                     }
-                    <div className="default-footer">
+                    <div className={defaultFooterClasses}>
                         {
-                            this.state.isLoginView?
-                            "没有账号？" :
-                            "已有账号？"
+                            isLoginView?
+                            <a href="javascript:void(0)" onClick={this._toggleView}>快速注册</a> :
+                            null
                         }
-                        <a href="javascript:void(0)" onClick={this._toggleView}>{this.state.isLoginView  ? "注册领红包" : "立即登录"}</a>
+                        { 
+                             isLoginView ?
+                             <Link to="getBackPassword" className="fr">忘记密码？</Link> :
+                             null
+                        }
+                        {
+                             !isLoginView ?
+                             <span>已有账号？<a href="javascript:void(0)" onClick={this._toggleView}>立即登录</a></span>:
+                             null   
+                        } 
                     </div>
                 </Container>
         )
     },
     componentDidMount(){
+        let inviteCode=this.props.location.query.inviteCode
+                       || getParamObjFromUrl().inviteCode
+                       || sessionStorage.getItem("ntInviteCode");
 
         DefaultStore.bind("change",function(){
             this.setState({
@@ -225,29 +264,17 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("loginFailed",function(msg){
-            Message.broadcast(msg);
+            Message.broadcast(msg,{backgroundColor:"#fff",color:"#000"});
         }.bind(this));
 
-        DefaultStore.bind("loginSuccess",function(){
-            let beforeComponent=this.props.location.query.beforeComponent;
-            if(beforeComponent){
-                this.context.router.push({
-                    pathname:beforeComponent
-                });
-            }else {
-                this.context.router.push({
-                    pathname:"/home"
-                });
-            }
 
-        }.bind(this));
-
+        DefaultStore.bind("loginSuccess",this._handleLoginSuccess);
 
         DefaultStore.bind("getVerificationCodeCheckSuccess",function(phoneNo){
             let queryObj={
                 phoneNo:phoneNo
             };
-            let inviteCode=this.props.location.query.inviteCode;
+
             if(!!inviteCode){
                 queryObj.inviteCode=inviteCode;
             }
@@ -258,11 +285,12 @@ let RegisterView=React.createClass({
         }.bind(this));
 
         DefaultStore.bind("getVerificationCodeCheckFailed",function(msg){
-            Message.broadcast(msg);
+            Message.broadcast(msg,{backgroundColor:"#fff",color:"#000"});
         }.bind(this));
 
     },
     componentWillUnmount(){
+        DefaultStore.unbind("loginSuccess",this._handleLoginSuccess);
         DefaultStore.clearAll();
     }
 });

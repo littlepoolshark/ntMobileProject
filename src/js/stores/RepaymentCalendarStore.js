@@ -37,7 +37,6 @@ var RepaymentCalendarStore={
         monthPickerFrameList:generateMonthPickerFrameList(),
         datePickerCellList:[],
         repaymentDetailList:[],
-        repaymentDashboardList:[],//每个月的回款统计列表
         currMonth_zyjbx:0,//当月已结本息
         currMonth_zdsbx:0,//当月待收本息
         todayTotalRepaymentAmount:0
@@ -159,37 +158,28 @@ var RepaymentCalendarStore={
             todayTotalRepaymentAmount:totalRepaymentAmount
         });
     },
-    updateRepaymentDashboardList(list){
-        Object.assign(this._all,{
-            repaymentDashboardList:list
-        });
-    },
     updateCurrDate(date){
         Object.assign(this._all,{
             currDate:date
         });
     },
-    updateCurrMonthRepaymentDashboard(){//更新当月已结本息和当月待收本息
-        let {
-            currYear,
-            currMonth,
-            repaymentDashboardList,
-            currMonth_zyjbx,
-            currMonth_zdsbx
-            }=this._all;
-        for(let i=0;i<repaymentDashboardList.length;i++){
-            let year=repaymentDashboardList[i].date.split("-")[0];
-            let month=repaymentDashboardList[i].date.split("-")[1];
-            if(currYear === parseInt(year) && currMonth === parseInt(month)){
-                currMonth_zyjbx=repaymentDashboardList[i].zyjbx;
-                currMonth_zdsbx=repaymentDashboardList[i].zdsbx;
-                break;
+    updateCurrMonthRepaymentDashboard(list){//更新当月已结本息和当月待收本息
+        let currMonth_zyjbx =0,//当月已结本息
+            currMonth_zdsbx =0;//当月待收本息
+        if(list && list.length){
+            for(let i=0;i<list.length;i++){
+                if(list[i].status === "paid"){
+                    currMonth_zyjbx += parseFloat(list[i].amount);
+                }
+                if(list[i].status === "unpaid"){
+                    currMonth_zdsbx += parseFloat(list[i].amount);
+                }
             }
         }
 
         Object.assign(this._all,{
-            currMonth_zyjbx:currMonth_zyjbx,
-            currMonth_zdsbx:currMonth_zdsbx
+            currMonth_zyjbx:currMonth_zyjbx.toFixed(2),
+            currMonth_zdsbx:currMonth_zdsbx.toFixed(2)
         });
     },
     updateCurrYearAndCurrMonth(monthTime){
@@ -201,14 +191,23 @@ var RepaymentCalendarStore={
         });
     },
     updateRepaymentDetailList(list){
+        let compensationArr=[];//从后台返回的数据中提取补偿金数组
+        for(let i=0;i<list.length;i++){
+            if(list[i].compensation){
+                compensationArr.push({
+                    productName:list[i].productName,
+                    compensationAmount:list[i].compensation,
+                    isCompensationItem:true
+                })
+            }
+        }
         Object.assign(this._all,{
-            repaymentDetailList:list
+            repaymentDetailList:list.concat(compensationArr)
         });
     },
     updateBeforeGetDatePickerCellList(source){
         this.updateCurrDate(source.currDate);
         this.updateCurrYearAndCurrMonth(source.monthTime);
-        this.updateCurrMonthRepaymentDashboard();
         this._all.repaymentDetailList=[];
         this._all.todayTotalRepaymentAmount=0;
     },
@@ -229,22 +228,6 @@ MicroEvent.mixin(RepaymentCalendarStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
-        case "getRepaymentDashboardData_repaymentCalendar":
-            ajax({
-                ciUrl:"/user/v2/financialReceivedPlansStat",
-                data:{
-                    reqPageNum:1,
-                    maxResults:100
-                },
-                success(rs){
-                    if(rs.code === 0){
-                        RepaymentCalendarStore.updateRepaymentDashboardList(rs.data.list);
-                        RepaymentCalendarStore.updateCurrMonthRepaymentDashboard();
-                        RepaymentCalendarStore.trigger("change");
-                    }
-                }
-            });
-            break;
         case "getDatePickerCellList":
             RepaymentCalendarStore.updateBeforeGetDatePickerCellList({
                 currDate:0,
@@ -258,6 +241,7 @@ appDispatcher.register(function(payload){
                 },
                 success(rs){
                     if(rs.code === 0){
+                        RepaymentCalendarStore.updateCurrMonthRepaymentDashboard(rs.data.list);
                         RepaymentCalendarStore.updateDatePickerCellList(rs.data.list);
                         RepaymentCalendarStore.trigger("change");
                     }

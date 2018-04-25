@@ -1,0 +1,107 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#VIPProfile {
+
+  .dashboard-wrapper {
+    margin-top:0;
+
+    .dashboard {
+      display:flex;
+      align-items: center;
+
+      &>span {
+        display:block;
+      }
+
+      .imgIcon-my-avator {
+        width:rem-calc(30);
+        height:rem-calc(30);
+        margin-right:rem-calc(3);
+      }
+
+      .phone-number {
+        @include color-and-fontSize($C3,$T4);
+      }
+    }
+  }
+
+  .VIP-introduction {
+    position:relative;
+
+    h6 {
+      display:flex;
+      align-items: center;
+      padding-bottom:rem-calc(10);
+      margin-right:rem-calc(-15);
+      @include color-and-fontSize($C3,$T7);
+      font-weight:normal;
+      border-bottom:1px solid #e5e5e5;
+
+      &>span {
+        display:block;
+      }
+
+      &>span.title-flag {
+        width:rem-calc(4);
+        height:rem-calc(13);
+        margin-right:rem-calc(5);
+        margin-top:rem-calc(-2);
+        background-color:$C1;
+        border-radius:rem-calc(4);
+      }
+    }
+
+    section {
+      margin-bottom:rem-calc(30);
+
+      &:last-child {
+        margin-bottom:0;
+      }
+
+      .title {
+        @include color-and-fontSize(#999,rem-calc(14));
+      }
+      .subtitle {
+        display:flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-top:rem-calc(8);
+        margin-bottom:rem-calc(-10);
+
+        &>span {
+          display:block;
+        }
+
+        .label-text {
+          @include color-and-fontSize(#333,rem-calc(14));
+        }
+        .percent-text {
+          @include color-and-fontSize(#999,rem-calc(12));
+        }
+      }
+    }
+
+    .VIP-stamp {
+      width:rem-calc(66);
+      height:rem-calc(66);
+      background-image:url("../../img/vip_biaozhi.png");
+      background-size:cover;
+      position:absolute;
+      top:50%;
+      margin-top:rem-calc(-25);
+      right:rem-calc(50);
+    }
+  }
+
+  .warm-hint-text {
+    padding:0 rem-calc(15) 0;
+    @include color-and-fontSize(#999,rem-calc(14));
+  }
+}

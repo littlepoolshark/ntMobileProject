@@ -251,7 +251,7 @@ let Double11 = React.createClass({
                     <span>立即抢购</span>
                 </button>
             )
-        }else if(loanStatusText === "售罄"){
+        }else if(loanStatusText === "已售罄"){
             return (
                 <button className="double11-btn disabled">
                     <span>已售罄</span>
@@ -345,7 +345,7 @@ let Double11 = React.createClass({
                                             }
 
                                         </div>
-                                        <div className="subtitle text-center">预期年化率</div>
+                                        <div className="subtitle text-center">历史年化率</div>
                                     </Col>
                                     <Col  cols={2}>
                                         <div className="amount text-center"><strong>{deadline}</strong>个月</div>

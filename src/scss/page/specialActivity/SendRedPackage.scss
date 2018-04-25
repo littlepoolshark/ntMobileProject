@@ -1,0 +1,456 @@
+// Functions
+@import "../../helper/functions";
+
+// Variables
+@import "../../variables";
+
+// Mixin
+@import "../../helper/mixins";
+
+$primary-bg-color:#c12939;
+$second-bg-color:#fffce8;
+$primary-font-color:#a64731;
+$second-font-color:#fcc684;
+
+
+%sendRedPackage-table{
+  table {
+    thead  {
+      tr {
+        border:none;
+      }
+      th {
+        @include color-and-fontSize($primary-font-color,rem-calc(16));
+        background-color:transparent;
+      }
+    }
+
+    tbody  {
+      tr {
+        border:none;
+        &:nth-of-type(2n+1) {
+          background-color:#f2ecc8;
+        }
+        &:nth-of-type(2n){
+          background-color:#fffce8;
+        }
+      }
+      td {
+        padding:rem-calc(9) 0;
+        @include color-and-fontSize($primary-font-color,rem-calc(14));
+      }
+
+    }
+}
+
+}
+#sendRedPackage-view {
+  z-index:1;
+}
+#sendRedPackage {
+  background-color:$primary-bg-color;
+
+  .sendRedPackage-section {
+    margin:0 rem-calc(15);
+    .title {
+      margin-top:rem-calc(30);
+
+      &>img {
+        display:block;
+        width:rem-calc(285);
+        height:auto;
+        margin:0 auto;
+      }
+    }
+    .subtitle {
+      a {
+        @include color-and-fontSize($second-font-color,rem-calc(14));
+        text-decoration: underline;
+      }
+    }
+
+    .body {
+      width:100%;
+      padding:rem-calc(10);
+      position:relative;
+      border:2px solid #92100f;
+
+      .body-header {
+        display:flex;
+        justify-content: space-between;
+        padding:rem-calc(15);
+        background-color:#fffce8;
+
+        &>div:first-child {
+          margin-right:rem-calc(15)
+        }
+      }
+      .body-footer {
+        padding:rem-calc(15);
+        background-color: #f2ecc8;
+
+        .title {
+          margin-top:0;
+          margin-bottom:rem-calc(15);
+          @include color-and-fontSize($primary-font-color,rem-calc(16));
+        }
+
+        .content {
+          display:flex;
+          justify-content: space-between;
+          @include color-and-fontSize($primary-font-color,rem-calc(14));
+          line-height:1.4;
+
+          &>div:first-child {
+            margin-right:rem-calc(15)
+          }
+
+          .long-tag {
+            display:inline-block;
+            width:rem-calc(135);
+            height:rem-calc(28);
+            margin-bottom:rem-calc(5);
+            padding-left:rem-calc(5);
+            line-height: rem-calc(30);
+            text-align: center;
+            @include color-and-fontSize(#f2ecc8,rem-calc(14));
+            background-color:#e83649;
+            border-radius:rem-calc(15);
+          }
+
+          a {
+            @include color-and-fontSize($second-font-color,rem-calc(14));
+            text-decoration: underline;
+          }
+        }
+
+        .remark {
+          margin-top:rem-calc(15);
+          @include color-and-fontSize(#e83649,rem-calc(14));
+        }
+      }
+
+      .makeup-angle {
+        width:rem-calc(21);
+        height:rem-calc(21);
+        position:absolute;
+        background-size: cover;
+
+        &.top-left {
+          left:0;
+          top:0;
+          background-image:url("../../../img/specialActivity/sendRedPackage/angle-top-left.png");
+        }
+
+        &.top-right {
+          right:0;
+          top:0;
+          background-image:url("../../../img/specialActivity/sendRedPackage/angle-top-right.png");
+        }
+
+        &.bottom-left {
+          left:0;
+          bottom:0;
+          background-image:url("../../../img/specialActivity/sendRedPackage/bottom-left.png");
+        }
+
+        &.bottom-right {
+          right:0;
+          bottom:0;
+          background-image:url("../../../img/specialActivity/sendRedPackage/bottom-right.png");
+        }
+      }
+
+      .markup-firecracker {
+        width:rem-calc(26);
+        height:rem-calc(78);
+        background-image:url("../../../img/specialActivity/sendRedPackage/firecracker.png");
+        background-size: cover;
+        position:absolute;
+
+        &.left {
+          bottom:rem-calc(-79);
+          left:0;
+        }
+
+        &.right {
+          bottom:rem-calc(-79);
+          right:0;
+        }
+      }
+    }
+
+    .footer {
+      margin-top:rem-calc(25);
+      @include color-and-fontSize(#fcc684,rem-calc(14));
+
+      span.check-detail-btn {
+        display:inline-block;
+        width:rem-calc(80);
+        height:rem-calc(20);
+        margin-left:rem-calc(50);
+        line-height:rem-calc(20);
+        text-align:center;
+        border:1px solid #fcc684;
+        border-radius:rem-calc(10);
+      }
+      a {
+        @include color-and-fontSize(#fcc684,rem-calc(14));
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .luckDraw-section {
+    width:rem-calc(320);
+    margin:rem-calc(30) auto;
+
+    .header {
+      width:rem-calc(320);
+      height:rem-calc(226);
+      background-image:url("../../../img/specialActivity/sendRedPackage/chun.png");
+      background-size: cover;
+      position:relative;
+
+      .left-drawCount {
+        width:100%;
+        height:rem-calc(40);
+        text-align: center;
+        @include color-and-fontSize(#fcc684,rem-calc(14));
+        position:absolute;
+        bottom:rem-calc(20);
+        left:0;
+
+        & .drawCount-tag {
+          display:inline-block;
+          width:rem-calc(25);
+          height:rem-calc(25);
+          margin-right:rem-calc(5);
+          line-height: rem-calc(26);
+          text-align: center;
+          @include color-and-fontSize($primary-font-color,rem-calc(20));
+          background-color:$second-bg-color;
+          border-radius:50%;
+        }
+
+        a {
+          @include color-and-fontSize(#fcc684,rem-calc(14));
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .lucky-draw-wrapper {
+      width:rem-calc(320);
+      height:rem-calc(320);
+      margin:0 auto;
+      margin-top:rem-calc(-20);
+      position:relative;
+
+      .lucky-draw-turntable {
+        width:rem-calc(320);
+        height:rem-calc(320);
+        background:url("../../../img/specialActivity/sendRedPackage/turntable.png");
+        background-size:cover;
+        transition:transform 2s ease-in-out;
+        transform:rotate(0deg);
+        position:absolute;
+        left:0;
+        top:0;
+        z-index:1;
+
+      }
+
+      .lucky-draw-needle {
+        width:rem-calc(121);
+        height:rem-calc(132);
+        background-image:url("../../../img/specialActivity/sendRedPackage/draw-btn.png");
+        background-size:cover;
+        position:absolute;
+        left:50%;
+        margin-left:rem-calc(-58);
+        top:50%;
+        margin-top:rem-calc(-66);
+        z-index:2;
+
+        &.disabled {
+          background-image:url("../../../img/specialActivity/sendRedPackage/draw-btn_disabled.png");
+        }
+      }
+    }
+  }
+
+  .rights-copy {
+    margin:rem-calc(15);
+    @include color-and-fontSize(#ff8d99,rem-calc(13));
+  }
+  .srp-btn.primary {
+    display:inline-block;
+    width:rem-calc(240);
+    height:rem-calc(57);
+    padding:0;
+    line-height:rem-calc(55);
+    text-align: center;
+    @include color-and-fontSize(#fff,rem-calc(18));
+    background-image:url("../../../img/specialActivity/sendRedPackage/btn-bg.png");
+    background-size: cover;
+    border:none;
+    outline:none;
+  }
+
+  .srp-btn.second {
+    display:inline-block;
+    width:rem-calc(240);
+    height:rem-calc(42);
+    padding:0;
+    line-height:rem-calc(44);
+    text-align: center;
+    @include color-and-fontSize(#fff,rem-calc(18));
+    background-color:#e13a47;
+    border-radius:rem-calc(5);
+    border:none;
+    outline:none;
+
+    &.small {
+      width:rem-calc(115);
+    }
+  }
+
+  .share-guide-img {
+    display:inline-block;
+    width:50%;
+    height:auto;
+    position:absolute;
+    top:rem-calc(10);
+    right:rem-calc(10);
+  }
+
+  /*
+ * 自定义modal样式
+ */
+  .modal-customize {
+    width:rem-calc(320);
+
+    .modal-inner {
+      background-color:transparent;
+      border-radius:rem-calc(10);
+    }
+  }
+  .customize-modal {
+    width:rem-calc(320);
+    position:relative;
+
+    &.redBg-modal {
+      padding-top:rem-calc(213);
+
+
+      .customize-modal-header {
+        width:rem-calc(320);
+        height:rem-calc(213);
+        background-image:url("../../../img/specialActivity/sendRedPackage/modal-bg.png");
+        background-size:cover;
+        position:absolute;
+        left:0;
+        top:0;
+
+        &>span {
+          display:block;
+          width:rem-calc(31);
+          height:rem-calc(31);
+          background:url("../../../img/specialActivity/sendRedPackage/closeBtn.png");
+          background-size:cover;
+          position:absolute;
+          top:0;
+          right:0;
+        }
+      }
+
+      .customize-modal-body {
+        position:relative;
+        background-color:#e83649;
+        padding:rem-calc(25) rem-calc(15);
+
+        .title {
+          display:flex;
+          flex-direction:column;
+          justify-content: center;
+          width:100%;
+          height:rem-calc(118);
+          @include color-and-fontSize($primary-font-color,rem-calc(21));
+          position:absolute;
+          left:0;
+          top:rem-calc(-115);
+
+          span {
+            font-size:rem-calc(16);
+          }
+        }
+      }
+      .sendRedPackage-record {
+        height:rem-calc(160);
+        overflow-y:scroll;
+        background-color:#f2ecc8;
+        @extend %sendRedPackage-table;
+      }
+    }
+
+    &.yellowWhite-modal {
+      padding:rem-calc(15);
+      background-color:$second-bg-color;
+      border-radius:rem-calc(10);
+
+      .customize-modal-header {
+        width:100%;
+        height:rem-calc(40);
+        position:absolute;
+        left:0;
+        top:0;
+
+        &>span {
+          display:block;
+          width:rem-calc(30);
+          height:rem-calc(30);
+          background:url("../../../img/specialActivity/sendRedPackage/closeBtn_wrappe.png");
+          background-size:cover;
+          position:absolute;
+          top:rem-calc(-10);
+          right:rem-calc(-10);
+        }
+      }
+
+      .title {
+        margin:rem-calc(20) 0;
+        text-align: center;
+        @include color-and-fontSize(#a64731,rem-calc(20));
+
+      }
+
+      .updateApp-hint {
+        margin-bottom:rem-calc(30);
+        @include color-and-fontSize($primary-font-color,rem-calc(14));
+      }
+
+      .rules-description {
+        p {
+          margin-top:0;
+          margin-bottom:rem-calc(10);
+          line-height:1.5;
+          text-align: left;
+          @include color-and-fontSize($primary-font-color,rem-calc(14));
+        }
+      }
+
+      .redPackage-description {
+        @extend %sendRedPackage-table;
+      }
+    }
+
+    .customize-modal-footer {
+      text-align: center;
+
+      button + button {
+        margin-left:rem-calc(50);
+      }
+    }
+  }
+}

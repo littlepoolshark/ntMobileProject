@@ -1,0 +1,300 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#gljLoanIntroduction {
+  padding-bottom:rem-calc(42);
+
+  @import "./Summary";
+  @import "./RuleDescription";
+
+  .summary {
+    .title,.amount,.unit {
+      text-align:center;
+      @include color-and-fontSize($C3,$T5);
+    }
+    .subtitle {
+      margin-top:0;
+      margin-bottom:rem-calc(5);
+      @include color-and-fontSize($C4,$T9);
+    }
+
+
+    .progressBar {
+      margin-top:rem-calc(30);
+      margin-bottom:0;
+    }
+
+    .yearRate {
+      position: relative;
+
+      .rewardRate {
+        display:inline-block;
+        line-height:1;
+        @include color-and-fontSize($C1,$T8);
+        position:absolute;
+        top:0;
+        left:50%;
+        margin-left:rem-calc(66);
+      }
+    }
+  }
+
+  .tabs {
+    margin-top:0;
+    margin-bottom:0;
+    padding-top:rem-calc(50);
+    background-color:transparent;
+
+    .tabs-body .tab-panel{
+      padding:0;
+    }
+
+    .tabs-nav {
+      margin-bottom:-1px;
+      padding:rem-calc(5) rem-calc(15);
+      border-top:1px solid $separation-line-color;
+      border-bottom:1px solid $separation-line-color;
+      background:#fff;
+      position:absolute;
+      top:40px;
+      left:0;
+      z-index:999;
+
+      .btn-sm {
+        @include color-and-fontSize($C3,$T5);
+      }
+    }
+
+    .btn-hollow.btn-primary {
+      border:none;
+      color:$C3;
+
+      &.active {
+        background:#fff;
+        color:$C1;
+      }
+    }
+
+    .group {
+      h6 {
+        display:flex;
+        align-items: center;
+        margin-bottom:rem-calc(10);
+        @include color-and-fontSize($C3,$T7);
+        font-weight:normal;
+
+        &>span {
+          display:block;
+        }
+
+        &>span.title-flag {
+          width:rem-calc(4);
+          height:rem-calc(13);
+          margin-right:rem-calc(5);
+          margin-top:rem-calc(-2);
+          background-color:$C1;
+          border-radius:rem-calc(4);
+        }
+
+        &>span.imgIcon-blue-questionMark {
+          width:rem-calc(40);
+          height:rem-calc(40);
+        }
+      }
+
+      .content {
+        @include color-and-fontSize($C4,$T8);
+        text-align: justify;
+      }
+
+      .icon-titles {
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom:rem-calc(12);
+
+        & .title1 {
+          width:rem-calc(67);
+          height:rem-calc(60);
+          background-size:cover;
+          background-image:url("../../img/icon_da@2x.png");
+        }
+
+        & .title2 {
+          width:rem-calc(54);
+          height:rem-calc(60);
+          background-size:cover;
+          background-image:url("../../img/icon_xian@2x.png");
+        }
+
+        & .title3 {
+          width:rem-calc(54);
+          height:rem-calc(60);
+          background-size:cover;
+          background-image:url("../../img/icon_shi@2x.png");
+        }
+
+        & .title4 {
+          width:rem-calc(54);
+          height:rem-calc(60);
+          background-size:cover;
+          background-image:url("../../img/icon_quan@2x.png");
+        }
+
+      }
+
+      ul.guaranteeLabelList {
+        margin:0;
+        padding:0 0 0 rem-calc(15);
+        list-style-type: disc;
+
+        &>li {
+          color:$C4;
+        }
+      }
+
+      &.authInfo-list {
+        .col {
+          display:flex;
+          align-items: center;
+
+          .imgIcon {
+            display:block;
+            width:rem-calc(16);
+            height:rem-calc(16);
+            margin-right:rem-calc(7);
+          }
+        }
+      }
+    }
+  }
+
+  #productIntroduction {
+
+    td.title {
+      width:35%;
+      text-align:left;
+      @include color-and-fontSize($C3,$T7);
+
+      @media screen and (max-width:320px){
+        width:40%;
+        padding-right:0;
+      }
+
+      .icon-wrapper {
+        display:flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        &>span {
+          display:block;
+          width:rem-calc(16);
+          height:rem-calc(16);
+          margin-right:rem-calc(10);
+        }
+      }
+    }
+
+    td.content {
+      text-align:left;
+      @include color-and-fontSize($C4,$T7);
+
+      .icon-wrapper {
+        position:relative;
+
+        &>.imgIcon-grey-questionMark {
+          display:block;
+          width:rem-calc(40);
+          height:rem-calc(40);
+          position:absolute;
+          right:rem-calc(-10);
+          top:rem-calc(-8);
+        }
+      }
+    }
+
+    table tbody tr {
+      border:none;
+    }
+  }
+
+  table {
+    background:#fff;
+  }
+
+
+
+  .popup {
+    padding-bottom:rem-calc(45);
+    background:#f8f8f8;
+  }
+  .popup-header {
+    z-index:9999;
+  }
+  .popup-body {
+    padding:0;
+  }
+
+  @import "./CheckMoreDetailBar";
+
+  .icon-check {
+    @include color-and-fontSize($global-success,$T8);
+  }
+
+  .description-mask {
+    width:100%;
+    height:100%;
+    padding:0 rem-calc(45) rem-calc(70);
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .body {
+      margin-top:rem-calc(110);
+
+      .title {
+        margin-bottom:rem-calc(28);
+        padding-bottom:rem-calc(10);
+        @include color-and-fontSize(#fff,$T6);
+        border-bottom:1px solid #fff;
+      }
+
+      .content {
+        p {
+          margin:rem-calc(5) 0 0;
+          @include color-and-fontSize(#fff,$T8);
+        }
+      }
+    }
+    .footer {
+         .imgIcon-closeBtnInWrapper {
+            display:block;
+            margin:0 auto;
+            width:rem-calc(45);
+            height:rem-calc(45);
+        }
+    }
+
+    &.riskLevel-mask {
+      .body {
+        margin-top:rem-calc(30);
+      }
+    }
+  }
+
+  .share-guide-img {
+    display:inline-block;
+    width:50%;
+    height:auto;
+    position:absolute;
+    top:rem-calc(10);
+    right:rem-calc(10);
+  }
+
+}

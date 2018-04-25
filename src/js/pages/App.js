@@ -27,7 +27,7 @@ const App = React.createClass({
             history,
             ...props
             } = this.props;
-        let transition = children.props.transition || 'sfr';
+        //let transition = children.props.transition || 'sfr';
         let pathname=location.pathname;
         let currPageName;
         if(pathname !== "/"){
@@ -54,7 +54,7 @@ const App = React.createClass({
         let queryStr=location.query.type;
         let key=(currPageName === "EarnSetIntroduction" && queryStr   )? currPageName + "." + queryStr : currPageName;
 
-
+        
         return (
             <Container direction="column"  >
                 <Container fill={true}>
@@ -85,7 +85,7 @@ const App = React.createClass({
                     />
                     <TabBar.Item
                         component={Link}
-                        title="理财"
+                        title="投资"
                         iconClassPrefix="imgIcon"
                         icon="financial-pig"
                         selectedIcon="financial-pig_active"
@@ -111,6 +111,10 @@ const App = React.createClass({
         let paramObj=geParamObjFromUrl();
         if(paramObj.ntjrSource && paramObj.ntjrSource !== ""){
             sessionStorage.setItem("ntjrSource",paramObj.ntjrSource);
+        }
+
+        if(paramObj.inviteCode){
+            sessionStorage.setItem("ntInviteCode",paramObj.inviteCode);
         }
     }
 });

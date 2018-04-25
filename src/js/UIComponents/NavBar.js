@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import ClassNameMixin from './mixins/ClassNameMixin';
 import Icon from './Icon';
 
+import cookie from "../lib/cookie";
+
 const NavBar = React.createClass({
   mixins: [ClassNameMixin],
 
@@ -21,6 +23,12 @@ const NavBar = React.createClass({
       onAction: () => {
       },
     };
+  },
+
+  _isInWebViewOfNTApp(){//检测当前web app的所处的环境是否是农泰金融的安卓或者ios客户端的webview。
+    let deviceType=cookie.getCookie("deviceType");
+    let isInAppWebview=["ntandroid","ntios"].indexOf(deviceType.toLowerCase()) > -1;
+    return isInAppWebview;
   },
 
   renderTitle() {
@@ -147,7 +155,7 @@ const NavBar = React.createClass({
     return (
       <header
         {...props}
-        className={classNames(classSet, className)}
+        className={classNames(classSet, className,this._isInWebViewOfNTApp() ? "hide" : "")}
       >
         {this.renderTitle()}
         {this.renderNav('left')}

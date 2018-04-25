@@ -9,6 +9,12 @@
 #productList {
   padding-bottom:rem-calc(55);
 
+  &.loading {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   ::-webkit-scrollbar {
     width:0;
   }
@@ -50,12 +56,55 @@
     }
   }
 
-  .checkMore-button {
-    margin:rem-calc(15) 0;
-    padding:rem-calc(5) 0;
-    text-align:center;
-    @include color-and-fontSize($C4,$T8);
+  .transfer-card {
+    .group-body {
+     padding-top:rem-calc(25);
+     padding-bottom:rem-calc(25);
+     background-image:url("../../img/bg_zhaiquan@2x.png") ;
+     background-size:cover;
+    }
+
+
+    .imgIcon-zzlc {
+      display:inline-block;
+      width:rem-calc(18);
+      height:rem-calc(18);
+      margin-right: rem-calc(6);
+    }
+
+    .transfer-title {
+      display:flex;
+      align-items: center;
+    }
+
+    .transfer-count {
+      padding-left:rem-calc(18);
+
+      strong {
+        color:$C1;
+      }
+    }
   }
+
+  .checkMore-button {
+    display:inline-block;
+    margin:rem-calc(15) auto rem-calc(30);
+    padding:rem-calc(5) rem-calc(8);
+    text-align:center;
+    @include color-and-fontSize(#cd9b57,$T8);
+    border:1px solid #cd9b57;
+    border-radius:rem-calc(2);
+  }
+
+  .loadingImg-wrapper {
+    @include color-and-fontSize(#666,rem-calc(14));
+
+    .loading-img {
+      width:rem-calc(50);
+      height:auto;
+    }
+  }
+
 }
 
 

@@ -48,7 +48,9 @@ function identityCodeValid(code) {
 var RealNameAuthenticationStore={
     _all:{
         realName:"",
-        idCardNo:""
+        idCardNo:"",
+        hadBindBankCard:false,
+        hadSetDealPassword:false
     },
     checkForm(){
         let {
@@ -96,6 +98,19 @@ MicroEvent.mixin(RealNameAuthenticationStore);
 
 appDispatcher.register(function(payload){
     switch(payload.actionName){
+        case "getInitialData_realNameAuthentication":
+            ajax({
+                ciUrl:"/user/v2/securityCenter",
+                success(rs){
+                    if(rs.code === 0){
+                        RealNameAuthenticationStore.updateAll({
+                            hadBindBankCard:rs.data.bankInfo.bankCardVerified === "yes" ? true : false,
+                            hadSetDealPassword:rs.data.dealPassVerifyInfo.isDealPwdSet === "yes" ? true : false
+                        })
+                    }
+                }
+            });
+            break;
         case "submitAuthenticationForm":
             RealNameAuthenticationStore.updateAll(payload.data);
 

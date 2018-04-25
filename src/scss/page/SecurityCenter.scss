@@ -7,121 +7,121 @@
 // Mixin
 @import "../helper/mixins";
 
-@keyframes  bg-color-change_score25 {
+@keyframes bg-color-change_score25 {
   0% {
-    background:darken(red,20%);
+    background: darken(red, 20%);
   }
   100% {
     background: red;
   }
 }
-@keyframes  bg-color-change_score50 {
+@keyframes bg-color-change_score50 {
   0% {
-    background: darken(red,20%);
-  }
-  25% {
-    background:red;
-  }
-  50% {
-    background:darken(#fd8900,20%);
-  }
-  100% {
-    background:#fd8900;
-  }
-}
-@keyframes  bg-color-change_score75 {
-  0% {
-    background:darken(red,20%);
+    background: darken(red, 20%);
   }
   25% {
     background: red;
   }
   50% {
-    background:#fd8900;
+    background: darken(#fd8900, 20%);
+  }
+  100% {
+    background: #fd8900;
+  }
+}
+@keyframes bg-color-change_score75 {
+  0% {
+    background: darken(red, 20%);
+  }
+  25% {
+    background: red;
+  }
+  50% {
+    background: #fd8900;
   }
   75% {
-    background:darken(#3eb987,20%);
+    background: darken(#3eb987, 20%);
   }
   100% {
-    background:#3eb987;
+    background: #3eb987;
   }
 }
-@keyframes  bg-color-change_score100 {
+@keyframes bg-color-change_score100 {
   0% {
-    background:darken(red,20%);
+    background: darken(red, 20%);
   }
   25% {
     background: red;
   }
   50% {
-    background:#fd8900;
+    background: #fd8900;
   }
   75% {
-    background:#3eb987;
+    background: #3eb987;
   }
   100% {
-    background:#0c85f5;
+    background: #0c85f5;
   }
 }
 @keyframes flicker {
   0% {
-    opacity:1;
+    opacity: 1;
   }
   25% {
-    opacity:0.75;
+    opacity: 0.75;
   }
   50% {
-    opacity:0.5;
+    opacity: 0.5;
   }
   25% {
-    opacity:0.75;
+    opacity: 0.75;
   }
   100% {
-    opacity:1;
+    opacity: 1;
   }
 }
 #securityCenter {
   .nav-bar {
-    width:100%;
-    height:rem-calc(40);
-    color:#fff;
-    font-size:rem-calc(18);
-    text-align:center;
-    position:relative;
-    display:flex;
+    width: 100%;
+    height: rem-calc(40);
+    color: #fff;
+    font-size: rem-calc(18);
+    text-align: center;
+    position: relative;
+    display: flex;
     align-items: center;
     justify-content: center;
 
     .nav-bar-left {
-      width:rem-calc(100);
-      height:100%;
-      font-size:rem-calc(16);
-      position:absolute;
-      left:rem-calc(15);
-      top:0;
-      display:flex;
+      width: rem-calc(100);
+      height: 100%;
+      font-size: rem-calc(16);
+      position: absolute;
+      left: rem-calc(15);
+      top: 0;
+      display: flex;
       justify-content: flex-start;
       align-items: center;
 
       .icon-left-nav {
-        font-weight:normal;
-        font-size:rem-calc(14);
+        font-weight: normal;
+        font-size: rem-calc(14);
       }
     }
   }
   .dashboard-wrapper {
-    width:100%;
-    background:red;
-    padding-bottom:rem-calc(30);
+    width: 100%;
+    background: red;
+    padding-bottom: rem-calc(30);
 
     .dashboard {
-      width:rem-calc(236);
-      height:rem-calc(159);
-      margin:rem-calc(20) auto 0;
-      background-image:url("../../img/security-bg.png");
-      background-size:cover;
-      position:relative;
-      display:flex;
+      width: rem-calc(236);
+      height: rem-calc(159);
+      margin: rem-calc(20) auto 0;
+      background-image: url("../../img/security-bg.png");
+      background-size: cover;
+      position: relative;
+      display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
@@ -135,78 +135,116 @@
       }
 
       .rotate-needle {
-        width:rem-calc(118);
-        height:1px;
+        width: rem-calc(118);
+        height: 1px;
         background-color: transparent;
         position: absolute;
-        left:rem-calc(118);
-        top:rem-calc(118);
-        transition:all 3s ease-in-out;
+        left: rem-calc(118);
+        top: rem-calc(118);
+        transition: all 3s ease-in-out;
         transform-origin: left top;
-        transform:rotate(160deg);
+        transform: rotate(160deg);
 
         .needle-header {
-          display:inline-block;
-          width:rem-calc(10);
-          height:rem-calc(10);
-          background-color:#25d025;
+          display: inline-block;
+          width: rem-calc(10);
+          height: rem-calc(10);
+          background-color: #25d025;
           position: absolute;
-          right:-3px;
-          top:-4px;
-          border-radius:50%;
-          animation:flicker 1s infinite;
-          box-shadow:0 0 5px #25d025;
+          right: -3px;
+          top: -4px;
+          border-radius: 50%;
+          animation: flicker 1s infinite;
+          box-shadow: 0 0 5px #25d025;
         }
       }
 
-      &>span {
-        display:block;
+      & > span {
+        display: block;
       }
     }
 
     &.score25 {
-      animation:bg-color-change_score25 3s 1 ;
+      animation: bg-color-change_score25 3s 1;
       animation-fill-mode: forwards;
 
       .rotate-needle {
-        transform:rotate(215deg);
+        transform: rotate(215deg);
       }
     }
 
     &.score50 {
-      animation:bg-color-change_score50 3s 1 ;
+      animation: bg-color-change_score50 3s 1;
       animation-fill-mode: forwards;
 
       .rotate-needle {
-        transform:rotate(270deg);
+        transform: rotate(270deg);
       }
     }
 
     &.score75 {
-      animation:bg-color-change_score75 3s 1 ;
+      animation: bg-color-change_score75 3s 1;
       animation-fill-mode: forwards;
 
       .rotate-needle {
-        transform:rotate(325deg);
+        transform: rotate(325deg);
       }
     }
 
     &.score100 {
-      animation:bg-color-change_score100 3s 1 ;
+      animation: bg-color-change_score100 3s 1;
       animation-fill-mode: forwards;
 
       .rotate-needle {
-        transform:rotate(380deg);
+        transform: rotate(380deg);
       }
     }
   }
 
   .warm-hint {
-    margin-top:rem-calc(10);
+    margin-top: rem-calc(10);
     @include color-and-fontSize($white,$T8);
   }
 
   .list {
-    margin:0;
+    margin: 0;
+  }
+
+  .group-body {
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+
+    .header {
+      height: rem-calc(44);
+      padding: 0 rem-calc(15) 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .icon-wrapper {
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        .imgIcon {
+          width: rem-calc(21);
+          height: rem-calc(21);
+          margin-right: rem-calc(8);
+        }
+      }
+
+      .flag {
+        color: red;
+      }
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .item-linked > a {
+      padding-left: 0;
+    }
   }
 }

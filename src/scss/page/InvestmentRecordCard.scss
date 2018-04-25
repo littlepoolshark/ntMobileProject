@@ -54,6 +54,11 @@
     background-image: url("../../img/icon_label_transfered.png");
   }
 
+  .stamp-img {
+    height:rem-calc(40);
+    width:auto;
+  }
+
   .header {
     display:flex;
     justify-content: flex-start;
@@ -61,20 +66,24 @@
     font-weight: normal;
     margin-bottom:rem-calc(10);
 
-    .tag-icon {
-      display:inline-block;
-      width:auto;
-      height:rem-calc(20);
-      margin-left:rem-calc(5);
-      padding:rem-calc(2) rem-calc(5);
-      line-height:rem-calc(16);
-      @include color-and-fontSize($white,$T10);
-      background:#f9b704;
-      border-radius:0 7px 0 7px ;
+    &>span {
+      display:block;
+    }
 
-      &.transfer {
-        background:#0cc5a0;
-      }
+    .tag-icon {
+      display: block;
+      margin-left:rem-calc(5);
+      padding: 2px 5px;
+      color: #cd9b57;
+      font-size: 0.75rem;
+      border: 1px solid #cd9b57;
+    }
+
+    button {
+      margin:0;
+      margin-left:auto;
+      padding:rem-calc(8);
+      border-radius:rem-calc(2);
     }
   }
   .body {
@@ -84,5 +93,11 @@
     padding:rem-calc(5) 0;
     @include color-and-fontSize($C4,$T10);
     border-top:1px dashed $separation-line-color;
+
+    .pay-modal {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }

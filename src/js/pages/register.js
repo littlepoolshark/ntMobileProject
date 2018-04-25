@@ -1,3 +1,4 @@
+//@flow
 let RegisterAction=require("../actions/RegisterAction.js");
 let RegisterStore=require("../stores/RegisterStore.js");
 
@@ -21,14 +22,16 @@ import MobileVerificationCode from "../UIComponents/MobileVerificationCode";
 let Register=React.createClass({
     getInitialState(){
         return {
+            loginPassword:"",
             showLoginPasswordField:false,
-            inviterCode:RegisterStore.getInviterCode()
+            inviterCode:RegisterStore.getInviterCode(),
+            showInviteCodeEntry:true
         }
     },
-    _formatPhoneNo(phoneNo){
+    _formatPhoneNo(phoneNo:string){
         return phoneNo.slice(0,3) + "****" + phoneNo.slice(7);
     },
-    _handleNavBack(obj){
+    _handleNavBack(obj:Object){
 
         if(obj.title === "返回"){
             this.props.history.pushState(null,"/");
@@ -36,7 +39,7 @@ let Register=React.createClass({
             this.refs.modal.open();
         }
     },
-    _handleOnAction(data,event){
+    _handleOnAction(data:string,event:Object){
         let btnTxt=event.target.innerText;
         if(btnTxt === "取消"){
             RegisterAction.clearInviterCode();
@@ -48,7 +51,7 @@ let Register=React.createClass({
         }
 
     },
-    _handleOnDismiss(event){
+    _handleOnDismiss(){
         this.refs.modal.close();
     },
     _toggleEyeOfField(){
@@ -67,6 +70,21 @@ let Register=React.createClass({
         inviterCode=inviterCode.replace(/\D/g,"");
         RegisterAction.changeInviterCode(inviterCode);
     },
+    _handleFieldValueChange(fieldName:string){
+        let fieldValue=this.refs[fieldName].getValue();
+        switch (fieldName){
+            case "password":
+                if(fieldValue.length > 16){
+                    fieldValue=fieldValue.slice(0,16);
+                }
+                this.setState({
+                    loginPassword:fieldValue
+                });
+                break;
+            default:
+                break;
+        };
+    },
     render (){
         let phoneNo=this.props.location.query.phoneNo;
         let backNav = {
@@ -78,13 +96,15 @@ let Register=React.createClass({
             component:"a",
             title:"邀请人",
             ref:"inviter"
-        }
+        };
+
+        let loginPassword=this.state.loginPassword;
         return (
             <Container  {...this.props} scrollable={false}>
                 <NavBar
                     title="注册"
                     leftNav={[backNav]}
-                    rightNav={[rightNav]}
+                    rightNav={this.state.showInviteCodeEntry ? [rightNav] : []}
                     amStyle="primary"
                     onAction={this._handleNavBack}
                 />
@@ -114,8 +134,10 @@ let Register=React.createClass({
                             <Field
                                 type={this.state.showLoginPasswordField ? "text" : "password"}
                                 label="登录密码"
-                                placeholder="6~20位字母，字符，符号"
-                                ref="password" 
+                                placeholder="6-16位字母和数字组合"
+                                ref="password"
+                                value={loginPassword}
+                                onChange={this._handleFieldValueChange.bind(null,"password")}
                             />
                             <Icon
                                 name={this.state.showLoginPasswordField ? "eye-on" : "eye-off"}
@@ -149,6 +171,12 @@ let Register=React.createClass({
     },
     componentDidMount(){
 
+        RegisterStore.bind("shutdownTheInviteCodeEntry",function(){
+            this.setState({
+                showInviteCodeEntry:false
+            });
+        }.bind(this));
+
         RegisterStore.bind("registerSuccess",function(){
             this.context.router.push({
                 pathname:"/productList"
@@ -166,9 +194,14 @@ let Register=React.createClass({
         }.bind(this));
 
         //下面这段代码必须写在对“inviterCodeChange”事件进行handler绑定之后，否则，无法进入该handler里面
-        let inviteCode=this.props.location.query.inviteCode;
+        let inviteCode:string=this.props.location.query.inviteCode;
+        let ntjrSource:string=sessionStorage.getItem("ntjrSource") || "";
         if(!!inviteCode){
             RegisterAction.changeInviterCode(inviteCode);
+        }
+         
+        if(!!ntjrSource){
+            RegisterAction.askForShowInviteEntry(ntjrSource);
         }
     },
     componentWillUnmount(){

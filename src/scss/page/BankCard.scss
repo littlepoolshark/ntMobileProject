@@ -9,29 +9,28 @@
 
 #bankCard {
   .bankCard {
-    display:flex;
-    justify-content: flex-start;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
 
   .bankCard-logo {
-    width:rem-calc(40);
-    height:rem-calc(40);
-    margin-right:rem-calc(15);
+    display: flex;
+    align-items: center;
 
-    img {
-      width:100%;
-      height:auto;
+    .imgIcon-my-bankCard2 {
+      margin-right: rem-calc(5);
+      @include size(rem-calc(30), rem-calc(30));
     }
   }
 
   .bankCard-body {
     .title {
-      @include color-and-fontSize($C3,$T5);
+      @include color-and-fontSize($C3, $T5);
     }
 
     .subtitle {
-      @include color-and-fontSize($C4,$T8);
+      @include color-and-fontSize($C4, $T8);
     }
   }
 }

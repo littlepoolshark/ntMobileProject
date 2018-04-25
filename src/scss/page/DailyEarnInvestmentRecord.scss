@@ -7,69 +7,51 @@
 // Mixin
 @import "../helper/mixins";
 #dailyEarnInvestmentRecord {
-  .navbar {
-    width:100%;
-    position:fixed;
-    left:0;
-    top:0;
-    z-index:101;
-  }
-  .tabs {
-    margin-top:0;
-    margin-bottom:0;
-    padding-top:rem-calc(100);
-    background-color:transparent;
 
-    .tabs-body .tab-panel{
-      padding:0;
-    }
-
-    .tabs-nav {
-      margin-bottom:-1px;
-      padding:rem-calc(5) rem-calc(15);
-      border-top:1px solid $separation-line-color;
-      border-bottom:1px solid $separation-line-color;
-      background:#fff;
-      position:absolute;
-      top:40px;
-      left:0;
-      z-index:999;
-
-      .btn-sm {
-        @include color-and-fontSize($C3,$T5);
-      }
-    }
-
-    .btn-hollow.btn-primary {
-      border:none;
-      color:$C3;
-
-      &.active {
-        background:#fff;
-        color:$C1;
-      }
-    }
-  }
-
-  ul.detailList {
-    padding:0;
+  .dealRecord-list {
     margin:0;
+    padding:0;
     list-style:none;
+    background-color:#fff;
 
-    li {
-      display:flex;
-      justify-content: space-between;
-      align-items: center;
-      height:rem-calc(50);
-      padding:0 rem-calc(15);
-      background-color: #fff;
+    .dealRecord-item {
+      padding:rem-calc(10) rem-calc(15);
       border-bottom:1px solid $separation-line-color;
 
       &:last-child {
         border:none;
       }
+
+      .title {
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .amount {
+          @include color-and-fontSize($C1,$T4);
+        }
+        .desc {
+          @include color-and-fontSize($C3,$T6);
+        }
+
+        &>span {
+          display:block;
+        }
+
+      }
+      .subtitle {
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        @include color-and-fontSize($C4,$T10);
+
+        &>span {
+          display:block;
+        }
+      }
     }
   }
+
 
   #matchLoanModal {
     background:#eee;

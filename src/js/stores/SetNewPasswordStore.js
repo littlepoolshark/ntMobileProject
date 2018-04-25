@@ -16,6 +16,8 @@ var SetNewPasswordStore={
       confirmLoginPassword =trim(confirmLoginPassword);
       originLoginPassword = !!originLoginPassword && trim(originLoginPassword);*/
 
+      let checkPassword_regexp=/^(?!^\d+$)(?!^[a-zA-Z]+$)[0-9a-zA-Z]{6,16}$/;//登录密码和交易密码共用同一个正则表达式来验证
+
       if(originLoginPassword === ""){
           confirmResult={
               success:false,
@@ -26,10 +28,15 @@ var SetNewPasswordStore={
               success:false,
               msg:"新登录密码不能为空，请输入！"
           }
-      }else if(newLoginPassword.length < 6 || newLoginPassword.length > 20){
+      }else if (newLoginPassword.length < 6){
           confirmResult={
               success:false,
-              msg:"新登录密码长度不符合，请检查！"
+              msg:"密码至少设置6位"
+          }
+      }else if(!checkPassword_regexp.test(newLoginPassword)){
+          confirmResult={
+              success:false,
+              msg:"密码必须是字母和数字组合"
           }
       }else if(confirmLoginPassword === ""){
           confirmResult={

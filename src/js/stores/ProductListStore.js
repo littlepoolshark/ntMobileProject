@@ -6,16 +6,20 @@ import config from "../config";
 
 var ProductListStore={
     _all:{
-        productList:[]
+       list:[],
+       transferringCount:0
     },
     getAll(){
-        return this._all.productList;
+        return this._all;
     },
     clearAll(){
-        this._all.productList=[];
+        this._all={
+            list:[],
+            transferringCount:0
+        };
     },
     updateAll(source){//to be remember,concat 不是变异方法。
-        this._all.productList=this._all.productList.concat(source.list);
+        this._all=Object.assign(this._all,source);
     }
 };
 MicroEvent.mixin(ProductListStore);
@@ -25,25 +29,49 @@ appDispatcher.register(function(payload){
     switch(payload.actionName){
         case "productList.getNextPage":
                 ajax({
-                    ciUrl:"/platinfo/v2/financePlanData",
+                    ciUrl:"/platinfo/v2/financePlanData_2",
                     success:function(rs){
                         if(rs.code === 0){
                             let source={},list=[];
-                            //鉴于从该接口返回的天天赚数据有时候有type这个字段，有时候没有这个字段，先前端自动加上
-                            if(!rs.data.hq.type){
-                                rs.data.hq.type="ttz_product";
+
+                            for(let i=0;i<rs.data.dqList.length;i++){
+                                //统一赚系列标的status字段的值为好采投的status字段值（"prepublish"）
+                                if(["jjz_product","yyz_product"].indexOf(rs.data.dqList[i].type) > -1 && rs.data.dqList[i].status === "pre_publish"){
+                                    rs.data.dqList[i].status="prepublish";
+                                }
                             }
-                            rs.data.lcjh[0].isFirstChild=true;
-                            rs.data.xmzt.list[0].isFirstChild=true;
-                            list=list.concat(rs.data.hq,rs.data.lcjh,rs.data.xmzt.list);
+
+                            list=[
+                                {
+                                    type:"moonList",
+                                    items:rs.data.moonList
+                                },
+                                {
+                                    type:"dqList",
+                                    items:rs.data.dqList
+                                },
+                                {
+                                    type:"xsList",
+                                    items:rs.data.xsList
+                                },
+                                {
+                                    type:"transferList",
+                                    items:rs.data.transferList
+                                },
+                                {
+                                    type:"hqList",
+                                    items:rs.data.hqList
+                                }
+                            ];
                             source={
-                                list:list
-                            };
+                                list:list,
+                                transferringCount:rs.data.transferringCount
+                            }
                             ProductListStore.updateAll(source);
                             ProductListStore.trigger("change");
                         }
                     }
-                })
+                });
 
 
             break;

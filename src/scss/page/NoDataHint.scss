@@ -1,0 +1,24 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+.noData-hint {
+  margin-top:rem-calc(80);
+
+  .img-wrapper > img{
+    width:rem-calc(64);
+    height:rem-calc(64);
+  }
+
+  .text-hint {
+    margin-top:rem-calc(7);
+    color:#999;
+    font-size:rem-calc(14);
+  }
+
+}

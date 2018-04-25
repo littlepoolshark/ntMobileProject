@@ -1,0 +1,273 @@
+// Functions
+@import "../../helper/functions";
+
+// Variables
+@import "../../variables";
+
+// Mixin
+@import "../../helper/mixins";
+$pga-primary-color:#0c6261;
+
+#presentGoldenApple {
+  padding-bottom:rem-calc(20);
+
+  section.product-introduction {
+    background-color:#fff;
+
+    .banner-wrapper {
+      position:relative;
+
+      .btn-wrapper {
+        width:100%;
+        height:rem-calc(100);
+        position:absolute;
+        left:0;
+        bottom:rem-calc(15);
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &>img {
+          height:rem-calc(20);
+          width:auto;
+          margin-bottom:rem-calc(10);
+          display:block;
+        }
+      }
+    }
+
+    .product-introduction-title {
+      margin: rem-calc(20) 0 0;
+
+      &>img {
+        display:block;
+        height:rem-calc(30);
+        width:auto;
+        margin:0 auto;
+      }
+    }
+
+    .product-introduction-content {
+      padding-bottom:rem-calc(30);
+    }
+  }
+
+  section.rule-description {
+    .rule-description-title {
+      margin:rem-calc(30) 0;
+
+      img {
+        display:block;
+        height:rem-calc(50);
+        width:auto;
+        margin:0 auto;
+      }
+    }
+
+    .rule-description-content {
+      margin:0 rem-calc(30) rem-calc(30);
+      padding:rem-calc(15);
+      @include color-and-fontSize(#111,rem-calc(13));
+      background-color:#f1f0df;
+
+      p {
+        margin-top:0;
+        margin-bottom:rem-calc(20);
+        @include color-and-fontSize(#111,rem-calc(13));
+        line-height: 1.8;
+      }
+    }
+
+    .rule-description-date {
+      margin:rem-calc(30) 0 rem-calc(15);
+      text-align: center;
+      @include color-and-fontSize(#111,rem-calc(14));
+
+      &>strong {
+        color:$pga-primary-color;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .pga-btn {
+    display:block;
+    width:rem-calc(200);
+    height:rem-calc(40);
+    margin:0 auto;
+    line-height:rem-calc(35);
+    text-align: center;
+    border:none;
+    outline: none;
+    border-radius:rem-calc(20);
+
+    &.primary {
+      @include color-and-fontSize(#fff,rem-calc(18));
+      font-weight: bold;
+      background:linear-gradient(to bottom,#ce1334,#e23a47);
+    }
+
+    &.second {
+      @include color-and-fontSize($pga-primary-color,rem-calc(18));
+      background-color:#fff;
+      border:1px solid $pga-primary-color;
+    }
+
+    &.third {
+      @include color-and-fontSize($pga-primary-color,rem-calc(18));
+      background-color:#fff;
+    }
+  }
+
+  .slideMask-wrapper {
+    width:100%;
+    height:100%;
+    padding:0 rem-calc(15);
+    display:flex;
+    align-items: center;
+    @include color-and-fontSize(#333,rem-calc(14));
+
+    .slideMask-body {
+      width:100%;
+      padding:rem-calc(30) rem-calc(15);
+      background:url("../../../img/specialActivity/pga-mask-bg.png") no-repeat left top;
+      background-color:#f1f0df;
+      position:relative;
+
+      &.present-redPackage {
+        .img-wrapper {
+          img {
+            display:block;
+            height:rem-calc(130);
+            width:auto;
+            margin:rem-calc(8) auto;
+          }
+        }
+      }
+
+      &.present-apple {
+        .img-wrapper {
+          margin:rem-calc(8) auto;
+        }
+      }
+
+      &.presentAppleSuccessHint {
+        .img-wrapper {
+          margin:rem-calc(8) auto;
+          text-align: center;
+
+          img {
+            display:inline-block;
+            height:rem-calc(125);
+            width:auto;
+            margin-left:rem-calc(-50);
+          }
+        }
+      }
+
+      &.presentRedPackageSuccessHint {
+        .img-wrapper {
+          margin:rem-calc(8) auto;
+          text-align: center;
+
+          img {
+            display:inline-block;
+            height:rem-calc(82);
+            width:auto;
+            margin-left:rem-calc(-60);
+          }
+        }
+      }
+
+      &.hadGotPrizeHint {
+        text-align: center;
+        .img-wrapper {
+          margin:rem-calc(8) auto;
+          text-align: center;
+
+          img {
+            display:inline-block;
+            height:rem-calc(92);
+            width:auto;
+            margin-left:rem-calc(-10);
+          }
+        }
+
+        .hadGotPrizeHint-box {
+          display:inline-block;
+          width:rem-calc(255);
+          height:rem-calc(93);
+          padding-left:rem-calc(65);
+          margin-left:rem-calc(-65);
+          background-image:url("../../../img/specialActivity/pga-hadGotPrize-hint.png");
+          background-size:cover;
+
+          &>div {
+            width:100%;
+            height:100%;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            strong {
+              color:$C1;
+              font-weight: normal;
+            }
+          }
+        }
+      }
+
+      &.addressForm {
+        .addressForm-title {
+          @include color-and-fontSize(#333,rem-calc(18));
+        }
+        .addressForm-remark {
+          margin-top:rem-calc(15);
+          @include color-and-fontSize(#333,rem-calc(14));
+
+          strong {
+            font-weight: normal;
+            color:$C1;
+          }
+        }
+      }
+
+      button {
+        margin-top:rem-calc(15);
+      }
+
+      button + button {
+        margin-top:rem-calc(10);
+      }
+
+      @media screen and (max-width: 350px ){
+        .item-input .field-label {
+          width:20%;
+        }
+      }
+
+      .formCheck-hint {
+        @include color-and-fontSize($C1,rem-calc(12));
+      }
+    }
+
+    .imgIcon-closeBtnInWrapper {
+      width:rem-calc(45);
+      height:rem-calc(45);
+      position:absolute;
+      left:50%;
+      margin-left:rem-calc(-17);
+      bottom:rem-calc(-70);
+    }
+
+    .slideMask-title {
+      strong {
+        font-weight: normal;
+        color:$C1;
+      }
+    }
+
+  }
+}

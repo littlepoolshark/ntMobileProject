@@ -1,0 +1,52 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#homeNewbieProdectCard {
+    position: relative;
+    
+    .title {
+        @include color-and-fontSize(#333,rem-calc(16));
+    }
+    .subtitle {
+        @include color-and-fontSize(#333,rem-calc(12));        
+    }
+
+    .product-rate {
+        line-height: 1;
+        @include color-and-fontSize(#f6313c,rem-calc(45));
+    }
+
+    .purchaseBtn {
+        width:rem-calc(80);
+        height:rem-calc(22);
+        text-align: center;
+        line-height: rem-calc(22);
+        @include color-and-fontSize(#fff,rem-calc(12));
+        background:#f6313c;
+        border-radius:rem-calc(11);
+    }
+    .tag {
+        @include size(rem-calc(55),rem-calc(55));
+        background-image:url("../../img/tabar_onlyone@2x.png");
+        background-size:cover;
+        position:absolute;
+        top:0;
+        right:0;
+    }
+    .col-4 {
+        display:flex;
+        align-items: center;
+    }
+    .col-2 {
+        .subtitle {
+            width:rem-calc(80);
+            text-align: center;
+        }
+    }
+}

@@ -9,72 +9,138 @@
 
 #userHome {
   padding-bottom:rem-calc(55);
+
+
   .dashboard {
-    padding-top:rem-calc(15);
-    background-color:$C1;
+    margin-top:0;
+    background-color:#fff;
 
-    .header {
-      /*在uc浏览器上遭遇兼容问题，采取回退方案，即：浮动布局
-      display:flex;
-      align-items: center;
-      justify-content:flex-start;*/
-      height:rem-calc(32);
-      line-height: rem-calc(30);
-      padding-left:rem-calc(15);
+    .dashboard-header {
+      height:rem-calc(44);
+      padding:0 rem-calc(10);
+      border-bottom:1px solid #eee;
 
-      /*.message-icon-wrapper {
-        margin-right:auto;
-      }*/
-      /*&>a,
-      &>button {
-        display:block;
-      }*/
+      .left,
+      .right {
+        height:100%;
+        display:flex;
+        align-items: center;
 
-      .btn-hollow {
-        margin-bottom:0;
-        padding:rem-calc(8) rem-calc(5);
-        @include color-and-fontSize($white,rem-calc(14));
-        border-color:$C9;
-
-        &:hover {
-          background-color:transparent;
+        &>span {
+          display:block;
         }
       }
 
+      .left {
+        &>span {
+          width:rem-calc(28);
+          height:rem-calc(28);
+          margin-right:rem-calc(5);
+        }
 
+        .phone-number {
+          width:auto;
+        }
+      }
+
+      .right {
+        &>span {
+          width:rem-calc(44);
+          height:rem-calc(44);
+        }
+
+        .imgIcon-my-letter {
+          margin-right:rem-calc(-10);
+        }
+      }
     }
-    .subtitle {
-      @include color-and-fontSize($C9,$T10);
+    .dashboard-body {
+      margin:rem-calc(10) rem-calc(10) 0;
+      padding:rem-calc(15);
+      border-radius:rem-calc(5);
+      //background-image:linear-gradient(to bottom right,#dd393c,#fa6f68);
+      background-image:url("../../img/bg_assets@2x.png");
+      background-size:cover;
+
+      .header {
+        display:flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom:rem-calc(30);
+
+        .total-property {
+          .icon-right-nav {
+            font-size:rem-calc(12)
+          }
+        }
+
+        .openZX-flag {
+          display:flex;
+          align-items: center;
+
+          &>span {
+            display:block;
+
+            &.imgIcon {
+              width:rem-calc(16);
+              height:rem-calc(16);
+              margin-right:rem-calc(2);
+            }
+
+            &.imgIcon-my-openZX-off + span {
+              color:#eeb668;
+            }
+
+            &.title {
+              height:rem-calc(20);
+              line-height: rem-calc(23);
+            }
+          }
+        }
+      }
+      .footer {
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .dashboard-footer {
+      .col-3 {
+        height:rem-calc(60);
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        @include color-and-fontSize($C3,$T7);
+
+        & > span {
+          display:block;
+
+          &.imgIcon {
+            width:rem-calc(40);
+            height:rem-calc(40);
+            margin-right:rem-calc(10);
+          }
+        }
+
+      }
+    }
+
+    .title {
+      @include color-and-fontSize(#fff,$T9);
     }
     .amount {
       line-height:1;
-      @include color-and-fontSize(#fff,$T3);
-    }
-    strong.amount  {
-      font-weight: normal;
-      @include color-and-fontSize(#fff,rem-calc(30));
-    }
+      @include color-and-fontSize(#fff,rem-calc(20));
 
-    .sub-dashboard {
-      margin:auto rem-calc(15);
-      padding:rem-calc(10) 0 ;
-      border-top:1px solid #f6695b;
-
-      .col-3:first-child {
-        border-right:1px solid #f6695b;
+      strong {
+        font-weight: normal;
+        @include color-and-fontSize(#fff,rem-calc(30));
       }
     }
-
-    .data-eye-wrapper {
-      display:inline-block;
-      position:relative;
-
-      .imgIcon {
-        position:absolute;
-        top:rem-calc(-4);
-        right:rem-calc(-70);
-      }
+    .phone-number {
+      @include color-and-fontSize($C3,$T4);
     }
+
 
   }
   .investmentRecord-entry {
@@ -122,8 +188,40 @@
   .list {
     margin:rem-calc(15) 0;
 
-    .coupon-count {
+    strong {
       color:$C1;
+    }
+
+    .imgIcon-share-coupon {
+      height:rem-calc(25);
+      width:rem-calc(60);
+    }
+  }
+
+  .registerZX-entry-wrapper {
+    margin-top:rem-calc(10);
+
+    .registerZX-entry {
+      width:rem-calc(150);
+      margin:0 auto;
+      padding:rem-calc(2) 0;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      border:1px solid #e4ba2a;
+      border-radius:rem-calc(14);
+
+      .imgIcon {
+        width:rem-calc(20);
+        height:rem-calc(20);
+        margin:0;
+      }
+
+      &>span {
+        display:block;
+        margin-left:rem-calc(3);
+        @include color-and-fontSize($C9,$T10);
+      }
     }
   }
 

@@ -1,9 +1,10 @@
 require("../../scss/page/Recharge.scss");
-let RechargeAction=require("../actions/RechargeAction.js");
-let RechargeStore=require("../stores/RechargeStore.js");
+let RechargeAction = require("../actions/RechargeAction.js");
+let RechargeStore = require("../stores/RechargeStore.js");
 
 import React from "react";
-import classNames from 'classnames';
+import { Link } from "react-router";
+import classNames from "classnames";
 import cookie from "../lib/cookie";
 import getParamObjFromUrl from "../lib/getParamObjFromUrl";
 import type from "../lib/type";
@@ -18,310 +19,201 @@ import Message from "../UIComponents/Message";
 import Modal from "../UIComponents/modal/Modal";
 import NavBar from "../UIComponents/NavBar";
 
-import BankCard from "./utilities/BankCard";
-
-
-let RechargeAmountSelection=React.createClass({
-    getInitialState(){
-        return {
-            currRechargeAmount:0
-        }
-    },
-    _selectRechargeAmount(amount){
-        this.props.SelectionHandler && this.props.SelectionHandler(amount);
-        this.setState({
-            currRechargeAmount:amount
-        });
-    },
-    render(){
-        let rechargeAmountArr=[10000,2000,1000,500,100];
-        let currRechargeAmount=this.state.currRechargeAmount;
-        return (
-            <div className="rechargeAmount-selectionBar">
-                {
-                    rechargeAmountArr.map(function(item,index){
-                        let spanClass=classNames({
-                            active:currRechargeAmount === item
-                        });
-                        return (
-                            <span
-                                className={spanClass}
-                                onClick={this._selectRechargeAmount.bind(null,item)}
-                                key={index}
-                            >
-                                {item}
-                            </span>
-                        )
-                    }.bind(this))
-                }
-            </div>
-        )
-    }
+let RechargeAmountSelection = React.createClass({
+  getInitialState() {
+    return {
+      currRechargeAmount: 0
+    };
+  },
+  _selectRechargeAmount(amount) {
+    this.props.SelectionHandler && this.props.SelectionHandler(amount);
+    this.setState({
+      currRechargeAmount: amount
+    });
+  },
+  render() {
+    let rechargeAmountArr = [10000, 2000, 1000, 500, 100];
+    let currRechargeAmount = this.state.currRechargeAmount;
+    return (
+      <div className="rechargeAmount-selectionBar">
+        {rechargeAmountArr.map(
+          function(item, index) {
+            let spanClass = classNames({
+              active: currRechargeAmount === item
+            });
+            return (
+              <span
+                className={spanClass}
+                onClick={this._selectRechargeAmount.bind(null, item)}
+                key={index}
+              >
+                {item}
+              </span>
+            );
+          }.bind(this)
+        )}
+      </div>
+    );
+  }
 });
 
 //充值组件
-let Recharge=React.createClass({
-    getInitialState(){
-        //sessionStorage.setItem("openId","ou6bcs4ZgG8vO2qor1CWLbyFdrcc");
-        let hasOpenIdInSessionStorage=!!sessionStorage.getItem("openId");//用户微信充值的token(openId,它是农泰公众号appId与用户id结合生成的一个唯一标识码)
-        let openIdInUrl=getParamObjFromUrl().openId;
-        let ua= window.navigator.userAgent.toLowerCase();
-        let isInWeChatBrowser=ua.match(/MicroMessenger/i) == 'micromessenger';//ua.match(/MicroMessenger/i)的返回值要么就是null，要么就是一个数组
-        let isSupportForWeChatPay=isInWeChatBrowser;
-        /*
-         *  如果当前SessionStorage和url都没有携带openId，则通过一系列的流转和回跳获取openId
-         *  weXin -> https://open.weixin.qq.com/connect/oauth2/authorize ->  /ci/toCiWxRecharge.do -> 后台返回的过度页面 -> weXin的recharge组件
-         */
-        if(!hasOpenIdInSessionStorage){
-            //如果SessionStorage里面没有openId这个key，url里面也没有openId这个key的话，
-            // 并且是在微信客户端里面，就跳转到https://open.weixin.qq.com
-            if(openIdInUrl === undefined && isInWeChatBrowser){
-                let protocol = window.location.protocol;
-                var host = window.location.host;
-                var redirectUri= encodeURIComponent(protocol+"//"+host+"/ci/user/toCiWxRecharge.do");
-                var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8164883e71adab3a&redirect_uri="+redirectUri+"&response_type=code&scope=snsapi_base&state=123&connect_redirect=1#wechat_redirect";
-                window.location.href = url;
-            }else if(openIdInUrl === "" || openIdInUrl === "null" || openIdInUrl === "undefined"){//这种情况属于用户没有关注农泰公众号
-                isSupportForWeChatPay = false;
-            }else {//如果成功取回openId的话，就存放在SessionStorage中
-                sessionStorage.setItem("openId",openIdInUrl);
-            }
-        }
-        return {
-            data:RechargeStore.getAll(),
-            isLimitDetailModalOpen:false,
-            confirmModalOpen:false,
-            isSupportForWeChatPay:isSupportForWeChatPay
-        }
-    },
-    _handleRechargeSubmit(){
-        RechargeAction.recharge();
-    },
-    _handleRechargeAmountChange(){
-        let rechargeAmount=this.refs.rechargeAmount.getValue();
-        let reg=/[^\d\.]/g;//过滤除了数组和点号的字符
-        rechargeAmount=rechargeAmount.replace(reg,"");
-        if(rechargeAmount.indexOf(".") > -1 ){//如果是小数点后的位数大于两位的小数,则将其截断为小数点后两位
-            if(!!rechargeAmount.split(".")[1] && rechargeAmount.split(".")[1].length > 2){
-                rechargeAmount=rechargeAmount.split(".")[0] + "." + rechargeAmount.split(".")[1].slice(0,2);
-            }
-        }
-        rechargeAmount=rechargeAmount === "" ? 0 : rechargeAmount;
-        RechargeAction.changeRechargeAmount(rechargeAmount);
-    },
-    _handleRechargeTypeChange(type){
-        RechargeAction.changeRechargeType(type);
-    },
-    _selectRechargeAmount(amount){
-        RechargeAction.changeRechargeAmount(amount);
-    },
-    _closeLimitDetailModal(){
-        this.setState({
-            isLimitDetailModalOpen:false
-        })
-    },
-    _openLimitDetailModal(){
-        this.setState({
-            isLimitDetailModalOpen:true
-        })
-    },
-    _closeConfirmModal(){
-        this.setState({
-            confirmModalOpen:false
-        })
-    },
-    _openConfirmModal(){
-        this.setState({
-            confirmModalOpen:true
-        })
-    },
-    _confirmModalAction(confirm){
-        if(confirm){
-            this.context.router.push({
-               pathname:"openZhongJinShortcut"
-            });
-        }else {
-            this._closeConfirmModal();
-        }
-    },
-    _showLimitDetailOfWCPay(){
-        this._openLimitDetailModal();
-    },
-    _handleNavClick(){
-        this.context.router.push({
-            pathname:"userHome"
-        });
-    },
-    render (){
-        let {
-            currRechargeType,
-            rechargeAmount,
-            singleLimit,
-            everydayLimit,
-            bankName,
-            fullCardNo,
-            idcardFull,
-            realNameFull,
-            id
-            }=this.state.data;
-
-        let leftNav= {
-            component:"a",
-            icon: 'left-nav',
-            title: '返回'
-        };
-
-        let isSupportForWeChatPay=this.state.isSupportForWeChatPay;
-        let token=cookie.getCookie("token");
-        let everydayLimitText=everydayLimit > 0 ? "单日限额"+everydayLimit+"元" : "单日无限额";
-        let warmHintText="单笔限额"+singleLimit+"元，" + everydayLimitText;
-
-        return (
-            <Container  {...this.props} scrollable={false} id="recharge">
-                <NavBar
-                    title="充值"
-                    leftNav={[leftNav]}
-                    amStyle="primary"
-                    onAction={this._handleNavClick}
-                />
-                <Group
-                    header={warmHintText}
-                    className={currRechargeType === "shortcut" && isSupportForWeChatPay ? "active" : ""}
-                    onClick={this._handleRechargeTypeChange.bind(null,"shortcut")}
-                >
-                    <div className="shortcut-pay-wrapper cf">
-                        <img src={require("../../img/shortcut.png")} alt="" className="recharge-card-bg" />
-                        <span className="fr">尾号{fullCardNo && fullCardNo.slice(-4)}</span>
-                        <span className="fr">{bankName}</span>
-                    </div>
-                </Group>
-                {
-                    isSupportForWeChatPay ?
-                    <Group
-                        header={<span>最高限额：50,000元  </span>}
-                        className={currRechargeType === "wechat" ? "active" : ""}
-                        onClick={this._handleRechargeTypeChange.bind(null,"wechat")}
-                    >
-                        <img src={require("../../img/wechat.png")} alt="" className="recharge-card-bg" />
-                    </Group> :
-                    null
-                }
-
-                <Group
-                    header=""
-                    noPadded
-                >
-                    <List>
-                        <List.Item
-                            nested="input"
-                        >
-                            <Field
-                                type="number"
-                                label="金额"
-                                placeholder="充值金额10元起"
-                                ref="rechargeAmount"
-                                value={rechargeAmount ? rechargeAmount : ""}
-                                onChange={this._handleRechargeAmountChange}
-                            />
-                        </List.Item>
-                    </List>
-                </Group>
-
-                <RechargeAmountSelection SelectionHandler={this._selectRechargeAmount} />
-
-                <form action="/ci/user/v2/wx_LianlianRechage" method="post" id="shortcutPaymentForm">
-                    <input type="hidden"  name="bankCardId" value={id} />
-                    <input type="hidden"  name="bg_color" value="7699FF" />
-                    <input type="hidden"  name="id_no" value={idcardFull} />
-                    <input type="hidden"  name="card_no" value={fullCardNo} />
-                    <input type="hidden"  name="rechargeType" value="biddingBank" />
-                    <input type="hidden"  name="acct_name"  value={realNameFull} />
-                    <input type="hidden"  name="money_order" value={rechargeAmount} />
-                    <input type="hidden" name="Authorization" value={token}/>
-                </form>
-
-                <Modal
-                    ref="limitDetailModal"
-                    isOpen={this.state.isLimitDetailModalOpen}
-                    role="alert"
-                    onAction={this._closeLimitDetailModal}
-                >
-                    暂时没做这个限额详情
-                </Modal>
-
-                <Modal
-                    ref="confirmModal"
-                    isOpen={this.state.confirmModalOpen}
-                    role="confirm"
-                    onAction={this._confirmModalAction}
-                >
-                    您还没有开通快捷支付，去开通？
-                    {
-                        /*<a href="javascript:void(0);" className="showLimitDetail-btn" onClick={this._showLimitDetailOfWCPay}>支持银行及限额？</a>*/
-                    }
-                </Modal>
-
-                <div className="" style={{padding:"0 0.9375rem",marginTop:"2rem"}}>
-                    <Button amStyle="primary" block radius={true} onClick={this._handleRechargeSubmit}>完成充值</Button>
-                </div>
-            </Container>
-        )
-    },
-    componentDidMount(){
-        let rechargeAmount=this.props.location.query.rechargeAmount;
-        if(rechargeAmount !== undefined){
-            RechargeAction.changeRechargeAmount(rechargeAmount);
-        }
-        RechargeAction.getBankCardInfoFromServer();
-
-        RechargeStore.bind("change",function(){
-            this.setState(RechargeStore.getAll());
-        }.bind(this));
-
-        RechargeStore.bind("rechargeAmountCheckFailed",function(msg){
-            Message.broadcast(msg);
-        });
-
-        //使用原生的表单提交方式来提交连连支付表单
-        RechargeStore.bind("submitShortcutForm",function(){
-            let shortcutForm=document.getElementById("shortcutPaymentForm");
-            shortcutForm.submit();
-        });
-
-        //已经开通中金支付的快捷支付的话，就跳转到确认支付页面
-        RechargeStore.bind("hadOpenZhongJinShortcut",function(rechargeAmount){
-            this.context.router.push({
-                pathname:"zhongJinShortcutPay",
-                query:{
-                    rechargeAmount:rechargeAmount
-                }
-            });
-        }.bind(this));
-
-        //还没有开通中金支付的快捷支付的话，就跳转值开通中金快捷支付页面
-        RechargeStore.bind("hadNotOpenZhongJinShortcut",function(){
-            this._openConfirmModal();
-        }.bind(this));
-
-        RechargeStore.bind("rechargeSuccess",function(){
-            this.context.router.push({
-                pathname:"userHome"
-            });
-            Message.broadcast("充值成功！");
-        });
-
-        RechargeStore.bind("rechargeFailed",function(msg){
-            Message.broadcast(msg);
-        });
-
-    },
-    componentWillUnmount(){
-        RechargeStore.clearAll();
+let Recharge = React.createClass({
+  getInitialState() {
+    return {
+      data: RechargeStore.getAll(),
+      isLoadingModalOpen: false
+    };
+  },
+  _handleRechargeSubmit() {
+    RechargeAction.recharge_upgrade();
+  },
+  _handleRechargeAmountChange() {
+    let rechargeAmount = this.refs.rechargeAmount.getValue();
+    let reg = /[^\d\.]/g; //过滤除了数组和点号的字符
+    rechargeAmount = rechargeAmount.replace(reg, "");
+    if (rechargeAmount.indexOf(".") > -1) {
+      //如果是小数点后的位数大于两位的小数,则将其截断为小数点后两位
+      if (
+        !!rechargeAmount.split(".")[1] &&
+        rechargeAmount.split(".")[1].length > 2
+      ) {
+        rechargeAmount =
+          rechargeAmount.split(".")[0] +
+          "." +
+          rechargeAmount.split(".")[1].slice(0, 2);
+      }
     }
+    rechargeAmount = rechargeAmount === "" ? 0 : rechargeAmount;
+    RechargeAction.changeRechargeAmount(rechargeAmount);
+  },
+  _selectRechargeAmount(amount) {
+    RechargeAction.changeRechargeAmount(amount);
+  },
+  _handleNavClick() {
+    this.context.router.push({
+      pathname: "userHome"
+    });
+  },
+  _renderBankCard(cardNo) {
+    let cardNo_start = cardNo.slice(0, 4);
+    let cardNo_end = cardNo.slice(-4);
+    return (
+      <div className="bankCard-wrapper">
+        <div className="bankCard">
+          <Icon classPrefix="imgIcon" name="my-bankCard" />
+          <span style={{ fontWeight: "bold" }}>{cardNo_start}</span>
+          <span>****</span>
+          <span>****</span>
+          <span style={{ fontWeight: "bold" }}>{cardNo_end}</span>
+        </div>
+      </div>
+    );
+  },
+  render() {
+    let { rechargeAmount, fullCardNo } = this.state.data;
+
+    let leftNav = {
+      component: "a",
+      icon: "left-nav",
+      title: "返回"
+    };
+
+    return (
+      <Container {...this.props} scrollable={false} id="recharge">
+        <NavBar
+          title="充值"
+          leftNav={[leftNav]}
+          amStyle="primary"
+          onAction={this._handleNavClick}
+        />
+        {this._renderBankCard(fullCardNo)}
+
+        <Group header="" noPadded>
+          <div className="header">充值金额</div>
+          <List>
+            <List.Item nested="input">
+              <Field
+                type="number"
+                label="￥"
+                placeholder="充值金额10元起"
+                ref="rechargeAmount"
+                value={rechargeAmount ? rechargeAmount : ""}
+                onChange={this._handleRechargeAmountChange}
+              />
+            </List.Item>
+          </List>
+          <div className="footer">
+            <Icon classPrefix="imgIcon" name="guarder-icon" />
+            资金由平安银行全面存管
+          </div>
+        </Group>
+
+        <Modal title="" isOpen={this.state.isLoadingModalOpen} role="loading">
+          处理中，请稍候...
+        </Modal>
+
+        <div className="" style={{ padding: "0 0.9375rem", marginTop: "2rem" }}>
+          <Button
+            amStyle="primary"
+            block
+            radius={true}
+            onClick={this._handleRechargeSubmit}
+          >
+            完成充值
+          </Button>
+        </div>
+        <div className="bankQuotaRemark">
+          <Link to="bankQuotaTable">限额说明</Link>
+        </div>
+      </Container>
+    );
+  },
+  componentDidMount() {
+    let rechargeAmount = this.props.location.query.rechargeAmount;
+    if (rechargeAmount !== undefined) {
+      RechargeAction.changeRechargeAmount(rechargeAmount);
+    }
+    RechargeAction.getBankCardInfoFromServer();
+
+    RechargeStore.bind(
+      "change",
+      function() {
+        this.setState(RechargeStore.getAll());
+      }.bind(this)
+    );
+
+    RechargeStore.bind("rechargeAmountCheckFailed", function(msg) {
+      Message.broadcast(msg);
+    });
+
+    RechargeStore.bind("requestIStarting", () => {
+      this.setState({
+        isLoadingModalOpen: true
+      });
+    });
+
+    RechargeStore.bind("requestIsEnd", () => {
+      this.setState({
+        isLoadingModalOpen: false
+      });
+    });
+
+    RechargeStore.bind("getNextLocationInfoSuccess", nextLocation => {
+      window.location.href = nextLocation;
+    });
+
+    RechargeStore.bind("getNextLocationInfoFailed", msg => {
+      Message.broadcast(msg);
+    });
+  },
+  componentWillUnmount() {
+    RechargeStore.clearAll();
+  }
 });
 
 Recharge.contextTypes = {
-    router:React.PropTypes.object.isRequired
+  router: React.PropTypes.object.isRequired
 };
 
-module.exports=Recharge;
+module.exports = Recharge;

@@ -1,9 +1,12 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var RegisterGuideAction={
-    getInitialData(){
+    getInitialData(inviteCode){
         appDispatcher.dispatch({
-            actionName:"getInitialData_registerGuide"
+            actionName:"getInitialData_registerGuide",
+            data:{
+                inviteCode
+            }
         })
     },
     toggleCheck (){

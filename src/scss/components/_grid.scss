@@ -101,6 +101,7 @@
 
 // grid modifiers: flex container wrap
 @each $wrap in wrap, wrap-reverse {
+
   .#{$grid-prefix}-#{$wrap} {
     @include grid-wrap($wrap);
   }

@@ -1,0 +1,26 @@
+// Functions
+@import "../helper/functions";
+
+// Variables
+@import "../variables";
+
+// Mixin
+@import "../helper/mixins";
+
+#shareholderInfo {
+    padding:rem-calc(15);
+    background-color:#fff;
+
+
+    .title {
+        @include color-and-fontSize(#333,rem-calc(18));
+    }
+    .content {
+        margin-top:5px;
+        @include color-and-fontSize(#666,rem-calc(12));
+    }
+
+    section {
+        margin-top:rem-calc(30);
+    }
+}

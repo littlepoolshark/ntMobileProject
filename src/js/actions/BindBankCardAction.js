@@ -1,12 +1,10 @@
 var appDispatcher=require("../dispatcher/dispatcher.js");
 
 var BindBankCardAction={
-    getUserNameFromLocation(userName){
+    getInitialDataFromLocation(queryData){
         appDispatcher.dispatch({
-            actionName:"getUserNameFromLocation",
-            data:{
-                userName:userName
-            }
+            actionName:"getInitialDataFromLocation_bindBankCard",
+            data:queryData
         })
     },
     selectBankCard(bankId,bankName){
